@@ -96,15 +96,19 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Required for true responsive layout.
+ * content="width=device-width, initial-scale=1"
+ * (maximumScale kept high so users can zoom — a11y; not a shrink hack)
+ */
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0b1f3a" },
   ],
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
-  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -114,7 +118,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col font-sans">
+      <body className="flex min-h-full w-full min-w-0 flex-col font-sans">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

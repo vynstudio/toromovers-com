@@ -4,7 +4,7 @@ import { designedForLife } from "@/lib/content";
 export function DesignedForLife() {
   return (
     <section
-      className="relative min-h-[52vh] overflow-hidden sm:min-h-[64vh]"
+      className="full-bleed relative w-full min-h-[52vh] overflow-hidden sm:min-h-[60vh] lg:min-h-[64vh]"
       aria-labelledby="designed-heading"
     >
       <Image
@@ -15,15 +15,12 @@ export function DesignedForLife() {
         className="object-cover object-[center_30%]"
       />
       <div className="absolute inset-0 bg-black/55" />
-      <div className="relative flex min-h-[52vh] items-end px-5 pb-12 sm:min-h-[64vh] sm:px-12 sm:pb-20 lg:max-w-2xl lg:px-20">
-        <div>
-          <h2
-            id="designed-heading"
-            className="text-[1.85rem] font-normal tracking-tight text-white sm:text-4xl lg:text-5xl"
-          >
+      <div className="site-container-wide relative flex min-h-[52vh] items-end pb-12 sm:min-h-[60vh] sm:pb-16 lg:min-h-[64vh] lg:pb-20">
+        <div className="w-full max-w-2xl min-w-0">
+          <h2 id="designed-heading" className="fluid-h2 text-white">
             {designedForLife.title}
           </h2>
-          <p className="aeo-answer mt-3 max-w-lg text-[14.5px] leading-relaxed text-white/90 sm:mt-4 sm:text-base">
+          <p className="aeo-answer fluid-lede mt-3 text-white/90 sm:mt-4">
             {designedForLife.body}
           </p>
         </div>

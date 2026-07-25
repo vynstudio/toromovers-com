@@ -5,24 +5,22 @@ export function FeatureGrid() {
   return (
     <section
       id="how-it-works"
-      className="bg-white py-14 sm:py-28"
+      className="full-bleed w-full bg-white py-14 sm:py-20 lg:py-28"
       aria-label="Services and capabilities"
     >
-      <div className="mx-auto max-w-5xl px-5 sm:px-8 lg:px-10">
-        {/* Mobile: single-column left-aligned stack (matches reference) */}
-        <div className="flex flex-col gap-12 sm:grid sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:grid-cols-3">
+      <div className="site-container">
+        {/* Mobile: 1 col · tablet: 2 · desktop: 3 */}
+        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:grid-cols-3 lg:gap-x-12">
           {featureGrid.items.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col items-start text-left sm:items-center sm:text-center"
+              className="flex w-full flex-col items-start text-left sm:items-center sm:text-center"
             >
               <div className="icon-circle mb-4 sm:mb-5">
                 <FeatureIcon name={item.icon} />
               </div>
-              <h3 className="text-lg font-medium tracking-tight text-foreground">
-                {item.title}
-              </h3>
-              <p className="aeo-answer mt-2 max-w-[280px] text-[14px] leading-relaxed text-muted sm:text-sm">
+              <h3 className="fluid-h3 text-foreground">{item.title}</h3>
+              <p className="aeo-answer mt-2 w-full max-w-sm text-[var(--text-body)] leading-relaxed text-muted sm:mx-auto">
                 {item.body}
               </p>
             </div>
@@ -33,7 +31,7 @@ export function FeatureGrid() {
           <a
             href={featureGrid.ctaHref}
             data-cta="features-quote"
-            className="inline-flex min-h-12 w-full max-w-xs items-center justify-center gap-2 rounded-md border border-foreground/25 px-7 py-3.5 text-sm tracking-tight text-foreground transition hover:border-navy hover:text-navy sm:w-auto"
+            className="btn-fluid tap-target inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-md border border-foreground/25 px-7 py-3.5 text-sm tracking-tight text-foreground transition hover:border-navy hover:text-navy sm:w-auto sm:max-w-none"
           >
             {featureGrid.cta}
             <IconArrow />

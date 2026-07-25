@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto max-w-2xl px-5 py-16 sm:px-8 sm:py-24">
+    <main className="site-container-narrow py-16 sm:py-24">
       <Link href="/" className="text-sm text-navy underline underline-offset-4">
         ← Back home
       </Link>

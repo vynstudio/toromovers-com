@@ -23,7 +23,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageGraph()) }}
       />
       <Nav />
-      <main className="flex-1">
+      <main className="w-full min-w-0 flex-1">
         <Hero />
         <FeatureAlternating />
         <Integrations />
