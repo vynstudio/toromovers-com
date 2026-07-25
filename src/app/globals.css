@@ -2,25 +2,102 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0a0a0a;
+  --navy: #0b1f3a;
+  --navy-mid: #132d52;
+  --navy-soft: #1a3a66;
+  --muted: #5c5c5c;
+  --border: #e8e8e8;
+  --card-shadow: 0 20px 60px rgba(11, 31, 58, 0.08),
+    0 4px 16px rgba(0, 0, 0, 0.04);
+  --nav-shadow: 0 8px 32px rgba(11, 31, 58, 0.1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-navy: var(--navy);
+  --color-navy-mid: var(--navy-mid);
+  --color-navy-soft: var(--navy-soft);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--navy) 18%, white);
+  color: var(--navy);
+}
+
+/* Soft hero wash like the reference */
+.hero-wash {
+  background:
+    radial-gradient(
+      120% 80% at 20% 30%,
+      rgba(255, 255, 255, 0.95) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      90% 70% at 80% 20%,
+      rgba(11, 31, 58, 0.04) 0%,
+      transparent 50%
+    ),
+    linear-gradient(165deg, #f7f8fa 0%, #eef1f5 45%, #f5f6f8 100%);
+}
+
+.card-elevated {
+  box-shadow: var(--card-shadow);
+}
+
+.nav-pill {
+  box-shadow: var(--nav-shadow);
+}
+
+/* Underline nav links matching reference */
+.nav-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+}
+
+/* Feature icon circles */
+.icon-circle {
+  width: 72px;
+  height: 72px;
+  border-radius: 9999px;
+  background: var(--navy);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Image rounded cards */
+.img-card {
+  border-radius: 1.25rem;
+  overflow: hidden;
+}
+
+/* Focus rings */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 3px;
 }
