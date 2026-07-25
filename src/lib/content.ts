@@ -1,4 +1,5 @@
-// Homepage copy — English, VitaBand-layout sections adapted for Toro Movers.
+// Homepage copy — mobile-first VitaBand layout adapted for Toro Movers.
+// Real business facts only (phone, rating, services, area).
 
 export const nav = {
   links: [
@@ -8,6 +9,7 @@ export const nav = {
   ],
   cta: "get a quote",
   ctaHref: "#quote",
+  ctaPhoneLabel: "call now",
 } as const;
 
 export const hero = {
@@ -17,18 +19,28 @@ export const hero = {
   ctaHref: "#discover",
   image: {
     src: "/images/hero-truck.jpg",
-    alt: "Professional moving truck ready for a local Central Florida move",
+    alt: "Professional moving truck ready for a local Central Florida move with Toro Movers",
   },
 } as const;
 
-export const features = [
+export type FeatureBlock = {
+  id: string;
+  title: string;
+  body: string;
+  image: { src: string; alt: string };
+  reverse: boolean;
+  /** When true, mobile stacks text above image (matches VitaBand precise block). */
+  mobileTextFirst?: boolean;
+};
+
+export const features: FeatureBlock[] = [
   {
     id: "comfort",
     title: "So smooth, you won't even feel the stress",
     body: "Designed for real life, Toro fits effortlessly into your day—whether you're packing a studio, emptying a family home, or winding down a lease. Care and efficiency, perfectly balanced.",
     image: {
       src: "/images/check-watch.webp",
-      alt: "Happy customer checking the time on moving day",
+      alt: "Homeowner checking the clock on a stress-free moving day in Central Florida",
     },
     reverse: false,
   },
@@ -37,12 +49,13 @@ export const features = [
     title: "Precise is nice",
     body: "Our trained crew and proven process ensure you get careful handling with unparalleled attention. Whether it's furniture, fragile boxes, or tight stairwells, Toro delivers reliable moves you can trust—helping you start fresh, every time.",
     image: {
-      src: "/images/move-boxes.jpg",
-      alt: "Carefully packed and stacked moving boxes",
+      src: "/images/phone-hand.jpg",
+      alt: "Customer reviewing their move details on a phone during packing day",
     },
     reverse: true,
+    mobileTextFirst: true,
   },
-] as const;
+];
 
 export const integrations = {
   title: "Better living through coordination",
@@ -51,7 +64,7 @@ export const integrations = {
   ctaHref: "#why",
   image: {
     src: "/images/woman-home.jpg",
-    alt: "Homeowner planning a smooth local move",
+    alt: "Central Florida homeowner planning a coordinated local move",
   },
 } as const;
 
@@ -59,7 +72,7 @@ export const whyBanner = {
   title: "Why Toro Movers",
   image: {
     src: "/images/forest-smile.jpg",
-    alt: "Confident smile outdoors after a stress-free move",
+    alt: "Confident smile after a smooth local move with Toro Movers",
   },
 } as const;
 
@@ -67,45 +80,45 @@ export const featureGrid = {
   items: [
     {
       title: "Full-Service Moves",
-      body: "Truck, crew, loading, transport, and careful placement—end to end.",
+      body: "Truck, crew, loading, transport, and careful placement—end to end across Orlando and Central Florida.",
       icon: "truck" as const,
     },
     {
       title: "Labor-Only Help",
-      body: "Already have a U-Haul or POD? We load tight and unload fast.",
+      body: "Already have a U-Haul or POD? We load tight and unload fast—billed by the hour with a clear minimum.",
       icon: "box" as const,
     },
     {
       title: "Apartment Specialists",
-      body: "Stairs, elevators, and tight complex windows handled with care.",
+      body: "Stairs, elevators, and tight complex windows handled carefully so your deposit and floors stay safe.",
       icon: "building" as const,
     },
     {
       title: "Up-Front Pricing",
-      body: "Honest hourly rates quoted clearly—no surprise fees on move day.",
+      body: "Honest hourly rates quoted clearly before we start—no surprise fees on move day.",
       icon: "tag" as const,
     },
     {
       title: "Bilingual Crew",
-      body: "English & Spanish-speaking team for clear communication every step.",
+      body: "English & Spanish-speaking team for clear communication from quote to final box.",
       icon: "chat" as const,
     },
     {
       title: "Local Coverage",
-      body: "Orlando metro & Central Florida—same-week scheduling when available.",
+      body: "Orlando metro & Central Florida only—same-week scheduling when availability allows.",
       icon: "map" as const,
     },
   ],
-  cta: "know yourself better",
+  cta: "get your quote",
   ctaHref: "#quote",
 } as const;
 
 export const designedForLife = {
   title: "Designed for life",
-  body: "Sleek process, lightweight stress, and comfortable communication 24/7 planning—Toro is built to blend seamlessly into your lifestyle—whether you're hitting a new apartment, the office, or a family home.",
+  body: "Sleek process, lightweight stress, and clear communication—Toro is built to blend seamlessly into your lifestyle, whether you're hitting a new apartment, the office, or a family home.",
   image: {
     src: "/images/team.webp",
-    alt: "Toro Movers crew ready for the day",
+    alt: "Toro Movers crew ready for a local Central Florida move",
   },
 } as const;
 
@@ -115,7 +128,7 @@ export const splitStories = [
     body: "Our process is refined with real move experience, ensuring the plan you receive is both accurate and actionable—empowering you to make better choices every move day.",
     image: {
       src: "/images/team-huddle.jpg",
-      alt: "Team coordinating a careful local move plan",
+      alt: "Team coordinating a careful local move plan for a Central Florida customer",
     },
   },
   {
@@ -123,7 +136,7 @@ export const splitStories = [
     body: "No more guessing games. Toro gives you clear timing and real-time communication so you stay calm, stay on schedule, and settle into your new space with energy to spare.",
     image: {
       src: "/images/coastal.jpg",
-      alt: "Peaceful Florida coastal morning after settling in",
+      alt: "Peaceful Florida morning after settling into a new home",
     },
   },
 ] as const;
@@ -138,7 +151,8 @@ export const closing = {
   title: "Take Control of Your\nMove Today",
   body: "Join neighbors across Central Florida who transformed their moving day with Toro. Get a clear quote and start living your next chapter—one careful step at a time.",
   cta: "start moving better",
-  ctaHref: "#quote",
+  // Primary conversion: phone
+  ctaHref: "tel:+16896002720",
 } as const;
 
 export const footer = {
@@ -146,4 +160,71 @@ export const footer = {
   privacyHref: "/privacy",
   terms: "Terms of Service",
   termsHref: "/terms",
+} as const;
+
+// AEO: answer-first FAQs for featured snippets / AI answers
+export const faq = {
+  heading: "Common questions",
+  sub: "Straight answers from a local Central Florida moving company.",
+  items: [
+    {
+      q: "How much do movers cost in Orlando?",
+      a: "Most local moves with Toro Movers are quoted by the hour. Price depends on crew size, truck needs, stairs or elevators, and how much you're moving. You get an up-front hourly rate and a clear minimum—no surprise fees on move day. Call (689) 600-2720 for a fast quote.",
+    },
+    {
+      q: "Do you offer labor-only moving help?",
+      a: "Yes. If you already have a U-Haul, PODS, or rental truck, Toro provides labor-only loading and unloading by the hour. We pack the truck tight so nothing shifts, then unload and place items where you want them.",
+    },
+    {
+      q: "Are you a local Central Florida moving company?",
+      a: "Yes. Toro Movers is a family-owned local mover based in the Orlando metro. We serve Central Florida only—that is how we keep same-week scheduling and honest hourly pricing.",
+    },
+    {
+      q: "Do you move apartments with stairs and elevators?",
+      a: "Yes. Apartment and condo moves are a core service: walk-ups, elevators, loading-zone limits, and tight complex windows. We protect floors and doorways and work within building rules.",
+    },
+    {
+      q: "Is the crew bilingual?",
+      a: "Yes. Our crews speak English and Spanish so instructions, timing, and placement details stay clear from quote to last box.",
+    },
+    {
+      q: "How do I get a quote?",
+      a: "Call or text (689) 600-2720. Share your move date, from/to addresses, home type, and roughly how much you have. We reply with crew size, hourly rate, and availability—usually the same day.",
+    },
+  ],
+} as const;
+
+// Visible process for HowTo schema + conversion clarity
+export const process = {
+  heading: "How it works",
+  steps: [
+    {
+      name: "Tell us about your move",
+      text: "Share date, addresses, home type, and stairs or elevator details. Takes about two minutes on a call.",
+    },
+    {
+      name: "Get an up-front rate",
+      text: "We quote hourly pricing, crew size, and truck needs clearly—before anyone shows up.",
+    },
+    {
+      name: "We show up and move",
+      text: "The same careful bilingual crew loads, transports if needed, and places items where they go.",
+    },
+  ],
+} as const;
+
+export const trust = {
+  rating: "4.9",
+  ratingLabel: "Google rating",
+  reviews: "36+",
+  reviewsLabel: "reviews",
+  moves: "100+",
+  movesLabel: "local moves",
+  area: "Central Florida",
+  areaLabel: "service area",
+} as const;
+
+export const areasSnippet = {
+  heading: "Service areas",
+  lead: "Local movers across the Orlando metro and Central Florida—including Orlando, Kissimmee, Winter Park, Clermont, Sanford, Oviedo, Winter Garden, St. Cloud, Lakeland, and nearby communities.",
 } as const;

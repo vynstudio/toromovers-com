@@ -8,9 +8,9 @@
   --navy-soft: #1a3a66;
   --muted: #5c5c5c;
   --border: #e8e8e8;
-  --card-shadow: 0 20px 60px rgba(11, 31, 58, 0.08),
-    0 4px 16px rgba(0, 0, 0, 0.04);
-  --nav-shadow: 0 8px 32px rgba(11, 31, 58, 0.1);
+  --card-shadow: 0 12px 40px rgba(11, 31, 58, 0.08),
+    0 2px 12px rgba(0, 0, 0, 0.04);
+  --nav-shadow: 0 8px 28px rgba(11, 31, 58, 0.1);
 }
 
 @theme inline {
@@ -30,6 +30,7 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -38,6 +39,7 @@ body {
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -58,7 +60,24 @@ body {
       rgba(11, 31, 58, 0.04) 0%,
       transparent 50%
     ),
-    linear-gradient(165deg, #f7f8fa 0%, #eef1f5 45%, #f5f6f8 100%);
+    linear-gradient(165deg, #eceef2 0%, #e8ebf0 40%, #f0f2f5 100%);
+}
+
+@media (min-width: 640px) {
+  .hero-wash {
+    background:
+      radial-gradient(
+        120% 80% at 20% 30%,
+        rgba(255, 255, 255, 0.95) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        90% 70% at 80% 20%,
+        rgba(11, 31, 58, 0.04) 0%,
+        transparent 50%
+      ),
+      linear-gradient(165deg, #f7f8fa 0%, #eef1f5 45%, #f5f6f8 100%);
+  }
 }
 
 .card-elevated {
@@ -69,7 +88,6 @@ body {
   box-shadow: var(--nav-shadow);
 }
 
-/* Underline nav links matching reference */
 .nav-link {
   text-decoration: underline;
   text-underline-offset: 4px;
@@ -77,27 +95,46 @@ body {
   text-decoration-color: currentColor;
 }
 
-/* Feature icon circles */
 .icon-circle {
-  width: 72px;
-  height: 72px;
+  width: 64px;
+  height: 64px;
   border-radius: 9999px;
   background: var(--navy);
   color: #fff;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
-/* Image rounded cards */
+@media (min-width: 640px) {
+  .icon-circle {
+    width: 72px;
+    height: 72px;
+  }
+}
+
 .img-card {
-  border-radius: 1.25rem;
+  border-radius: 1.1rem;
   overflow: hidden;
 }
 
-/* Focus rings */
+@media (min-width: 640px) {
+  .img-card {
+    border-radius: 1.25rem;
+  }
+}
+
+/* Tap targets & focus */
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--navy);
   outline-offset: 3px;
+}
+
+/* Prefer readable line lengths on narrow phones */
+@media (max-width: 380px) {
+  .card-elevated h1 {
+    font-size: 1.9rem;
+  }
 }

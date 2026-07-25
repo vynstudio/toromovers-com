@@ -7,45 +7,20 @@ import { FeatureGrid } from "@/components/FeatureGrid";
 import { DesignedForLife } from "@/components/DesignedForLife";
 import { SplitStories } from "@/components/SplitStories";
 import { Testimonial } from "@/components/Testimonial";
+import { Process } from "@/components/Process";
+import { Faq } from "@/components/Faq";
+import { Areas } from "@/components/Areas";
 import { ClosingCta } from "@/components/ClosingCta";
 import { Footer } from "@/components/Footer";
-import { SITE_URL } from "@/lib/site";
-import { testimonial } from "@/lib/content";
-
-const homeJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  "@id": `${SITE_URL}/#webpage`,
-  url: SITE_URL,
-  name: "Toro Movers | Local Movers in Orlando & Central Florida",
-  isPartOf: { "@id": `${SITE_URL}/#website` },
-  about: { "@id": `${SITE_URL}/#movingcompany` },
-  primaryImageOfPage: {
-    "@type": "ImageObject",
-    url: `${SITE_URL}/images/hero-truck.jpg`,
-  },
-  speakable: {
-    "@type": "SpeakableSpecification",
-    cssSelector: ["h1", "h2"],
-  },
-  mainEntity: {
-    "@type": "Review",
-    reviewBody: testimonial.quote,
-    author: { "@type": "Person", name: testimonial.name },
-    reviewRating: {
-      "@type": "Rating",
-      ratingValue: "5",
-      bestRating: "5",
-    },
-  },
-};
+import { StickyCta } from "@/components/StickyCta";
+import { homePageGraph } from "@/lib/schema";
 
 export default function HomePage() {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageGraph()) }}
       />
       <Nav />
       <main className="flex-1">
@@ -57,9 +32,13 @@ export default function HomePage() {
         <DesignedForLife />
         <SplitStories />
         <Testimonial />
+        <Process />
+        <Faq />
+        <Areas />
         <ClosingCta />
       </main>
       <Footer />
+      <StickyCta />
     </>
   );
 }

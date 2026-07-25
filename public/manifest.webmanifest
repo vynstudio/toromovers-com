@@ -1,0 +1,23 @@
+{
+  "name": "Toro Movers",
+  "short_name": "Toro Movers",
+  "description": "Local movers in Orlando & Central Florida",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b1f3a",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

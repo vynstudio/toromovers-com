@@ -1,22 +1,23 @@
 import Image from "next/image";
 import { nav } from "@/lib/content";
-import { BUSINESS_NAME } from "@/lib/site";
+import { BUSINESS_NAME, PHONE_TEL } from "@/lib/site";
 
 export function Nav() {
   return (
-    <header className="pointer-events-none absolute inset-x-0 top-0 z-50 px-4 pt-5 sm:px-6 sm:pt-6 lg:px-10">
+    <header className="pointer-events-none absolute inset-x-0 top-0 z-50 px-3 pt-4 sm:px-6 sm:pt-6 lg:px-10">
+      {/* Mobile: compact pill — logo + CTA only (matches reference) */}
       <nav
-        className="nav-pill pointer-events-auto mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-full bg-white px-5 py-3 sm:px-7 sm:py-3.5"
+        className="nav-pill pointer-events-auto mx-auto flex max-w-5xl items-center justify-between gap-3 rounded-full bg-white px-3.5 py-2.5 sm:gap-4 sm:px-7 sm:py-3.5"
         aria-label="Primary"
       >
-        <a href="/" className="flex shrink-0 items-center gap-2">
+        <a href="/" className="flex shrink-0 items-center" aria-label={`${BUSINESS_NAME} home`}>
           <Image
             src="/logos/toro-lockup-navy.svg"
             alt={BUSINESS_NAME}
             width={132}
             height={28}
             priority
-            className="h-7 w-auto sm:h-8"
+            className="h-6 w-auto sm:h-8"
           />
         </a>
 
@@ -30,9 +31,18 @@ export function Nav() {
           ))}
         </ul>
 
+        {/* Mobile CTA goes to phone for conversion; desktop scrolls to quote */}
+        <a
+          href={PHONE_TEL}
+          data-cta="nav-phone"
+          className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-full bg-foreground px-3.5 py-2 text-[12px] font-medium tracking-tight text-white transition hover:bg-navy sm:hidden sm:px-5 sm:text-sm"
+        >
+          {nav.cta}
+        </a>
         <a
           href={nav.ctaHref}
-          className="inline-flex shrink-0 items-center justify-center rounded-full bg-foreground px-4 py-2 text-[13px] font-medium tracking-tight text-white transition hover:bg-navy sm:px-5 sm:text-sm"
+          data-cta="nav-quote"
+          className="hidden min-h-10 shrink-0 items-center justify-center rounded-full bg-foreground px-5 py-2 text-sm font-medium tracking-tight text-white transition hover:bg-navy sm:inline-flex"
         >
           {nav.cta}
         </a>
