@@ -1,17 +1,18 @@
 import { process } from "@/lib/content";
 
+/** 3-step how-it-works — single column on mobile, 3-col from 768px. */
 export function Process() {
   return (
     <section
       id="process"
-      className="full-bleed w-full border-t border-border bg-zinc-50 py-14 sm:py-20"
+      className="full-bleed w-full border-t border-border bg-zinc-50 py-12 sm:py-16 lg:py-20"
       aria-labelledby="process-heading"
     >
       <div className="site-container">
         <h2 id="process-heading" className="fluid-h2 text-foreground">
           {process.heading}
         </h2>
-        <ol className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-8 lg:gap-12">
+        <ol className="section-grid section-grid-3 mt-8 sm:mt-10">
           {process.steps.map((step, i) => (
             <li key={step.name} className="relative w-full min-w-0">
               <span className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-navy text-sm font-medium text-white">

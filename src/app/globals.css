@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Mobile-first design system (320–375px base → enhance upward)
+   - Default = single column, fluid, conversion-first
+   - Only min-width media queries expand layout
+   - No zoom / transform:scale() layout hacks
+   ========================================================================== */
+
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
@@ -8,23 +15,70 @@
   --navy-soft: #1a3a66;
   --muted: #5c5c5c;
   --border: #e8e8e8;
-  --card-shadow: 0 12px 40px rgba(11, 31, 58, 0.08),
-    0 2px 12px rgba(0, 0, 0, 0.04);
-  --nav-shadow: 0 8px 28px rgba(11, 31, 58, 0.1);
+  --card-shadow: 0 8px 28px rgba(11, 31, 58, 0.08),
+    0 2px 10px rgba(0, 0, 0, 0.04);
+  --nav-shadow: 0 6px 24px rgba(11, 31, 58, 0.1);
 
-  /* Fluid layout tokens — max-width only, never fixed width */
-  --container-max: 1200px;
-  --container-wide: 1280px;
-  --container-narrow: 720px;
-  --container-pad: clamp(1rem, 2.5vw, 2.5rem);
+  /* Mobile-first container: full width + 16px gutters by default */
+  --container-pad: 16px;
+  --container-max: 100%;
+  --container-wide-max: 100%;
+  --container-narrow-max: 100%;
 
-  /* Fluid type — grows with viewport, no zoom/scale hacks */
-  --text-body: clamp(0.9375rem, 0.9rem + 0.2vw, 1.0625rem);
-  --text-lede: clamp(0.9375rem, 0.88rem + 0.35vw, 1.125rem);
-  --text-h1: clamp(2.125rem, 1.6rem + 2.2vw, 3.75rem);
-  --text-h2: clamp(1.75rem, 1.35rem + 1.5vw, 2.75rem);
-  --text-h3: clamp(1.125rem, 1.05rem + 0.35vw, 1.35rem);
-  --text-display: clamp(2rem, 1.4rem + 2.4vw, 3.75rem);
+  /* Touch: Google recommends ~48dp; WCAG 2.5.8 minimum 24px */
+  --tap-min: 48px;
+  --tap-gap: 12px;
+
+  /* Type — readable on 320px first, scales up fluidly */
+  --text-body: 0.9375rem;
+  --text-lede: 0.9375rem;
+  --text-h1: 2rem;
+  --text-h2: 1.625rem;
+  --text-h3: 1.125rem;
+  --text-display: 1.875rem;
+}
+
+/* Progressive type enhancement */
+@media (min-width: 390px) {
+  :root {
+    --text-h1: 2.125rem;
+    --text-display: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-pad: 24px;
+    --card-shadow: 0 12px 40px rgba(11, 31, 58, 0.08),
+      0 2px 12px rgba(0, 0, 0, 0.04);
+    --text-body: 1rem;
+    --text-lede: 1.0625rem;
+    --text-h1: 2.75rem;
+    --text-h2: 2.125rem;
+    --text-h3: 1.2rem;
+    --text-display: 2.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --container-pad: 32px;
+    --container-max: 1200px;
+    --container-wide-max: 1280px;
+    --container-narrow-max: 720px;
+    --text-h1: 3.4rem;
+    --text-h2: 2.5rem;
+    --text-display: 3.5rem;
+    --text-lede: 1.125rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --container-pad: 40px;
+    --text-h1: 3.75rem;
+    --text-display: 3.75rem;
+  }
 }
 
 @theme inline {
@@ -48,7 +102,6 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Natural scale — never shrink the root document */
   width: 100%;
   overflow-x: clip;
 }
@@ -73,10 +126,9 @@ body {
   color: var(--navy);
 }
 
-/* ------------------------------------------------------------------ */
-/* Fluid containers (replace rigid fixed-width wrappers)              */
-/* ------------------------------------------------------------------ */
-/* Prefix site- to avoid clashing with Tailwind's container utility */
+/* -------------------------------------------------------------------------- */
+/* Containers — mobile: 100% width + 16px pad; desktop: max-width caps        */
+/* -------------------------------------------------------------------------- */
 .site-container,
 .site-container-wide,
 .site-container-narrow {
@@ -88,22 +140,43 @@ body {
 }
 
 .site-container-wide {
-  max-width: var(--container-wide);
+  max-width: var(--container-wide-max);
 }
 
 .site-container-narrow {
-  max-width: var(--container-narrow);
+  max-width: var(--container-narrow-max);
 }
 
-/* Full-bleed sections stay edge-to-edge; content uses .container inside */
 .full-bleed {
   width: 100%;
   max-width: 100%;
 }
 
-/* ------------------------------------------------------------------ */
-/* Responsive media — prevent fixed-size overflow                     */
-/* ------------------------------------------------------------------ */
+/* Section grid — single column by default (mobile-first) */
+.section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .section-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/* Responsive media                                                           */
+/* -------------------------------------------------------------------------- */
 img,
 video,
 iframe,
@@ -112,7 +185,6 @@ svg {
   height: auto;
 }
 
-/* next/image fill containers need explicit size from parent */
 .img-card,
 .img-fill {
   position: relative;
@@ -123,7 +195,7 @@ svg {
 }
 
 .img-card {
-  border-radius: 1.1rem;
+  border-radius: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -132,29 +204,17 @@ svg {
   }
 }
 
-/* Grid children must be allowed to shrink */
 .grid > *,
 .flex > * {
   min-width: 0;
 }
 
-/* ------------------------------------------------------------------ */
-/* Soft hero wash                                                     */
-/* ------------------------------------------------------------------ */
+/* -------------------------------------------------------------------------- */
+/* Hero wash                                                                  */
+/* -------------------------------------------------------------------------- */
 .hero-wash {
   width: 100%;
-  background:
-    radial-gradient(
-      120% 80% at 20% 30%,
-      rgba(255, 255, 255, 0.95) 0%,
-      transparent 55%
-    ),
-    radial-gradient(
-      90% 70% at 80% 20%,
-      rgba(11, 31, 58, 0.04) 0%,
-      transparent 50%
-    ),
-    linear-gradient(165deg, #eceef2 0%, #e8ebf0 40%, #f0f2f5 100%);
+  background: linear-gradient(165deg, #eceef2 0%, #e8ebf0 45%, #f0f2f5 100%);
 }
 
 @media (min-width: 768px) {
@@ -183,19 +243,24 @@ svg {
 .nav-pill {
   box-shadow: var(--nav-shadow);
   width: 100%;
-  max-width: var(--container-wide);
+  max-width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .nav-pill {
+    max-width: var(--container-wide-max);
+  }
 }
 
 .nav-link {
   text-decoration: underline;
   text-underline-offset: 4px;
   text-decoration-thickness: 1px;
-  text-decoration-color: currentColor;
 }
 
 .icon-circle {
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   border-radius: 9999px;
   background: var(--navy);
   color: #fff;
@@ -212,10 +277,9 @@ svg {
   }
 }
 
-/* Fluid headings used site-wide */
 .fluid-h1 {
   font-size: var(--text-h1);
-  line-height: 1.08;
+  line-height: 1.1;
   letter-spacing: -0.02em;
   font-weight: 400;
 }
@@ -235,7 +299,7 @@ svg {
 
 .fluid-display {
   font-size: var(--text-display);
-  line-height: 1.1;
+  line-height: 1.12;
   letter-spacing: -0.02em;
   font-weight: 400;
 }
@@ -245,7 +309,9 @@ svg {
   line-height: 1.65;
 }
 
-/* Tap targets & focus — min 44px interaction height where possible */
+/* -------------------------------------------------------------------------- */
+/* Touch targets — 48×48 minimum for primary actions                          */
+/* -------------------------------------------------------------------------- */
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--navy);
@@ -253,13 +319,100 @@ button:focus-visible {
 }
 
 .tap-target {
-  min-height: 44px;
-  min-width: 44px;
+  min-height: var(--tap-min);
+  min-width: var(--tap-min);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Buttons/links should wrap rather than overflow on narrow screens */
+/* Spacing between adjacent tappable controls */
+.tap-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tap-gap);
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .tap-stack {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
 .btn-fluid {
   max-width: 100%;
   white-space: normal;
   text-align: center;
+}
+
+/* Primary solid CTA */
+.btn-primary {
+  min-height: var(--tap-min);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  background: var(--foreground);
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--navy);
+}
+
+.btn-primary:active {
+  background: var(--navy-mid);
+}
+
+/* Outline CTA */
+.btn-outline {
+  min-height: var(--tap-min);
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--foreground) 22%, transparent);
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  background: transparent;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+/* Compact trust chips */
+.trust-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.trust-chip strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* Safe area for sticky mobile chrome */
+.safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+/* 320px edge cases */
+@media (max-width: 359px) {
+  :root {
+    --text-h1: 1.75rem;
+    --container-pad: 12px;
+  }
 }

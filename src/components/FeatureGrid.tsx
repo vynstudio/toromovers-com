@@ -1,37 +1,44 @@
 import { featureGrid } from "@/lib/content";
 import { FeatureIcon, IconArrow } from "@/components/icons";
 
+/**
+ * Services — high priority on mobile (conversion).
+ * Base: 1-col stack. 768px: 2-col. 1024px: 3-col.
+ */
 export function FeatureGrid() {
   return (
     <section
       id="how-it-works"
-      className="full-bleed w-full bg-white py-14 sm:py-20 lg:py-28"
+      className="full-bleed w-full bg-white py-12 sm:py-16 lg:py-24"
       aria-label="Services and capabilities"
     >
       <div className="site-container">
-        {/* Mobile: 1 col · tablet: 2 · desktop: 3 */}
-        <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 sm:gap-x-10 sm:gap-y-14 lg:grid-cols-3 lg:gap-x-12">
+        <h2 className="fluid-h2 mb-8 text-foreground sm:mb-12 sm:text-center">
+          What we handle
+        </h2>
+
+        <div className="section-grid section-grid-3">
           {featureGrid.items.map((item) => (
             <div
               key={item.title}
               className="flex w-full flex-col items-start text-left sm:items-center sm:text-center"
             >
-              <div className="icon-circle mb-4 sm:mb-5">
+              <div className="icon-circle mb-3 sm:mb-4">
                 <FeatureIcon name={item.icon} />
               </div>
               <h3 className="fluid-h3 text-foreground">{item.title}</h3>
-              <p className="aeo-answer mt-2 w-full max-w-sm text-[var(--text-body)] leading-relaxed text-muted sm:mx-auto">
+              <p className="aeo-answer mt-2 w-full text-[var(--text-body)] leading-relaxed text-muted sm:max-w-sm">
                 {item.body}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="mt-12 flex justify-center sm:mt-16">
+        <div className="mt-10 flex justify-center sm:mt-14">
           <a
             href={featureGrid.ctaHref}
             data-cta="features-quote"
-            className="btn-fluid tap-target inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-md border border-foreground/25 px-7 py-3.5 text-sm tracking-tight text-foreground transition hover:border-navy hover:text-navy sm:w-auto sm:max-w-none"
+            className="btn-outline btn-fluid tap-target inline-flex w-full max-w-sm gap-2 sm:w-auto sm:max-w-none"
           >
             {featureGrid.cta}
             <IconArrow />

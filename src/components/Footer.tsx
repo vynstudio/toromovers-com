@@ -12,7 +12,7 @@ import { IconFacebook, IconInstagram, IconX } from "@/components/icons";
 
 export function Footer() {
   return (
-    <footer className="full-bleed w-full bg-foreground px-[var(--container-pad)] pb-28 pt-4 text-white sm:pb-10">
+    <footer className="full-bleed w-full bg-foreground px-[var(--container-pad)] pb-32 pt-4 text-white sm:pb-10">
       <div className="site-container flex flex-col items-center justify-between gap-8 border-t border-white/10 pt-10 sm:flex-row sm:items-center">
         <div className="flex items-center gap-5 text-white/80">
           <a
