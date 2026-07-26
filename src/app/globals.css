@@ -307,18 +307,95 @@ svg {
   }
 }
 
+/* Pill shell — wide on desktop, content composed via nav groups */
 .nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   box-shadow: var(--nav-shadow);
   width: 100%;
   max-width: 100%;
   margin-inline: auto;
   background: #fff;
   border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
+  border-radius: 9999px;
+  padding: 0.4rem 0.55rem 0.4rem 0.75rem;
+  /* No justify-between — groups control composition */
+}
+
+@media (min-width: 768px) {
+  .nav-pill {
+    gap: 0.75rem;
+    padding: 0.45rem 0.65rem 0.45rem 1rem;
+  }
 }
 
 @media (min-width: 1024px) {
   .nav-pill {
-    max-width: var(--container-wide-max);
+    max-width: min(var(--container-wide-max), 1100px);
+    gap: 1rem;
+    padding: 0.5rem 0.75rem 0.5rem 1.15rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .nav-pill {
+    max-width: min(var(--container-wide-max), 1180px);
+  }
+}
+
+/* Grouped regions — balanced desktop, simple mobile */
+.nav-left {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.nav-center {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.nav-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .nav-right {
+    gap: 12px;
+  }
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+    gap: 0.25rem 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav-links {
+    gap: 0.35rem 0.85rem;
   }
 }
 
@@ -326,7 +403,23 @@ svg {
   text-decoration: underline;
   text-underline-offset: 5px;
   text-decoration-thickness: 1px;
-  padding: 0.5rem 0.35rem;
+  padding: 0.5rem 0.4rem;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* Slightly quieter nav CTAs so they fit the pill without dominating */
+.nav-right .btn-primary {
+  padding-inline: 0.95rem;
+  font-size: 0.8125rem;
+}
+
+@media (min-width: 768px) {
+  .nav-right .btn-primary {
+    font-size: 0.875rem;
+    padding-inline: 1.1rem;
+  }
 }
 
 .icon-circle {
