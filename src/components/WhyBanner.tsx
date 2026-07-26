@@ -5,7 +5,7 @@ export function WhyBanner() {
   return (
     <section
       id="why"
-      className="full-bleed relative w-full min-h-[42vh] overflow-hidden sm:min-h-[52vh] lg:min-h-[58vh]"
+      className="full-bleed relative w-full min-h-[40vh] overflow-hidden sm:min-h-[50vh] lg:min-h-[56vh]"
       aria-labelledby="why-heading"
     >
       <Image
@@ -15,8 +15,8 @@ export function WhyBanner() {
         sizes="100vw"
         className="object-cover object-center"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/35 to-black/20" />
-      <div className="site-container-wide relative flex min-h-[42vh] items-end pb-10 sm:min-h-[52vh] sm:pb-14 lg:min-h-[58vh] lg:pb-16">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/35 to-black/20" />
+      <div className="site-container-wide relative flex min-h-[40vh] items-end pb-10 sm:min-h-[50vh] sm:pb-14 lg:min-h-[56vh] lg:pb-16">
         <h2 id="why-heading" className="fluid-display text-white">
           {whyBanner.title}
         </h2>

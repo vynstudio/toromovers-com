@@ -1,43 +1,52 @@
 import { closing } from "@/lib/content";
 import { IconArrow } from "@/components/icons";
+import { QuoteForm } from "@/components/QuoteForm";
 import { PHONE_DISPLAY, PHONE_TEL, HOURS_LABEL } from "@/lib/site";
 
+/**
+ * Final conversion block + lightweight quote form.
+ * Phone is primary; form is progressive enhancement for non-call leads.
+ */
 export function ClosingCta() {
   return (
     <section
       id="quote"
-      className="full-bleed w-full bg-foreground px-[var(--container-pad)] py-14 text-center text-white sm:py-20 lg:py-28"
+      className="full-bleed section-pad w-full bg-foreground px-[var(--container-pad)] text-white"
       aria-labelledby="closing-heading"
     >
       <div className="site-container-narrow">
-        <h2
-          id="closing-heading"
-          className="fluid-display whitespace-pre-line text-white"
-        >
-          {closing.title}
-        </h2>
-        <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-prose text-white/70 sm:mt-6">
-          {closing.body}
-        </p>
+        <div className="text-center">
+          <h2
+            id="closing-heading"
+            className="fluid-display whitespace-pre-line text-white"
+          >
+            {closing.title}
+          </h2>
+          <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-prose text-white/70 sm:mt-5">
+            {closing.body}
+          </p>
+        </div>
 
         <div className="tap-stack mt-8 justify-center sm:mt-10">
           <a
             href={PHONE_TEL}
             data-cta="closing-phone"
-            className="btn-fluid tap-target inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/40 bg-white px-7 py-3.5 text-sm font-medium tracking-tight text-foreground transition hover:bg-white/90"
+            className="btn-on-dark btn-fluid tap-target inline-flex w-full sm:w-auto"
           >
             Call {PHONE_DISPLAY}
           </a>
           <a
-            href={PHONE_TEL}
-            data-cta="closing-secondary"
-            className="btn-fluid tap-target inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-white/40 px-7 py-3.5 text-sm tracking-tight text-white transition hover:border-white hover:bg-white/10"
+            href="#quote-form"
+            data-cta="closing-form"
+            className="btn-outline-light btn-fluid tap-target inline-flex w-full sm:w-auto"
           >
-            {closing.cta}
+            Request a quote
             <IconArrow />
           </a>
         </div>
-        <p className="mt-5 text-xs text-white/40">{HOURS_LABEL}</p>
+        <p className="mt-4 text-center text-xs text-white/40">{HOURS_LABEL}</p>
+
+        <QuoteForm />
       </div>
     </section>
   );

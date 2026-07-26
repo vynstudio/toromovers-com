@@ -3,20 +3,20 @@ import { nav } from "@/lib/content";
 import { BUSINESS_NAME, PHONE_TEL } from "@/lib/site";
 
 /**
- * Mobile-first nav: logo + one primary CTA (call).
- * Mid/desktop enhances with in-page links via min-width only.
- * No hamburger complexity — conversion is one tap away.
+ * Sticky header — always reachable on scroll (mobile + desktop).
+ * Mobile: logo + Call now (one tap).
+ * md+: in-page links + Get a quote.
  */
 export function Nav() {
   return (
-    <header className="pointer-events-none absolute inset-x-0 top-0 z-50 w-full px-[var(--container-pad)] pt-3 sm:pt-5">
+    <header className="site-header pointer-events-none">
       <nav
-        className="nav-pill pointer-events-auto mx-auto flex w-full items-center justify-between gap-2 rounded-full bg-white px-3 py-2 sm:gap-4 sm:px-6 sm:py-3"
+        className="nav-pill pointer-events-auto flex items-center justify-between gap-2 rounded-full px-3 py-1.5 sm:gap-4 sm:px-6 sm:py-2.5"
         aria-label="Primary"
       >
         <a
           href="/"
-          className="tap-target flex shrink-0 items-center"
+          className="tap-target flex shrink-0 items-center rounded-full px-1"
           aria-label={`${BUSINESS_NAME} home`}
         >
           <Image
@@ -29,13 +29,12 @@ export function Nav() {
           />
         </a>
 
-        {/* Progressive enhance: show links from 768px up */}
-        <ul className="hidden items-center gap-5 text-[15px] tracking-tight text-foreground md:flex lg:gap-8">
+        <ul className="hidden items-center gap-1 text-[15px] tracking-tight text-foreground md:flex lg:gap-2">
           {nav.links.map((link) => (
             <li key={link.href}>
               <a
                 href={link.href}
-                className="nav-link tap-target inline-flex items-center py-1 transition-opacity hover:opacity-70"
+                className="nav-link tap-target inline-flex items-center rounded-md transition-opacity hover:opacity-70"
               >
                 {link.label}
               </a>
@@ -43,7 +42,7 @@ export function Nav() {
           ))}
         </ul>
 
-        {/* Always tappable — call on phone, quote on larger */}
+        {/* Primary conversion — always ≥48px; call on small, quote on larger */}
         <a
           href={PHONE_TEL}
           data-cta="nav-phone"

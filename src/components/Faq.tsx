@@ -4,7 +4,7 @@ export function Faq() {
   return (
     <section
       id="faq"
-      className="full-bleed w-full border-t border-border bg-white py-14 sm:py-20 lg:py-24"
+      className="full-bleed section-pad w-full border-t border-border bg-white"
       aria-labelledby="faq-heading"
     >
       <div className="site-container-narrow">
@@ -13,7 +13,7 @@ export function Faq() {
         </h2>
         <p className="mt-2 text-[var(--text-body)] text-muted">{faq.sub}</p>
 
-        <dl className="mt-10 space-y-8">
+        <dl className="mt-10 space-y-8 sm:space-y-10">
           {faq.items.map((item) => (
             <div key={item.q} className="w-full min-w-0">
               <dt>

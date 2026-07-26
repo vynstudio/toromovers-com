@@ -1,12 +1,11 @@
 import Image from "next/image";
 import { features } from "@/lib/content";
 
-/** Lifestyle proof — secondary on mobile (after services). 1-col → 2-col at lg. */
 export function FeatureAlternating() {
   return (
     <section
       id="discover"
-      className="full-bleed w-full bg-white py-12 sm:py-16 lg:py-24"
+      className="full-bleed section-pad w-full bg-white"
       aria-label="Discover Toro Movers"
     >
       <div className="site-container-wide flex flex-col gap-12 sm:gap-16 lg:gap-24">
@@ -16,10 +15,10 @@ export function FeatureAlternating() {
           return (
             <article
               key={f.id}
-              className="grid w-full items-center gap-5 sm:gap-8 lg:grid-cols-2 lg:gap-14"
+              className="grid w-full items-center gap-5 sm:gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-16"
             >
               <div
-                className={`img-card relative aspect-[4/3] w-full bg-zinc-100 ${
+                className={`img-card relative aspect-[4/3] w-full ${
                   f.reverse ? "lg:order-2" : "lg:order-1"
                 } ${textFirstMobile ? "order-2" : "order-1"}`}
               >

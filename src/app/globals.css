@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   Mobile-first design system (320–375px base → enhance upward)
-   - Default = single column, fluid, conversion-first
-   - Only min-width media queries expand layout
-   - No zoom / transform:scale() layout hacks
+   Mobile-first design system
+   Base: 320–375px single-column, fluid, conversion-first
+   Enhance only with min-width (no max-width breakpoints for layout collapse)
+   No zoom / transform:scale() layout hacks
    ========================================================================== */
 
 :root {
@@ -17,19 +17,21 @@
   --border: #e8e8e8;
   --card-shadow: 0 8px 28px rgba(11, 31, 58, 0.08),
     0 2px 10px rgba(0, 0, 0, 0.04);
-  --nav-shadow: 0 6px 24px rgba(11, 31, 58, 0.1);
+  --nav-shadow: 0 6px 24px rgba(11, 31, 58, 0.12);
 
-  /* Mobile-first container: full width + 16px gutters by default */
+  /* Mobile-first: full-bleed content + gutters */
   --container-pad: 16px;
   --container-max: 100%;
   --container-wide-max: 100%;
   --container-narrow-max: 100%;
+  --section-y: 3rem;
+  --header-h: 4.25rem;
 
-  /* Touch: Google recommends ~48dp; WCAG 2.5.8 minimum 24px */
+  /* Touch targets (Google ~48dp; WCAG 2.5.8 ≥24px) */
   --tap-min: 48px;
   --tap-gap: 12px;
 
-  /* Type — readable on 320px first, scales up fluidly */
+  /* Type — phone-first sizes */
   --text-body: 0.9375rem;
   --text-lede: 0.9375rem;
   --text-h1: 2rem;
@@ -38,46 +40,77 @@
   --text-display: 1.875rem;
 }
 
-/* Progressive type enhancement */
+/* 320px edge */
+@media (max-width: 359px) {
+  :root {
+    --text-h1: 1.75rem;
+    --text-display: 1.7rem;
+    --container-pad: 14px;
+  }
+}
+
 @media (min-width: 390px) {
   :root {
-    --text-h1: 2.125rem;
+    --text-h1: 2.15rem;
     --text-display: 2rem;
   }
 }
 
+/* Tablet — still full width containers, larger type & rhythm */
 @media (min-width: 768px) {
   :root {
-    --container-pad: 24px;
-    --card-shadow: 0 12px 40px rgba(11, 31, 58, 0.08),
+    --container-pad: 28px;
+    --section-y: 4.5rem;
+    --header-h: 4.75rem;
+    --card-shadow: 0 14px 44px rgba(11, 31, 58, 0.09),
       0 2px 12px rgba(0, 0, 0, 0.04);
-    --text-body: 1rem;
-    --text-lede: 1.0625rem;
-    --text-h1: 2.75rem;
-    --text-h2: 2.125rem;
-    --text-h3: 1.2rem;
-    --text-display: 2.75rem;
+    --text-body: 1.0625rem;
+    --text-lede: 1.125rem;
+    --text-h1: 2.85rem;
+    --text-h2: 2.2rem;
+    --text-h3: 1.25rem;
+    --text-display: 2.85rem;
   }
 }
 
+/* Desktop — introduce max-width so content breathes, not a tiny island */
 @media (min-width: 1024px) {
   :root {
-    --container-pad: 32px;
-    --container-max: 1200px;
-    --container-wide-max: 1280px;
-    --container-narrow-max: 720px;
-    --text-h1: 3.4rem;
-    --text-h2: 2.5rem;
+    --container-pad: 40px;
+    --container-max: 1120px;
+    --container-wide-max: 1240px;
+    --container-narrow-max: 760px;
+    --section-y: 5.5rem;
+    --header-h: 5.25rem;
+    --text-h1: 3.5rem;
+    --text-h2: 2.6rem;
     --text-display: 3.5rem;
-    --text-lede: 1.125rem;
+    --text-lede: 1.1875rem;
   }
 }
 
+/* Large desktop — fill the viewport with confident scale */
 @media (min-width: 1280px) {
   :root {
-    --container-pad: 40px;
-    --text-h1: 3.75rem;
-    --text-display: 3.75rem;
+    --container-pad: 48px;
+    --container-max: 1200px;
+    --container-wide-max: 1320px;
+    --container-narrow-max: 800px;
+    --section-y: 6rem;
+    --text-h1: 3.85rem;
+    --text-h2: 2.75rem;
+    --text-display: 3.85rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --container-pad: 56px;
+    --container-max: 1280px;
+    --container-wide-max: 1400px;
+    --container-narrow-max: 840px;
+    --text-h1: 4rem;
+    --text-display: 4rem;
   }
 }
 
@@ -103,22 +136,25 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   width: 100%;
+  max-width: 100%;
   overflow-x: clip;
 }
 
 body {
   margin: 0;
   width: 100%;
+  max-width: 100%;
   min-width: 0;
   min-height: 100%;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   font-size: var(--text-body);
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: clip;
+  position: relative;
 }
 
 ::selection {
@@ -126,8 +162,13 @@ body {
   color: var(--navy);
 }
 
+/* Anchor targets clear sticky header */
+[id] {
+  scroll-margin-top: calc(var(--header-h) + 12px);
+}
+
 /* -------------------------------------------------------------------------- */
-/* Containers — mobile: 100% width + 16px pad; desktop: max-width caps        */
+/* Containers — width 100%, max-width only (never fixed width shells)         */
 /* -------------------------------------------------------------------------- */
 .site-container,
 .site-container-wide,
@@ -152,30 +193,39 @@ body {
   max-width: 100%;
 }
 
-/* Section grid — single column by default (mobile-first) */
+.section-pad {
+  padding-block: var(--section-y);
+}
+
+/* Section grid — 1 col default */
 .section-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 1.5rem;
   width: 100%;
 }
 
 @media (min-width: 768px) {
   .section-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.75rem 2rem;
+  }
+
+  .section-grid-3 {
+    /* stay 2-col until desktop for readable cards */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
   .section-grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem 2.5rem;
   }
 }
 
 /* -------------------------------------------------------------------------- */
-/* Responsive media                                                           */
+/* Media                                                                      */
 /* -------------------------------------------------------------------------- */
 img,
 video,
@@ -196,11 +246,12 @@ svg {
 
 .img-card {
   border-radius: 1rem;
+  background: #f0f2f5;
 }
 
 @media (min-width: 768px) {
   .img-card {
-    border-radius: 1.25rem;
+    border-radius: 1.35rem;
   }
 }
 
@@ -210,7 +261,7 @@ svg {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Hero wash                                                                  */
+/* Surfaces                                                                   */
 /* -------------------------------------------------------------------------- */
 .hero-wash {
   width: 100%;
@@ -240,10 +291,29 @@ svg {
   max-width: 100%;
 }
 
+/* Sticky header shell */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background: transparent;
+  padding: 0.75rem var(--container-pad) 0;
+}
+
+@media (min-width: 768px) {
+  .site-header {
+    padding-top: 1rem;
+  }
+}
+
 .nav-pill {
   box-shadow: var(--nav-shadow);
   width: 100%;
   max-width: 100%;
+  margin-inline: auto;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
 }
 
 @media (min-width: 1024px) {
@@ -254,8 +324,9 @@ svg {
 
 .nav-link {
   text-decoration: underline;
-  text-underline-offset: 4px;
+  text-underline-offset: 5px;
   text-decoration-thickness: 1px;
+  padding: 0.5rem 0.35rem;
 }
 
 .icon-circle {
@@ -279,14 +350,14 @@ svg {
 
 .fluid-h1 {
   font-size: var(--text-h1);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   font-weight: 400;
 }
 
 .fluid-h2 {
   font-size: var(--text-h2);
-  line-height: 1.15;
+  line-height: 1.14;
   letter-spacing: -0.02em;
   font-weight: 400;
 }
@@ -299,8 +370,8 @@ svg {
 
 .fluid-display {
   font-size: var(--text-display);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
   font-weight: 400;
 }
 
@@ -310,10 +381,13 @@ svg {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Touch targets — 48×48 minimum for primary actions                          */
+/* Touch & buttons                                                            */
 /* -------------------------------------------------------------------------- */
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid var(--navy);
   outline-offset: 3px;
 }
@@ -326,7 +400,7 @@ button:focus-visible {
   justify-content: center;
 }
 
-/* Spacing between adjacent tappable controls */
+/* Comfortable gap between adjacent controls */
 .tap-stack {
   display: flex;
   flex-direction: column;
@@ -340,6 +414,14 @@ button:focus-visible {
     flex-wrap: wrap;
     align-items: center;
   }
+
+  .tap-stack > .btn-primary,
+  .tap-stack > .btn-outline,
+  .tap-stack > a.btn-primary,
+  .tap-stack > a.btn-outline {
+    width: auto;
+    min-width: 11rem;
+  }
 }
 
 .btn-fluid {
@@ -348,17 +430,29 @@ button:focus-visible {
   text-align: center;
 }
 
-/* Primary solid CTA */
-.btn-primary {
+.btn-primary,
+.btn-outline {
   min-height: var(--tap-min);
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.5rem;
-  background: var(--foreground);
-  color: #fff;
+  padding: 0.8rem 1.35rem;
+  border-radius: 0.55rem;
   font-size: 0.9375rem;
   font-weight: 500;
   letter-spacing: -0.01em;
-  transition: background 0.15s ease;
+  line-height: 1.2;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.1s ease;
+  cursor: pointer;
+  text-decoration: none;
+  gap: 0.4rem;
+}
+
+.btn-primary {
+  background: var(--foreground);
+  color: #fff;
+  border: 1px solid transparent;
 }
 
 .btn-primary:hover,
@@ -370,33 +464,121 @@ button:focus-visible {
   background: var(--navy-mid);
 }
 
-/* Outline CTA */
 .btn-outline {
-  min-height: var(--tap-min);
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.5rem;
-  border: 1px solid color-mix(in srgb, var(--foreground) 22%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--foreground) 24%, transparent);
   color: var(--foreground);
-  font-size: 0.9375rem;
-  letter-spacing: -0.01em;
   background: transparent;
-  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
 }
 
 .btn-outline:hover,
 .btn-outline:focus-visible {
   border-color: var(--navy);
   color: var(--navy);
+  background: color-mix(in srgb, var(--navy) 4%, white);
 }
 
-/* Compact trust chips */
+.btn-outline-light {
+  min-height: var(--tap-min);
+  padding: 0.8rem 1.35rem;
+  border-radius: 0.55rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  color: #fff;
+  background: transparent;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  gap: 0.4rem;
+}
+
+.btn-outline-light:hover,
+.btn-outline-light:focus-visible {
+  border-color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-on-dark {
+  min-height: var(--tap-min);
+  padding: 0.8rem 1.35rem;
+  border-radius: 0.55rem;
+  background: #fff;
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  gap: 0.4rem;
+}
+
+.btn-on-dark:hover,
+.btn-on-dark:focus-visible {
+  background: #f3f4f6;
+}
+
+/* Form controls — large, single-column friendly */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
+  text-align: left;
+}
+
+.field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.field input,
+.field select,
+.field textarea {
+  min-height: var(--tap-min);
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 1rem; /* ≥16px avoids iOS zoom */
+  font-family: inherit;
+  line-height: 1.3;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-color: transparent;
+}
+
+.field select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23ffffff99' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.25rem;
+}
+
+.field select option {
+  color: #0a0a0a;
+  background: #fff;
+}
+
 .trust-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   font-size: 0.8125rem;
   color: var(--muted);
-  white-space: nowrap;
+  line-height: 1.3;
 }
 
 .trust-chip strong {
@@ -404,15 +586,47 @@ button:focus-visible {
   font-weight: 600;
 }
 
-/* Safe area for sticky mobile chrome */
+/* Interactive trust/review chips need real tap size */
+a.trust-chip {
+  min-height: var(--tap-min);
+  padding-inline: 0.25rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .safe-bottom {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
-/* 320px edge cases */
-@media (max-width: 359px) {
-  :root {
-    --text-h1: 1.75rem;
-    --container-pad: 12px;
+/* Service card surface on desktop */
+.service-card {
+  width: 100%;
+  padding: 0;
+}
+
+@media (min-width: 1024px) {
+  .service-card {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Sticky mobile bar text: prevent overflow on 320 */
+.sticky-cta-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .btn-primary,
+  .btn-outline,
+  .btn-on-dark,
+  .btn-outline-light {
+    transition: none;
   }
 }

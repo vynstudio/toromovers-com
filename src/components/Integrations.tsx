@@ -5,12 +5,12 @@ import { IconArrow } from "@/components/icons";
 export function Integrations() {
   return (
     <section
-      className="full-bleed w-full bg-white pb-12 sm:pb-20 lg:pb-24"
+      className="full-bleed section-pad w-full bg-white"
       aria-labelledby="integrations-heading"
     >
       <div className="site-container-wide">
         <div className="grid w-full items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
-          <div className="img-card relative order-1 aspect-[4/3] w-full bg-zinc-100">
+          <div className="img-card relative order-1 aspect-[4/3] w-full">
             <Image
               src={integrations.image.src}
               alt={integrations.image.alt}
@@ -19,7 +19,7 @@ export function Integrations() {
               className="object-cover"
             />
           </div>
-          <div className="order-2 w-full min-w-0 lg:pl-4">
+          <div className="order-2 w-full min-w-0 lg:pl-2">
             <h2 id="integrations-heading" className="fluid-h2 text-foreground">
               {integrations.title}
             </h2>
@@ -29,7 +29,7 @@ export function Integrations() {
             <a
               href={integrations.ctaHref}
               data-cta="integrations"
-              className="btn-fluid tap-target mt-7 inline-flex w-full items-center justify-center gap-2 rounded-md bg-foreground px-6 py-3.5 text-sm font-medium tracking-tight text-white transition hover:bg-navy sm:mt-8 sm:w-auto sm:justify-start"
+              className="btn-primary btn-fluid tap-target mt-7 inline-flex w-full sm:mt-8 sm:w-auto"
             >
               {integrations.cta}
               <IconArrow className="h-4 w-4" />

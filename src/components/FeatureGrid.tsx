@@ -2,18 +2,18 @@ import { featureGrid } from "@/lib/content";
 import { FeatureIcon, IconArrow } from "@/components/icons";
 
 /**
- * Services — high priority on mobile (conversion).
- * Base: 1-col stack. 768px: 2-col. 1024px: 3-col.
+ * Services — high on mobile conversion path.
+ * 1-col → 2-col (768) → 3-col (1024).
  */
 export function FeatureGrid() {
   return (
     <section
       id="how-it-works"
-      className="full-bleed w-full bg-white py-12 sm:py-16 lg:py-24"
+      className="full-bleed section-pad w-full bg-white"
       aria-label="Services and capabilities"
     >
       <div className="site-container">
-        <h2 className="fluid-h2 mb-8 text-foreground sm:mb-12 sm:text-center">
+        <h2 className="fluid-h2 mb-8 text-foreground md:mb-12 md:text-center">
           What we handle
         </h2>
 
@@ -21,24 +21,24 @@ export function FeatureGrid() {
           {featureGrid.items.map((item) => (
             <div
               key={item.title}
-              className="flex w-full flex-col items-start text-left sm:items-center sm:text-center"
+              className="service-card flex w-full flex-col items-start text-left md:items-center md:text-center"
             >
-              <div className="icon-circle mb-3 sm:mb-4">
+              <div className="icon-circle mb-3 md:mb-4" aria-hidden>
                 <FeatureIcon name={item.icon} />
               </div>
               <h3 className="fluid-h3 text-foreground">{item.title}</h3>
-              <p className="aeo-answer mt-2 w-full text-[var(--text-body)] leading-relaxed text-muted sm:max-w-sm">
+              <p className="aeo-answer mt-2 w-full max-w-none text-[var(--text-body)] leading-relaxed text-muted md:mx-auto md:max-w-sm">
                 {item.body}
               </p>
             </div>
           ))}
         </div>
 
-        <div className="mt-10 flex justify-center sm:mt-14">
+        <div className="mt-10 flex justify-center md:mt-14">
           <a
             href={featureGrid.ctaHref}
             data-cta="features-quote"
-            className="btn-outline btn-fluid tap-target inline-flex w-full max-w-sm gap-2 sm:w-auto sm:max-w-none"
+            className="btn-outline btn-fluid tap-target inline-flex w-full max-w-sm md:w-auto md:max-w-none"
           >
             {featureGrid.cta}
             <IconArrow />

@@ -36,7 +36,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homePageGraph()) }}
       />
       <Nav />
-      <main className="w-full min-w-0 flex-1">
+      <main id="main" className="w-full min-w-0 flex-1">
         {/* Primary conversion path */}
         <Hero />
         <TrustBar />
