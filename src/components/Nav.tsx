@@ -63,8 +63,8 @@ export function Nav() {
                 <Image
                   src="/logos/toro-bull-black.svg"
                   alt=""
-                  width={40}
-                  height={32}
+                  width={32}
+                  height={26}
                   priority
                   className="brand-bull"
                 />
@@ -94,7 +94,7 @@ export function Nav() {
             <a
               href={PHONE_TEL}
               data-cta="nav-phone"
-              className="btn-primary tap-target shrink-0 rounded-full px-3.5 text-[13px] sm:px-4 sm:text-sm"
+              className="btn-primary tap-target nav-cta"
             >
               Call now
             </a>
@@ -103,7 +103,7 @@ export function Nav() {
               data-open-quote
               data-source="nav-quote"
               data-cta="nav-quote"
-              className="btn-primary tap-target hidden shrink-0 rounded-full px-4 text-sm md:inline-flex"
+              className="btn-primary tap-target nav-cta nav-cta-quote"
             >
               {nav.cta}
             </button>
