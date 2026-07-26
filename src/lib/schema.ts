@@ -11,7 +11,8 @@ import {
   SOCIAL_PROFILES,
   SLOGAN,
 } from "@/lib/site";
-import { faq, process, testimonial } from "@/lib/content";
+import { faq, process } from "@/lib/content";
+import { googleReviews } from "@/lib/reviews";
 
 const description =
   "Family-owned movers in Orlando & Central Florida. Full-service, labor-only & apartment moves. Up-front hourly pricing, bilingual crew. Call (689) 600-2720.";
@@ -65,16 +66,16 @@ export function organizationGraph() {
           bestRating: "5",
           reviewCount: REVIEW_COUNT,
         },
-        review: {
+        review: googleReviews.slice(0, 5).map((r) => ({
           "@type": "Review",
-          author: { "@type": "Person", name: testimonial.name },
-          reviewBody: testimonial.quote,
+          author: { "@type": "Person", name: r.name },
+          reviewBody: r.text,
           reviewRating: {
             "@type": "Rating",
-            ratingValue: "5",
+            ratingValue: String(r.rating),
             bestRating: "5",
           },
-        },
+        })),
         sameAs: SOCIAL_PROFILES,
         openingHoursSpecification: [
           {

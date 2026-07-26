@@ -167,11 +167,6 @@ export const splitStories: {
   },
 ];
 
-export const testimonial = {
-  name: "Stael G.",
-  quote:
-    "Great experience! The team was on time, professional, and handled everything with care. Very easy to work with and made my move stress-free—I highly recommend!",
-} as const;
 
 export const closing = {
   title: "Take Control of Your\nMove Today",
@@ -184,6 +179,8 @@ export const closing = {
 export const footer = {
   privacy: "Privacy Policy",
   privacyHref: "/privacy",
+  cookies: "Cookie Policy",
+  cookiesHref: "/cookies",
   terms: "Terms of Service",
   termsHref: "/terms",
 } as const;

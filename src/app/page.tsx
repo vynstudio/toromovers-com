@@ -8,12 +8,13 @@ import { Integrations } from "@/components/Integrations";
 import { WhyBanner } from "@/components/WhyBanner";
 import { DesignedForLife } from "@/components/DesignedForLife";
 import { SplitStories } from "@/components/SplitStories";
-import { Testimonial } from "@/components/Testimonial";
+import { Reviews } from "@/components/Reviews";
 import { Faq } from "@/components/Faq";
 import { Areas } from "@/components/Areas";
 import { ClosingCta } from "@/components/ClosingCta";
 import { Footer } from "@/components/Footer";
 import { LeadModal } from "@/components/LeadModal";
+import { CookieBanner } from "@/components/CookieBanner";
 import { homePageGraph } from "@/lib/schema";
 
 /**
@@ -49,7 +50,7 @@ export default function HomePage() {
         <WhyBanner />
         <DesignedForLife />
         <SplitStories />
-        <Testimonial />
+        <Reviews />
 
         {/* Answers + local SEO + final CTA */}
         <Faq />
@@ -58,6 +59,7 @@ export default function HomePage() {
       </main>
       <Footer />
       <LeadModal />
+      <CookieBanner />
     </>
   );
 }

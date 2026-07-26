@@ -81,6 +81,9 @@ export function Footer() {
           <a href={footer.privacyHref} className="tap-target min-h-0 py-1">
             {footer.privacy}
           </a>
+          <a href={footer.cookiesHref} className="tap-target min-h-0 py-1">
+            {footer.cookies}
+          </a>
           <a href={footer.termsHref} className="tap-target min-h-0 py-1">
             {footer.terms}
           </a>
