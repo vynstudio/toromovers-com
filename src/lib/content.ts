@@ -84,13 +84,40 @@ export const integrations = {
   },
 } as const;
 
-export const whyBanner = {
+/** Concrete differentiators — replaces full-bleed lifestyle banners */
+export const whyToro = {
   title: "Why Toro Movers",
-  image: {
-    src: "/images/why-family.webp",
-    alt: "Happy family smiling in their new home after a local move",
-    position: "object-[center_28%]",
-  },
+  lede: "Local Central Florida movers—clear pricing, real crew, no franchise hand-offs.",
+  items: [
+    {
+      title: "Family-owned",
+      body: "Owners handle your booking. Same people who quote often show up on the day—no call center, no contractor hand-off.",
+      icon: "truck" as const,
+    },
+    {
+      title: "Up-front hourly rates",
+      body: "You know the crew size, rate, and minimum before we start. No fuel surcharges or surprise stair fees.",
+      icon: "tag" as const,
+    },
+    {
+      title: "Bilingual crew",
+      body: "English and Spanish from quote to final box so timing and placement stay clear.",
+      icon: "chat" as const,
+    },
+    {
+      title: "Apartment specialists",
+      body: "Stairs, elevators, tight loading zones, and HOA windows—handled carefully so deposits stay safe.",
+      icon: "building" as const,
+    },
+  ],
+  stats: [
+    { value: "4.9★", label: "Google rating" },
+    { value: "36+", label: "reviews" },
+    { value: "100+", label: "local moves" },
+    { value: "EN · ES", label: "bilingual" },
+  ],
+  ctaPhone: "Call now",
+  ctaQuote: "Get a free quote",
 } as const;
 
 export const featureGrid = {
@@ -129,44 +156,6 @@ export const featureGrid = {
   cta: "get your quote",
   ctaHref: "#quote",
 } as const;
-
-export const designedForLife = {
-  title: "Designed for life",
-  body: "Sleek process, lightweight stress, and clear communication—Toro is built to blend seamlessly into your lifestyle, whether you're hitting a new apartment, the office, or a family home.",
-  image: {
-    src: "/images/designed-life.webp",
-    alt: "Family arriving home with boxes, starting their new chapter together",
-    // high-angle: family lower-center with boxes around
-    position: "object-[center_55%]",
-  },
-} as const;
-
-export const splitStories: {
-  title: string;
-  body: string;
-  image: ImageAsset;
-}[] = [
-  {
-    title: "Care Meets Simplicity",
-    body: "Our process is refined with real move experience, ensuring the plan you receive is both accurate and actionable—empowering you to make better choices every move day.",
-    image: {
-      src: "/images/care-boxes.webp",
-      alt: "Family carefully moving boxes together into their new home",
-      position: "object-[center_38%]",
-    },
-  },
-  {
-    title: "See Your Day, Your Way",
-    body: "No more guessing games. Toro gives you clear timing and real-time communication so you stay calm, stay on schedule, and settle into your new space with energy to spare.",
-    image: {
-      src: "/images/settle-calm.webp",
-      alt: "Relaxed family settled in after a smooth, on-schedule local move",
-      // faces sit at the bottom of a tall white frame
-      position: "object-bottom",
-    },
-  },
-];
-
 
 export const closing = {
   title: "Take Control of Your\nMove Today",

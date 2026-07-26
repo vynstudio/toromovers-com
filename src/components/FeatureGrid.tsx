@@ -8,7 +8,7 @@ import { FeatureIcon, IconArrow } from "@/components/icons";
 export function FeatureGrid() {
   return (
     <section
-      id="how-it-works"
+      id="services"
       className="full-bleed section-pad w-full bg-white"
       aria-label="Services and capabilities"
     >

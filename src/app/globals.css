@@ -227,6 +227,114 @@ body {
   }
 }
 
+/* Why Toro — cards + proof + CTA */
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .why-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem 1.5rem;
+  }
+}
+
+.why-card {
+  border: 1px solid var(--border);
+  border-radius: 1.15rem;
+  background: #fff;
+  padding: 1.25rem 1.2rem 1.35rem;
+  min-width: 0;
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  .why-card {
+    padding: 1.4rem 1.35rem 1.5rem;
+  }
+}
+
+.why-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .why-stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+.why-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: #fafafa;
+  padding: 1rem 0.75rem;
+  min-width: 0;
+}
+
+.why-stat-value {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  line-height: 1.15;
+}
+
+@media (min-width: 768px) {
+  .why-stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+.why-stat-label {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.why-cta-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  background: #f7f8fa;
+  padding: 1.1rem;
+}
+
+@media (min-width: 640px) {
+  .why-cta-bar {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    padding: 1.15rem 1.35rem;
+  }
+}
+
+
 /* -------------------------------------------------------------------------- */
 /* Media                                                                      */
 /* -------------------------------------------------------------------------- */

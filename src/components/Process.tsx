@@ -3,7 +3,7 @@ import { process } from "@/lib/content";
 export function Process() {
   return (
     <section
-      id="process"
+      id="how-it-works"
       className="full-bleed section-pad w-full border-t border-border bg-zinc-50"
       aria-labelledby="process-heading"
     >

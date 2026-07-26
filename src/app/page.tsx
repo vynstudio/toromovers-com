@@ -5,9 +5,7 @@ import { FeatureGrid } from "@/components/FeatureGrid";
 import { Process } from "@/components/Process";
 import { FeatureAlternating } from "@/components/FeatureAlternating";
 import { Integrations } from "@/components/Integrations";
-import { WhyBanner } from "@/components/WhyBanner";
-import { DesignedForLife } from "@/components/DesignedForLife";
-import { SplitStories } from "@/components/SplitStories";
+import { WhyToro } from "@/components/WhyToro";
 import { Reviews } from "@/components/Reviews";
 import { Faq } from "@/components/Faq";
 import { Areas } from "@/components/Areas";
@@ -18,16 +16,9 @@ import { CookieBanner } from "@/components/CookieBanner";
 import { homePageGraph } from "@/lib/schema";
 
 /**
- * Mobile-first content priority (per product brief):
- * 1. Heading + value + CTA/phone (Hero)
- * 2. Trust signals
- * 3. Services
- * 4. How it works (process)
- * 5. Secondary lifestyle proof
- * 6. FAQ + service area
- * 7. Closing conversion
- *
- * Layout enhances to multi-column only via min-width media queries.
+ * Mobile-first conversion path:
+ * Hero → trust → services → process → lifestyle proof → why Toro →
+ * reviews → FAQ → areas → close.
  */
 export default function HomePage() {
   return (
@@ -38,21 +29,14 @@ export default function HomePage() {
       />
       <Nav />
       <main id="main" className="w-full min-w-0 flex-1">
-        {/* Primary conversion path */}
         <Hero />
         <TrustBar />
         <FeatureGrid />
         <Process />
-
-        {/* Secondary / brand storytelling */}
         <FeatureAlternating />
         <Integrations />
-        <WhyBanner />
-        <DesignedForLife />
-        <SplitStories />
+        <WhyToro />
         <Reviews />
-
-        {/* Answers + local SEO + final CTA */}
         <Faq />
         <Areas />
         <ClosingCta />
