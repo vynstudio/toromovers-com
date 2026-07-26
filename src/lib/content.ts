@@ -44,8 +44,8 @@ export const features: FeatureBlock[] = [
     title: "So smooth, you won't even feel the stress",
     body: "Designed for real life, Toro fits effortlessly into your day—whether you're packing a studio, emptying a family home, or winding down a lease. Care and efficiency, perfectly balanced.",
     image: {
-      src: "/images/check-watch.webp",
-      alt: "Homeowner checking the clock on a stress-free moving day in Central Florida",
+      src: "/images/comfort-relax.jpg",
+      alt: "Couple relaxing stress-free after settling into their new home",
     },
     reverse: false,
   },
@@ -54,8 +54,8 @@ export const features: FeatureBlock[] = [
     title: "Precise is nice",
     body: "Our trained crew and proven process ensure you get careful handling with unparalleled attention. Whether it's furniture, fragile boxes, or tight stairwells, Toro delivers reliable moves you can trust—helping you start fresh, every time.",
     image: {
-      src: "/images/phone-hand.jpg",
-      alt: "Customer reviewing their move details on a phone during packing day",
+      src: "/images/precise-packing.jpg",
+      alt: "Family carefully packing boxes in a bright home on move day",
     },
     reverse: true,
     mobileTextFirst: true,
@@ -68,16 +68,16 @@ export const integrations = {
   cta: "know your move better",
   ctaHref: "#why",
   image: {
-    src: "/images/woman-home.jpg",
-    alt: "Central Florida homeowner planning a coordinated local move",
+    src: "/images/living-joy.jpg",
+    alt: "Homeowner laughing with joy after a smoothly coordinated move",
   },
 } as const;
 
 export const whyBanner = {
   title: "Why Toro Movers",
   image: {
-    src: "/images/forest-smile.jpg",
-    alt: "Confident smile after a smooth local move with Toro Movers",
+    src: "/images/why-family.jpg",
+    alt: "Happy family smiling in their new home after a local move",
   },
 } as const;
 
@@ -122,8 +122,8 @@ export const designedForLife = {
   title: "Designed for life",
   body: "Sleek process, lightweight stress, and clear communication—Toro is built to blend seamlessly into your lifestyle, whether you're hitting a new apartment, the office, or a family home.",
   image: {
-    src: "/images/team.webp",
-    alt: "Toro Movers crew ready for a local Central Florida move",
+    src: "/images/designed-life.jpg",
+    alt: "Family arriving home with boxes, starting their new chapter together",
   },
 } as const;
 
@@ -132,16 +132,16 @@ export const splitStories = [
     title: "Care Meets Simplicity",
     body: "Our process is refined with real move experience, ensuring the plan you receive is both accurate and actionable—empowering you to make better choices every move day.",
     image: {
-      src: "/images/team-huddle.jpg",
-      alt: "Team coordinating a careful local move plan for a Central Florida customer",
+      src: "/images/care-boxes.jpg",
+      alt: "Family carefully moving boxes together into their new home",
     },
   },
   {
     title: "See Your Day, Your Way",
     body: "No more guessing games. Toro gives you clear timing and real-time communication so you stay calm, stay on schedule, and settle into your new space with energy to spare.",
     image: {
-      src: "/images/coastal.jpg",
-      alt: "Peaceful Florida morning after settling into a new home",
+      src: "/images/settle-calm.jpg",
+      alt: "Relaxed family settled in after a smooth, on-schedule local move",
     },
   },
 ] as const;
