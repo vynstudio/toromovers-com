@@ -16,6 +16,7 @@ import {
 export function Hero() {
   return (
     <section
+      id="hero"
       className="hero-wash full-bleed relative w-full overflow-hidden pb-8 pt-2 sm:pb-16 lg:pb-24 lg:pt-4"
       aria-labelledby="hero-heading"
     >

@@ -13,7 +13,6 @@ import { Faq } from "@/components/Faq";
 import { Areas } from "@/components/Areas";
 import { ClosingCta } from "@/components/ClosingCta";
 import { Footer } from "@/components/Footer";
-import { StickyCta } from "@/components/StickyCta";
 import { LeadModal } from "@/components/LeadModal";
 import { homePageGraph } from "@/lib/schema";
 
@@ -58,7 +57,6 @@ export default function HomePage() {
         <ClosingCta />
       </main>
       <Footer />
-      <StickyCta />
       <LeadModal />
     </>
   );

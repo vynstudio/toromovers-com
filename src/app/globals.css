@@ -291,7 +291,17 @@ svg {
   max-width: 100%;
 }
 
-/* Sticky header shell */
+/* Header spacer — only needed when mobile nav is position:fixed */
+.site-header-spacer {
+  display: none;
+  width: 100%;
+  /* Matches mobile fixed header + top padding */
+  height: 4.25rem;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* Sticky header shell — top by default; mobile docks to bottom past hero */
 .site-header {
   position: sticky;
   top: 0;
@@ -299,11 +309,59 @@ svg {
   width: 100%;
   background: transparent;
   padding: 0.75rem var(--container-pad) 0;
+  transition:
+    top 0.28s ease,
+    bottom 0.28s ease,
+    padding 0.28s ease,
+    background 0.2s ease;
+}
+
+/* Mobile: fixed pill so it can slide between top and bottom without layout jump */
+@media (max-width: 767px) {
+  .site-header-spacer {
+    display: block;
+  }
+
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    padding: 0.65rem var(--container-pad) 0;
+  }
+
+  .site-header--bottom {
+    top: auto;
+    bottom: 0;
+    padding: 0.5rem var(--container-pad)
+      max(0.5rem, env(safe-area-inset-bottom));
+    background: linear-gradient(
+      to top,
+      rgba(247, 248, 250, 0.97) 50%,
+      rgba(247, 248, 250, 0)
+    );
+  }
+
+  .site-header--bottom .nav-pill {
+    box-shadow: 0 -8px 32px rgba(11, 31, 58, 0.18);
+  }
 }
 
 @media (min-width: 768px) {
   .site-header {
     padding-top: 1rem;
+  }
+
+  /* Desktop never docks to bottom */
+  .site-header--bottom {
+    position: sticky;
+    top: 0;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    padding: 1rem var(--container-pad) 0;
+    background: transparent;
   }
 }
 
@@ -896,14 +954,6 @@ a.trust-chip {
   .service-card {
     padding: 0.5rem 0.75rem;
   }
-}
-
-/* Sticky mobile bar text: prevent overflow on 320 */
-.sticky-cta-label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
