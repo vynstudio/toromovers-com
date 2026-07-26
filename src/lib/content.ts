@@ -21,6 +21,10 @@ export const hero = {
     src: "/images/hero-truck.jpg",
     alt: "Professional moving truck ready for a local Central Florida move with Toro Movers",
   },
+  /** Desktop-only (lg+) hero loop. Mobile keeps static image until a mobile clip is ready. */
+  video: {
+    src: "/videos/hero-desktop.mp4",
+  },
 } as const;
 
 export type FeatureBlock = {

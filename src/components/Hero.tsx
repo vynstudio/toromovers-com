@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { hero } from "@/lib/content";
+import { HeroVisual } from "@/components/HeroVisual";
 import { IconArrow } from "@/components/icons";
 import {
   GOOGLE_RATING,
@@ -11,7 +11,7 @@ import {
 /**
  * Mobile-first hero — conversion before decoration.
  * Stacked CTAs on phone; side-by-side from 640px.
- * Desktop: 2-col layout from 1024px (min-width only).
+ * Desktop: 2-col layout from 1024px + hero video; mobile keeps static image.
  */
 export function Hero() {
   return (
@@ -85,16 +85,7 @@ export function Hero() {
         </div>
 
         <div className="relative order-2 w-full min-w-0 lg:order-1">
-          <div className="img-card relative aspect-[16/10] w-full sm:aspect-[4/3] lg:aspect-[5/4.6]">
-            <Image
-              src={hero.image.src}
-              alt={hero.image.alt}
-              fill
-              priority
-              sizes="(max-width: 1023px) 100vw, 50vw"
-              className="object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(11,31,58,0.16)]"
-            />
-          </div>
+          <HeroVisual />
         </div>
       </div>
     </section>
