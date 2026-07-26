@@ -42,14 +42,16 @@ export function Hero() {
                 <span className="sm:hidden">Call now</span>
                 <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
               </a>
-              <a
-                href="#quote"
+              <button
+                type="button"
+                data-open-quote
+                data-source="hero-quote"
                 data-cta="hero-quote"
                 className="btn-outline btn-fluid tap-target inline-flex w-full"
               >
                 Get a free quote
                 <IconArrow />
-              </a>
+              </button>
             </div>
 
             <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted sm:mt-6 sm:text-sm">

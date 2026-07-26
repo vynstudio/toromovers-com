@@ -35,14 +35,16 @@ export function FeatureGrid() {
         </div>
 
         <div className="mt-10 flex justify-center md:mt-14">
-          <a
-            href={featureGrid.ctaHref}
+          <button
+            type="button"
+            data-open-quote
+            data-source="features-quote"
             data-cta="features-quote"
             className="btn-outline btn-fluid tap-target inline-flex w-full max-w-sm md:w-auto md:max-w-none"
           >
             {featureGrid.cta}
             <IconArrow />
-          </a>
+          </button>
         </div>
       </div>
     </section>

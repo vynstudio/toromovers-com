@@ -51,14 +51,16 @@ export function StickyCta() {
         >
           <span className="sticky-cta-label">Call now</span>
         </a>
-        <a
-          href="#quote"
+        <button
+          type="button"
+          data-open-quote
+          data-source="sticky-quote"
           data-cta="sticky-quote"
           className="tap-target flex min-h-12 flex-1 items-center justify-center gap-1 rounded-xl bg-navy px-3 text-sm font-semibold tracking-tight text-white"
         >
           <span className="sticky-cta-label">Get quote</span>
           <IconArrow className="h-3.5 w-3.5 shrink-0" />
-        </a>
+        </button>
       </div>
     </div>
   );

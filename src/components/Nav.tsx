@@ -58,13 +58,15 @@ export function Nav() {
           >
             Call now
           </a>
-          <a
-            href={nav.ctaHref}
+          <button
+            type="button"
+            data-open-quote
+            data-source="nav-quote"
             data-cta="nav-quote"
             className="btn-primary tap-target hidden shrink-0 rounded-full px-4 text-sm md:inline-flex"
           >
             {nav.cta}
-          </a>
+          </button>
         </div>
       </nav>
     </header>
