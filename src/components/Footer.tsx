@@ -11,67 +11,68 @@ import {
 import { IconFacebook, IconInstagram, IconX } from "@/components/icons";
 
 /**
- * Dark footer only — brand bar matches reference:
- * social icons + bull + TORO·MOVERS in one centered row.
+ * Dark footer only.
+ * Brand bar: socials + white bull + TORO·MOVERS as one centered lockup row.
  */
 export function Footer() {
   return (
     <footer className="full-bleed w-full bg-foreground px-[var(--container-pad)] pb-28 text-white md:pb-4">
       <div className="site-container border-t border-white/10">
-        {/* Brand bar: f · X · IG · bull · TORO·MOVERS */}
-        <div className="footer-bar">
-          <div className="footer-socials">
-            <a
-              href={SOCIAL.facebook}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="tap-target rounded-full p-2"
-            >
-              <IconFacebook />
-            </a>
-            <a
-              href={SOCIAL.x}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="X"
-              className="tap-target rounded-full p-2"
-            >
-              <IconX />
-            </a>
-            <a
-              href={SOCIAL.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="tap-target rounded-full p-2"
-            >
-              <IconInstagram />
-            </a>
-          </div>
+        {/* Single row: f · X · IG · bull · TORO·MOVERS */}
+        <div className="footer-bar" role="group" aria-label="Brand and social">
+          <a
+            href={SOCIAL.facebook}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook"
+            className="footer-social-link"
+          >
+            <IconFacebook />
+          </a>
+          <a
+            href={SOCIAL.x}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="X"
+            className="footer-social-link"
+          >
+            <IconX />
+          </a>
+          <a
+            href={SOCIAL.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="footer-social-link"
+          >
+            <IconInstagram />
+          </a>
 
           <a
             href="/"
-            className="footer-brand-inline"
+            className="footer-lockup"
             aria-label={`${BUSINESS_NAME} home`}
           >
-            <span className="brand-mark" aria-hidden>
-              <Image
-                src="/logos/toro-bull-white.svg"
-                alt=""
-                width={36}
-                height={28}
-                className="brand-bull"
-              />
-            </span>
-            <span className="brand-name">
-              TORO<span className="brand-dot">·</span>MOVERS
+            <Image
+              src="/logos/toro-bull-white.svg"
+              alt=""
+              width={40}
+              height={32}
+              className="footer-bull"
+              priority={false}
+            />
+            <span className="footer-wordmark">
+              TORO<span className="footer-dot">·</span>MOVERS
             </span>
           </a>
         </div>
 
         <div className="footer-meta">
-          <a href={PHONE_TEL} data-cta="footer-phone" className="tap-target min-h-0 py-1">
+          <a
+            href={PHONE_TEL}
+            data-cta="footer-phone"
+            className="tap-target min-h-0 py-1"
+          >
             {PHONE_DISPLAY}
           </a>
           <a href={EMAIL_HREF} className="tap-target min-h-0 py-1">
