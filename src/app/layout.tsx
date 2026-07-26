@@ -8,6 +8,8 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+  preload: true,
+  adjustFontFallback: true,
 });
 
 const titleDefault =
@@ -55,7 +57,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/images/hero-poster.jpg",
+        url: "/images/hero-poster.webp",
         width: 960,
         height: 960,
         alt: "Toro Movers — professional local moving in Central Florida",
@@ -66,7 +68,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: titleDefault,
     description,
-    images: ["/images/hero-poster.jpg"],
+    images: ["/images/hero-poster.webp"],
   },
   robots: {
     index: true,

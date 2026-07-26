@@ -30,7 +30,7 @@ export function organizationGraph() {
           "@type": "ImageObject",
           url: `${SITE_URL}/logos/toro-lockup-navy.svg`,
         },
-        image: `${SITE_URL}/images/hero-poster.jpg`,
+        image: `${SITE_URL}/images/hero-poster.webp`,
         description,
         slogan: SLOGAN,
         telephone: PHONE_E164,
@@ -151,7 +151,7 @@ export function homePageGraph() {
         about: { "@id": `${SITE_URL}/#movingcompany` },
         primaryImageOfPage: {
           "@type": "ImageObject",
-          url: `${SITE_URL}/images/hero-poster.jpg`,
+          url: `${SITE_URL}/images/hero-poster.webp`,
         },
         speakable: {
           "@type": "SpeakableSpecification",

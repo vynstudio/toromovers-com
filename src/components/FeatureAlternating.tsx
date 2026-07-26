@@ -17,8 +17,9 @@ export function FeatureAlternating() {
               key={f.id}
               className="grid w-full items-center gap-5 sm:gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-16"
             >
+              {/* Portrait stock — taller frame so faces aren't chopped by 4:3 crop */}
               <div
-                className={`img-card relative aspect-[4/3] w-full ${
+                className={`img-card relative aspect-[4/5] w-full sm:aspect-[5/6] lg:aspect-[4/5] ${
                   f.reverse ? "lg:order-2" : "lg:order-1"
                 } ${textFirstMobile ? "order-2" : "order-1"}`}
               >
@@ -26,8 +27,9 @@ export function FeatureAlternating() {
                   src={f.image.src}
                   alt={f.image.alt}
                   fill
-                  sizes="(max-width: 1023px) 100vw, 50vw"
-                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1023px) 90vw, 42vw"
+                  quality={75}
+                  className={`object-cover ${f.image.position ?? "object-center"}`}
                 />
               </div>
 

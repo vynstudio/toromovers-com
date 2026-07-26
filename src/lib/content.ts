@@ -19,7 +19,7 @@ export const hero = {
   ctaHref: "#discover",
   /** Still frame from the hero video — mobile placeholder until a mobile clip is ready. */
   image: {
-    src: "/images/hero-poster.jpg",
+    src: "/images/hero-poster.webp",
     alt: "Toro Movers crew handling a residential move in Central Florida",
   },
   /** Desktop-only (lg+) high-quality muted loop. */
@@ -28,11 +28,19 @@ export const hero = {
   },
 } as const;
 
+/** src + alt + focal point for portrait stock inside landscape/tall frames. */
+export type ImageAsset = {
+  src: string;
+  alt: string;
+  /** Tailwind object-position class, e.g. object-[center_30%] */
+  position?: string;
+};
+
 export type FeatureBlock = {
   id: string;
   title: string;
   body: string;
-  image: { src: string; alt: string };
+  image: ImageAsset;
   reverse: boolean;
   /** When true, mobile stacks text above image (matches VitaBand precise block). */
   mobileTextFirst?: boolean;
@@ -44,8 +52,9 @@ export const features: FeatureBlock[] = [
     title: "So smooth, you won't even feel the stress",
     body: "Designed for real life, Toro fits effortlessly into your day—whether you're packing a studio, emptying a family home, or winding down a lease. Care and efficiency, perfectly balanced.",
     image: {
-      src: "/images/comfort-relax.jpg",
+      src: "/images/comfort-relax.webp",
       alt: "Couple relaxing stress-free after settling into their new home",
+      position: "object-[center_42%]",
     },
     reverse: false,
   },
@@ -54,8 +63,9 @@ export const features: FeatureBlock[] = [
     title: "Precise is nice",
     body: "Our trained crew and proven process ensure you get careful handling with unparalleled attention. Whether it's furniture, fragile boxes, or tight stairwells, Toro delivers reliable moves you can trust—helping you start fresh, every time.",
     image: {
-      src: "/images/precise-packing.jpg",
+      src: "/images/precise-packing.webp",
       alt: "Family carefully packing boxes in a bright home on move day",
+      position: "object-[center_32%]",
     },
     reverse: true,
     mobileTextFirst: true,
@@ -68,16 +78,18 @@ export const integrations = {
   cta: "know your move better",
   ctaHref: "#why",
   image: {
-    src: "/images/living-joy.jpg",
+    src: "/images/living-joy.webp",
     alt: "Homeowner laughing with joy after a smoothly coordinated move",
+    position: "object-[center_58%]",
   },
 } as const;
 
 export const whyBanner = {
   title: "Why Toro Movers",
   image: {
-    src: "/images/why-family.jpg",
+    src: "/images/why-family.webp",
     alt: "Happy family smiling in their new home after a local move",
+    position: "object-[center_28%]",
   },
 } as const;
 
@@ -122,29 +134,38 @@ export const designedForLife = {
   title: "Designed for life",
   body: "Sleek process, lightweight stress, and clear communication—Toro is built to blend seamlessly into your lifestyle, whether you're hitting a new apartment, the office, or a family home.",
   image: {
-    src: "/images/designed-life.jpg",
+    src: "/images/designed-life.webp",
     alt: "Family arriving home with boxes, starting their new chapter together",
+    // high-angle: family lower-center with boxes around
+    position: "object-[center_55%]",
   },
 } as const;
 
-export const splitStories = [
+export const splitStories: {
+  title: string;
+  body: string;
+  image: ImageAsset;
+}[] = [
   {
     title: "Care Meets Simplicity",
     body: "Our process is refined with real move experience, ensuring the plan you receive is both accurate and actionable—empowering you to make better choices every move day.",
     image: {
-      src: "/images/care-boxes.jpg",
+      src: "/images/care-boxes.webp",
       alt: "Family carefully moving boxes together into their new home",
+      position: "object-[center_38%]",
     },
   },
   {
     title: "See Your Day, Your Way",
     body: "No more guessing games. Toro gives you clear timing and real-time communication so you stay calm, stay on schedule, and settle into your new space with energy to spare.",
     image: {
-      src: "/images/settle-calm.jpg",
+      src: "/images/settle-calm.webp",
       alt: "Relaxed family settled in after a smooth, on-schedule local move",
+      // faces sit at the bottom of a tall white frame
+      position: "object-bottom",
     },
   },
-] as const;
+];
 
 export const testimonial = {
   name: "Stael G.",

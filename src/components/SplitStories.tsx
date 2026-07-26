@@ -7,14 +7,15 @@ export function SplitStories() {
       {splitStories.map((story, i) => (
         <div
           key={story.title}
-          className="relative w-full min-h-[46vh] overflow-hidden sm:min-h-[52vh] lg:min-h-[56vh]"
+          className="relative w-full min-h-[48vh] overflow-hidden sm:min-h-[52vh] lg:min-h-[56vh]"
         >
           <Image
             src={story.image.src}
             alt={story.image.alt}
             fill
             sizes="100vw"
-            className="object-cover"
+            quality={72}
+            className={`object-cover ${story.image.position ?? "object-center"}`}
           />
           <div
             className={`absolute inset-0 ${
@@ -24,7 +25,7 @@ export function SplitStories() {
             }`}
           />
           <div
-            className={`site-container-wide relative flex min-h-[46vh] items-end py-12 sm:min-h-[52vh] sm:items-center sm:py-16 lg:min-h-[56vh] ${
+            className={`site-container-wide relative flex min-h-[48vh] items-end py-12 sm:min-h-[52vh] sm:items-center sm:py-16 lg:min-h-[56vh] ${
               i === 0 ? "sm:justify-end" : "sm:justify-start"
             }`}
           >

@@ -28,7 +28,8 @@ export function HeroVisual() {
         alt={hero.image.alt}
         fill
         priority
-        sizes="(max-width: 1023px) 100vw, 50vw"
+        quality={70}
+        sizes="(max-width: 1023px) 100vw, 42vw"
         className={`object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(11,31,58,0.16)] ${
           showDesktopVideo ? "lg:invisible" : ""
         }`}
@@ -40,7 +41,8 @@ export function HeroVisual() {
           muted
           loop
           playsInline
-          preload="auto"
+          // metadata is enough until play; full file streams after autoplay
+          preload="metadata"
           aria-label={hero.image.alt}
         >
           <source src={hero.video.src} type="video/mp4" />
