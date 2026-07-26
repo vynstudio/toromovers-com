@@ -973,8 +973,7 @@ a.trust-chip {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Lead modal (multi-step popup · toromovers.net model)                       */
-/* Lead modal — monochrome accents only                                      */
+/* Lead modal — name + phone only · fixed shell · monochrome                  */
 /* -------------------------------------------------------------------------- */
 .lead-overlay {
   --lead-accent: #0a0a0a;
@@ -1011,11 +1010,39 @@ a.trust-chip {
   overflow: hidden;
 }
 
+/* Stable height so capture ↔ done does not resize the shell */
+.lead-modal--simple {
+  height: min(92dvh, 520px);
+  min-height: min(92dvh, 480px);
+}
+
 @media (min-width: 640px) {
   .lead-modal {
     border-radius: 1.25rem;
     max-height: min(88dvh, 700px);
   }
+
+  .lead-modal--simple {
+    height: 520px;
+    min-height: 520px;
+    max-height: 520px;
+  }
+}
+
+.lead-scroll--simple {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .lead-progress {
@@ -1176,6 +1203,17 @@ a.trust-chip {
   font-size: 1rem;
   font-family: inherit;
   color: var(--foreground);
+  box-sizing: border-box;
+}
+
+.lead-field input::placeholder,
+.lead-zip::placeholder {
+  color: #a3a3a3;
+  opacity: 1;
+}
+
+.lead-field input[aria-invalid="true"] {
+  border-color: #737373;
 }
 
 .lead-zip {
