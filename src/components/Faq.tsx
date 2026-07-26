@@ -1,32 +1,40 @@
 import { faq } from "@/lib/content";
 
-/** Compact FAQ list — tight spacing, border dividers, no heavy section pad. */
+/**
+ * Accordion FAQ — collapsed by default so the section stays short.
+ * Uses native <details>/<summary> (no JS, keyboard-accessible).
+ * Answers remain in the DOM for SEO / AEO.
+ */
 export function Faq() {
   return (
     <section
       id="faq"
-      className="full-bleed w-full border-t border-border bg-white py-10 sm:py-12"
+      className="full-bleed w-full border-t border-border bg-white py-8 sm:py-10"
       aria-labelledby="faq-heading"
     >
       <div className="site-container-narrow">
-        <h2
-          id="faq-heading"
-          className="text-xl font-medium tracking-tight text-foreground sm:text-2xl"
-        >
-          {faq.heading}
-        </h2>
-        <p className="mt-1 text-sm text-muted">{faq.sub}</p>
+        <div className="faq-head">
+          <h2 id="faq-heading" className="faq-title">
+            {faq.heading}
+          </h2>
+          <p className="faq-sub">{faq.sub}</p>
+        </div>
 
-        <dl className="faq-list mt-5">
-          {faq.items.map((item) => (
-            <div key={item.q} className="faq-item">
-              <dt>
-                <h3 className="faq-q">{item.q}</h3>
-              </dt>
-              <dd className="aeo-answer faq-a">{item.a}</dd>
-            </div>
+        <div className="faq-accordion">
+          {faq.items.map((item, i) => (
+            <details key={item.q} className="faq-details" name="toro-faq">
+              <summary className="faq-summary">
+                <span className="faq-summary-text">{item.q}</span>
+                <span className="faq-chevron" aria-hidden>
+                  +
+                </span>
+              </summary>
+              <div className="aeo-answer faq-panel">
+                <p>{item.a}</p>
+              </div>
+            </details>
           ))}
-        </dl>
+        </div>
       </div>
     </section>
   );
