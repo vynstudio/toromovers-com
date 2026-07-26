@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { hero } from "@/lib/content";
 
 /**
- * Mobile: static hero image (no video download).
- * Desktop (lg+): muted autoplay loop — video only mounts when viewport qualifies.
+ * Mobile: poster still from the hero video (no truck stock image).
+ * Desktop (lg+): high-quality muted autoplay loop — only mounts ≥1024px so
+ * phones never download the desktop MP4.
  */
 export function HeroVisual() {
   const [showDesktopVideo, setShowDesktopVideo] = useState(false);
@@ -21,14 +22,16 @@ export function HeroVisual() {
 
   return (
     <div className="img-card relative aspect-[16/10] w-full overflow-hidden sm:aspect-[4/3] lg:aspect-[5/4.6]">
-      {/* Mobile + LCP fallback; sits under the video on desktop */}
+      {/* Mobile placeholder + brief desktop cover until video paints */}
       <Image
         src={hero.image.src}
         alt={hero.image.alt}
         fill
         priority
         sizes="(max-width: 1023px) 100vw, 50vw"
-        className="object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(11,31,58,0.16)]"
+        className={`object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(11,31,58,0.16)] ${
+          showDesktopVideo ? "lg:invisible" : ""
+        }`}
       />
       {showDesktopVideo ? (
         <video
@@ -38,7 +41,6 @@ export function HeroVisual() {
           loop
           playsInline
           preload="auto"
-          poster={hero.image.src}
           aria-label={hero.image.alt}
         >
           <source src={hero.video.src} type="video/mp4" />

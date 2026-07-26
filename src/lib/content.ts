@@ -17,11 +17,12 @@ export const hero = {
   lede: "Stay in control with Toro Movers, the Central Florida crew that handles packing, loading, and careful placement—all on your schedule.",
   cta: "discover toro movers",
   ctaHref: "#discover",
+  /** Still frame from the hero video — mobile placeholder until a mobile clip is ready. */
   image: {
-    src: "/images/hero-truck.jpg",
-    alt: "Professional moving truck ready for a local Central Florida move with Toro Movers",
+    src: "/images/hero-poster.jpg",
+    alt: "Toro Movers crew handling a residential move in Central Florida",
   },
-  /** Desktop-only (lg+) hero loop. Mobile keeps static image until a mobile clip is ready. */
+  /** Desktop-only (lg+) high-quality muted loop. */
   video: {
     src: "/videos/hero-desktop.mp4",
   },

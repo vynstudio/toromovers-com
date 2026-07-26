@@ -55,9 +55,9 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/images/hero-truck.jpg",
-        width: 1400,
-        height: 591,
+        url: "/images/hero-poster.jpg",
+        width: 960,
+        height: 960,
         alt: "Toro Movers — professional local moving in Central Florida",
       },
     ],
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: titleDefault,
     description,
-    images: ["/images/hero-truck.jpg"],
+    images: ["/images/hero-poster.jpg"],
   },
   robots: {
     index: true,
