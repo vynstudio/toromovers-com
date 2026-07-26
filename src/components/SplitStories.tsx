@@ -7,7 +7,7 @@ export function SplitStories() {
       {splitStories.map((story, i) => (
         <div
           key={story.title}
-          className="relative w-full min-h-[48vh] overflow-hidden sm:min-h-[52vh] lg:min-h-[56vh]"
+          className="relative w-full min-h-[40vh] overflow-hidden sm:min-h-[42vh] lg:min-h-[40vh] lg:max-h-[440px]"
         >
           <Image
             src={story.image.src}
@@ -25,7 +25,7 @@ export function SplitStories() {
             }`}
           />
           <div
-            className={`site-container-wide relative flex min-h-[48vh] items-end py-12 sm:min-h-[52vh] sm:items-center sm:py-16 lg:min-h-[56vh] ${
+            className={`site-container-wide relative flex min-h-[40vh] items-end py-10 sm:min-h-[42vh] sm:items-center sm:py-12 lg:min-h-[40vh] lg:py-14 ${
               i === 0 ? "sm:justify-end" : "sm:justify-start"
             }`}
           >

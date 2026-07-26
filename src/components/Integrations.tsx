@@ -10,12 +10,12 @@ export function Integrations() {
     >
       <div className="site-container-wide">
         <div className="grid w-full items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-16">
-          <div className="img-card relative order-1 aspect-[4/5] w-full sm:aspect-[5/6] lg:aspect-[4/5]">
+          <div className="img-card relative order-1 aspect-[4/3] w-full lg:aspect-auto lg:h-[min(380px,46vh)] xl:h-[min(400px,42vh)]">
             <Image
               src={integrations.image.src}
               alt={integrations.image.alt}
               fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1023px) 90vw, 42vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1023px) 90vw, 40vw"
               quality={75}
               className={`object-cover ${integrations.image.position ?? "object-center"}`}
             />
