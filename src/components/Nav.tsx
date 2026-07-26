@@ -6,29 +6,28 @@ import { nav } from "@/lib/content";
 import { BUSINESS_NAME, PHONE_TEL } from "@/lib/site";
 
 /**
- * Desktop: sticky top pill (unchanged).
- * Mobile: fixed pill — top while in hero, docks to bottom after hero
- * (replaces the old sticky Call/Quote bar).
+ * Desktop: sticky top pill.
+ * Mobile: top while in hero; hides when past hero (sticky Call/Quote takes over).
  */
 export function Nav() {
-  const [dockBottom, setDockBottom] = useState(false);
+  const [hiddenMobile, setHiddenMobile] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
 
     const update = () => {
       if (!mq.matches) {
-        setDockBottom(false);
+        setHiddenMobile(false);
         return;
       }
 
       const hero = document.getElementById("hero");
       if (!hero) {
-        setDockBottom(window.scrollY > 280);
+        setHiddenMobile(window.scrollY > 200);
         return;
       }
 
-      setDockBottom(hero.getBoundingClientRect().bottom < 12);
+      setHiddenMobile(hero.getBoundingClientRect().bottom < 8);
     };
 
     update();
@@ -44,13 +43,12 @@ export function Nav() {
 
   return (
     <>
-      {/* Reserves top space under fixed mobile nav (hidden on md+) */}
       <div className="site-header-spacer" aria-hidden />
       <header
         className={`site-header pointer-events-none${
-          dockBottom ? " site-header--bottom" : ""
+          hiddenMobile ? " site-header--hidden" : ""
         }`}
-        data-dock={dockBottom ? "bottom" : "top"}
+        data-mobile-nav={hiddenMobile ? "hidden" : "visible"}
       >
         <nav className="nav-pill pointer-events-auto" aria-label="Primary">
           <div className="nav-left">

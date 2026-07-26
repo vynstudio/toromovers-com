@@ -412,7 +412,7 @@ svg {
   pointer-events: none;
 }
 
-/* Sticky header shell — top by default; mobile docks to bottom past hero */
+/* Sticky header shell — top by default; mobile hides past hero (sticky CTAs take over) */
 .site-header {
   position: sticky;
   top: 0;
@@ -421,13 +421,12 @@ svg {
   background: transparent;
   padding: 0.75rem var(--container-pad) 0;
   transition:
-    top 0.28s ease,
-    bottom 0.28s ease,
-    padding 0.28s ease,
-    background 0.2s ease;
+    transform 0.28s ease,
+    opacity 0.22s ease,
+    padding 0.28s ease;
 }
 
-/* Mobile: fixed pill so it can slide between top and bottom without layout jump */
+/* Mobile: fixed top pill; slides away when past hero */
 @media (max-width: 767px) {
   .site-header-spacer {
     display: block;
@@ -438,42 +437,35 @@ svg {
     top: 0;
     left: 0;
     right: 0;
-    bottom: auto;
     padding: 0.65rem var(--container-pad) 0;
   }
 
-  .site-header--bottom {
-    top: auto;
-    bottom: 0;
-    padding: 0.5rem var(--container-pad)
-      max(0.5rem, env(safe-area-inset-bottom));
-    background: linear-gradient(
-      to top,
-      rgba(247, 248, 250, 0.97) 50%,
-      rgba(247, 248, 250, 0)
-    );
-  }
-
-  .site-header--bottom .nav-pill {
-    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.16);
+  .site-header--hidden {
+    transform: translateY(calc(-100% - 0.5rem));
+    opacity: 0;
+    pointer-events: none;
   }
 }
 
 @media (min-width: 768px) {
   .site-header {
     padding-top: 1rem;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: none; /* shell is non-interactive; pill is pointer-events-auto */
   }
+}
 
-  /* Desktop never docks to bottom */
-  .site-header--bottom {
-    position: sticky;
-    top: 0;
-    bottom: auto;
-    left: auto;
-    right: auto;
-    padding: 1rem var(--container-pad) 0;
-    background: transparent;
-  }
+/* Sticky mobile Call / Get quote bar */
+.sticky-cta-bar {
+  padding-bottom: max(0.65rem, env(safe-area-inset-bottom));
+}
+
+.sticky-cta-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
 }
 
 /* Pill shell — brand left · links center · CTAs right; never overflow */
@@ -1195,10 +1187,11 @@ a.trust-chip {
   overflow: hidden;
 }
 
-/* Stable height so capture ↔ done does not resize the shell */
-.lead-modal--simple {
-  height: min(92dvh, 520px);
-  min-height: min(92dvh, 480px);
+/* Stable height across capture → qualify steps → done */
+.lead-modal--simple,
+.lead-modal--funnel {
+  height: min(92dvh, 560px);
+  min-height: min(92dvh, 520px);
 }
 
 @media (min-width: 640px) {
@@ -1207,10 +1200,11 @@ a.trust-chip {
     max-height: min(88dvh, 700px);
   }
 
-  .lead-modal--simple {
-    height: 520px;
-    min-height: 520px;
-    max-height: 520px;
+  .lead-modal--simple,
+  .lead-modal--funnel {
+    height: 560px;
+    min-height: 560px;
+    max-height: 560px;
   }
 }
 
@@ -1219,6 +1213,11 @@ a.trust-chip {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.lead-modal--funnel .lead-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .hp-field {
