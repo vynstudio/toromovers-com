@@ -669,11 +669,11 @@ select:focus-visible {
   background: #f3f4f6;
 }
 
-/* Form controls — large, single-column friendly */
+/* Form controls — light theme (page is light; dark only on footer) */
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
   width: 100%;
   text-align: left;
 }
@@ -681,7 +681,7 @@ select:focus-visible {
 .field label {
   font-size: 0.875rem;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--foreground);
 }
 
 .field input,
@@ -691,9 +691,9 @@ select:focus-visible {
   width: 100%;
   padding: 0.75rem 0.9rem;
   border-radius: 0.5rem;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  color: var(--foreground);
   font-size: 1rem; /* ≥16px avoids iOS zoom */
   font-family: inherit;
   line-height: 1.3;
@@ -701,20 +701,20 @@ select:focus-visible {
 
 .field input::placeholder,
 .field textarea::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: color-mix(in srgb, var(--muted) 70%, white);
 }
 
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--navy);
   outline-offset: 2px;
   border-color: transparent;
 }
 
 .field select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23ffffff99' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%235c5c5c' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.9rem center;
   padding-right: 2.25rem;
@@ -723,6 +723,44 @@ select:focus-visible {
 .field select option {
   color: #0a0a0a;
   background: #fff;
+}
+
+/* Compact FAQ */
+.faq-list {
+  border-top: 1px solid var(--border);
+}
+
+.faq-item {
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.faq-q {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  color: var(--foreground);
+}
+
+@media (min-width: 768px) {
+  .faq-q {
+    font-size: 1rem;
+  }
+}
+
+.faq-a {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .faq-a {
+    font-size: 0.9375rem;
+  }
 }
 
 .trust-chip {

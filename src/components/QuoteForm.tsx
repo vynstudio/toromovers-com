@@ -4,9 +4,8 @@ import { FormEvent, useState } from "react";
 import { EMAIL, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 /**
- * Lightweight mobile-first quote form.
- * Submits via mailto (no backend). Phone remains the primary conversion path.
- * Inputs are ≥16px / 48px tall for touch + iOS zoom prevention.
+ * Lightweight quote form on light background.
+ * Submits via mailto; phone remains primary conversion path.
  */
 export function QuoteForm() {
   const [status, setStatus] = useState<"idle" | "ready">("idle");
@@ -40,11 +39,10 @@ export function QuoteForm() {
     <form
       id="quote-form"
       onSubmit={onSubmit}
-      className="mx-auto mt-10 grid w-full max-w-md gap-4 rounded-2xl border border-white/12 bg-white/5 p-5 sm:mt-12 sm:p-7"
+      className="quote-form mx-auto mt-10 grid w-full max-w-md gap-4 rounded-2xl border border-border bg-zinc-50 p-5 sm:mt-12 sm:p-7"
       aria-label="Request a moving quote"
-      noValidate={false}
     >
-      <div className="field">
+      <div className="field field-light">
         <label htmlFor="quote-name">Name</label>
         <input
           id="quote-name"
@@ -55,7 +53,7 @@ export function QuoteForm() {
           required
         />
       </div>
-      <div className="field">
+      <div className="field field-light">
         <label htmlFor="quote-phone">Phone</label>
         <input
           id="quote-phone"
@@ -67,7 +65,7 @@ export function QuoteForm() {
           required
         />
       </div>
-      <div className="field">
+      <div className="field field-light">
         <label htmlFor="quote-move">Move type</label>
         <select id="quote-move" name="moveType" defaultValue="Full-service">
           <option>Full-service</option>
@@ -76,15 +74,15 @@ export function QuoteForm() {
           <option>Not sure yet</option>
         </select>
       </div>
-      <div className="field">
+      <div className="field field-light">
         <label htmlFor="quote-date">Preferred date (optional)</label>
         <input id="quote-date" name="date" type="date" />
       </div>
-      <p className="text-xs leading-relaxed text-white/45">
+      <p className="text-xs leading-relaxed text-muted">
         Prefer to talk? Call{" "}
         <a
           href={PHONE_TEL}
-          className="tap-target inline min-h-0 underline underline-offset-2"
+          className="tap-target inline min-h-0 font-medium text-navy underline underline-offset-2"
         >
           {PHONE_DISPLAY}
         </a>
@@ -93,7 +91,7 @@ export function QuoteForm() {
       <button
         type="submit"
         data-cta="quote-form-submit"
-        className="btn-on-dark btn-fluid tap-target w-full"
+        className="btn-primary btn-fluid tap-target w-full"
       >
         {status === "ready" ? "Opening email…" : "Send quote request"}
       </button>
