@@ -1107,6 +1107,11 @@ a.trust-chip {
   color: var(--foreground);
 }
 
+.lead-optional {
+  font-weight: 400;
+  color: var(--muted);
+}
+
 .lead-field input,
 .lead-zip {
   min-height: var(--tap-min);

@@ -58,6 +58,7 @@ export function LeadModal() {
   const [phase, setPhase] = useState<LeadPhase>("capture");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [smsConsent, setSmsConsent] = useState(true);
   const [service, setService] = useState<ServiceKind | "">("");
   const [fromZip, setFromZip] = useState("");
@@ -96,6 +97,7 @@ export function LeadModal() {
     setPhase("capture");
     setName("");
     setPhone("");
+    setEmail("");
     setSmsConsent(true);
     setService("");
     setFromZip("");
@@ -222,13 +224,14 @@ export function LeadModal() {
     await postLead({
       name: name.trim(),
       phone: digits(phone),
+      email: email.trim() || undefined,
       funnel: funnelOf(service),
       source,
       serviceType: "Pending qualify",
       note: "Soft capture (contact first · name + phone) — still qualifying · toromovers.com",
       lang: "en",
       consentSms: smsConsent,
-      consentEmail: false,
+      consentEmail: Boolean(email.trim()),
       landingPage:
         typeof window !== "undefined" ? window.location.href : "https://toromovers.com/",
       hp: "",
@@ -254,6 +257,7 @@ export function LeadModal() {
         await postLead({
           name: name.trim(),
           phone: digits(phone),
+          email: email.trim() || undefined,
           funnel: funnelOf(resolvedSvc),
           source,
           serviceType: [
@@ -283,8 +287,9 @@ export function LeadModal() {
             .filter(Boolean)
             .join(" — "),
           lang: "en",
-          consentSms: softSentRef.current ? false : smsConsent,
-          consentEmail: false,
+          // Full complete: always notify client (SMS + email when present)
+          consentSms: smsConsent,
+          consentEmail: Boolean(email.trim()),
           landingPage:
             typeof window !== "undefined"
               ? window.location.href
@@ -301,7 +306,7 @@ export function LeadModal() {
         setAdvancing(false);
       }
     },
-    [name, phone, fromZip, toZip, smsConsent, source],
+    [name, phone, email, fromZip, toZip, smsConsent, source],
   );
 
   function pickAndAdvance(apply: () => void, next: ActivePhase | "finish") {
@@ -488,12 +493,29 @@ export function LeadModal() {
                       name="phone"
                       inputMode="tel"
                       autoComplete="tel"
-                      enterKeyHint="done"
+                      enterKeyHint="next"
                       value={phone}
                       onChange={(e) => setPhone(formatPhone(e.target.value))}
                       placeholder={PHONE_DISPLAY}
                       required
                       aria-invalid={phone.length > 0 && !phoneOk}
+                    />
+                  </label>
+
+                  <label className="lead-field">
+                    <span>
+                      Email{" "}
+                      <span className="lead-optional">(for confirmation)</span>
+                    </span>
+                    <input
+                      type="email"
+                      name="email"
+                      autoComplete="email"
+                      enterKeyHint="done"
+                      inputMode="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@email.com"
                     />
                   </label>
 
@@ -504,8 +526,11 @@ export function LeadModal() {
                       onChange={(e) => setSmsConsent(e.target.checked)}
                     />
                     <span>
-                      I agree to texts &amp; calls from Toro Movers at{" "}
-                      {PHONE_DISPLAY}. Reply STOP to opt out.
+                      I agree to texts, calls
+                      {email.trim() ? ", and email" : ""} from Toro Movers at{" "}
+                      {PHONE_DISPLAY}
+                      {email.trim() ? ` / ${email.trim()}` : ""}. Reply STOP to
+                      opt out of SMS.
                     </span>
                   </label>
 
