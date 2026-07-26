@@ -393,7 +393,7 @@ export function LeadModal() {
               <div className="lead-stars">
                 ★★★★★{" "}
                 <span>
-                  {GOOGLE_RATING} · Central Florida
+                  {GOOGLE_RATING} · Central Florida · free quote
                 </span>
               </div>
             </div>
