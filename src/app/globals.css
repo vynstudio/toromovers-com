@@ -10,14 +10,17 @@
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
-  --navy: #0b1f3a;
-  --navy-mid: #132d52;
-  --navy-soft: #1a3a66;
+  /* Monochrome only: black / white / gray */
+  --navy: #0a0a0a;
+  --navy-mid: #1a1a1a;
+  --navy-soft: #2a2a2a;
+  --gray: #6b6b6b;
+  --gray-soft: #f3f4f6;
   --muted: #5c5c5c;
   --border: #e8e8e8;
-  --card-shadow: 0 8px 28px rgba(11, 31, 58, 0.08),
+  --card-shadow: 0 8px 28px rgba(0, 0, 0, 0.08),
     0 2px 10px rgba(0, 0, 0, 0.04);
-  --nav-shadow: 0 6px 24px rgba(11, 31, 58, 0.12);
+  --nav-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
 
   /* Mobile-first: full-bleed content + gutters */
   --container-pad: 16px;
@@ -62,7 +65,7 @@
     --container-pad: 28px;
     --section-y: 4.5rem;
     --header-h: 4.75rem;
-    --card-shadow: 0 14px 44px rgba(11, 31, 58, 0.09),
+    --card-shadow: 0 14px 44px rgba(0, 0, 0, 0.09),
       0 2px 12px rgba(0, 0, 0, 0.04);
     --text-body: 1.0625rem;
     --text-lede: 1.125rem;
@@ -158,8 +161,8 @@ body {
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--navy) 18%, white);
-  color: var(--navy);
+  background: #e5e5e5;
+  color: var(--foreground);
 }
 
 /* Anchor targets clear sticky header */
@@ -278,7 +281,7 @@ svg {
       ),
       radial-gradient(
         90% 70% at 80% 20%,
-        rgba(11, 31, 58, 0.04) 0%,
+        rgba(0, 0, 0, 0.04) 0%,
         transparent 50%
       ),
       linear-gradient(165deg, #f7f8fa 0%, #eef1f5 45%, #f5f6f8 100%);
@@ -344,7 +347,7 @@ svg {
   }
 
   .site-header--bottom .nav-pill {
-    box-shadow: 0 -8px 32px rgba(11, 31, 58, 0.18);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.16);
   }
 }
 
@@ -465,7 +468,7 @@ svg {
 }
 
 .brand-dot {
-  color: var(--navy);
+  color: var(--muted);
   font-weight: 700;
   margin-inline: 0.05em;
 }
@@ -544,7 +547,7 @@ svg {
   width: 56px;
   height: 56px;
   border-radius: 9999px;
-  background: var(--navy);
+  background: var(--foreground);
   color: #fff;
   display: inline-flex;
   align-items: center;
@@ -599,7 +602,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--navy);
+  outline: 2px solid var(--foreground);
   outline-offset: 3px;
 }
 
@@ -668,11 +671,11 @@ select:focus-visible {
 
 .btn-primary:hover,
 .btn-primary:focus-visible {
-  background: var(--navy);
+  background: #1a1a1a;
 }
 
 .btn-primary:active {
-  background: var(--navy-mid);
+  background: #000;
 }
 
 .btn-outline {
@@ -683,9 +686,9 @@ select:focus-visible {
 
 .btn-outline:hover,
 .btn-outline:focus-visible {
-  border-color: var(--navy);
-  color: var(--navy);
-  background: color-mix(in srgb, var(--navy) 4%, white);
+  border-color: var(--foreground);
+  color: var(--foreground);
+  background: #f5f5f5;
 }
 
 .btn-outline-light {
@@ -765,7 +768,7 @@ select:focus-visible {
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  outline: 2px solid var(--navy);
+  outline: 2px solid var(--foreground);
   outline-offset: 2px;
   border-color: transparent;
 }
@@ -873,9 +876,9 @@ select:focus-visible {
 
 .faq-details[open] > .faq-summary .faq-chevron {
   transform: rotate(45deg);
-  background: color-mix(in srgb, var(--navy) 6%, white);
-  color: var(--navy);
-  border-color: color-mix(in srgb, var(--navy) 20%, white);
+  background: #f3f4f6;
+  color: var(--foreground);
+  border-color: #d4d4d4;
 }
 
 .faq-details[open] > .faq-summary {
@@ -971,13 +974,13 @@ a.trust-chip {
 
 /* -------------------------------------------------------------------------- */
 /* Lead modal (multi-step popup · toromovers.net model)                       */
-/* Differentiator: Toro cherry (#C8102E) — not navy/blue                       */
+/* Lead modal — monochrome accents only                                      */
 /* -------------------------------------------------------------------------- */
 .lead-overlay {
-  --lead-accent: #c8102e;
-  --lead-accent-soft: color-mix(in srgb, #c8102e 10%, white);
-  --lead-accent-mid: color-mix(in srgb, #c8102e 18%, white);
-  --lead-accent-ink: #9a0c24;
+  --lead-accent: #0a0a0a;
+  --lead-accent-soft: #f3f4f6;
+  --lead-accent-mid: #e8e8e8;
+  --lead-accent-ink: #0a0a0a;
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -1062,7 +1065,7 @@ a.trust-chip {
 
 .lead-stars {
   font-size: 0.7rem;
-  color: #c9a227;
+  color: #6b6b6b;
   line-height: 1.2;
 }
 
@@ -1261,7 +1264,7 @@ a.trust-chip {
 .lead-err {
   margin: 0;
   font-size: 0.85rem;
-  color: #b91c1c;
+  color: #3f3f3f;
 }
 
 .lead-sending {
@@ -1287,7 +1290,7 @@ a.trust-chip {
   justify-content: center;
 }
 
-/* Lead modal primary actions: black CTA (not navy hover) */
+/* Lead modal primary actions */
 .lead-modal .btn-primary {
   background: var(--foreground);
   color: #fff;

@@ -40,7 +40,7 @@ export function TrustBar() {
           <a
             href={PHONE_TEL}
             data-cta="trust-phone"
-            className="tap-target font-semibold text-navy underline underline-offset-2"
+            className="tap-target font-semibold text-foreground underline underline-offset-2"
           >
             {PHONE_DISPLAY}
           </a>

@@ -1,4 +1,4 @@
-/** Simple line icons for the feature grid — navy circles hold white strokes. */
+/** Simple line icons for the feature grid — black circles hold white strokes. */
 
 type IconProps = { className?: string };
 

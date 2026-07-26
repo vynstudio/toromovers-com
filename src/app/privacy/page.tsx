@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <main className="site-container-narrow py-16 sm:py-24">
-      <Link href="/" className="text-sm text-navy underline underline-offset-4">
+      <Link href="/" className="text-sm text-foreground underline underline-offset-4">
         ← Back home
       </Link>
       <h1 className="mt-8 text-3xl font-normal tracking-tight">Privacy Policy</h1>
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
         <h2 className="pt-4 text-lg font-medium text-foreground">Contact</h2>
         <p>
           Questions about privacy:{" "}
-          <a className="text-navy underline" href={`mailto:${EMAIL}`}>
+          <a className="text-foreground underline" href={`mailto:${EMAIL}`}>
             {EMAIL}
           </a>
           .

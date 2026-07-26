@@ -30,13 +30,13 @@ export function HeroVisual() {
         priority
         quality={70}
         sizes="(max-width: 1023px) 100vw, 42vw"
-        className={`object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(11,31,58,0.16)] ${
+        className={`object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(0,0,0,0.14)] ${
           showDesktopVideo ? "lg:invisible" : ""
         }`}
       />
       {showDesktopVideo ? (
         <video
-          className="absolute inset-0 z-[1] h-full w-full object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(11,31,58,0.16)]"
+          className="absolute inset-0 z-[1] h-full w-full object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(0,0,0,0.14)]"
           autoPlay
           muted
           loop

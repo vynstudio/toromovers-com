@@ -15,7 +15,7 @@ export function Process() {
           {process.steps.map((step, i) => (
             <li key={step.name} className="relative w-full min-w-0">
               <span
-                className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-navy text-sm font-medium text-white"
+                className="mb-3 inline-flex h-11 w-11 items-center justify-center rounded-full bg-foreground text-sm font-medium text-white"
                 aria-hidden
               >
                 {i + 1}

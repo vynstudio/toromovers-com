@@ -20,7 +20,7 @@ export function Areas() {
           <a
             href={PHONE_TEL}
             data-cta="areas-phone"
-            className="tap-target inline-flex min-h-0 py-1 font-medium text-navy underline underline-offset-2"
+            className="tap-target inline-flex min-h-0 py-1 font-medium text-foreground underline underline-offset-2"
           >
             Call for availability in your city
           </a>
