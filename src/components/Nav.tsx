@@ -4,28 +4,32 @@ import { BUSINESS_NAME, PHONE_TEL } from "@/lib/site";
 
 /**
  * Sticky header — grouped flex regions (left / center / right).
- * Avoids justify-between so CTAs stay together and links stay centered.
- * Mobile: logo + Call now. Desktop: logo | links | Call + Quote.
+ * Brand: black bull mark + TORO·MOVERS wordmark.
  */
 export function Nav() {
   return (
     <header className="site-header pointer-events-none">
       <nav className="nav-pill pointer-events-auto" aria-label="Primary">
-        {/* Left — logo */}
+        {/* Left — black bull + wordmark */}
         <div className="nav-left">
           <a
             href="/"
-            className="tap-target flex shrink-0 items-center rounded-full px-1"
+            className="brand-lockup tap-target"
             aria-label={`${BUSINESS_NAME} home`}
           >
-            <Image
-              src="/logos/toro-lockup-navy.svg"
-              alt={BUSINESS_NAME}
-              width={148}
-              height={32}
-              priority
-              className="h-6 w-auto sm:h-7 md:h-8"
-            />
+            <span className="brand-mark" aria-hidden>
+              <Image
+                src="/logos/toro-bull-black.svg"
+                alt=""
+                width={40}
+                height={32}
+                priority
+                className="brand-bull"
+              />
+            </span>
+            <span className="brand-name">
+              TORO<span className="brand-dot">·</span>MOVERS
+            </span>
           </a>
         </div>
 

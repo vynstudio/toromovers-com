@@ -46,16 +46,21 @@ export function Footer() {
 
         <a
           href="/"
-          className="tap-target order-first md:order-none"
+          className="brand-lockup tap-target order-first text-white md:order-none"
           aria-label={`${BUSINESS_NAME} home`}
         >
-          <Image
-            src="/logos/toro-lockup-white.svg"
-            alt={BUSINESS_NAME}
-            width={120}
-            height={26}
-            className="h-6 w-auto opacity-95"
-          />
+          <span className="brand-mark" aria-hidden>
+            <Image
+              src="/logos/toro-bull-white.svg"
+              alt=""
+              width={40}
+              height={32}
+              className="brand-bull"
+            />
+          </span>
+          <span className="brand-name text-white">
+            TORO<span className="brand-dot text-white/70">·</span>MOVERS
+          </span>
         </a>
 
         <div className="flex w-full max-w-xs flex-col items-center gap-1 text-sm text-white/55 md:max-w-none md:items-end">

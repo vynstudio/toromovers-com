@@ -352,6 +352,66 @@ svg {
   min-width: 0;
 }
 
+/* Brand: black bull + wordmark */
+.brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--foreground);
+  min-height: var(--tap-min);
+  padding-inline: 0.15rem;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .brand-mark {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.brand-bull {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.brand-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@media (min-width: 390px) {
+  .brand-name {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .brand-name {
+    font-size: 0.9375rem;
+    letter-spacing: 0.05em;
+  }
+}
+
+.brand-dot {
+  color: var(--navy);
+  font-weight: 700;
+  margin-inline: 0.05em;
+}
+
 .nav-center {
   flex: 1 1 auto;
   display: flex;
