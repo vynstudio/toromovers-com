@@ -49,10 +49,67 @@
   force = true
 
 # --- Engine: APIs & funnels ---
+# IMPORTANT: Do NOT proxy /api/lead — that is the design-site quote modal
+# (LeadModal). Engine /api/lead requires x-lead-secret and returns 401,
+# which surfaces as "Couldn't send" in the modal.
 
 [[redirects]]
-  from = "/api/*"
-  to = "https://live-toro-site.netlify.app/api/:splat"
+  from = "/api/crm/*"
+  to = "https://live-toro-site.netlify.app/api/crm/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/webhooks/*"
+  to = "https://live-toro-site.netlify.app/api/webhooks/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/job-size"
+  to = "https://live-toro-site.netlify.app/api/job-size"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/job-size/*"
+  to = "https://live-toro-site.netlify.app/api/job-size/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/intake"
+  to = "https://live-toro-site.netlify.app/api/intake"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/intake/*"
+  to = "https://live-toro-site.netlify.app/api/intake/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/lead-magnet"
+  to = "https://live-toro-site.netlify.app/api/lead-magnet"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/lead-magnet/*"
+  to = "https://live-toro-site.netlify.app/api/lead-magnet/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/review-request"
+  to = "https://live-toro-site.netlify.app/api/review-request"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/review-request/*"
+  to = "https://live-toro-site.netlify.app/api/review-request/:splat"
   status = 200
   force = true
 

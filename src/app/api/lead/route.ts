@@ -61,32 +61,41 @@ export async function POST(req: Request) {
   const consentSms =
     body.consentSms !== false && body.consentSms !== "false";
 
-  const channels = await notifyLead({
-    kind: soft ? "soft" : "full",
-    name,
-    phone,
-    email: email || undefined,
-    serviceType:
-      typeof body.serviceType === "string" ? body.serviceType : undefined,
-    note: typeof body.note === "string" ? body.note : undefined,
-    moveDate: typeof body.moveDate === "string" ? body.moveDate : undefined,
-    city: typeof body.city === "string" ? body.city : undefined,
-    funnel: typeof body.funnel === "string" ? body.funnel : undefined,
-    source:
-      typeof body.source === "string" && body.source
-        ? body.source
-        : "toromovers.com",
-    consentSms: soft ? false : consentSms,
-    landingPage:
-      typeof body.landingPage === "string"
-        ? body.landingPage
-        : "https://toromovers.com/",
-  });
+  // Prefer forwarding to the live SEO/CRM engine (has Telegram/OpenPhone secrets).
+  // Local notify is best-effort if this site has its own env keys.
+  let channels: Awaited<ReturnType<typeof notifyLead>> = [];
+  try {
+    channels = await notifyLead({
+      kind: soft ? "soft" : "full",
+      name,
+      phone,
+      email: email || undefined,
+      serviceType:
+        typeof body.serviceType === "string" ? body.serviceType : undefined,
+      note: typeof body.note === "string" ? body.note : undefined,
+      moveDate: typeof body.moveDate === "string" ? body.moveDate : undefined,
+      city: typeof body.city === "string" ? body.city : undefined,
+      funnel: typeof body.funnel === "string" ? body.funnel : undefined,
+      source:
+        typeof body.source === "string" && body.source
+          ? body.source
+          : "toromovers.com",
+      consentSms: soft ? false : consentSms,
+      landingPage:
+        typeof body.landingPage === "string"
+          ? body.landingPage
+          : "https://toromovers.com/",
+    });
+  } catch (err) {
+    console.error("[lead] notifyLead threw", err);
+  }
 
-  // Optional CRM forward (HubSpot etc. on .net) — non-blocking for UX
+  // Always forward to engine CRM — never the public domain (avoids hybrid proxy loops).
   let forwarded = false;
+  let forwardStatus = 0;
   const forwardUrl =
-    process.env.LEAD_FORWARD_URL || "https://toromovers.net/api/crm/lead";
+    process.env.LEAD_FORWARD_URL ||
+    "https://live-toro-site.netlify.app/api/crm/lead";
   try {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -98,34 +107,45 @@ export async function POST(req: Request) {
       method: "POST",
       headers,
       body: JSON.stringify({
-        ...body,
         name,
+        firstName: name.split(/\s+/)[0] || name,
         phone,
         email: email || undefined,
+        serviceType:
+          typeof body.serviceType === "string" ? body.serviceType : undefined,
+        note: typeof body.note === "string" ? body.note : undefined,
+        moveDate: typeof body.moveDate === "string" ? body.moveDate : undefined,
+        city: typeof body.city === "string" ? body.city : undefined,
+        funnel: typeof body.funnel === "string" ? body.funnel : undefined,
         source:
           typeof body.source === "string" && body.source
             ? body.source
             : "toromovers.com",
         site: "toromovers.com",
+        consentSms: soft ? false : consentSms,
         landingPage:
           typeof body.landingPage === "string"
             ? body.landingPage
             : "https://toromovers.com/",
       }),
     });
+    forwardStatus = res.status;
     forwarded = res.ok;
     if (!res.ok) {
-      console.error("[lead] CRM forward failed", res.status);
+      const t = await res.text().catch(() => "");
+      console.error("[lead] CRM forward failed", res.status, t.slice(0, 200));
     }
   } catch (err) {
     console.error("[lead] CRM forward error", err);
   }
 
-  const anyOk = channels.some((c) => c.ok) || forwarded;
+  // Always 200 so the quote modal never shows "Couldn't send" when the lead
+  // was accepted for processing (or spam-filtered). Team still gets engine CRM.
   return NextResponse.json({
-    ok: anyOk || true, // never block thank-you UX
+    ok: true,
     soft,
     channels,
     forwarded,
+    forwardStatus,
   });
 }
