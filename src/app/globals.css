@@ -1157,8 +1157,15 @@ a.trust-chip {
   --lead-accent-soft: #f3f4f6;
   --lead-accent-mid: #e8e8e8;
   --lead-accent-ink: #0a0a0a;
+  /* visualViewport vars set by LeadModal when the keyboard opens */
+  --lead-vvh: 100dvh;
+  --lead-vvt: 0px;
   position: fixed;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: var(--lead-vvt);
+  height: var(--lead-vvh);
+  bottom: auto;
   z-index: 100;
   display: flex;
   align-items: flex-end;
@@ -1166,10 +1173,14 @@ a.trust-chip {
   padding: 0;
   background: rgba(10, 10, 10, 0.55);
   backdrop-filter: blur(4px);
+  /* Keep overlay above iOS keyboard chrome */
+  overflow: hidden;
 }
 
 @media (min-width: 640px) {
   .lead-overlay {
+    top: 0;
+    height: 100%;
     align-items: center;
     padding: 1.25rem;
   }
@@ -1187,11 +1198,13 @@ a.trust-chip {
   overflow: hidden;
 }
 
-/* Stable height across capture → qualify steps → done */
+/* Mobile: fill the *visible* viewport (shrinks when keyboard is open).
+   No huge min-height — that was burying fields under the keyboard. */
 .lead-modal--simple,
 .lead-modal--funnel {
-  height: min(92dvh, 560px);
-  min-height: min(92dvh, 520px);
+  height: var(--lead-vvh, 92dvh);
+  max-height: var(--lead-vvh, 92dvh);
+  min-height: 0;
 }
 
 @media (min-width: 640px) {
@@ -1318,14 +1331,31 @@ a.trust-chip {
   flex: 1 1 auto;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: 0.5rem 1rem 1rem;
   min-height: 0;
+  /* Extra room so the focused field can scroll above the keyboard + autofill bar */
+  scroll-padding-bottom: 6rem;
 }
 
 .lead-form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  /* Space under last field so iOS autofill bar doesn’t cover Continue */
+  padding-bottom: 0.25rem;
+}
+
+@media (max-width: 639px) {
+  .lead-form {
+    padding-bottom: 1rem;
+  }
+
+  .lead-field input:focus {
+    /* Nudge browser to keep focused field in the scrollport */
+    scroll-margin-bottom: 8rem;
+    scroll-margin-top: 5rem;
+  }
 }
 
 .lead-enter {

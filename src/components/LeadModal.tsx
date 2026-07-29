@@ -78,6 +78,7 @@ export function LeadModal() {
       : `lead-${Date.now()}`,
   );
   const dialogRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   const phoneOk = digits(phone).length === 10;
   const nameOk = name.trim().length >= 2;
@@ -190,7 +191,7 @@ export function LeadModal() {
     };
   }, [openModal]);
 
-  // Body scroll lock + Escape
+  // Body scroll lock + Escape + visualViewport (iOS keyboard)
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -199,16 +200,62 @@ export function LeadModal() {
       if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
-    // Focus first input
-    window.setTimeout(() => {
-      const el = dialogRef.current?.querySelector<HTMLElement>(
-        "input:not([type=hidden]), button.lead-opt",
-      );
-      el?.focus();
-    }, 50);
+
+    const overlay = overlayRef.current;
+    const syncViewport = () => {
+      const vv = window.visualViewport;
+      if (!overlay) return;
+      if (vv) {
+        // Keep sheet inside the visible area above the keyboard
+        overlay.style.setProperty("--lead-vvh", `${Math.round(vv.height)}px`);
+        overlay.style.setProperty("--lead-vvt", `${Math.round(vv.offsetTop)}px`);
+      } else {
+        overlay.style.setProperty("--lead-vvh", "100dvh");
+        overlay.style.setProperty("--lead-vvt", "0px");
+      }
+    };
+    syncViewport();
+    window.visualViewport?.addEventListener("resize", syncViewport);
+    window.visualViewport?.addEventListener("scroll", syncViewport);
+    window.addEventListener("resize", syncViewport);
+
+    // Desktop: focus first control. Mobile: do NOT autofocus on the first
+    // "contact" step — that immediately opens the keyboard + iOS AutoFill bar
+    // and buries the form (bad first paint). User taps the field when ready.
+    const isDesktop = window.matchMedia("(min-width: 640px)").matches;
+    const shouldAutofocus =
+      isDesktop || (phase !== "capture" && phase !== "done");
+    let t: number | undefined;
+    if (shouldAutofocus) {
+      t = window.setTimeout(() => {
+        const el = dialogRef.current?.querySelector<HTMLElement>(
+          "input:not([type=hidden]), button.lead-opt",
+        );
+        el?.focus({ preventScroll: false });
+        el?.scrollIntoView({ block: "center", behavior: "smooth" });
+      }, 80);
+    }
+
+    const onFocusIn = (e: FocusEvent) => {
+      const t = e.target;
+      if (!(t instanceof HTMLElement)) return;
+      if (t.tagName !== "INPUT" && t.tagName !== "TEXTAREA") return;
+      // After keyboard animates, keep the field above the autofill bar
+      window.setTimeout(() => {
+        t.scrollIntoView({ block: "center", behavior: "smooth" });
+        syncViewport();
+      }, 300);
+    };
+    dialogRef.current?.addEventListener("focusin", onFocusIn);
+
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
+      window.visualViewport?.removeEventListener("resize", syncViewport);
+      window.visualViewport?.removeEventListener("scroll", syncViewport);
+      window.removeEventListener("resize", syncViewport);
+      dialogRef.current?.removeEventListener("focusin", onFocusIn);
+      if (t) window.clearTimeout(t);
     };
   }, [open, close, phase]);
 
@@ -366,6 +413,7 @@ export function LeadModal() {
 
   return (
     <div
+      ref={overlayRef}
       className="lead-overlay"
       role="presentation"
       onMouseDown={(e) => {
@@ -478,7 +526,8 @@ export function LeadModal() {
                       name="name"
                       autoComplete="name"
                       enterKeyHint="next"
-                      autoFocus
+                      // No autoFocus — on mobile it opens the keyboard + AutoFill
+                      // bar immediately and covers the form (bad first paint).
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Your name"
