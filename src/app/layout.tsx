@@ -1,8 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { BUSINESS_NAME, SITE_URL } from "@/lib/site";
 import { organizationGraph } from "@/lib/schema";
+
+/** Searchable Analytics (browser) — human + AI-referred traffic */
+const SEARCHABLE_SITE_TOKEN =
+  process.env.NEXT_PUBLIC_SEARCHABLE_SITE_TOKEN ||
+  "pst_18bcf81295a1c8185e489122";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -132,6 +138,17 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationGraph()),
           }}
+        />
+        {/* Searchable Analytics — queue stub + deferred tracker */}
+        <Script id="searchable-queue" strategy="beforeInteractive">
+          {`window.sa=window.sa||function(){(sa.q=sa.q||[]).push(arguments)}`}
+        </Script>
+        <Script
+          id="searchable-tracker"
+          src="https://searchable-tracker.searchable.workers.dev/s.js"
+          strategy="afterInteractive"
+          data-domain="toromovers.com"
+          data-site-token={SEARCHABLE_SITE_TOKEN}
         />
         {children}
       </body>
