@@ -99,10 +99,10 @@ export function CityLanding({ city }: { city: CityPageContent }) {
           <h2 id="areas-local-heading" className="fluid-h2 text-foreground">
             Serving {city.name} &amp; nearby
           </h2>
-          <ul className="areas-chips mt-8" aria-label={`${city.name} neighborhoods`}>
+          <ul className="nbhd-tags mt-8" aria-label={`${city.name} neighborhoods`}>
             {city.neighborhoods.map((n) => (
               <li key={n}>
-                <span className="areas-chip areas-chip--static">{n}</span>
+                <span className="nbhd-tag">{n}</span>
               </li>
             ))}
           </ul>
