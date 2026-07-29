@@ -3,7 +3,7 @@ import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 /** Cities called out on the homepage (links to SEO engine pages). */
 const AREA_LINKS = [
-  { label: "Orlando", href: "/orlando-movers" },
+  { label: "Orlando movers", href: "/orlando-movers" },
   { label: "Kissimmee", href: "/kissimmee-movers" },
   { label: "Winter Park", href: "/winter-park-movers" },
   { label: "Clermont", href: "/clermont-movers" },
@@ -46,7 +46,7 @@ export function Areas() {
           ))}
           <li>
             <a href="/service-areas" className="areas-chip areas-chip--more">
-              All areas
+              Service areas
             </a>
           </li>
         </ul>
