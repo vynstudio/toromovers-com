@@ -1,3 +1,9 @@
+# =============================================================================
+# Hybrid hosting: DESIGN owns toromovers.com homepage + legal pages.
+# SEO / funnel / CRM engine proxies to live-toro-site (status 200 rewrite).
+# Engine assetPrefix points at live-toro-site.netlify.app for /_next assets.
+# =============================================================================
+
 [build]
   command = "npm run build"
   publish = ".next"
@@ -10,9 +16,678 @@
   NEXT_TELEMETRY_DISABLED = "1"
   NEXT_PUBLIC_SITE_URL = "https://toromovers.com"
 
-# SEO: force apex domain (www → non-www)
+# www → apex
 [[redirects]]
   from = "https://www.toromovers.com/*"
   to = "https://toromovers.com/:splat"
   status = 301
+  force = true
+
+# Legacy brand domains (moved with this site)
+[[redirects]]
+  from = "https://toromovers.net/*"
+  to = "https://toromovers.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.toromovers.net/*"
+  to = "https://toromovers.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://toromudanzas.com/*"
+  to = "https://toromovers.com/?utm_source=toromudanzas&utm_medium=redirect"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.toromudanzas.com/*"
+  to = "https://toromovers.com/?utm_source=toromudanzas&utm_medium=redirect"
+  status = 301
+  force = true
+
+# --- Engine: APIs & funnels ---
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://live-toro-site.netlify.app/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/get-my-price"
+  to = "https://live-toro-site.netlify.app/get-my-price"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/get-my-price/*"
+  to = "https://live-toro-site.netlify.app/get-my-price/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/es/get-my-price"
+  to = "https://live-toro-site.netlify.app/es/get-my-price"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/es/get-my-price/*"
+  to = "https://live-toro-site.netlify.app/es/get-my-price/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/book"
+  to = "https://live-toro-site.netlify.app/book"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/book/*"
+  to = "https://live-toro-site.netlify.app/book/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/move-day-checklist"
+  to = "https://live-toro-site.netlify.app/move-day-checklist"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/move-day-checklist/*"
+  to = "https://live-toro-site.netlify.app/move-day-checklist/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/movingday-checklist"
+  to = "https://live-toro-site.netlify.app/movingday-checklist"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/movingday-checklist/*"
+  to = "https://live-toro-site.netlify.app/movingday-checklist/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/move-details"
+  to = "https://live-toro-site.netlify.app/move-details"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/move-details/*"
+  to = "https://live-toro-site.netlify.app/move-details/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/job-size"
+  to = "https://live-toro-site.netlify.app/job-size"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/job-size/*"
+  to = "https://live-toro-site.netlify.app/job-size/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/your-move"
+  to = "https://live-toro-site.netlify.app/your-move"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/your-move/*"
+  to = "https://live-toro-site.netlify.app/your-move/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/intake"
+  to = "https://live-toro-site.netlify.app/intake"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/intake/*"
+  to = "https://live-toro-site.netlify.app/intake/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/quote"
+  to = "https://live-toro-site.netlify.app/quote"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/quote/*"
+  to = "https://live-toro-site.netlify.app/quote/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/get-quote"
+  to = "https://live-toro-site.netlify.app/get-quote"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/get-quote/*"
+  to = "https://live-toro-site.netlify.app/get-quote/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/quote-prep"
+  to = "https://live-toro-site.netlify.app/quote-prep"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/checklist"
+  to = "https://live-toro-site.netlify.app/checklist"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/thank-you"
+  to = "https://live-toro-site.netlify.app/thank-you"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/thank-you-full-service"
+  to = "https://live-toro-site.netlify.app/thank-you-full-service"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/thank-you-labor"
+  to = "https://live-toro-site.netlify.app/thank-you-labor"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/thank-you-checklist"
+  to = "https://live-toro-site.netlify.app/thank-you-checklist"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/ads/*"
+  to = "https://live-toro-site.netlify.app/ads/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/es/ads/*"
+  to = "https://live-toro-site.netlify.app/es/ads/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/es/*"
+  to = "https://live-toro-site.netlify.app/es/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/packing-services"
+  to = "https://live-toro-site.netlify.app/packing-services"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/apartment-movers"
+  to = "https://live-toro-site.netlify.app/apartment-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/opengraph-image"
+  to = "https://live-toro-site.netlify.app/opengraph-image"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/robots.txt"
+  to = "https://live-toro-site.netlify.app/robots.txt"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "https://live-toro-site.netlify.app/sitemap.xml"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/email-preview"
+  to = "https://live-toro-site.netlify.app/email-preview"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/email-preview/*"
+  to = "https://live-toro-site.netlify.app/email-preview/:splat"
+  status = 200
+  force = true
+
+# --- Engine: public assets used by SEO pages ---
+
+[[redirects]]
+  from = "/hero/*"
+  to = "https://live-toro-site.netlify.app/hero/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/city/*"
+  to = "https://live-toro-site.netlify.app/city/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/bull.svg"
+  to = "https://live-toro-site.netlify.app/bull.svg"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/favicon.ico"
+  to = "https://live-toro-site.netlify.app/favicon.ico"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/manifest.webmanifest"
+  to = "https://live-toro-site.netlify.app/manifest.webmanifest"
+  status = 200
+  force = true
+
+# --- Engine: SEO money pages (exact) ---
+
+[[redirects]]
+  from = "/altamonte-springs-movers"
+  to = "https://live-toro-site.netlify.app/altamonte-springs-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/apartment-movers-orlando-fl"
+  to = "https://live-toro-site.netlify.app/apartment-movers-orlando-fl"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/apopka-movers"
+  to = "https://live-toro-site.netlify.app/apopka-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog"
+  to = "https://live-toro-site.netlify.app/blog"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/apartment-moving-checklist-orlando-renters"
+  to = "https://live-toro-site.netlify.app/blog/apartment-moving-checklist-orlando-renters"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/best-time-to-move-central-florida"
+  to = "https://live-toro-site.netlify.app/blog/best-time-to-move-central-florida"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/full-service-vs-labor-only-orlando"
+  to = "https://live-toro-site.netlify.app/blog/full-service-vs-labor-only-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/furniture-disassembly-protection-movers-orlando"
+  to = "https://live-toro-site.netlify.app/blog/furniture-disassembly-protection-movers-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/hidden-moving-fees-orlando"
+  to = "https://live-toro-site.netlify.app/blog/hidden-moving-fees-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/how-much-does-a-local-move-cost-orlando"
+  to = "https://live-toro-site.netlify.app/blog/how-much-does-a-local-move-cost-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-choose-a-moving-company-orlando"
+  to = "https://live-toro-site.netlify.app/blog/how-to-choose-a-moving-company-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-prepare-for-a-local-move-in-orlando"
+  to = "https://live-toro-site.netlify.app/blog/how-to-prepare-for-a-local-move-in-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/labor-only-moving-orlando"
+  to = "https://live-toro-site.netlify.app/blog/labor-only-moving-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/moving-into-storage-orlando"
+  to = "https://live-toro-site.netlify.app/blog/moving-into-storage-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/tipping-movers-orlando"
+  to = "https://live-toro-site.netlify.app/blog/tipping-movers-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/what-youre-paying-for-orlando-movers"
+  to = "https://live-toro-site.netlify.app/blog/what-youre-paying-for-orlando-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/central-florida-movers"
+  to = "https://live-toro-site.netlify.app/central-florida-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/central-florida-moving-checklist"
+  to = "https://live-toro-site.netlify.app/central-florida-moving-checklist"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/clermont-movers"
+  to = "https://live-toro-site.netlify.app/clermont-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/commercial-movers"
+  to = "https://live-toro-site.netlify.app/commercial-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/davenport-movers"
+  to = "https://live-toro-site.netlify.app/davenport-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/fern-park-movers"
+  to = "https://live-toro-site.netlify.app/fern-park-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/full-service-moving"
+  to = "https://live-toro-site.netlify.app/full-service-moving"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/kissimmee-movers"
+  to = "https://live-toro-site.netlify.app/kissimmee-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/labor-only-moving"
+  to = "https://live-toro-site.netlify.app/labor-only-moving"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/lake-mary-movers"
+  to = "https://live-toro-site.netlify.app/lake-mary-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/lakeland-movers"
+  to = "https://live-toro-site.netlify.app/lakeland-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/loading-unloading"
+  to = "https://live-toro-site.netlify.app/loading-unloading"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/maitland-movers"
+  to = "https://live-toro-site.netlify.app/maitland-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/orlando-movers"
+  to = "https://live-toro-site.netlify.app/orlando-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/oviedo-movers"
+  to = "https://live-toro-site.netlify.app/oviedo-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/residential-movers"
+  to = "https://live-toro-site.netlify.app/residential-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sanford-movers"
+  to = "https://live-toro-site.netlify.app/sanford-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/service-areas"
+  to = "https://live-toro-site.netlify.app/service-areas"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/st-cloud-movers"
+  to = "https://live-toro-site.netlify.app/st-cloud-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/windermere-movers"
+  to = "https://live-toro-site.netlify.app/windermere-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/winter-garden-movers"
+  to = "https://live-toro-site.netlify.app/winter-garden-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/winter-haven-movers"
+  to = "https://live-toro-site.netlify.app/winter-haven-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/winter-park-movers"
+  to = "https://live-toro-site.netlify.app/winter-park-movers"
+  status = 200
+  force = true
+
+# --- Engine: legacy ad / city aliases ---
+
+[[redirects]]
+  from = "/movers-orlando-lp"
+  to = "https://live-toro-site.netlify.app/movers-orlando-lp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/loading-help"
+  to = "https://live-toro-site.netlify.app/loading-help"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/lp"
+  to = "https://live-toro-site.netlify.app/lp"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/funnel"
+  to = "https://live-toro-site.netlify.app/funnel"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/moving"
+  to = "https://live-toro-site.netlify.app/moving"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/mudanza"
+  to = "https://live-toro-site.netlify.app/mudanza"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/pages/*"
+  to = "https://live-toro-site.netlify.app/pages/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/movers-orlando"
+  to = "https://live-toro-site.netlify.app/movers-orlando"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/movers-lake-mary"
+  to = "https://live-toro-site.netlify.app/movers-lake-mary"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/movers-winter-park"
+  to = "https://live-toro-site.netlify.app/movers-winter-park"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/casselberry-movers"
+  to = "https://live-toro-site.netlify.app/casselberry-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/longwood-movers"
+  to = "https://live-toro-site.netlify.app/longwood-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/celebration-movers"
+  to = "https://live-toro-site.netlify.app/celebration-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/poinciana-movers"
+  to = "https://live-toro-site.netlify.app/poinciana-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/ocoee-movers"
+  to = "https://live-toro-site.netlify.app/ocoee-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/mount-dora-movers"
+  to = "https://live-toro-site.netlify.app/mount-dora-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/leesburg-movers"
+  to = "https://live-toro-site.netlify.app/leesburg-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/tavares-movers"
+  to = "https://live-toro-site.netlify.app/tavares-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/minneola-movers"
+  to = "https://live-toro-site.netlify.app/minneola-movers"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/apartment-moves"
+  to = "https://live-toro-site.netlify.app/apartment-moves"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/home-moves"
+  to = "https://live-toro-site.netlify.app/home-moves"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/commercial-moves"
+  to = "https://live-toro-site.netlify.app/commercial-moves"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/about"
+  to = "https://live-toro-site.netlify.app/about"
+  status = 200
   force = true
