@@ -5,25 +5,24 @@ import {
   HOURS_LABEL,
   PHONE_DISPLAY,
   PHONE_TEL,
-  REVIEW_COUNT,
   SERVICE_REGION,
 } from "@/lib/site";
 
 /**
- * Two-section close:
- * 1) Hero conversion message + Call / Request quote (opens lead popup)
- * 2) Trust / contact strip (no form — form is modal)
+ * Closing conversion — separate section from Service areas.
+ * 1) Primary CTA block
+ * 2) Trust strip
  */
 export function ClosingCta() {
   return (
     <>
-      {/* Section 1 — primary conversion */}
       <section
         id="quote"
         className="closing-cta full-bleed w-full px-[var(--container-pad)]"
         aria-labelledby="closing-heading"
       >
         <div className="site-container-narrow text-center">
+          <p className="closing-eyebrow">Next step</p>
           <h2
             id="closing-heading"
             className="fluid-display whitespace-pre-line text-foreground"
@@ -57,7 +56,6 @@ export function ClosingCta() {
         </div>
       </section>
 
-      {/* Section 2 — trust / next step (no form) */}
       <section
         className="closing-secondary full-bleed w-full px-[var(--container-pad)]"
         aria-label="Why book with Toro"
@@ -68,7 +66,7 @@ export function ClosingCta() {
               {GOOGLE_RATING}★
             </p>
             <p className="mt-1 text-sm text-muted">
-              Google rating · {REVIEW_COUNT}+ reviews
+              Google rating · real local customers
             </p>
           </div>
           <div>

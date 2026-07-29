@@ -1757,15 +1757,90 @@ a.trust-chip {
 }
 
 /* Closing: two sections */
-.closing-cta {
+/* Service areas — own band (separate from closing CTA) */
+.areas-section {
+  background: #f7f8fa;
   border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.areas-eyebrow {
+  margin: 0 0 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.areas-lead {
+  margin-top: 1rem;
+}
+
+.areas-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 0.55rem;
+}
+
+.areas-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  background: #fff;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.areas-chip:hover {
+  background: #fff;
+  border-color: var(--foreground);
+}
+
+.areas-chip--more {
+  background: var(--foreground);
+  color: #fff;
+  border-color: var(--foreground);
+}
+
+.areas-chip--more:hover {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.areas-call {
+  margin: 0;
+}
+
+/* Closing CTA — conversion band (visually distinct from areas) */
+.closing-cta {
+  border-top: none;
   background: #fff;
   padding-block: var(--section-y);
 }
 
+.closing-eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .closing-secondary {
   border-top: 1px solid var(--border);
-  background: #f7f8fa;
+  background: #fafafa;
   padding-block: 2.5rem;
 }
 
