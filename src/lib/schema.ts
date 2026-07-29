@@ -14,8 +14,13 @@ import {
 import { faq, process } from "@/lib/content";
 import { googleReviews } from "@/lib/reviews";
 
-const description =
-  "Family-owned movers in Orlando & Central Florida. Full-service, labor-only & apartment moves. Up-front hourly pricing, bilingual crew. Call (689) 600-2720.";
+/** Organization / LocalBusiness description — visible-facts only. */
+const organizationDescription =
+  "Toro Movers is a family-owned Orlando moving company serving Central Florida with full-service moves, labor-only loading and unloading, apartment moving, bilingual English and Spanish crews, and up-front hourly rates.";
+
+/** Homepage WebPage description — answer-first for AEO. */
+const homepageDescription =
+  "Toro Movers helps Orlando and Central Florida customers plan local moves with full-service moving, labor-only loading, apartment moving, bilingual communication, and clear hourly pricing before move day.";
 
 export function organizationGraph() {
   return {
@@ -32,7 +37,7 @@ export function organizationGraph() {
           url: `${SITE_URL}/logos/toro-lockup-navy.svg`,
         },
         image: `${SITE_URL}/images/hero-poster.webp`,
-        description,
+        description: organizationDescription,
         slogan: SLOGAN,
         telephone: PHONE_E164,
         email: EMAIL,
@@ -146,8 +151,8 @@ export function homePageGraph() {
         "@type": "WebPage",
         "@id": `${SITE_URL}/#webpage`,
         url: SITE_URL,
-        name: "Toro Movers | Local Movers in Orlando & Central Florida",
-        description,
+        name: "Toro Movers | Orlando Movers & Central Florida Moving Company",
+        description: homepageDescription,
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#movingcompany` },
         primaryImageOfPage: {
@@ -175,9 +180,9 @@ export function homePageGraph() {
       {
         "@type": "HowTo",
         "@id": `${SITE_URL}/#howto`,
-        name: "How to book local movers with Toro Movers",
+        name: process.heading,
         description:
-          "Three steps to book bilingual local movers in Orlando and Central Florida.",
+          "Three steps to book bilingual local movers in Orlando and Central Florida with Toro Movers.",
         totalTime: "PT10M",
         step: process.steps.map((step, i) => ({
           "@type": "HowToStep",

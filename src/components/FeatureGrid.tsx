@@ -14,7 +14,7 @@ export function FeatureGrid() {
     >
       <div className="site-container">
         <h2 className="fluid-h2 mb-8 text-center text-foreground md:mb-12">
-          What we handle
+          {featureGrid.heading}
         </h2>
 
         <div className="section-grid section-grid-3">

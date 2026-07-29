@@ -7,6 +7,10 @@ export const BUSINESS_NAME = "Toro Movers";
 export const LEGAL_NAME = "Toro Movers LLC";
 export const SLOGAN = "Moving People Forward";
 
+/** Site-wide SEO description — keep aligned with layout metadata + schema. */
+export const SITE_DESCRIPTION =
+  "Toro Movers is a family-owned Orlando moving company serving Central Florida with full-service moves, labor-only loading, apartment moving, bilingual crews, and up-front hourly rates.";
+
 export const PHONE_DISPLAY = "(689) 600-2720";
 export const PHONE_TEL = "tel:+16896002720";
 export const PHONE_E164 = "+16896002720";

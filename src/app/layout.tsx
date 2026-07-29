@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { BUSINESS_NAME, SITE_URL } from "@/lib/site";
+import { BUSINESS_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
 import { organizationGraph } from "@/lib/schema";
 
 /** Searchable Analytics (browser) — human + AI-referred traffic */
@@ -19,9 +19,8 @@ const inter = Inter({
 });
 
 const titleDefault =
-  "Toro Movers | Local Movers in Orlando & Central Florida";
-const description =
-  "Family-owned movers in Orlando & Central Florida. Full-service, labor-only & apartment moves. Up-front hourly pricing, bilingual crew. Call (689) 600-2720.";
+  "Toro Movers | Orlando Movers & Central Florida Moving Company";
+const description = SITE_DESCRIPTION;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
