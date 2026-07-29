@@ -1776,19 +1776,84 @@ a.trust-chip {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Google-style reviews (Flex-inspired, monochrome shell)                     */
+/* Google-style reviews — snap slider (all reviews)                           */
 /* -------------------------------------------------------------------------- */
+.review-eyebrow {
+  margin: 0 0 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.review-eyebrow span {
+  letter-spacing: 0.08em;
+  margin-right: 0.35rem;
+  color: #0a0a0a;
+}
+
+.review-sub {
+  line-height: 1.55;
+  max-width: 38rem;
+  margin-inline: auto;
+}
+
+.review-slider {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.review-nav {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  background: #fff;
+  color: #0a0a0a;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+  z-index: 2;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.review-nav:hover {
+  background: #f3f4f6;
+}
+
+.review-nav:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 479px) {
+  .review-nav {
+    display: none; /* swipe on small phones; dots remain */
+  }
+
+  .review-slider {
+    grid-template-columns: 1fr;
+  }
+}
+
 .review-scroller {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--container-pad);
-  padding-inline: var(--container-pad);
-  padding-bottom: 0.5rem;
+  scroll-padding-inline: 0.25rem;
+  padding: 0.35rem 0.15rem 0.75rem;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
-  margin-inline: calc(var(--container-pad) * -1);
+  overscroll-behavior-x: contain;
 }
 
 .review-scroller::-webkit-scrollbar {
@@ -1796,8 +1861,8 @@ a.trust-chip {
 }
 
 .review-card {
-  flex: 0 0 min(100%, 20.5rem);
-  scroll-snap-align: start;
+  flex: 0 0 min(88vw, 20.5rem);
+  scroll-snap-align: center;
   background: #fff;
   border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
   border-radius: 1.15rem;
@@ -1810,8 +1875,15 @@ a.trust-chip {
 
 @media (min-width: 768px) {
   .review-card {
-    flex-basis: min(32%, 22rem);
+    flex-basis: min(42%, 22rem);
     min-height: 16.5rem;
+    scroll-snap-align: start;
+  }
+}
+
+@media (min-width: 1024px) {
+  .review-card {
+    flex-basis: min(32%, 22rem);
   }
 }
 

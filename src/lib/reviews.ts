@@ -1,6 +1,6 @@
 /**
  * Real customer reviews from Toro Movers Google Business Profile
- * (same set featured on toromovers.net · linked via GOOGLE_MAPS_REVIEWS_URL).
+ * (same set featured on the SEO site · linked via GOOGLE_MAPS_REVIEWS_URL).
  */
 export type GoogleReview = {
   name: string;
@@ -16,7 +16,12 @@ export type GoogleReview = {
   context?: string;
 };
 
-export const reviewsHeading = "5-star reviews from real Toro customers";
+/** Section H2 — why people rate Toro 5★ (no review counts) */
+export const reviewsHeading = "Why customers rate us 5 stars on Google";
+
+/** Supporting line under the heading */
+export const reviewsSub =
+  "On time. Careful with furniture. Clear hourly pricing. A crew that actually shows up when they say they will — and treats the job like it’s their own home.";
 
 export const googleReviews: GoogleReview[] = [
   {
