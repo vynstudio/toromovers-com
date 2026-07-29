@@ -1,6 +1,7 @@
 import { CityHero } from "@/components/city/CityHero";
 import { TrustBar } from "@/components/TrustBar";
 import { Reviews } from "@/components/Reviews";
+import { Faq } from "@/components/Faq";
 import { ClosingCta } from "@/components/ClosingCta";
 import { Areas } from "@/components/Areas";
 import { IconArrow } from "@/components/icons";
@@ -145,42 +146,13 @@ export function CityLanding({ city }: { city: CityPageContent }) {
 
       <Reviews />
 
-      {/* FAQ */}
-      <section
-        id="faq"
-        className="full-bleed w-full border-t border-border bg-white py-8 sm:py-10"
-        aria-labelledby="faq-heading"
-      >
-        <div className="site-container-narrow">
-          <div className="faq-head">
-            <h2 id="faq-heading" className="faq-title">
-              {city.name} movers — common questions
-            </h2>
-            <p className="faq-sub">
-              Straight answers from a local {city.name} moving company
-            </p>
-          </div>
-          <div className="faq-accordion">
-            {city.faqs.map((item) => (
-              <details
-                key={item.q}
-                className="faq-details"
-                name={`toro-faq-${city.slug}`}
-              >
-                <summary className="faq-summary">
-                  <span className="faq-summary-text">{item.q}</span>
-                  <span className="faq-chevron" aria-hidden>
-                    +
-                  </span>
-                </summary>
-                <div className="aeo-answer faq-panel">
-                  <p>{item.a}</p>
-                </div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Faq
+        eyebrow="FAQ"
+        heading={`${city.name} movers — common questions`}
+        sub={`Straight answers from a local ${city.name} moving company`}
+        items={city.faqs}
+        groupName={`toro-faq-${city.slug}`}
+      />
 
       <Areas />
       <ClosingCta title={city.closing.title} body={city.closing.body} />
