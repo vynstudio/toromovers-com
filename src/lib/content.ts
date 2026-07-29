@@ -3,9 +3,9 @@
 
 export const nav = {
   links: [
-    { label: "discover", href: "#discover" },
-    { label: "why toro", href: "#why" },
-    { label: "how it works", href: "#how-it-works" },
+    { label: "discover", href: "/#discover" },
+    { label: "why toro", href: "/#why" },
+    { label: "how it works", href: "/#how-it-works" },
   ],
   cta: "get a quote",
   ctaHref: "#quote",

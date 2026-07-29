@@ -12,6 +12,7 @@ import {
   SLOGAN,
 } from "@/lib/site";
 import { faq, process } from "@/lib/content";
+import type { CityPageContent } from "@/lib/city-pages";
 import { googleReviews } from "@/lib/reviews";
 
 /** Organization / LocalBusiness description — visible-facts only. */
@@ -189,6 +190,105 @@ export function homePageGraph() {
           position: i + 1,
           name: step.name,
           text: step.text,
+        })),
+      },
+    ],
+  };
+}
+
+/** City SEO page graph — MovingCompany + FAQ + breadcrumbs. Visible facts only. */
+export function cityPageGraph(city: CityPageContent) {
+  const pageUrl = `${SITE_URL}${city.href}`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["MovingCompany", "LocalBusiness"],
+        "@id": `${pageUrl}#business`,
+        name: `${BUSINESS_NAME} — ${city.name} Movers`,
+        url: pageUrl,
+        telephone: PHONE_E164,
+        email: EMAIL,
+        description: city.metadata.description,
+        areaServed: [
+          { "@type": "City", name: `${city.name}, FL` },
+          { "@type": "AdministrativeArea", name: SERVICE_REGION },
+        ],
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: SERVICE_BASE_LOCALITY,
+          addressRegion: "FL",
+          addressCountry: "US",
+        },
+        parentOrganization: {
+          "@type": "MovingCompany",
+          name: BUSINESS_NAME,
+          "@id": `${SITE_URL}/#movingcompany`,
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: city.schema.lat,
+          longitude: city.schema.lng,
+        },
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: GOOGLE_RATING,
+          bestRating: "5",
+          reviewCount: REVIEW_COUNT,
+        },
+        knowsLanguage: ["en", "es"],
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: `${city.name} moving services`,
+          itemListElement: city.services.map((s) => ({
+            "@type": "Offer",
+            itemOffered: {
+              "@type": "Service",
+              name: s.title,
+              description: s.body,
+              areaServed: `${city.name}, FL`,
+              url: `${SITE_URL}${s.href}`,
+            },
+          })),
+        },
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: city.metadata.title,
+        description: city.metadata.description,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+        about: { "@id": `${pageUrl}#business` },
+        primaryImageOfPage: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/images/hero-poster.webp`,
+        },
+        speakable: {
+          "@type": "SpeakableSpecification",
+          cssSelector: ["h1", "#faq h2", ".aeo-answer"],
+        },
+        inLanguage: "en-US",
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: `${city.name} Movers`,
+            item: pageUrl,
+          },
+        ],
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${pageUrl}#faq`,
+        mainEntity: city.faqs.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
         })),
       },
     ],

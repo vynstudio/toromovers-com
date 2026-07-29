@@ -549,11 +549,8 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/orlando-movers"
-  to = "https://live-toro-site.netlify.app/orlando-movers"
-  status = 200
-  force = true
+# /orlando-movers is served by this design site (homepage shell + city copy).
+# Do not proxy to the engine — design owns the page.
 
 [[redirects]]
   from = "/oviedo-movers"

@@ -1757,6 +1757,67 @@ a.trust-chip {
 }
 
 /* Closing: two sections */
+/* City SEO landing — homepage-aligned cards */
+.city-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #f7f8fa;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.city-seo-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .city-seo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+.city-seo-card {
+  border: 1px solid var(--border);
+  border-radius: 1.15rem;
+  background: #fff;
+  padding: 1.35rem 1.25rem 1.5rem;
+  min-width: 0;
+  height: 100%;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .city-seo-card {
+    text-align: left;
+    padding: 1.5rem 1.4rem;
+  }
+}
+
+.city-service-link {
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.city-service-link:hover {
+  border-color: color-mix(in srgb, var(--foreground) 28%, transparent);
+}
+
+.areas-chip--static {
+  cursor: default;
+  pointer-events: none;
+}
+
 /* Service areas — own band (separate from closing CTA) */
 .areas-section {
   background: #f7f8fa;

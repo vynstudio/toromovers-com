@@ -8,12 +8,19 @@ import {
   SERVICE_REGION,
 } from "@/lib/site";
 
+type ClosingCtaProps = {
+  title?: string;
+  body?: string;
+};
+
 /**
  * Closing conversion — separate section from Service areas.
  * 1) Primary CTA block
  * 2) Trust strip
  */
-export function ClosingCta() {
+export function ClosingCta({ title, body }: ClosingCtaProps = {}) {
+  const heading = title ?? closing.title;
+  const lede = body ?? closing.body;
   return (
     <>
       <section
@@ -27,10 +34,10 @@ export function ClosingCta() {
             id="closing-heading"
             className="fluid-display whitespace-pre-line text-foreground"
           >
-            {closing.title}
+            {heading}
           </h2>
           <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-prose text-muted sm:mt-5">
-            {closing.body}
+            {lede}
           </p>
 
           <div className="tap-stack mt-8 justify-center sm:mt-10">
