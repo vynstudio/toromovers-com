@@ -31,7 +31,7 @@ export function WhyToro() {
           {whyToro.items.map((item) => (
             <article
               key={item.title}
-              className="why-card flex w-full flex-col items-start text-left"
+              className="why-card flex w-full flex-col items-center text-center sm:items-start sm:text-left md:items-center md:text-center"
             >
               <div className="icon-circle mb-3" aria-hidden>
                 <FeatureIcon name={item.icon} />
@@ -67,11 +67,11 @@ export function WhyToro() {
         </p>
 
         {/* Thin conversion bar */}
-        <div className="why-cta-bar mt-10 sm:mt-12">
+        <div className="why-cta-bar mt-10 items-stretch justify-center text-center sm:mt-12 sm:items-center">
           <a
             href={PHONE_TEL}
             data-cta="why-call"
-            className="btn-primary btn-fluid tap-target inline-flex w-full sm:w-auto"
+            className="btn-primary btn-fluid tap-target inline-flex w-full justify-center sm:w-auto"
           >
             {whyToro.ctaPhone}
             <span className="hidden sm:inline"> · {PHONE_DISPLAY}</span>
@@ -81,7 +81,7 @@ export function WhyToro() {
             data-open-quote
             data-source="why-quote"
             data-cta="why-quote"
-            className="btn-outline btn-fluid tap-target inline-flex w-full sm:w-auto"
+            className="btn-outline btn-fluid tap-target inline-flex w-full justify-center sm:w-auto"
           >
             {whyToro.ctaQuote}
             <IconArrow />

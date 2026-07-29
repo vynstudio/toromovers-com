@@ -13,7 +13,7 @@ export function FeatureGrid() {
       aria-label="Services and capabilities"
     >
       <div className="site-container">
-        <h2 className="fluid-h2 mb-8 text-foreground md:mb-12 md:text-center">
+        <h2 className="fluid-h2 mb-8 text-center text-foreground md:mb-12">
           What we handle
         </h2>
 
@@ -21,13 +21,13 @@ export function FeatureGrid() {
           {featureGrid.items.map((item) => (
             <div
               key={item.title}
-              className="service-card flex w-full flex-col items-start text-left md:items-center md:text-center"
+              className="service-card flex w-full flex-col items-center text-center"
             >
               <div className="icon-circle mb-3 md:mb-4" aria-hidden>
                 <FeatureIcon name={item.icon} />
               </div>
               <h3 className="fluid-h3 text-foreground">{item.title}</h3>
-              <p className="aeo-answer mt-2 w-full max-w-none text-[var(--text-body)] leading-relaxed text-muted md:mx-auto md:max-w-sm">
+              <p className="aeo-answer mx-auto mt-2 w-full max-w-sm text-[var(--text-body)] leading-relaxed text-muted">
                 {item.body}
               </p>
             </div>

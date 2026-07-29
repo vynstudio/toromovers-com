@@ -34,12 +34,12 @@ export function FeatureAlternating() {
               </div>
 
               <div
-                className={`w-full min-w-0 ${
+                className={`w-full min-w-0 text-center lg:text-left ${
                   f.reverse ? "lg:order-1" : "lg:order-2"
                 } ${textFirstMobile ? "order-1" : "order-2"}`}
               >
                 <h2 className="fluid-h2 text-foreground">{f.title}</h2>
-                <p className="aeo-answer fluid-lede mt-3 max-w-prose text-muted sm:mt-4">
+                <p className="aeo-answer fluid-lede mx-auto mt-3 max-w-prose text-muted sm:mt-4 lg:mx-0">
                   {f.body}
                 </p>
               </div>

@@ -23,18 +23,18 @@ export function Hero() {
       <div className="site-container-wide grid w-full items-center gap-6 sm:gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-20">
         {/* Copy first on all sizes for conversion priority */}
         <div className="order-1 w-full min-w-0 lg:order-2">
-          <div className="card-elevated rounded-[1.25rem] bg-white px-5 py-7 sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:px-12 lg:py-14 xl:px-14 xl:py-16">
+          <div className="card-elevated rounded-[1.25rem] bg-white px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 sm:text-left lg:px-12 lg:py-14 xl:px-14 xl:py-16">
             <h1
               id="hero-heading"
               className="fluid-h1 whitespace-pre-line text-foreground"
             >
               {hero.h1}
             </h1>
-            <p className="aeo-answer fluid-lede mt-4 max-w-prose text-muted sm:mt-5">
+            <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-prose text-muted sm:mx-0 sm:mt-5">
               {hero.lede}
             </p>
 
-            <div className="tap-stack mt-7 sm:mt-8">
+            <div className="tap-stack mx-auto mt-7 max-w-sm sm:mx-0 sm:mt-8 sm:max-w-none">
               <a
                 href={PHONE_TEL}
                 data-cta="hero-call"
@@ -55,7 +55,7 @@ export function Hero() {
               </button>
             </div>
 
-            <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-muted sm:mt-6 sm:text-sm">
+            <p className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-xs text-muted sm:mt-6 sm:justify-start sm:text-sm">
               <span>
                 <strong className="font-semibold text-foreground">
                   {GOOGLE_RATING}★

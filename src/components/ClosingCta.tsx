@@ -62,7 +62,7 @@ export function ClosingCta() {
         className="closing-secondary full-bleed w-full px-[var(--container-pad)]"
         aria-label="Why book with Toro"
       >
-        <div className="site-container grid max-w-4xl gap-8 text-center sm:grid-cols-3 sm:gap-6 sm:text-left">
+        <div className="site-container grid max-w-4xl gap-8 text-center sm:grid-cols-3 sm:gap-6 md:text-left">
           <div>
             <p className="text-2xl font-semibold tracking-tight text-foreground">
               {GOOGLE_RATING}★
@@ -79,12 +79,12 @@ export function ClosingCta() {
               Local crews · same-week when available
             </p>
           </div>
-          <div className="sm:text-right">
+          <div className="flex flex-col items-center md:items-end md:text-right">
             <button
               type="button"
               data-open-quote
               data-source="closing-secondary"
-              className="btn-primary tap-target inline-flex w-full sm:w-auto"
+              className="btn-primary tap-target inline-flex w-full max-w-xs justify-center sm:w-auto"
             >
               Get my free quote
               <IconArrow />

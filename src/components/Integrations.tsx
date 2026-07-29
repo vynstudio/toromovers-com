@@ -20,17 +20,17 @@ export function Integrations() {
               className={`object-cover ${integrations.image.position ?? "object-center"}`}
             />
           </div>
-          <div className="order-2 w-full min-w-0 lg:pl-2">
+          <div className="order-2 w-full min-w-0 text-center lg:pl-2 lg:text-left">
             <h2 id="integrations-heading" className="fluid-h2 text-foreground">
               {integrations.title}
             </h2>
-            <p className="aeo-answer fluid-lede mt-3 max-w-prose text-muted sm:mt-5">
+            <p className="aeo-answer fluid-lede mx-auto mt-3 max-w-prose text-muted sm:mt-5 lg:mx-0">
               {integrations.body}
             </p>
             <a
               href={integrations.ctaHref}
               data-cta="integrations"
-              className="btn-primary btn-fluid tap-target mt-7 inline-flex w-full sm:mt-8 sm:w-auto"
+              className="btn-primary btn-fluid tap-target mx-auto mt-7 inline-flex w-full max-w-sm sm:mt-8 sm:w-auto lg:mx-0 lg:max-w-none"
             >
               {integrations.cta}
               <IconArrow className="h-4 w-4" />
