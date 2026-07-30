@@ -13,8 +13,8 @@ export const nav = {
 } as const;
 
 export const hero = {
-  h1: "Orlando Movers for Clear, Careful Moves",
-  lede: "Toro Movers is a family-owned moving company serving Orlando and Central Florida with full-service moves, labor-only loading, apartment moves, and up-front hourly rates.",
+  h1: "Orlando & Central Local Movers.\nYour Local Provider",
+  lede: "Toro Movers is your local Orlando & Central Florida moving company—full-service, labor-only loading, apartment moves, and up-front hourly rates.",
   cta: "discover toro movers",
   ctaHref: "#discover",
   /** Still frame from the hero video — mobile placeholder until a mobile clip is ready. */

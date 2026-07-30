@@ -2,13 +2,22 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import { BUSINESS_NAME, SITE_DESCRIPTION, SITE_URL } from "@/lib/site";
+import {
+  BUSINESS_NAME,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+  SITE_URL,
+} from "@/lib/site";
 import { organizationGraph } from "@/lib/schema";
 
 /** Searchable Analytics (browser) — human + AI-referred traffic */
 const SEARCHABLE_SITE_TOKEN =
   process.env.NEXT_PUBLIC_SEARCHABLE_SITE_TOKEN ||
   "pst_18bcf81295a1c8185e489122";
+
+/** Meta Pixel — retargeting / ads (audit: install Facebook Pixel) */
+const META_PIXEL_ID =
+  process.env.NEXT_PUBLIC_META_PIXEL_ID || "985575491098437";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -18,8 +27,7 @@ const inter = Inter({
   adjustFontFallback: true,
 });
 
-const titleDefault =
-  "Toro Movers | Orlando Movers & Central Florida Moving Company";
+const titleDefault = SITE_TITLE;
 const description = SITE_DESCRIPTION;
 
 export const metadata: Metadata = {
@@ -149,6 +157,16 @@ export default function RootLayout({
           data-domain="toromovers.com"
           data-site-token={SEARCHABLE_SITE_TOKEN}
         />
+        {META_PIXEL_ID ? (
+          <Script id="meta-pixel" strategy="afterInteractive">
+            {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`}
+          </Script>
+        ) : null}
         {children}
       </body>
     </html>

@@ -41,12 +41,14 @@ export const ORLANDO: CityPageContent = {
   name: "Orlando",
   badge: "Orlando, FL movers",
   metadata: {
-    title: "Orlando Movers | Local Moving Company in Orlando FL",
+    // 50–60 chars
+    title: "Orlando Movers | Local Moving Company FL",
+    // 120–160 chars
     description:
-      "Need Orlando movers? Toro Movers is a family-owned moving company offering full-service moves, labor-only loading, apartment moves, and up-front hourly rates.",
+      "Need Orlando movers? Family-owned Toro Movers offers full-service, labor-only & apartment moves with up-front hourly rates. Call (689) 600-2720.",
   },
-  h1: "Orlando Movers for Clear, Careful Local Moves",
-  lede: "Toro Movers is a family-owned Orlando moving company helping local customers with full-service moves, labor-only loading and unloading, apartment moves, and up-front hourly rates.",
+  h1: "Orlando & Central Local Movers.\nYour Local Provider",
+  lede: "Toro Movers is your local Orlando moving company—full-service, labor-only loading, apartment moves, and up-front hourly rates for Central Florida.",
   about: {
     h2: "Local movers in Orlando, FL",
     body: "Toro Movers provides local moving help in Orlando, FL for homes, apartments, storage units, rental trucks, and POD-style containers. Our bilingual English and Spanish crew helps with full-service moves, labor-only loading, apartment moves, and careful placement at your new address.",

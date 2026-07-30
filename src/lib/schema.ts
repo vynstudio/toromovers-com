@@ -1,12 +1,15 @@
 import {
   BUSINESS_NAME,
   EMAIL,
+  GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
   PHONE_E164,
   POSTAL_CODE,
   REVIEW_COUNT,
   SERVICE_BASE_LOCALITY,
   SERVICE_REGION,
+  SITE_DESCRIPTION,
+  SITE_TITLE,
   SITE_URL,
   SOCIAL_PROFILES,
   SLOGAN,
@@ -19,16 +22,18 @@ import { googleReviews } from "@/lib/reviews";
 const organizationDescription =
   "Toro Movers is a family-owned Orlando moving company serving Central Florida with full-service moves, labor-only loading and unloading, apartment moving, bilingual English and Spanish crews, and up-front hourly rates.";
 
-/** Homepage WebPage description — answer-first for AEO. */
-const homepageDescription =
-  "Toro Movers helps Orlando and Central Florida customers plan local moves with full-service moving, labor-only loading, apartment moving, bilingual communication, and clear hourly pricing before move day.";
+/** Homepage WebPage description — keep aligned with meta (SERP + AEO). */
+const homepageDescription = SITE_DESCRIPTION;
+
+/** Freshness for WebPage / GEO audits */
+const DATE_MODIFIED = new Date().toISOString().slice(0, 10);
 
 export function organizationGraph() {
   return {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": ["MovingCompany", "LocalBusiness"],
+        "@type": ["LocalBusiness", "MovingCompany"],
         "@id": `${SITE_URL}/#movingcompany`,
         name: BUSINESS_NAME,
         legalName: "Toro Movers LLC",
@@ -82,7 +87,10 @@ export function organizationGraph() {
             bestRating: "5",
           },
         })),
-        sameAs: SOCIAL_PROFILES,
+        sameAs: [
+          ...SOCIAL_PROFILES,
+          GOOGLE_MAPS_REVIEWS_URL,
+        ].filter(Boolean),
         openingHoursSpecification: [
           {
             "@type": "OpeningHoursSpecification",
@@ -152,8 +160,9 @@ export function homePageGraph() {
         "@type": "WebPage",
         "@id": `${SITE_URL}/#webpage`,
         url: SITE_URL,
-        name: "Toro Movers | Orlando Movers & Central Florida Moving Company",
+        name: SITE_TITLE,
         description: homepageDescription,
+        dateModified: DATE_MODIFIED,
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${SITE_URL}/#movingcompany` },
         primaryImageOfPage: {
@@ -258,6 +267,7 @@ export function cityPageGraph(city: CityPageContent) {
         url: pageUrl,
         name: city.metadata.title,
         description: city.metadata.description,
+        dateModified: DATE_MODIFIED,
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${pageUrl}#business` },
         primaryImageOfPage: {
