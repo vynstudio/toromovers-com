@@ -47,7 +47,7 @@ export const ORLANDO: CityPageContent = {
     description:
       "Need Orlando movers? Family-owned Toro Movers offers full-service, labor-only & apartment moves with up-front hourly rates. Call (689) 600-2720.",
   },
-  h1: "Orlando & Central Local Movers.\nYour Local Provider",
+  h1: "#1 Trusted Movers in\nOrlando & Central Florida",
   lede: "Toro Movers is your local Orlando moving company—full-service, labor-only loading, apartment moves, and up-front hourly rates for Central Florida.",
   about: {
     h2: "Local movers in Orlando, FL",

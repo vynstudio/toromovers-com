@@ -15,7 +15,7 @@ export const nav = {
 } as const;
 
 export const hero = {
-  h1: "Orlando & Central Local Movers.\nYour Local Provider",
+  h1: "#1 Trusted Movers in\nOrlando & Central Florida",
   lede: "Toro Movers is your local Orlando & Central Florida moving company—full-service, labor-only loading, apartment moves, and up-front hourly rates.",
   cta: "discover toro movers",
   ctaHref: "#discover",
