@@ -6,6 +6,7 @@ import { Process } from "@/components/Process";
 import { FeatureAlternating } from "@/components/FeatureAlternating";
 import { Integrations } from "@/components/Integrations";
 import { WhyToro } from "@/components/WhyToro";
+import { RecentMoves } from "@/components/RecentMoves";
 import { Reviews } from "@/components/Reviews";
 import { Faq } from "@/components/Faq";
 import { Areas } from "@/components/Areas";
@@ -19,7 +20,7 @@ import { homePageGraph } from "@/lib/schema";
 /**
  * Mobile-first conversion path:
  * Hero → trust → services → process → lifestyle proof → why Toro →
- * reviews → FAQ → areas → close.
+ * recent moves → reviews → FAQ → areas → close.
  */
 export default function HomePage() {
   return (
@@ -37,6 +38,7 @@ export default function HomePage() {
         <FeatureAlternating />
         <Integrations />
         <WhyToro />
+        <RecentMoves />
         <Reviews />
         <Faq />
         <Areas />

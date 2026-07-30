@@ -1,5 +1,6 @@
 import { CityHero } from "@/components/city/CityHero";
 import { TrustBar } from "@/components/TrustBar";
+import { RecentMoves } from "@/components/RecentMoves";
 import { Reviews } from "@/components/Reviews";
 import { Faq } from "@/components/Faq";
 import { ClosingCta } from "@/components/ClosingCta";
@@ -143,6 +144,8 @@ export function CityLanding({ city }: { city: CityPageContent }) {
           </div>
         </div>
       </section>
+
+      <RecentMoves />
 
       <Reviews />
 

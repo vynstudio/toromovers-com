@@ -964,6 +964,130 @@ select:focus-visible {
 }
 
 /* -------------------------------------------------------------------------- */
+/* Recent Moves gallery (DID-style SEO proof)                                 */
+/* -------------------------------------------------------------------------- */
+.recent-moves {
+  background: #fff;
+  border-top: 1px solid var(--border);
+}
+
+.recent-moves--page {
+  background: #f7f8fa;
+}
+
+.recent-moves-head {
+  text-align: center;
+  max-width: 36rem;
+  margin: 0 auto 1.75rem;
+}
+
+.recent-moves-eyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.recent-moves-lead {
+  margin: 0.75rem auto 0;
+  max-width: 34rem;
+  font-size: var(--text-lede);
+  line-height: 1.55;
+}
+
+.recent-moves-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+@media (min-width: 640px) {
+  .recent-moves-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .recent-moves-grid:not(.recent-moves-grid--page) {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0.65rem;
+  }
+
+  .recent-moves-grid--page {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+.recent-moves-item {
+  min-width: 0;
+}
+
+.recent-moves-card {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.85rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.recent-moves-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  background: #e8e8e8;
+  overflow: hidden;
+}
+
+.recent-moves-cap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.65rem 0.75rem 0.75rem;
+  text-align: left;
+}
+
+.recent-moves-cap-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  line-height: 1.25;
+}
+
+.recent-moves-cap-meta {
+  font-size: 0.7rem;
+  color: var(--muted);
+  line-height: 1.3;
+}
+
+@media (min-width: 768px) {
+  .recent-moves-cap-title {
+    font-size: 0.875rem;
+  }
+
+  .recent-moves-cap-meta {
+    font-size: 0.75rem;
+  }
+}
+
+.recent-moves-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* -------------------------------------------------------------------------- */
 /* FAQ — card panel + stacked accordion (homepage + city landings)            */
 /* -------------------------------------------------------------------------- */
 .faq-section {
