@@ -65,8 +65,9 @@ export const servicesHub = {
       title: "Commercial movers",
       body: "Small offices and suites with planned access and after-hours options when available.",
       href: "/commercial-movers",
-      image: "/images/moves/fs-04-orlando-crew-truck.jpg",
-      imageAlt: "Toro Movers crew and truck for commercial and full-service jobs",
+      image: "/images/moves/work-01.jpg",
+      imageAlt:
+        "Toro Movers loading furniture tightly into a truck on a local commercial-style job",
       icon: "map" as const,
     },
   ] satisfies ServiceHubItem[],
