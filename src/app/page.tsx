@@ -18,9 +18,10 @@ import { CookieBanner } from "@/components/CookieBanner";
 import { homePageGraph } from "@/lib/schema";
 
 /**
- * Mobile-first conversion path:
- * Hero → trust → services → process → lifestyle proof → why Toro →
- * recent moves → reviews → FAQ → areas → close.
+ * DID-style homepage strategy (Toro layout kept):
+ * Hero → trust → all services (linked) → process → recent moves (real photos)
+ * → why Toro → reviews → FAQ → areas → close.
+ * Lifestyle blocks kept lower for brand, not competing with service SEO.
  */
 export default function HomePage() {
   return (
@@ -35,13 +36,13 @@ export default function HomePage() {
         <TrustBar />
         <FeatureGrid />
         <Process />
-        <FeatureAlternating />
-        <Integrations />
-        <WhyToro />
         <RecentMoves />
+        <WhyToro />
         <Reviews />
         <Faq />
         <Areas />
+        <FeatureAlternating />
+        <Integrations />
         <ClosingCta />
       </main>
       <Footer />

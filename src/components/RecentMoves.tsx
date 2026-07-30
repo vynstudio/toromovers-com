@@ -10,12 +10,12 @@ import { IconArrow } from "@/components/icons";
 type RecentMovesProps = {
   items?: readonly MoveShot[];
   showAllLink?: boolean;
-  /** home = dense strip; page = grouped by service (DID gallery) */
   variant?: "home" | "page";
 };
 
 /**
- * DID-style Recent Moves — homepage grid or service-organized gallery.
+ * Real work photos — homepage strip or service-grouped gallery.
+ * Each card interlinks to the matching service/city page.
  */
 export function RecentMoves({
   items = recentMovesHome,
@@ -51,7 +51,12 @@ export function RecentMoves({
           <div className="recent-moves-groups">
             {groups.map((g) => (
               <div key={g.id} className="recent-moves-group">
-                <h3 className="recent-moves-group-title">{g.label}</h3>
+                <div className="recent-moves-group-bar">
+                  <h3 className="recent-moves-group-title">{g.label}</h3>
+                  <a href={g.href} className="recent-moves-group-link">
+                    {g.label} service <IconArrow />
+                  </a>
+                </div>
                 <MoveGrid items={g.items} isPage />
               </div>
             ))}
@@ -91,33 +96,35 @@ function MoveGrid({
     >
       {items.map((shot, i) => (
         <li key={shot.id} className="recent-moves-item">
-          <figure className="recent-moves-card">
-            <div className="recent-moves-frame">
-              <Image
-                src={shot.src}
-                alt={shot.alt}
-                fill
-                sizes={
-                  isPage
-                    ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                }
-                className="object-cover"
-                priority={i < 2}
-              />
-            </div>
-            <figcaption className="recent-moves-cap">
-              <span className="recent-moves-cap-title">{shot.title}</span>
-              <span className="recent-moves-cap-meta">
-                {shot.serviceLabel} · {shot.area}
-              </span>
-              {isPage ? (
-                <p className="recent-moves-cap-desc aeo-answer">
-                  {shot.description}
-                </p>
-              ) : null}
-            </figcaption>
-          </figure>
+          <a href={shot.href} className="recent-moves-card-link">
+            <figure className="recent-moves-card">
+              <div className="recent-moves-frame">
+                <Image
+                  src={shot.src}
+                  alt={shot.alt}
+                  fill
+                  sizes={
+                    isPage
+                      ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                  }
+                  className="object-cover"
+                  priority={i < 2}
+                />
+              </div>
+              <figcaption className="recent-moves-cap">
+                <span className="recent-moves-cap-title">{shot.title}</span>
+                <span className="recent-moves-cap-meta">
+                  {shot.serviceLabel} · {shot.area}
+                </span>
+                {isPage ? (
+                  <p className="recent-moves-cap-desc aeo-answer">
+                    {shot.description}
+                  </p>
+                ) : null}
+              </figcaption>
+            </figure>
+          </a>
         </li>
       ))}
     </ul>

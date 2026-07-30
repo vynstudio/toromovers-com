@@ -64,6 +64,7 @@ function galleryGraph() {
           description: m.description,
           caption: `${m.title}. ${m.description}`,
           keywords: `${m.serviceLabel}, ${m.area}, Toro Movers`,
+          url: `${SITE_URL}${m.href}`,
         })),
       },
       {

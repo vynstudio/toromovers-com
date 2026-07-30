@@ -1,14 +1,6 @@
 /**
- * Recent Moves — organized like didmoving.com gallery SEO.
- *
- * Parameters (per image, DID-style):
- * - title: short job-style headline (lightbox / caption)
- * - description: longer citable SEO sentence
- * - service: category bucket
- * - area: city / metro
- * - src / alt: file + accessibility SEO
- *
- * Swap files in /public/images/moves/ anytime; keep ids stable.
+ * Recent Moves — real Toro job photos + DID-style SEO parameters.
+ * title / description / service / area / href interlink to service pages.
  */
 
 export type MoveService =
@@ -23,176 +15,229 @@ export type MoveShot = {
   id: string;
   src: string;
   alt: string;
-  /** DID-style lightbox title */
   title: string;
-  /** DID-style longer description (citation-ready) */
   description: string;
   service: MoveService;
   serviceLabel: string;
   area: string;
+  /** Internal link for SEO (service or city page) */
+  href: string;
 };
 
-/** Homepage + gallery shared heading (DID: “Recent MOVES” / “See Us in Action”) */
 export const recentMovesHeading = {
   eyebrow: "Recent moves",
   title: "See us in action",
-  lead: "Orlando and Central Florida move work—apartment moves, home moves, packing, loading, and a bilingual local crew.",
+  lead: "Real Toro Movers work across Orlando and Central Florida—loading, packing, residential homes, and careful full-service moves by our local crew.",
   cta: "View full gallery",
   ctaHref: "/orlando-movers-gallery",
 } as const;
 
-/**
- * Service order for gallery filters / grouping (DID service silos, Toro labels).
- */
 export const MOVE_SERVICE_ORDER: readonly {
   id: MoveService;
   label: string;
+  href: string;
 }[] = [
-  { id: "apartment", label: "Apartment moves" },
-  { id: "residential", label: "Residential / homes" },
-  { id: "full-service", label: "Full-service" },
-  { id: "labor-only", label: "Labor-only / loading" },
-  { id: "packing", label: "Packing & protection" },
-  { id: "crew", label: "Local crew" },
+  { id: "full-service", label: "Full-service", href: "/full-service-moving" },
+  { id: "apartment", label: "Apartment moves", href: "/apartment-movers-orlando-fl" },
+  { id: "residential", label: "Residential / homes", href: "/residential-movers" },
+  { id: "labor-only", label: "Labor-only / loading", href: "/labor-only-moving" },
+  { id: "packing", label: "Packing & protection", href: "/full-service-moving" },
+  { id: "crew", label: "Local crew", href: "/orlando-movers" },
 ] as const;
 
-/** Full gallery catalog */
+/** Primary catalog: real work photos first (Desktop/Toromovers job shots) */
 export const recentMoves: readonly MoveShot[] = [
   {
-    id: "orlando-apartment",
-    src: "/images/moves/move-apartment-orlando.webp",
-    alt: "Apartment furniture carefully handled during an Orlando apartment move with Toro Movers",
-    title: "Apartment Moving — Orlando Local Movers",
+    id: "work-01",
+    src: "/images/moves/work-01.jpg",
+    alt: "Toro Movers loading patio furniture tightly into a moving truck on a local Orlando area job",
+    title: "Tight Truck Load — Local Full-Service Move",
     description:
-      "Toro Movers handles apartment moves in Orlando with attention to stairs, elevators, loading zones, and tight move-in windows so floors, doors, and furniture stay protected.",
+      "Toro Movers packs outdoor furniture and household items tight on the truck so nothing shifts—full-service and labor-only loading across Orlando and Central Florida.",
+    service: "full-service",
+    serviceLabel: "Full-service moving",
+    area: "Orlando metro",
+    href: "/full-service-moving",
+  },
+  {
+    id: "work-06",
+    src: "/images/moves/work-06.jpg",
+    alt: "Labeled moving boxes staged on a Central Florida driveway for a residential home move with Toro Movers",
+    title: "Residential Home Move — Central Florida",
+    description:
+      "Labeled boxes staged for a residential home move. Toro Movers handles house moves with clear hourly pricing and a local bilingual crew.",
+    service: "residential",
+    serviceLabel: "Residential moving",
+    area: "Central Florida",
+    href: "/residential-movers",
+  },
+  {
+    id: "work-02",
+    src: "/images/moves/work-02.jpg",
+    alt: "Toro Movers crew working a local move job in Central Florida",
+    title: "Local Crew On the Job",
+    description:
+      "Family-owned local movers—same crew style you meet on quote day, careful with furniture and access in Orlando apartments and homes.",
+    service: "crew",
+    serviceLabel: "Local crew",
+    area: "Orlando, FL",
+    href: "/orlando-movers",
+  },
+  {
+    id: "work-03",
+    src: "/images/moves/work-03.jpg",
+    alt: "Furniture and items protected during a Toro Movers local move",
+    title: "Furniture Protection — Full-Service",
+    description:
+      "Pads, wraps, and careful carries protect furniture on full-service Orlando moves so pieces arrive ready for placement.",
+    service: "full-service",
+    serviceLabel: "Full-service moving",
+    area: "Central Florida",
+    href: "/full-service-moving",
+  },
+  {
+    id: "work-04",
+    src: "/images/moves/work-04.jpg",
+    alt: "Loading and unloading work by Toro Movers labor-only or full-service crew",
+    title: "Loading & Unloading — Labor-Only or Truck",
+    description:
+      "Labor-only loading for U-Haul, PODS, and rental trucks—or full-service truck and crew—quoted by the hour with clear minimums.",
+    service: "labor-only",
+    serviceLabel: "Labor-only / loading",
+    area: "Central Florida",
+    href: "/labor-only-moving",
+  },
+  {
+    id: "work-05",
+    src: "/images/moves/work-05.jpg",
+    alt: "Apartment or condo move access work with Toro Movers in Orlando",
+    title: "Apartment Access — Orlando Movers",
+    description:
+      "Apartment movers in Orlando plan for stairs, elevators, parking, and move-in windows so the crew works carefully in tight spaces.",
     service: "apartment",
     serviceLabel: "Apartment moving",
     area: "Orlando, FL",
+    href: "/apartment-movers-orlando-fl",
   },
   {
-    id: "orlando-crew",
-    src: "/images/moves/move-orlando-crew.webp",
-    alt: "Toro Movers local crew prepared for a residential move in Orlando",
-    title: "Local Crew Ready — Orlando Movers",
+    id: "work-07",
+    src: "/images/moves/work-07.jpg",
+    alt: "Toro Movers packing and staging boxes on move day",
+    title: "Packing & Staging — Move Day Prep",
     description:
-      "Family-owned Orlando movers with a local bilingual crew—clear communication and up-front hourly rates for homes and apartments across Central Florida.",
-    service: "crew",
-    serviceLabel: "Local crew",
-    area: "Orlando, FL",
+      "Organized packing and staging help the crew load faster and protect fragile items on local Central Florida moves.",
+    service: "packing",
+    serviceLabel: "Packing & protection",
+    area: "Orlando metro",
+    href: "/full-service-moving",
   },
   {
-    id: "home-move",
-    src: "/images/moves/move-home-lake-mary.webp",
-    alt: "Residential home move with Toro Movers in Central Florida",
-    title: "Residential Home Move — Central Florida",
+    id: "work-08",
+    src: "/images/moves/work-08.jpg",
+    alt: "Toro Movers handling household items on a residential move",
+    title: "Careful Handling — Residential Move",
     description:
-      "Home and residential moves across Central Florida with careful loading, placement, and a local crew that plans around access, parking, and household volume.",
+      "Residential movers for Central Florida homes—careful handling, clear communication, and up-front hourly rates.",
     service: "residential",
     serviceLabel: "Residential moving",
     area: "Central Florida",
+    href: "/residential-movers",
   },
   {
-    id: "loading",
-    src: "/images/moves/move-loading.webp",
-    alt: "Toro Movers loading furniture and boxes for a local Central Florida move",
-    title: "Loading Day — Full-Service & Labor-Only",
+    id: "work-09",
+    src: "/images/moves/work-09.jpg",
+    alt: "Toro Movers crew loading a truck for a local Orlando move",
+    title: "Truck Loading — Orlando Local Movers",
     description:
-      "Loading and unloading for full-service truck moves or labor-only help with U-Haul, PODS, trailers, and rental trucks—packed tightly by the hour.",
-    service: "labor-only",
-    serviceLabel: "Labor-only / loading",
+      "Full-service truck loading by a local Orlando crew with bilingual English and Spanish support on the job.",
+    service: "full-service",
+    serviceLabel: "Full-service moving",
+    area: "Orlando, FL",
+    href: "/full-service-moving",
+  },
+  {
+    id: "work-10",
+    src: "/images/moves/work-10.jpg",
+    alt: "Protected furniture and appliances on a Toro Movers job",
+    title: "Appliance & Furniture Protection",
+    description:
+      "Appliances and furniture wrapped and moved carefully—part of full-service and careful labor-only jobs across the metro.",
+    service: "packing",
+    serviceLabel: "Packing & protection",
     area: "Central Florida",
+    href: "/full-service-moving",
   },
   {
-    id: "team",
-    src: "/images/moves/move-team.webp",
-    alt: "Bilingual Toro Movers team on a local Orlando-area job",
-    title: "Bilingual Moving Crew — Orlando Metro",
+    id: "work-11",
+    src: "/images/moves/work-11.jpg",
+    alt: "Toro Movers team on a Central Florida local moving job",
+    title: "Bilingual Local Crew",
     description:
-      "English and Spanish-speaking movers keep timing, furniture placement, and building rules clear from the first quote to the final box.",
+      "English and Spanish-speaking movers keep instructions clear from first call to final box on Orlando and Central Florida jobs.",
     service: "crew",
     serviceLabel: "Local crew",
     area: "Orlando metro",
+    href: "/orlando-movers",
   },
   {
-    id: "residential",
-    src: "/images/moves/move-residential.webp",
-    alt: "Furniture protected with pads during a Toro Movers full-service local move",
-    title: "Furniture Protection — Full-Service Moving",
+    id: "work-12",
+    src: "/images/moves/work-12.jpg",
+    alt: "Completed local move work with Toro Movers in Central Florida",
+    title: "Local Move Complete — Central Florida",
     description:
-      "Full-service Orlando movers protect furniture with pads and careful carries so large pieces and household goods arrive ready for placement.",
+      "Local movers for Orlando and nearby cities—homes, apartments, storage, and labor-only loading with honest hourly pricing.",
     service: "full-service",
     serviceLabel: "Full-service moving",
     area: "Central Florida",
+    href: "/orlando-movers",
   },
   {
-    id: "packing",
-    src: "/images/moves/move-packing.webp",
-    alt: "Boxes packed and staged before an Orlando moving day with Toro Movers",
-    title: "Packing Prep — Orlando Move Day",
+    id: "fs-crew-truck",
+    src: "/images/moves/fs-04-orlando-crew-truck.jpg",
+    alt: "Toro Movers crew with truck for full-service Orlando moving",
+    title: "Full-Service Crew & Truck — Orlando",
     description:
-      "Organized packing and staging before move day helps full-service and labor-only crews load faster and protect fragile items.",
+      "Full-service movers in Orlando bring the truck, crew, loading, transport, unloading, and placement with up-front hourly rates.",
+    service: "full-service",
+    serviceLabel: "Full-service moving",
+    area: "Orlando, FL",
+    href: "/full-service-moving",
+  },
+  {
+    id: "fs-wrap",
+    src: "/images/moves/fs-02-wrap-protect.jpg",
+    alt: "Furniture wrap and protection during a Toro Movers full-service job",
+    title: "Wrap & Protect — Full-Service Moving",
+    description:
+      "Professional wrap and pad protection on full-service moves so sofas, mattresses, and fragile pieces stay safe in transit.",
     service: "packing",
     serviceLabel: "Packing & protection",
-    area: "Orlando, FL",
-  },
-  {
-    id: "boxes",
-    src: "/images/moves/move-boxes.webp",
-    alt: "Organized boxes ready for labor-only or full-service loading with Toro Movers",
-    title: "Organized Load — Labor-Only & Full-Service",
-    description:
-      "Clear stacks and labeled loads support efficient hourly work—whether you need truck-and-crew full-service or labor-only loading.",
-    service: "labor-only",
-    serviceLabel: "Labor-only / loading",
     area: "Central Florida",
-  },
-  {
-    id: "hero-crew",
-    src: "/images/moves/move-hero-crew.webp",
-    alt: "Toro Movers crew handling a residential move in Central Florida",
-    title: "Move Day — Central Florida Local Movers",
-    description:
-      "Local Central Florida movers focused on careful handling, clear hourly pricing, and reliable crews for Orlando metro and nearby cities.",
-    service: "full-service",
-    serviceLabel: "Full-service moving",
-    area: "Central Florida",
-  },
-  {
-    id: "lake-mary-crew",
-    src: "/images/moves/move-lake-mary-crew.webp",
-    alt: "Toro Movers crew support for residential moves near Lake Mary and Orlando",
-    title: "Residential Support — North Metro / Central Florida",
-    description:
-      "Local movers covering Orlando and nearby Central Florida communities with the same up-front hourly model and bilingual crew.",
-    service: "residential",
-    serviceLabel: "Residential moving",
-    area: "Central Florida",
+    href: "/full-service-moving",
   },
 ] as const;
 
-/** Homepage strip — first 6 (DID home gallery density) */
 export const recentMovesHome = recentMoves.slice(0, 6);
 
-/** Group shots by service for gallery page organization */
 export function recentMovesByService(): {
   id: MoveService;
   label: string;
+  href: string;
   items: MoveShot[];
 }[] {
   return MOVE_SERVICE_ORDER.map((s) => ({
     id: s.id,
     label: s.label,
+    href: s.href,
     items: recentMoves.filter((m) => m.service === s.id) as MoveShot[],
   })).filter((g) => g.items.length > 0);
 }
 
-/** Gallery page SEO (DID: Houston Movers Gallery | … Recent Work) */
 export const recentMovesPageMeta = {
   title: "Orlando Movers Gallery | Recent Moves & Local Work",
   description:
-    "Orlando movers gallery—see Toro Movers apartment moves, home moves, packing, and loading across Central Florida. Family-owned local crew.",
-  /** DID-style city gallery slug */
+    "Real Toro Movers photos: Orlando apartment moves, home moves, packing, and truck loading across Central Florida. Family-owned local crew.",
   path: "/orlando-movers-gallery",
   h1: "Orlando movers gallery",
-  sub: "Recent work across Orlando and Central Florida",
+  sub: "Recent work from real local jobs",
 } as const;

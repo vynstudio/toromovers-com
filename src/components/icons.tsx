@@ -59,6 +59,23 @@ export function IconMap({ className = "h-7 w-7" }: IconProps) {
   );
 }
 
+export function IconHome({ className = "h-7 w-7" }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+      <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1v-10.5Z" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function IconLoad({ className = "h-7 w-7" }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+      <path d="M4 20h16M7 16V8l5-4 5 4v8" strokeLinejoin="round" />
+      <path d="M9 12h6M12 9v6" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export function IconArrow({ className = "h-4 w-4" }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
@@ -100,6 +117,8 @@ const iconMap = {
   tag: IconTag,
   chat: IconChat,
   map: IconMap,
+  home: IconHome,
+  load: IconLoad,
 } as const;
 
 export type FeatureIconName = keyof typeof iconMap;

@@ -1,50 +1,84 @@
-import { featureGrid } from "@/lib/content";
+import Image from "next/image";
+import { servicesHub } from "@/lib/services-hub";
 import { FeatureIcon, IconArrow } from "@/components/icons";
 
 /**
- * Services — high on mobile conversion path.
- * 1-col → 2-col (768) → 3-col (1024).
+ * DID-style services hub on homepage — all core services, linked + photo proof.
+ * Layout stays card grid; light accent on icons/links.
  */
 export function FeatureGrid() {
   return (
     <section
       id="services"
       className="full-bleed section-pad w-full bg-white"
-      aria-label="Services and capabilities"
+      aria-labelledby="services-heading"
     >
       <div className="site-container">
-        <h2 className="fluid-h2 mb-8 text-center text-foreground md:mb-12">
-          {featureGrid.heading}
-        </h2>
+        <header className="services-hub-head">
+          <p className="services-hub-eyebrow">{servicesHub.eyebrow}</p>
+          <h2
+            id="services-heading"
+            className="fluid-h2 text-center text-foreground"
+          >
+            {servicesHub.heading}
+          </h2>
+          <p className="aeo-answer services-hub-lead text-muted">
+            {servicesHub.lead}
+          </p>
+        </header>
 
-        <div className="section-grid section-grid-3">
-          {featureGrid.items.map((item) => (
-            <div
-              key={item.title}
-              className="service-card flex w-full flex-col items-center text-center"
+        <div className="services-hub-grid">
+          {servicesHub.items.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="services-hub-card"
+              data-cta={`service-${item.href.replace(/\//g, "")}`}
             >
-              <div className="icon-circle mb-3 md:mb-4" aria-hidden>
-                <FeatureIcon name={item.icon} />
+              <div className="services-hub-img">
+                <Image
+                  src={item.image}
+                  alt={item.imageAlt}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover"
+                />
               </div>
-              <h3 className="fluid-h3 text-foreground">{item.title}</h3>
-              <p className="aeo-answer mx-auto mt-2 w-full max-w-sm text-[var(--text-body)] leading-relaxed text-muted">
-                {item.body}
-              </p>
-            </div>
+              <div className="services-hub-body">
+                <div className="services-hub-icon" aria-hidden>
+                  <FeatureIcon name={item.icon} />
+                </div>
+                <h3 className="fluid-h3 text-foreground">{item.title}</h3>
+                <p className="aeo-answer services-hub-copy text-muted">
+                  {item.body}
+                </p>
+                <span className="services-hub-link">
+                  Learn more <IconArrow />
+                </span>
+              </div>
+            </a>
           ))}
         </div>
 
-        <div className="mt-10 flex justify-center md:mt-14">
+        <div className="services-hub-actions">
           <button
             type="button"
             data-open-quote
             data-source="features-quote"
             data-cta="features-quote"
-            className="btn-outline btn-fluid tap-target inline-flex w-full max-w-sm md:w-auto md:max-w-none"
+            className="btn-primary btn-fluid tap-target inline-flex"
           >
-            {featureGrid.cta}
+            {servicesHub.cta}
             <IconArrow />
           </button>
+          <a
+            href={servicesHub.galleryHref}
+            className="btn-outline btn-fluid tap-target inline-flex"
+            data-cta="services-gallery"
+          >
+            {servicesHub.galleryCta}
+            <IconArrow />
+          </a>
         </div>
       </div>
     </section>
