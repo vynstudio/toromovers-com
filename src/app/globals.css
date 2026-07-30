@@ -1087,6 +1087,41 @@ select:focus-visible {
   margin-top: 1.5rem;
 }
 
+/* Gallery page: group by service (DID service silos) */
+.gallery-page-hero {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.5rem;
+}
+
+.recent-moves-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
+}
+
+.recent-moves-group-title {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  text-align: left;
+}
+
+.recent-moves-cap-desc {
+  margin: 0.4rem 0 0;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+@media (min-width: 768px) {
+  .recent-moves-cap-desc {
+    font-size: 0.8125rem;
+  }
+}
+
 /* -------------------------------------------------------------------------- */
 /* FAQ — card panel + stacked accordion (homepage + city landings)            */
 /* -------------------------------------------------------------------------- */
