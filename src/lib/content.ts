@@ -19,10 +19,10 @@ export const hero = {
   lede: "Toro Movers is your local Orlando & Central Florida moving company—full-service, labor-only loading, apartment moves, and up-front hourly rates.",
   cta: "discover toro movers",
   ctaHref: "#discover",
-  /** Still frame from the hero video — mobile placeholder until a mobile clip is ready. */
+  /** Real crew/job still — mobile placeholder; desktop uses hero video when available. */
   image: {
-    src: "/images/hero-poster.webp",
-    alt: "Toro Movers crew handling a residential move in Central Florida",
+    src: "/images/hero-crew-real.jpg",
+    alt: "Toro Movers crew on a real local move job in Central Florida",
   },
   /** Desktop-only (lg+) high-quality muted loop. */
   video: {
@@ -30,7 +30,7 @@ export const hero = {
   },
 } as const;
 
-/** src + alt + focal point for portrait stock inside landscape/tall frames. */
+/** src + alt + focal point for real job photos inside landscape/tall frames. */
 export type ImageAsset = {
   src: string;
   alt: string;
@@ -54,8 +54,8 @@ export const features: FeatureBlock[] = [
     title: "So smooth, you won't feel buried by move day",
     body: "A good move starts before the first box is lifted. Toro Movers plans around the details that slow down Orlando moves: apartment access, stairs, elevator windows, parking, storage units, and rental trucks. You get a calm, clear plan with the right crew for the job.",
     image: {
-      src: "/images/comfort-relax.webp",
-      alt: "Central Florida customers relaxing after a completed local move",
+      src: "/images/proof-protect.jpg",
+      alt: "Furniture stretch-wrapped by Toro Movers on a real local job",
       position: "object-[center_42%]",
     },
     reverse: false,
@@ -65,8 +65,8 @@ export const features: FeatureBlock[] = [
     title: "Precise is nice",
     body: "Careful moving is not just about strength. Our crew loads furniture, boxes, and fragile items with attention to tight stairwells, doorways, floors, and truck space. Whether you need full-service movers or labor-only loading, the goal is simple: move efficiently without making a mess of your day.",
     image: {
-      src: "/images/precise-packing.webp",
-      alt: "Family packing boxes before an Orlando moving day",
+      src: "/images/proof-apartment.jpg",
+      alt: "Wrapped furniture staged during a real Toro Movers apartment move",
       position: "object-[center_32%]",
     },
     reverse: true,
@@ -80,9 +80,9 @@ export const integrations = {
   cta: "Know your move better",
   ctaHref: "#why",
   image: {
-    src: "/images/living-joy.webp",
-    alt: "Homeowner after a carefully coordinated Central Florida move",
-    position: "object-[center_58%]",
+    src: "/images/proof-loading.jpg",
+    alt: "Toro Movers crew carrying boxes on a real apartment move job",
+    position: "object-[center_40%]",
   },
 } as const;
 
