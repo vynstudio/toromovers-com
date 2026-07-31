@@ -7,45 +7,40 @@ import {
 } from "@/lib/site";
 
 /**
- * Concrete “why us” — monochrome cards + proof stats + thin conversion bar.
- * Replaces stacked full-bleed lifestyle photo banners.
+ * Compact “why us” band — SEO/AEO header + 4 tight cards + stats + CTAs.
+ * Fits a desktop viewport without towering empty pad.
  */
 export function WhyToro() {
   return (
     <section
       id="why"
-      className="full-bleed section-pad w-full bg-white"
+      className="why-band full-bleed w-full bg-white"
       aria-labelledby="why-heading"
     >
       <div className="site-container">
-        <div className="mx-auto max-w-2xl text-center">
-          <h2 id="why-heading" className="fluid-h2 text-foreground">
+        <header className="why-head">
+          <p className="why-eyebrow">{whyToro.eyebrow}</p>
+          <h2 id="why-heading" className="why-title text-foreground">
             {whyToro.title}
           </h2>
-          <p className="aeo-answer fluid-lede mt-3 text-muted sm:mt-4">
-            {whyToro.lede}
-          </p>
-        </div>
+          <p className="aeo-answer why-lede text-muted">{whyToro.lede}</p>
+        </header>
 
-        <div className="why-grid mt-10 sm:mt-12">
+        <div className="why-grid">
           {whyToro.items.map((item) => (
-            <article
-              key={item.title}
-              className="why-card flex w-full flex-col items-center text-center sm:items-start sm:text-left md:items-center md:text-center"
-            >
-              <div className="icon-circle mb-3" aria-hidden>
+            <article key={item.title} className="why-card">
+              <div className="why-card-icon" aria-hidden>
                 <FeatureIcon name={item.icon} />
               </div>
-              <h3 className="fluid-h3 text-foreground">{item.title}</h3>
-              <p className="aeo-answer mt-2 text-[var(--text-body)] leading-relaxed text-muted">
-                {item.body}
-              </p>
+              <div className="why-card-body">
+                <h3 className="why-card-title">{item.title}</h3>
+                <p className="aeo-answer why-card-text text-muted">{item.body}</p>
+              </div>
             </article>
           ))}
         </div>
 
-        {/* Proof strip */}
-        <ul className="why-stats mt-12 sm:mt-14" aria-label="Trust signals">
+        <ul className="why-stats" aria-label="Trust signals">
           {whyToro.stats.map((s) => (
             <li key={s.label} className="why-stat">
               <span className="why-stat-value">{s.value}</span>
@@ -53,8 +48,8 @@ export function WhyToro() {
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-center text-sm text-muted">
-          Real reviews on Google.{" "}
+
+        <p className="why-reviews-note text-muted">
           <a
             href={GOOGLE_MAPS_REVIEWS_URL}
             target="_blank"
@@ -62,16 +57,15 @@ export function WhyToro() {
             className="font-medium text-foreground underline underline-offset-2"
             data-cta="why-google-reviews"
           >
-            See all reviews
+            Read Google reviews
           </a>
         </p>
 
-        {/* Thin conversion bar */}
-        <div className="why-cta-bar mt-10 items-stretch justify-center text-center sm:mt-12 sm:items-center">
+        <div className="why-cta-bar">
           <a
             href={PHONE_TEL}
             data-cta="why-call"
-            className="btn-primary btn-fluid tap-target inline-flex w-full justify-center sm:w-auto"
+            className="btn-primary btn-fluid tap-target inline-flex justify-center"
           >
             {whyToro.ctaPhone}
             <span className="hidden sm:inline"> · {PHONE_DISPLAY}</span>
@@ -81,7 +75,7 @@ export function WhyToro() {
             data-open-quote
             data-source="why-quote"
             data-cta="why-quote"
-            className="btn-outline btn-fluid tap-target inline-flex w-full justify-center sm:w-auto"
+            className="btn-outline btn-fluid tap-target inline-flex justify-center"
           >
             {whyToro.ctaQuote}
             <IconArrow />

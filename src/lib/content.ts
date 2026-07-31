@@ -93,37 +93,41 @@ export const integrations = {
   },
 } as const;
 
-/** Concrete differentiators — replaces full-bleed lifestyle banners */
+/**
+ * Why Toro — compact differentiators (SEO/AEO).
+ * Avoid repeating services hub + proof section claims.
+ */
 export const whyToro = {
+  eyebrow: "Why Toro Movers",
   title: "Local Orlando movers with clear rates and a real crew",
-  lede: "Toro Movers is family-owned, locally operated, and built for Orlando and Central Florida moves. You get up-front hourly pricing, bilingual communication, and movers who understand apartments, stairs, elevators, storage units, and local access rules.",
+  lede: "Toro Movers is a family-owned moving company in Orlando. Hire a local crew for up-front hourly rates, bilingual English and Spanish service, and careful residential, townhome, and apartment moves across Central Florida.",
   items: [
     {
-      title: "Family-owned",
-      body: "Toro Movers is a local family-owned moving company, not a national franchise hand-off. The goal is direct communication, practical scheduling, and a crew that treats your move like local reputation matters.",
+      title: "Family-owned, not a franchise hand-off",
+      body: "You work with the people running the job—clear scheduling and accountability on every local move.",
       icon: "truck" as const,
     },
     {
-      title: "Up-front hourly rates",
-      body: "You get the hourly pricing model, crew size, minimums, and move details explained before the job starts. Toro Movers does not need invented dollar amounts or vague promises to make pricing feel clear.",
+      title: "Up-front hourly pricing",
+      body: "Crew size, minimums, and the hourly model explained before move day—no vague ballpark games.",
       icon: "tag" as const,
     },
     {
-      title: "Bilingual crew",
-      body: "Our English and Spanish-speaking team helps keep timing, placement, access instructions, and move-day questions clear. That matters when every elevator window, parking rule, and room label counts.",
+      title: "Bilingual English & Spanish",
+      body: "Access rules, placement, and timing stay clear when everyone understands the plan.",
       icon: "chat" as const,
     },
     {
-      title: "Apartment specialists",
-      body: "Apartment moves are one of Toro Movers' core strengths. We plan for stairs, elevators, tight hallways, parking limitations, loading zones, and move-in rules so the crew can work carefully and efficiently.",
+      title: "Built for real access",
+      body: "Stairs, elevators, loading zones, HOAs, and storage—planned around the building, not against it.",
       icon: "building" as const,
     },
   ],
   stats: [
-    { value: "5★", label: "Google rating" },
-    { value: "Local", label: "Central Florida movers" },
-    { value: "EN · ES", label: "English and Spanish" },
-    { value: "Family", label: "owned" },
+    { value: "5★", label: "Google" },
+    { value: "1,000+", label: "local moves" },
+    { value: "EN · ES", label: "bilingual" },
+    { value: "Orlando", label: "Central Florida" },
   ],
   ctaPhone: "Call now",
   ctaQuote: "Get a free quote",
