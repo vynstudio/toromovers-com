@@ -448,33 +448,37 @@ svg {
   max-width: 100%;
 }
 
-/* Header spacer — only needed when mobile nav is position:fixed */
+/* Header spacer — mobile only (fixed nav). Height = safe-area + pad + pill */
 .site-header-spacer {
   display: none;
   width: 100%;
-  /* Must clear fixed nav: safe-area + pad + pill (~3.25rem) */
   height: calc(
-    env(safe-area-inset-top, 0px) + 0.65rem + 3.35rem
+    env(safe-area-inset-top, 0px) + 0.75rem + 3.5rem
   );
   flex-shrink: 0;
   pointer-events: none;
 }
 
-/* Sticky header shell — top by default; mobile hides past hero (sticky CTAs take over) */
+/* Header shell: centers the pill; never full-bleed edge-to-edge crush */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 50;
   width: 100%;
+  max-width: 100%;
   background: transparent;
-  padding: 0.75rem var(--container-pad) 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0.85rem var(--container-pad) 0.5rem;
+  box-sizing: border-box;
   transition:
     transform 0.28s ease,
     opacity 0.22s ease,
     padding 0.28s ease;
 }
 
-/* Mobile: fixed top pill; slides away when past hero */
+/* Mobile: fixed centered pill; slides away past hero */
 @media (max-width: 767px) {
   .site-header-spacer {
     display: block;
@@ -485,12 +489,12 @@ svg {
     top: 0;
     left: 0;
     right: 0;
-    /* Clear notch / status bar so pill never sits under system UI */
-    padding: calc(env(safe-area-inset-top, 0px) + 0.55rem) var(--container-pad) 0;
+    padding: calc(env(safe-area-inset-top, 0px) + 0.65rem) var(--container-pad)
+      0.35rem;
   }
 
   .site-header--hidden {
-    transform: translateY(calc(-100% - 0.5rem - env(safe-area-inset-top, 0px)));
+    transform: translateY(calc(-100% - 0.75rem - env(safe-area-inset-top, 0px)));
     opacity: 0;
     pointer-events: none;
   }
@@ -499,9 +503,10 @@ svg {
 @media (min-width: 768px) {
   .site-header {
     padding-top: 1rem;
+    padding-bottom: 0.65rem;
     transform: none !important;
     opacity: 1 !important;
-    pointer-events: none; /* shell is non-interactive; pill is pointer-events-auto */
+    pointer-events: none; /* shell non-interactive; pill is pointer-events-auto */
   }
 }
 
@@ -563,56 +568,56 @@ svg {
   }
 }
 
-/* Pill shell — brand left · links center · CTAs right; never overflow */
+/* Pill: brand | links | CTAs — true center via equal side columns */
 .nav-pill {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem;
+  column-gap: 0.5rem;
   box-shadow: var(--nav-shadow);
   width: 100%;
-  max-width: 100%;
+  max-width: min(100%, 72rem);
   min-width: 0;
   margin-inline: auto;
   background: #fff;
   border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
   border-radius: 9999px;
   padding: 0.35rem 0.4rem 0.35rem 0.65rem;
-  overflow: hidden; /* clip — no bleed outside pill */
+  overflow: hidden;
   box-sizing: border-box;
 }
 
-/* Tap targets inside pill: keep height, drop forced 48px min-width */
 .nav-pill .tap-target {
   min-width: 0;
 }
 
 @media (min-width: 768px) {
   .nav-pill {
-    gap: 0.65rem;
+    column-gap: 0.65rem;
     padding: 0.4rem 0.5rem 0.4rem 0.9rem;
+    max-width: min(100%, 48rem);
   }
 }
 
 @media (min-width: 1024px) {
   .nav-pill {
-    max-width: min(var(--container-wide-max), 1100px);
-    gap: 0.85rem;
-    padding: 0.45rem 0.6rem 0.45rem 1.05rem;
+    max-width: min(100%, 64rem);
+    column-gap: 0.85rem;
+    padding: 0.45rem 0.65rem 0.45rem 1rem;
   }
 }
 
 @media (min-width: 1280px) {
   .nav-pill {
-    max-width: min(var(--container-wide-max), 1180px);
+    max-width: min(100%, 72rem);
   }
 }
 
-/* Left — brand can shrink / truncate */
+/* Left — brand */
 .nav-left {
-  flex: 1 1 auto;
   display: flex;
   align-items: center;
+  justify-self: start;
   min-width: 0;
   overflow: hidden;
 }
@@ -690,21 +695,21 @@ svg {
   margin-inline: 0.05em;
 }
 
-/* Center links — hidden on phone so they never steal width from brand/CTA */
+/* Center links — desktop/tablet only; phones use menu sheet */
 .nav-center {
   display: none;
-  flex: 1 1 auto;
   align-items: center;
   justify-content: center;
+  justify-self: center;
   min-width: 0;
-  overflow: hidden;
+  max-width: 100%;
 }
 
 .nav-right {
-  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  justify-self: end;
   gap: 0.4rem;
   min-width: 0;
   flex-shrink: 0;
@@ -721,45 +726,52 @@ svg {
   align-items: center;
   justify-content: center;
   flex-wrap: nowrap;
-  gap: 0.15rem 0.35rem;
+  gap: 0.1rem 0.2rem;
   list-style: none;
   margin: 0;
   padding: 0;
   min-width: 0;
 }
 
-/* Tablet+: show center links */
 @media (min-width: 768px) {
   .nav-center {
     display: flex;
   }
 
-  .nav-left {
-    flex: 0 1 auto;
-    max-width: 28%;
-  }
-
   .nav-links {
-    gap: 0.1rem 0.2rem;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 0.1rem 0.25rem;
   }
 }
 
 @media (min-width: 1024px) {
-  .nav-left {
-    max-width: none;
-  }
-
   .nav-links {
-    gap: 0.15rem 0.35rem;
-    flex-wrap: nowrap;
+    gap: 0.15rem 0.4rem;
   }
 }
 
 @media (min-width: 1280px) {
   .nav-links {
     gap: 0.2rem 0.55rem;
+  }
+}
+
+/* Phone: simple brand | CTAs row (no center column) */
+@media (max-width: 767px) {
+  .nav-pill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 0.5rem;
+    max-width: 100%;
+  }
+
+  .nav-left {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .nav-right {
+    flex: 0 0 auto;
   }
 }
 
@@ -852,25 +864,27 @@ svg {
 
 .nav-sheet-panel {
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  max-height: min(88dvh, 36rem);
-  padding:
-    calc(env(safe-area-inset-top, 0px) + 4.75rem)
-    var(--container-pad)
-    max(1.25rem, env(safe-area-inset-bottom, 0px));
+  left: var(--container-pad);
+  right: var(--container-pad);
+  top: calc(env(safe-area-inset-top, 0px) + 0.65rem + 3.65rem);
+  max-height: min(70dvh, 28rem);
+  padding: 0.75rem 1rem 1.1rem;
   background: #fff;
-  border-radius: 0 0 1.25rem 1.25rem;
-  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.16);
-  transform: translateY(-108%);
-  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
+  box-shadow: var(--nav-shadow);
+  transform: translateY(-12px);
+  opacity: 0;
+  transition:
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 .nav-sheet.is-open .nav-sheet-panel {
   transform: none;
+  opacity: 1;
 }
 
 .nav-sheet-links {
