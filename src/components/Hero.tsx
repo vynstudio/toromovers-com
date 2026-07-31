@@ -9,8 +9,7 @@ import {
 
 /**
  * Mobile-first conversion hero — copy + CTAs only.
- * Desktop: Orlando skyline fills behind the card.
- * Customer photo lives in CustomerProof below.
+ * Desktop: background video (lazy) + poster; mobile: light wash only.
  */
 export function Hero() {
   return (
@@ -19,7 +18,7 @@ export function Hero() {
       className="hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-6 pt-3 sm:pb-12 sm:pt-4 lg:py-16"
       aria-labelledby="hero-heading"
     >
-      <HeroSkyline />
+      <HeroSkyline withVideo />
 
       <div className="site-container-wide relative z-[1] flex w-full flex-1 items-center justify-center">
         <div className="mx-auto w-full max-w-3xl">
