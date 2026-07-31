@@ -1,10 +1,9 @@
 import Image from "next/image";
 import { servicesHub } from "@/lib/services-hub";
-import { FeatureIcon, IconArrow } from "@/components/icons";
+import { IconArrow } from "@/components/icons";
 
 /**
- * DID-style services hub on homepage — all core services, linked + photo proof.
- * Layout stays card grid; light accent on icons/links.
+ * S1 services hub: 3 primary photo cards + 3 compact secondary links.
  */
 export function FeatureGrid() {
   return (
@@ -27,37 +26,71 @@ export function FeatureGrid() {
           </p>
         </header>
 
-        <div className="services-hub-grid">
-          {servicesHub.items.map((item) => (
+        {/* Primary — full-service, labor-only, apartment */}
+        <div className="services-hub-primary">
+          {servicesHub.primary.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="services-hub-card"
+              className="services-hub-card services-hub-card--primary"
               data-cta={`service-${item.href.replace(/\//g, "")}`}
             >
-              <div className="services-hub-img">
+              <div className="services-hub-img services-hub-img--primary">
                 <Image
                   src={item.image}
                   alt={item.imageAlt}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-                  quality={65}
+                  quality={70}
                   loading="lazy"
                   className="object-cover object-center"
                 />
+                {item.badge ? (
+                  <span className="services-hub-badge">{item.badge}</span>
+                ) : null}
               </div>
               <div className="services-hub-body">
-                <div className="services-hub-icon" aria-hidden>
-                  <FeatureIcon name={item.icon} />
-                </div>
-                <h3 className="fluid-h3 text-foreground">{item.title}</h3>
+                <h3 className="services-hub-title text-foreground">
+                  {item.title}
+                </h3>
                 <p className="aeo-answer services-hub-copy text-muted">
                   {item.body}
                 </p>
                 <span className="services-hub-link">
-                  Learn more <IconArrow />
+                  View service <IconArrow />
                 </span>
               </div>
+            </a>
+          ))}
+        </div>
+
+        {/* Secondary — compact row / list */}
+        <div className="services-hub-secondary" aria-label="More services">
+          {servicesHub.secondary.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="services-hub-row"
+              data-cta={`service-${item.href.replace(/\//g, "")}`}
+            >
+              <div className="services-hub-row-img">
+                <Image
+                  src={item.image}
+                  alt=""
+                  fill
+                  sizes="96px"
+                  quality={60}
+                  loading="lazy"
+                  className="object-cover object-center"
+                />
+              </div>
+              <div className="services-hub-row-body">
+                <h3 className="services-hub-row-title">{item.title}</h3>
+                <p className="services-hub-row-copy text-muted">{item.body}</p>
+              </div>
+              <span className="services-hub-row-chevron" aria-hidden>
+                <IconArrow />
+              </span>
             </a>
           ))}
         </div>
