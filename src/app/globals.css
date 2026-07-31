@@ -3376,3 +3376,136 @@ a.trust-chip {
     animation: none;
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/* Trust marquee — under-hero desktop ticker                                  */
+/* -------------------------------------------------------------------------- */
+.trust-marquee {
+  position: relative;
+  width: 100%;
+  border-block: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  background: #fff;
+  /* Mobile: still show a compact static-friendly strip */
+  padding: 0.85rem 0;
+  overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+  .trust-marquee {
+    padding: 1rem 0;
+  }
+}
+
+.trust-marquee-viewport {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: trustMarquee 48s linear infinite;
+  will-change: transform;
+}
+
+.trust-marquee:hover .trust-marquee-viewport {
+  animation-play-state: paused;
+}
+
+.trust-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.trust-marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.15rem 1.35rem;
+  font-size: 0.8125rem;
+  font-weight: 550;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+@media (min-width: 1024px) {
+  .trust-marquee-item {
+    font-size: 0.875rem;
+    padding: 0.2rem 1.65rem;
+  }
+}
+
+.trust-marquee-dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.trust-marquee-fade {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3rem;
+  z-index: 1;
+}
+
+.trust-marquee-fade--left {
+  left: 0;
+  background: linear-gradient(90deg, #fff 0%, transparent 100%);
+}
+
+.trust-marquee-fade--right {
+  right: 0;
+  background: linear-gradient(270deg, #fff 0%, transparent 100%);
+}
+
+@media (min-width: 768px) {
+  .trust-marquee-fade {
+    width: 5rem;
+  }
+}
+
+@keyframes trustMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-marquee-viewport {
+    animation: none;
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--container-pad);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .trust-marquee-track:last-child {
+    display: none;
+  }
+}
+
+/* sr-only if not already defined */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

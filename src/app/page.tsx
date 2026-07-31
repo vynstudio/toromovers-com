@@ -1,5 +1,6 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
+import { TrustMarquee } from "@/components/TrustMarquee";
 import { CustomerProof } from "@/components/CustomerProof";
 import { FeatureGrid } from "@/components/FeatureGrid";
 import { Process } from "@/components/Process";
@@ -31,6 +32,7 @@ export default function HomePage() {
       <Nav />
       <main id="main" className="w-full min-w-0 flex-1">
         <Hero />
+        <TrustMarquee />
         <CustomerProof />
         <FeatureGrid />
         <Process />
