@@ -99,7 +99,7 @@ export const integrations = {
  */
 export const whyToro = {
   eyebrow: "Why Toro Movers",
-  title: "Local Orlando movers with clear rates and a real crew",
+  title: "Local Orlando movers with clear rates and a local crew",
   lede: "Toro Movers is a family-owned moving company in Orlando. Hire a local crew for up-front hourly rates, bilingual English and Spanish service, and careful residential, townhome, and apartment moves across Central Florida.",
   items: [
     {
