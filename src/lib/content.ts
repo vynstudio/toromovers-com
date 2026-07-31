@@ -221,22 +221,14 @@ export const faq = {
   ],
 } as const;
 
-// Visible process for HowTo schema + conversion clarity (keep short)
+// Ultra-short process strip (HowTo schema + conversion)
 export const process = {
-  heading: "How it works",
+  heading: "Book in 3 steps",
+  cta: "Get a free quote",
   steps: [
-    {
-      name: "Tell us your move",
-      text: "Date, addresses, home or apartment, and full-service or labor-only.",
-    },
-    {
-      name: "Get your hourly rate",
-      text: "Crew size, truck needs, and up-front hourly pricing before move day.",
-    },
-    {
-      name: "We move you",
-      text: "Local crew loads, protects, and places—done right the first time.",
-    },
+    { name: "Share details", text: "Date, addresses, home type" },
+    { name: "Get the rate", text: "Up-front hourly pricing" },
+    { name: "We move you", text: "Load, protect, place" },
   ],
 } as const;
 
