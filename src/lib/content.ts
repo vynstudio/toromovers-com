@@ -109,7 +109,7 @@ export const whyToro = {
     },
   ],
   stats: [
-    { value: "4.9★", label: "Google rating" },
+    { value: "5★", label: "Google rating" },
     { value: "Local", label: "Central Florida movers" },
     { value: "EN · ES", label: "English and Spanish" },
     { value: "Family", label: "owned" },
@@ -230,11 +230,11 @@ export const process = {
 } as const;
 
 export const trust = {
-  rating: "4.9",
+  rating: "5",
   ratingLabel: "Google rating",
   reviews: "36+",
   reviewsLabel: "reviews",
-  moves: "100+",
+  moves: "1,000+",
   movesLabel: "local moves",
   area: "Central Florida",
   areaLabel: "service area",

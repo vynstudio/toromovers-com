@@ -25,9 +25,9 @@ export const EMAIL_HREF = "mailto:hello@toromovers.com";
 export const HOURS_LABEL = "Mon–Sat · 7:00 AM – 7:00 PM";
 export const HOURS_NOTE = "Sunday on request";
 
-export const GOOGLE_RATING = "4.9";
+export const GOOGLE_RATING = "5";
 export const REVIEW_COUNT = "36";
-export const MOVES_DONE = "100+";
+export const MOVES_DONE = "1,000+";
 
 export const GOOGLE_MAPS_REVIEWS_URL =
   "https://maps.app.goo.gl/4VLksGpLoVTYXv3k7";
