@@ -111,7 +111,7 @@ function MoveGrid({
                   }
                   quality={60}
                   loading="lazy"
-                  className="object-cover"
+                  className="object-cover object-center"
                 />
               </div>
               <figcaption className="recent-moves-cap">

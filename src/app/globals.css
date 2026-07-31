@@ -1104,6 +1104,13 @@ select:focus-visible {
   width: 100%;
   aspect-ratio: 16 / 10;
   background: #ececec;
+  overflow: hidden;
+}
+
+/* Real phone photos are often portrait — crop center, never rotate */
+.services-hub-img img {
+  object-fit: cover;
+  object-position: center;
 }
 
 .services-hub-body {
@@ -1223,6 +1230,11 @@ select:focus-visible {
   aspect-ratio: 3 / 2;
   background: #e8e8e8;
   overflow: hidden;
+}
+
+.recent-moves-frame img {
+  object-fit: cover;
+  object-position: center;
 }
 
 .recent-moves-cap {
