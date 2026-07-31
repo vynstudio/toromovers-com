@@ -86,20 +86,22 @@ export function CustomerProof() {
                 <span className="customer-proof-stat-value">
                   {GOOGLE_RATING}★
                 </span>
-                <span className="customer-proof-stat-label">Google rated</span>
+                <span className="customer-proof-stat-label">
+                  on Google
+                </span>
               </a>
             </li>
             <li className="customer-proof-stat">
               <span className="customer-proof-stat-value">{MOVES_DONE}</span>
-              <span className="customer-proof-stat-label">local moves</span>
+              <span className="customer-proof-stat-label">Orlando moves</span>
             </li>
             <li className="customer-proof-stat">
               <span className="customer-proof-stat-value">EN · ES</span>
-              <span className="customer-proof-stat-label">bilingual crew</span>
+              <span className="customer-proof-stat-label">bilingual movers</span>
             </li>
             <li className="customer-proof-stat">
-              <span className="customer-proof-stat-value">Local</span>
-              <span className="customer-proof-stat-label">{SERVICE_REGION}</span>
+              <span className="customer-proof-stat-value">Family</span>
+              <span className="customer-proof-stat-label">owned · {SERVICE_REGION}</span>
             </li>
           </ul>
 

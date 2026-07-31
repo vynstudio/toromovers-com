@@ -3253,17 +3253,23 @@ a.trust-chip {
 
 .customer-proof-title {
   margin: 0.5rem 0 0;
-  font-size: clamp(1.5rem, 3.8vw, 2.35rem);
+  font-size: clamp(1.4rem, 3.6vw, 2.15rem);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.12;
+  line-height: 1.15;
   color: var(--foreground);
-  max-width: 22ch;
+  max-width: 28ch;
 }
 
 @media (min-width: 1024px) {
   .customer-proof-title {
-    max-width: none;
+    max-width: 18ch;
+  }
+}
+
+@media (min-width: 1280px) {
+  .customer-proof-title {
+    max-width: 20ch;
   }
 }
 

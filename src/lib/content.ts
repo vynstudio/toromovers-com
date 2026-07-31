@@ -22,29 +22,32 @@ export const hero = {
   ctaHref: "#discover",
 } as const;
 
-/** Standalone post-hero proof band — real customer photo + trust (mobile-first). */
+/**
+ * Post-hero proof band — SEO/AEO answer-first copy.
+ * Targets: local Orlando movers, family-owned, bilingual, hourly rates.
+ */
 export const customerProof = {
-  eyebrow: "Real customers · Real local moves",
-  title: "The smile after the move is the point",
-  lede: "Family-owned Orlando movers who show up on time, protect your things, and leave you relieved—not stressed.",
+  eyebrow: "Orlando movers customers trust",
+  title: "Why Central Florida chooses Toro for local moves",
+  lede: "Toro Movers is a family-owned local moving company in Orlando. Customers hire us for on-time crews, careful handling, bilingual English and Spanish communication, and up-front hourly rates across Central Florida—not a national franchise hand-off.",
   ctaQuote: "Get a free quote",
   points: [
     {
-      title: "On-time local crew",
-      body: "Direct communication—not a franchise hand-off.",
+      title: "Local Orlando crew, not a call center",
+      body: "You talk with the people running the move. Clear scheduling and same-day coordination for homes, apartments, and rental trucks.",
     },
     {
-      title: "Careful with your home",
-      body: "Pads, wrap, and placement the way you want it.",
+      title: "Careful apartment & home moving",
+      body: "Pads, wrap, stairs, elevators, and placement planned around real access—so furniture and boxes arrive the way you expect.",
     },
     {
-      title: "Up-front hourly rates",
-      body: "Clear pricing before move day. No surprise add-ons.",
+      title: "Up-front hourly moving rates",
+      body: "Know the hourly model before move day. Full-service and labor-only options with no surprise fuel or stair fee games.",
     },
   ],
   image: {
     src: "/images/hero-lake-customer.jpg",
-    alt: "Toro Movers owner with a happy customer by the lake after a local move in Central Florida",
+    alt: "Toro Movers owner with a happy customer after a real local move in Central Florida",
   },
 } as const;
 
