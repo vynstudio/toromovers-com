@@ -411,6 +411,7 @@ svg {
     min-height: min(72vh, 40rem);
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
   }
 
