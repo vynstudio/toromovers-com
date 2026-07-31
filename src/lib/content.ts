@@ -221,21 +221,21 @@ export const faq = {
   ],
 } as const;
 
-// Visible process for HowTo schema + conversion clarity
+// Visible process for HowTo schema + conversion clarity (keep short)
 export const process = {
-  heading: "A simple moving plan before the crew arrives",
+  heading: "How it works",
   steps: [
     {
-      name: "Tell us about your move",
-      text: "Share your move date, pickup and drop-off locations, home or apartment type, stairs, elevators, truck access, and whether you need full-service moving or labor-only help.",
+      name: "Tell us your move",
+      text: "Date, addresses, home or apartment, and full-service or labor-only.",
     },
     {
-      name: "Get an up-front hourly rate",
-      text: "Toro Movers confirms the recommended crew size, truck needs, hourly pricing model, minimums, and scheduling availability before move day so you know what to expect.",
+      name: "Get your hourly rate",
+      text: "Crew size, truck needs, and up-front hourly pricing before move day.",
     },
     {
-      name: "We load, move, and place",
-      text: "Your bilingual local crew arrives ready to protect your items, handle the heavy lifting, load efficiently, and place furniture and boxes where they belong.",
+      name: "We move you",
+      text: "Local crew loads, protects, and places—done right the first time.",
     },
   ],
 } as const;

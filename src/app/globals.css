@@ -1578,6 +1578,92 @@ select:focus-visible {
   }
 }
 
+/* Process band — compact how-it-works (not full section-pad) */
+.process-band {
+  padding: 1.75rem 0;
+}
+
+@media (min-width: 768px) {
+  .process-band {
+    padding: 2rem 0;
+  }
+}
+
+.process-heading {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.process-steps {
+  list-style: none;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .process-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem 1.25rem;
+    margin-top: 1.25rem;
+  }
+}
+
+.process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.9rem;
+  border: 1px solid var(--border);
+  background: #fff;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .process-step {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 1.05rem;
+  }
+}
+
+.process-num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  background: var(--foreground);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1;
+}
+
+.process-step-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  color: var(--foreground);
+}
+
+.process-step-text {
+  margin: 0.3rem 0 0;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
 .recent-moves-lead {
   margin: 0.75rem auto 0;
   max-width: 34rem;
