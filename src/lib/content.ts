@@ -19,10 +19,10 @@ export const hero = {
   lede: "Toro Movers is your local Orlando & Central Florida moving company—full-service, labor-only loading, apartment moves, and up-front hourly rates.",
   cta: "discover toro movers",
   ctaHref: "#discover",
-  /** Real crew/job still for hero (no video). */
+  /** Real customer still for desktop hero (no video). */
   image: {
-    src: "/images/hero-crew-real.jpg",
-    alt: "Toro Movers crew on a real local move job in Central Florida",
+    src: "/images/hero-lake-customer.jpg",
+    alt: "Toro Movers owner with a happy customer by the lake after a local move in Central Florida",
   },
 } as const;
 
