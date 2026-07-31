@@ -1,17 +1,18 @@
 // Homepage copy — mobile-first layout adapted for Toro Movers.
 // SEO/AEO answer-first copy. Real business facts only (phone, rating, services, area).
 
-/** Primary nav — DID-style IA adapted to Toro (services / areas / gallery / process) */
+/** Primary nav — Title Case IA (v1 plain links; dropdowns later) */
 export const nav = {
   links: [
-    { label: "services", href: "/#services" },
-    { label: "areas", href: "/#areas" },
-    { label: "gallery", href: "/orlando-movers-gallery" },
-    { label: "how it works", href: "/#how-it-works" },
+    { label: "Home", href: "/" },
+    { label: "About us", href: "/#why" },
+    { label: "Moving services", href: "/#services" },
+    { label: "Resources", href: "/#faq" },
+    { label: "Gallery", href: "/orlando-movers-gallery" },
   ],
-  cta: "get a quote",
+  cta: "Get a quote",
   ctaHref: "#quote",
-  ctaPhoneLabel: "call now",
+  ctaPhoneLabel: "Call",
 } as const;
 
 export const hero = {

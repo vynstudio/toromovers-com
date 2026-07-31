@@ -6,18 +6,24 @@ import { nav } from "@/lib/content";
 import { BUSINESS_NAME, PHONE_TEL } from "@/lib/site";
 
 /**
- * Desktop: sticky top pill.
- * Mobile: top while in hero; hides when past hero (sticky Call/Quote takes over).
- * Spacer + safe-area keep content from sliding under the fixed pill.
+ * Desktop: sticky top pill + Title Case links + CTAs.
+ * Mobile: logo + menu + Call; sheet opens for full nav.
+ * Hides past hero on phone so sticky bottom CTAs take over.
  */
 export function Nav() {
   const [hiddenMobile, setHiddenMobile] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
 
     const update = () => {
       if (!mq.matches) {
+        setHiddenMobile(false);
+        return;
+      }
+      // Keep nav visible while menu is open
+      if (menuOpen) {
         setHiddenMobile(false);
         return;
       }
@@ -28,7 +34,6 @@ export function Nav() {
         return;
       }
 
-      // Hide slightly before hero fully leaves so sticky bar can take over cleanly
       setHiddenMobile(hero.getBoundingClientRect().bottom < 48);
     };
 
@@ -41,16 +46,31 @@ export function Nav() {
       window.removeEventListener("resize", update);
       mq.removeEventListener("change", update);
     };
-  }, []);
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <>
       <div className="site-header-spacer" aria-hidden />
       <header
         className={`site-header pointer-events-none${
-          hiddenMobile ? " site-header--hidden" : ""
+          hiddenMobile && !menuOpen ? " site-header--hidden" : ""
         }`}
-        data-mobile-nav={hiddenMobile ? "hidden" : "visible"}
+        data-mobile-nav={hiddenMobile && !menuOpen ? "hidden" : "visible"}
       >
         <nav className="nav-pill pointer-events-auto" aria-label="Primary">
           <div className="nav-left">
@@ -58,6 +78,7 @@ export function Nav() {
               href="/"
               className="brand-lockup tap-target"
               aria-label={`${BUSINESS_NAME} home`}
+              onClick={closeMenu}
             >
               <span className="brand-mark" aria-hidden>
                 <Image
@@ -78,7 +99,7 @@ export function Nav() {
           <div className="nav-center">
             <ul className="nav-links">
               {nav.links.map((link) => (
-                <li key={link.href}>
+                <li key={link.href + link.label}>
                   <a
                     href={link.href}
                     className="nav-link tap-target inline-flex items-center rounded-md transition-opacity hover:opacity-70"
@@ -91,12 +112,42 @@ export function Nav() {
           </div>
 
           <div className="nav-right">
+            <button
+              type="button"
+              className="nav-menu-btn tap-target"
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav-panel"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              onClick={() => setMenuOpen((o) => !o)}
+            >
+              <span className="nav-menu-icon" aria-hidden>
+                {menuOpen ? (
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path
+                      d="M4 4l10 10M14 4L4 14"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path
+                      d="M3 5h12M3 9h12M3 13h12"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                )}
+              </span>
+            </button>
             <a
               href={PHONE_TEL}
               data-cta="nav-phone"
               className="btn-primary tap-target nav-cta"
             >
-              Call
+              {nav.ctaPhoneLabel}
             </a>
             <button
               type="button"
@@ -110,6 +161,61 @@ export function Nav() {
           </div>
         </nav>
       </header>
+
+      {/* Mobile menu sheet */}
+      <div
+        className={`nav-sheet${menuOpen ? " is-open" : ""}`}
+        aria-hidden={!menuOpen}
+      >
+        <button
+          type="button"
+          className="nav-sheet-backdrop"
+          aria-label="Close menu"
+          tabIndex={menuOpen ? 0 : -1}
+          onClick={closeMenu}
+        />
+        <div
+          id="mobile-nav-panel"
+          className="nav-sheet-panel"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site menu"
+        >
+          <ul className="nav-sheet-links">
+            {nav.links.map((link) => (
+              <li key={`m-${link.href}-${link.label}`}>
+                <a
+                  href={link.href}
+                  className="nav-sheet-link tap-target"
+                  onClick={closeMenu}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div className="nav-sheet-actions">
+            <a
+              href={PHONE_TEL}
+              data-cta="nav-menu-phone"
+              className="btn-primary btn-fluid tap-target inline-flex w-full justify-center"
+              onClick={closeMenu}
+            >
+              Call now
+            </a>
+            <button
+              type="button"
+              data-open-quote
+              data-source="nav-menu-quote"
+              data-cta="nav-menu-quote"
+              className="btn-outline btn-fluid tap-target inline-flex w-full justify-center"
+              onClick={closeMenu}
+            >
+              {nav.cta}
+            </button>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
