@@ -1,5 +1,5 @@
 import { CityHero } from "@/components/city/CityHero";
-import { TrustBar } from "@/components/TrustBar";
+import { CustomerProof } from "@/components/CustomerProof";
 import { RecentMoves } from "@/components/RecentMoves";
 import { Reviews } from "@/components/Reviews";
 import { Faq } from "@/components/Faq";
@@ -24,7 +24,7 @@ export function CityLanding({ city }: { city: CityPageContent }) {
         discoverLabel={`${city.name} services`}
         source={`city-${city.slug}`}
       />
-      <TrustBar />
+      <CustomerProof />
 
       {/* About + SEO sections */}
       <section

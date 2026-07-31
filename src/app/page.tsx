@@ -1,6 +1,6 @@
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
-import { TrustBar } from "@/components/TrustBar";
+import { CustomerProof } from "@/components/CustomerProof";
 import { FeatureGrid } from "@/components/FeatureGrid";
 import { Process } from "@/components/Process";
 import { FeatureAlternating } from "@/components/FeatureAlternating";
@@ -18,9 +18,8 @@ import { homePageGraph } from "@/lib/schema";
 
 /**
  * DID-style homepage strategy (Toro layout kept):
- * Hero → trust → all services (linked) → process → recent moves (real photos)
+ * Hero → customer proof (animated) → services → process → recent moves
  * → why Toro → reviews → FAQ → areas → close.
- * Lifestyle blocks kept lower for brand, not competing with service SEO.
  */
 export default function HomePage() {
   return (
@@ -32,7 +31,7 @@ export default function HomePage() {
       <Nav />
       <main id="main" className="w-full min-w-0 flex-1">
         <Hero />
-        <TrustBar />
+        <CustomerProof />
         <FeatureGrid />
         <Process />
         <RecentMoves />

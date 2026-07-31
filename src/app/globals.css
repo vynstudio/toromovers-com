@@ -2770,3 +2770,314 @@ a.trust-chip {
     bottom: 4.5rem;
   }
 }
+
+/* -------------------------------------------------------------------------- */
+/* Customer proof — post-hero attention band (mobile-first, CSS motion)       */
+/* -------------------------------------------------------------------------- */
+.customer-proof {
+  --proof-pad-y: 2.75rem;
+  position: relative;
+  width: 100%;
+  padding: var(--proof-pad-y) 0;
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgba(200, 16, 46, 0.06) 0%, transparent 55%),
+    linear-gradient(180deg, #f7f8fa 0%, #ffffff 55%, #f3f4f6 100%);
+  border-top: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .customer-proof {
+    --proof-pad-y: 3.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .customer-proof {
+    --proof-pad-y: 4.5rem;
+  }
+}
+
+.customer-proof-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .customer-proof-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    grid-template-areas:
+      "stage copy"
+      "stage actions";
+    align-items: center;
+    column-gap: 3rem;
+    row-gap: 1.25rem;
+    text-align: left;
+  }
+
+  .customer-proof-stage {
+    grid-area: stage;
+  }
+
+  .customer-proof-copy {
+    grid-area: copy;
+  }
+
+  .customer-proof-actions {
+    grid-area: actions;
+    justify-content: flex-start;
+  }
+}
+
+.customer-proof-eyebrow {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.customer-proof-title {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.45rem, 4.8vw, 2.15rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--foreground);
+}
+
+.customer-proof-lede {
+  margin: 0.75rem auto 0;
+  max-width: 34rem;
+  font-size: var(--text-lede);
+  line-height: 1.5;
+}
+
+@media (min-width: 1024px) {
+  .customer-proof-lede {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Photo stage */
+.customer-proof-stage {
+  position: relative;
+  width: 100%;
+  max-width: 22rem;
+  margin: 0.25rem auto 0;
+}
+
+@media (min-width: 640px) {
+  .customer-proof-stage {
+    max-width: 26rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .customer-proof-stage {
+    max-width: 28rem;
+    margin: 0;
+  }
+}
+
+.customer-proof-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 1.35rem;
+  overflow: hidden;
+  background: #e8ebf0;
+  box-shadow:
+    0 18px 48px rgba(10, 10, 10, 0.14),
+    0 4px 14px rgba(10, 10, 10, 0.06);
+  transform: translateY(18px) scale(0.97);
+  opacity: 0;
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.55s ease;
+}
+
+.customer-proof.is-visible .customer-proof-frame {
+  transform: none;
+  opacity: 1;
+}
+
+.customer-proof-img {
+  transition: transform 8s ease-out;
+  will-change: transform;
+}
+
+.customer-proof.is-visible .customer-proof-img {
+  animation: proofKenBurns 12s ease-in-out infinite alternate;
+}
+
+.customer-proof-shine {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    transparent 42%,
+    transparent 58%,
+    rgba(0, 0, 0, 0.12) 100%
+  );
+}
+
+/* Floating trust chips */
+.customer-proof-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  left: 0.65rem;
+  right: 0.65rem;
+  bottom: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  z-index: 2;
+}
+
+.customer-proof-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--muted);
+  line-height: 1.2;
+  transform: translateY(12px);
+  opacity: 0;
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease;
+}
+
+.customer-proof-chip strong {
+  color: var(--foreground);
+  font-weight: 700;
+  margin-right: 0.2rem;
+}
+
+.customer-proof-chip a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.customer-proof-chip a:hover,
+.customer-proof-chip a:focus-visible {
+  color: var(--foreground);
+}
+
+.customer-proof-chip--accent {
+  background: color-mix(in srgb, var(--accent) 10%, #fff);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+.customer-proof-chip--accent strong {
+  color: var(--accent);
+}
+
+.customer-proof.is-visible .customer-proof-chip:nth-child(1) {
+  transition-delay: 0.18s;
+  transform: none;
+  opacity: 1;
+}
+
+.customer-proof.is-visible .customer-proof-chip:nth-child(2) {
+  transition-delay: 0.28s;
+  transform: none;
+  opacity: 1;
+}
+
+.customer-proof.is-visible .customer-proof-chip:nth-child(3) {
+  transition-delay: 0.38s;
+  transform: none;
+  opacity: 1;
+}
+
+/* Copy + actions entrance */
+.customer-proof-copy,
+.customer-proof-actions {
+  width: 100%;
+  transform: translateY(14px);
+  opacity: 0;
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s ease;
+}
+
+.customer-proof.is-visible .customer-proof-copy {
+  transition-delay: 0.08s;
+  transform: none;
+  opacity: 1;
+}
+
+.customer-proof.is-visible .customer-proof-actions {
+  transition-delay: 0.32s;
+  transform: none;
+  opacity: 1;
+}
+
+.customer-proof-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--tap-gap);
+  max-width: 22rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .customer-proof-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .customer-proof-actions {
+    margin: 0;
+  }
+}
+
+@keyframes proofKenBurns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .customer-proof-frame,
+  .customer-proof-chip,
+  .customer-proof-copy,
+  .customer-proof-actions {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  .customer-proof.is-visible .customer-proof-img,
+  .customer-proof-img {
+    animation: none;
+  }
+}
