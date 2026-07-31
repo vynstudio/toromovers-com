@@ -57,9 +57,9 @@ export function CustomerProof() {
               src={customerProof.image.src}
               alt={customerProof.image.alt}
               fill
-              quality={72}
-              sizes="(max-width: 639px) 94vw, (max-width: 1023px) 80vw, 48vw"
-              className="customer-proof-img object-cover object-[center_18%]"
+              quality={88}
+              sizes="(max-width: 639px) 94vw, (max-width: 1023px) 80vw, 50vw"
+              className="customer-proof-img object-cover object-[center_28%]"
             />
             <div className="customer-proof-shine" aria-hidden />
           </div>

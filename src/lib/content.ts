@@ -46,8 +46,8 @@ export const customerProof = {
     },
   ],
   image: {
-    src: "/images/hero-lake-customer.jpg",
-    alt: "Toro Movers owner with a happy customer after a real local move in Central Florida",
+    src: "/images/proof-customer-closeup.jpg",
+    alt: "Toro Movers owner and a happy customer after a real local move in Central Florida",
   },
 } as const;
 
