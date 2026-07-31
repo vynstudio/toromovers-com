@@ -2,7 +2,8 @@ import Image from "next/image";
 import { hero } from "@/lib/content";
 
 /**
- * Static hero still only — no video (faster LCP / less bandwidth).
+ * Desktop hero still only (parent hides below lg).
+ * No priority — not LCP on mobile; avoids wasted mobile download.
  */
 export function HeroVisual() {
   return (
@@ -11,9 +12,8 @@ export function HeroVisual() {
         src={hero.image.src}
         alt={hero.image.alt}
         fill
-        priority
         quality={60}
-        sizes="(max-width: 1023px) 100vw, 42vw"
+        sizes="(max-width: 1023px) 0px, 42vw"
         className="object-cover object-center lg:object-contain lg:drop-shadow-[0_32px_64px_rgba(0,0,0,0.14)]"
       />
     </div>

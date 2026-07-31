@@ -10,8 +10,7 @@ import {
 
 /**
  * Mobile-first hero — conversion before decoration.
- * Stacked CTAs on phone; side-by-side from 640px.
- * Desktop: 2-col layout from 1024px + hero video; mobile keeps static image.
+ * Phone: copy + CTAs only (no image). Desktop: 2-col + still photo.
  */
 export function Hero() {
   return (
@@ -85,7 +84,8 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative order-2 w-full min-w-0 lg:order-1">
+        {/* Hero image: desktop only — skip on mobile for speed */}
+        <div className="relative order-2 hidden w-full min-w-0 lg:order-1 lg:block">
           <HeroVisual />
         </div>
       </div>

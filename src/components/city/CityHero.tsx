@@ -100,7 +100,8 @@ export function CityHero({
           </div>
         </div>
 
-        <div className="relative order-2 w-full min-w-0 lg:order-1">
+        {/* Image desktop only — copy/CTAs first on mobile */}
+        <div className="relative order-2 hidden w-full min-w-0 lg:order-1 lg:block">
           <HeroVisual />
         </div>
       </div>
