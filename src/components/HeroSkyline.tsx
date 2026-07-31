@@ -56,7 +56,10 @@ export function HeroSkyline({ withVideo = false }: HeroSkylineProps) {
   }, [withVideo]);
 
   return (
-    <div className="hero-skyline" aria-hidden>
+    <div
+      className={`hero-skyline${withVideo ? " hero-skyline--video" : ""}`}
+      aria-hidden
+    >
       {videoSrc ? (
         <video
           className="hero-skyline-video"
@@ -64,8 +67,7 @@ export function HeroSkyline({ withVideo = false }: HeroSkylineProps) {
           muted
           loop
           playsInline
-          preload="metadata"
-          poster="/images/hero-video-poster.jpg"
+          preload="auto"
           src={videoSrc}
         />
       ) : null}

@@ -426,11 +426,21 @@ svg {
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
-    /* Instant paint before video loads (mobile never hits this rule) */
-    background-image: url("/images/hero-video-poster.jpg");
+    background-color: #1a2330;
+  }
+
+  /* City pages / no video: static skyline only */
+  .hero-skyline:not(.hero-skyline--video) {
+    background-image: url("/images/hero-orlando-skyline.jpg");
     background-size: cover;
-    background-position: center center;
+    background-position: center 40%;
     background-repeat: no-repeat;
+  }
+
+  /* Homepage: video only — no still image underneath */
+  .hero-skyline--video {
+    background-image: none;
+    background-color: #0f1419;
   }
 
   .hero-skyline-video {
@@ -457,7 +467,7 @@ svg {
   }
 }
 
-/* Prefer reduced motion: no video (poster only) */
+/* Prefer reduced motion: solid dark only (no video) */
 @media (min-width: 1024px) and (prefers-reduced-motion: reduce) {
   .hero-skyline-video {
     display: none;
