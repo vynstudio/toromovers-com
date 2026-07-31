@@ -6,6 +6,7 @@ import { IconArrow } from "@/components/icons";
 
 /**
  * Mobile sticky conversion bar — Call + Get quote.
+ * Matches top nav pill colors (white shell, accent Call, outline Quote).
  * Appears when the mobile nav hides (past hero). Desktop: never shown.
  */
 export function StickyCta() {
@@ -21,9 +22,10 @@ export function StickyCta() {
       }
 
       const hero = document.getElementById("hero");
+      // Match Nav hide threshold so bars never stack
       const pastHero = hero
-        ? hero.getBoundingClientRect().bottom < 8
-        : window.scrollY > 200;
+        ? hero.getBoundingClientRect().bottom < 48
+        : window.scrollY > 120;
 
       const quote = document.getElementById("quote");
       const nearQuote =
@@ -46,20 +48,22 @@ export function StickyCta() {
 
   return (
     <div
-      className={`sticky-cta-bar fixed inset-x-0 bottom-0 z-50 w-full px-3 pt-2 transition-transform duration-300 md:hidden ${
-        visible ? "translate-y-0" : "pointer-events-none translate-y-[120%]"
+      className={`sticky-cta-bar fixed inset-x-0 bottom-0 w-full px-3 pt-3 transition-transform duration-300 md:hidden ${
+        visible
+          ? "is-visible translate-y-0"
+          : "pointer-events-none translate-y-[120%]"
       }`}
       aria-hidden={!visible}
     >
       <div
-        className="mx-auto flex w-full max-w-lg items-stretch gap-2 rounded-2xl bg-foreground p-2 shadow-[0_-10px_40px_rgba(0,0,0,0.3)]"
+        className="sticky-cta-shell"
         role="group"
         aria-label="Quick contact"
       >
         <a
           href={PHONE_TEL}
           data-cta="sticky-phone"
-          className="tap-target flex min-h-12 flex-1 items-center justify-center rounded-xl bg-white px-3 text-sm font-semibold tracking-tight text-foreground"
+          className="btn-primary tap-target inline-flex"
         >
           <span className="sticky-cta-label">Call now</span>
         </a>
@@ -68,7 +72,7 @@ export function StickyCta() {
           data-open-quote
           data-source="sticky-quote"
           data-cta="sticky-quote"
-          className="tap-target flex min-h-12 flex-1 items-center justify-center gap-1 rounded-xl bg-white/15 px-3 text-sm font-semibold tracking-tight text-white"
+          className="btn-outline tap-target inline-flex"
         >
           <span className="sticky-cta-label">Get quote</span>
           <IconArrow className="h-3.5 w-3.5 shrink-0" />

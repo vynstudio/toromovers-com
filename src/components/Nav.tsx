@@ -8,6 +8,7 @@ import { BUSINESS_NAME, PHONE_TEL } from "@/lib/site";
 /**
  * Desktop: sticky top pill.
  * Mobile: top while in hero; hides when past hero (sticky Call/Quote takes over).
+ * Spacer + safe-area keep content from sliding under the fixed pill.
  */
 export function Nav() {
   const [hiddenMobile, setHiddenMobile] = useState(false);
@@ -23,11 +24,12 @@ export function Nav() {
 
       const hero = document.getElementById("hero");
       if (!hero) {
-        setHiddenMobile(window.scrollY > 200);
+        setHiddenMobile(window.scrollY > 120);
         return;
       }
 
-      setHiddenMobile(hero.getBoundingClientRect().bottom < 8);
+      // Hide slightly before hero fully leaves so sticky bar can take over cleanly
+      setHiddenMobile(hero.getBoundingClientRect().bottom < 48);
     };
 
     update();
@@ -94,7 +96,7 @@ export function Nav() {
               data-cta="nav-phone"
               className="btn-primary tap-target nav-cta"
             >
-              Call now
+              Call
             </a>
             <button
               type="button"

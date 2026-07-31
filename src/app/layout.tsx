@@ -123,6 +123,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
+  // Required so env(safe-area-inset-*) clears notch / home indicator
+  viewportFit: "cover",
   // Let the browser shrink the layout when the mobile keyboard opens
   // so the quote sheet stays usable (Chrome/Android; Safari uses visualViewport).
   interactiveWidget: "resizes-content",

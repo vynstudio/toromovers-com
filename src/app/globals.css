@@ -31,7 +31,8 @@
   --container-wide-max: 100%;
   --container-narrow-max: 100%;
   --section-y: 3rem;
-  --header-h: 4.25rem;
+  /* Mobile fixed nav: safe-area + pad + pill (desktop overrides below) */
+  --header-h: calc(env(safe-area-inset-top, 0px) + 4rem);
 
   /* Touch targets (Google ~48dp; WCAG 2.5.8 ≥24px) */
   --tap-min: 48px;
@@ -409,8 +410,10 @@ svg {
 .site-header-spacer {
   display: none;
   width: 100%;
-  /* Matches mobile fixed header + top padding */
-  height: 4.25rem;
+  /* Must clear fixed nav: safe-area + pad + pill (~3.25rem) */
+  height: calc(
+    env(safe-area-inset-top, 0px) + 0.65rem + 3.35rem
+  );
   flex-shrink: 0;
   pointer-events: none;
 }
@@ -440,11 +443,12 @@ svg {
     top: 0;
     left: 0;
     right: 0;
-    padding: 0.65rem var(--container-pad) 0;
+    /* Clear notch / status bar so pill never sits under system UI */
+    padding: calc(env(safe-area-inset-top, 0px) + 0.55rem) var(--container-pad) 0;
   }
 
   .site-header--hidden {
-    transform: translateY(calc(-100% - 0.5rem));
+    transform: translateY(calc(-100% - 0.5rem - env(safe-area-inset-top, 0px)));
     opacity: 0;
     pointer-events: none;
   }
@@ -459,9 +463,48 @@ svg {
   }
 }
 
-/* Sticky mobile Call / Get quote bar */
+/* Sticky mobile Call / Get quote — same white pill language as top nav */
 .sticky-cta-bar {
-  padding-bottom: max(0.65rem, env(safe-area-inset-bottom));
+  z-index: 50;
+  padding-bottom: max(0.55rem, env(safe-area-inset-bottom, 0px));
+  /* Soft fade so content doesn't hard-clip under the bar */
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.96) 35%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.sticky-cta-bar.is-visible {
+  pointer-events: auto;
+}
+
+.sticky-cta-shell {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 28rem;
+  margin-inline: auto;
+  padding: 0.4rem;
+  background: #fff;
+  border: 1px solid color-mix(in srgb, var(--foreground) 6%, transparent);
+  border-radius: 9999px;
+  box-shadow: var(--nav-shadow);
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+.sticky-cta-shell .btn-primary,
+.sticky-cta-shell .btn-outline {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.85rem;
+  font-size: 0.8125rem;
+  border-radius: 9999px;
+  justify-content: center;
 }
 
 .sticky-cta-label {
@@ -469,6 +512,13 @@ svg {
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
+}
+
+/* Room so last content isn't trapped under sticky dock */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  }
 }
 
 /* Pill shell — brand left · links center · CTAs right; never overflow */
@@ -689,6 +739,27 @@ svg {
   white-space: nowrap;
   flex-shrink: 0;
   border-radius: 9999px;
+}
+
+/* Phone: single short CTA so brand + button never collide */
+@media (max-width: 767px) {
+  .nav-pill {
+    gap: 0.35rem;
+    padding: 0.3rem 0.35rem 0.3rem 0.55rem;
+  }
+
+  .nav-right .btn-primary {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.8125rem;
+    min-height: 2.6rem;
+  }
+
+  /* Very narrow: bull only, more room for Call */
+  @media (max-width: 359px) {
+    .brand-name {
+      display: none;
+    }
+  }
 }
 
 @media (min-width: 380px) {
@@ -2764,10 +2835,10 @@ a.trust-chip {
   margin-top: 0.85rem;
 }
 
-/* Lift cookie banner above mobile docked nav */
+/* Lift cookie banner above mobile sticky CTA dock */
 @media (max-width: 767px) {
   .cookie-banner {
-    bottom: 4.5rem;
+    bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
   }
 }
 
