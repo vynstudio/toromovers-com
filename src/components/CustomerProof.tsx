@@ -14,9 +14,8 @@ import {
 } from "@/lib/site";
 
 /**
- * Option A — proof band: photo + copy/CTAs as one unit.
- * Mobile: photo → copy → trust row → CTAs.
- * Desktop: 2-col, copy stack vertically centered to photo.
+ * Dense proof band: large photo + filled copy column
+ * (stats, points, CTAs) — no empty dead zones.
  */
 export function CustomerProof() {
   const ref = useRef<HTMLElement>(null);
@@ -38,7 +37,7 @@ export function CustomerProof() {
           io.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -6% 0px" },
+      { threshold: 0.12, rootMargin: "0px 0px -4% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -51,15 +50,15 @@ export function CustomerProof() {
       className={`customer-proof full-bleed${visible ? " is-visible" : ""}`}
       aria-labelledby="proof-heading"
     >
-      <div className="customer-proof-inner site-container">
+      <div className="customer-proof-inner site-container-wide">
         <div className="customer-proof-stage">
           <div className="customer-proof-frame">
             <Image
               src={customerProof.image.src}
               alt={customerProof.image.alt}
               fill
-              quality={70}
-              sizes="(max-width: 639px) 92vw, (max-width: 1023px) 70vw, 440px"
+              quality={72}
+              sizes="(max-width: 639px) 94vw, (max-width: 1023px) 80vw, 48vw"
               className="customer-proof-img object-cover object-[center_18%]"
             />
             <div className="customer-proof-shine" aria-hidden />
@@ -75,29 +74,50 @@ export function CustomerProof() {
             {customerProof.lede}
           </p>
 
-          <p className="customer-proof-trust">
-            <a
-              href={GOOGLE_MAPS_REVIEWS_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cta="proof-google"
-              className="customer-proof-trust-link"
-            >
-              <strong>{GOOGLE_RATING}★</strong> Google rated
-            </a>
-            <span className="customer-proof-trust-sep" aria-hidden>
-              ·
-            </span>
-            <span>
-              <strong>{MOVES_DONE}</strong> moves
-            </span>
-            <span className="customer-proof-trust-sep" aria-hidden>
-              ·
-            </span>
-            <span>
-              <strong>{SERVICE_REGION}</strong>
-            </span>
-          </p>
+          <ul className="customer-proof-stats" aria-label="Trust signals">
+            <li className="customer-proof-stat">
+              <a
+                href={GOOGLE_MAPS_REVIEWS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cta="proof-google"
+                className="customer-proof-stat-link"
+              >
+                <span className="customer-proof-stat-value">
+                  {GOOGLE_RATING}★
+                </span>
+                <span className="customer-proof-stat-label">Google rated</span>
+              </a>
+            </li>
+            <li className="customer-proof-stat">
+              <span className="customer-proof-stat-value">{MOVES_DONE}</span>
+              <span className="customer-proof-stat-label">local moves</span>
+            </li>
+            <li className="customer-proof-stat">
+              <span className="customer-proof-stat-value">EN · ES</span>
+              <span className="customer-proof-stat-label">bilingual crew</span>
+            </li>
+            <li className="customer-proof-stat">
+              <span className="customer-proof-stat-value">Local</span>
+              <span className="customer-proof-stat-label">{SERVICE_REGION}</span>
+            </li>
+          </ul>
+
+          <ul className="customer-proof-points">
+            {customerProof.points.map((p) => (
+              <li key={p.title} className="customer-proof-point">
+                <span className="customer-proof-point-mark" aria-hidden>
+                  ✓
+                </span>
+                <span>
+                  <strong className="customer-proof-point-title">{p.title}</strong>
+                  <span className="customer-proof-point-body text-muted">
+                    {p.body}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
 
           <div className="customer-proof-actions">
             <a

@@ -28,6 +28,20 @@ export const customerProof = {
   title: "The smile after the move is the point",
   lede: "Family-owned Orlando movers who show up on time, protect your things, and leave you relieved—not stressed.",
   ctaQuote: "Get a free quote",
+  points: [
+    {
+      title: "On-time local crew",
+      body: "Direct communication—not a franchise hand-off.",
+    },
+    {
+      title: "Careful with your home",
+      body: "Pads, wrap, and placement the way you want it.",
+    },
+    {
+      title: "Up-front hourly rates",
+      body: "Clear pricing before move day. No surprise add-ons.",
+    },
+  ],
   image: {
     src: "/images/hero-lake-customer.jpg",
     alt: "Toro Movers owner with a happy customer by the lake after a local move in Central Florida",
