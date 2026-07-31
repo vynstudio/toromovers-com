@@ -26,7 +26,7 @@ export const hero = {
 export const customerProof = {
   eyebrow: "Real customers · Real local moves",
   title: "The smile after the move is the point",
-  lede: "Family-owned Orlando movers who show up on time, protect your things, and leave you relieved—not stressed. 5★ Google rated with 1,000+ moves across Central Florida.",
+  lede: "Family-owned Orlando movers who show up on time, protect your things, and leave you relieved—not stressed.",
   ctaQuote: "Get a free quote",
   image: {
     src: "/images/hero-lake-customer.jpg",
