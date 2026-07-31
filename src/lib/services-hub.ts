@@ -27,27 +27,27 @@ export const servicesHub = {
       title: "Residential moving services",
       body: "Houses and single-family homes across Orlando and Central Florida—careful furniture handling, HOA access, and placement room by room.",
       href: "/residential-movers",
-      image: "/images/moves/svc-residential.jpg",
+      image: "/images/moves/svc-primary-residential.jpg",
       imageAlt:
-        "Toro Movers handling a large residential item on a real Central Florida home job",
+        "Toro Movers crew carrying a large padded item to the truck on a real residential home move",
       badge: "Homes",
     },
     {
       title: "Townhome movers",
       body: "Multi-level townhomes with stairs, tight turns, garages, and shared driveways—planned so walls, floors, and railings stay protected.",
       href: "/residential-movers",
-      image: "/images/moves/svc-loading.jpg",
+      image: "/images/moves/svc-primary-townhome.jpg",
       imageAlt:
-        "Toro Movers loading furniture carefully on a real multi-level home job",
+        "Toro Movers carrying boxes on a multi-level walkway with stairs on a real townhome-style job",
       badge: "Townhomes",
     },
     {
       title: "Apartment movers in Orlando",
       body: "Stairs, elevators, loading zones, and complex move-in windows—planned before the crew arrives for Orlando apartments and condos.",
       href: "/apartment-movers-orlando-fl",
-      image: "/images/moves/svc-apartment.jpg",
+      image: "/images/moves/svc-primary-apartment.jpg",
       imageAlt:
-        "Toro Movers carrying boxes in an apartment hallway on a real Orlando-area move",
+        "Toro Movers carrying boxes in an apartment hallway on a real Orlando-area apartment move",
       badge: "Apartments",
     },
   ] satisfies ServiceHubItem[],
