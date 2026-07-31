@@ -1,11 +1,19 @@
 # Toro Movers — toromovers.com source handoff
 
-**Last updated:** 2026-07-25  
-**Domain:** https://toromovers.com (custom domain configured; DNS may still be propagating)  
+**Last updated:** 2026-07-31  
+**Domain:** https://toromovers.com  
 **Staging / Netlify:** https://toromovers-com.netlify.app  
 **GitHub:** https://github.com/vynstudio/toromovers-com (private)  
 **Local path:** `/Users/vynstudio/toromovers-com`  
-**Not related to:** `toromovers.net` / `toromovers-site` (separate repo & Netlify project)
+**Engine (proxied SEO/funnels):** `toromovers-site` → live-toro-site.netlify.app  
+
+## City conversion (25-page SEO rollout)
+
+- **Playbook + queue:** [`docs/CITY-CONVERSION.md`](./docs/CITY-CONVERSION.md)
+- **Machine queue:** [`src/lib/city-queue.ts`](./src/lib/city-queue.ts)
+- **Template city:** `/orlando-movers` via `CityLanding` + `ORLANDO` in `src/lib/city-pages.ts`
+- **Rule:** Finish home + Orlando, then convert **one URL at a time** (remove Netlify proxy → design route → sitemap → GSC index)
+
 
 ---
 
