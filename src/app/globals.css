@@ -430,18 +430,13 @@ svg {
   .hero-skyline-veil {
     position: absolute;
     inset: 0;
-    /* Soft light wash so white card + nav stay readable */
+    /* Light veil only — skyline stays sharp and visible */
     background:
       linear-gradient(
         180deg,
-        rgba(247, 248, 250, 0.72) 0%,
-        rgba(247, 248, 250, 0.42) 42%,
-        rgba(247, 248, 250, 0.58) 100%
-      ),
-      radial-gradient(
-        90% 70% at 50% 40%,
-        rgba(255, 255, 255, 0.32) 0%,
-        transparent 70%
+        rgba(247, 248, 250, 0.38) 0%,
+        rgba(247, 248, 250, 0.18) 45%,
+        rgba(247, 248, 250, 0.32) 100%
       );
   }
 }
