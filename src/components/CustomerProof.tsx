@@ -105,22 +105,6 @@ export function CustomerProof() {
             </li>
           </ul>
 
-          <ul className="customer-proof-points">
-            {customerProof.points.map((p) => (
-              <li key={p.title} className="customer-proof-point">
-                <span className="customer-proof-point-mark" aria-hidden>
-                  ✓
-                </span>
-                <span>
-                  <strong className="customer-proof-point-title">{p.title}</strong>
-                  <span className="customer-proof-point-body text-muted">
-                    {p.body}
-                  </span>
-                </span>
-              </li>
-            ))}
-          </ul>
-
           <div className="customer-proof-actions">
             <a
               href={PHONE_TEL}
