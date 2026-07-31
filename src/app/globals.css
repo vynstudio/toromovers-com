@@ -31,8 +31,12 @@
   --container-wide-max: 100%;
   --container-narrow-max: 100%;
   --section-y: 3rem;
-  /* Mobile fixed nav: safe-area + pad + pill (desktop overrides below) */
-  --header-h: calc(env(safe-area-inset-top, 0px) + 4rem);
+  /* Sticky header clearance (anchors, scroll-margin) */
+  --nav-pill-h: 3.25rem;
+  --nav-top-gap: 0.65rem;
+  --header-h: calc(
+    env(safe-area-inset-top, 0px) + var(--nav-top-gap) + var(--nav-pill-h) + 0.5rem
+  );
 
   /* Touch targets (Google ~48dp; WCAG 2.5.8 ≥24px) */
   --tap-min: 48px;
@@ -448,18 +452,14 @@ svg {
   max-width: 100%;
 }
 
-/* Header spacer — mobile only (fixed nav). Height = safe-area + pad + pill */
+/*
+ * No fixed-position nav + fake spacer (that was causing mobile overlap).
+ * Sticky header stays in document flow → hero always starts below the pill.
+ */
 .site-header-spacer {
-  display: none;
-  width: 100%;
-  height: calc(
-    env(safe-area-inset-top, 0px) + 0.75rem + 3.5rem
-  );
-  flex-shrink: 0;
-  pointer-events: none;
+  display: none !important;
 }
 
-/* Header shell: centers the pill; never full-bleed edge-to-edge crush */
 .site-header {
   position: sticky;
   top: 0;
@@ -470,7 +470,8 @@ svg {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 0.85rem var(--container-pad) 0.5rem;
+  padding: calc(env(safe-area-inset-top, 0px) + var(--nav-top-gap))
+    var(--container-pad) 0.5rem;
   box-sizing: border-box;
   transition:
     transform 0.28s ease,
@@ -478,21 +479,8 @@ svg {
     padding 0.28s ease;
 }
 
-/* Mobile: fixed centered pill; slides away past hero */
+/* Mobile: hide after hero; still sticky so it never covers page content at rest */
 @media (max-width: 767px) {
-  .site-header-spacer {
-    display: block;
-  }
-
-  .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: calc(env(safe-area-inset-top, 0px) + 0.65rem) var(--container-pad)
-      0.35rem;
-  }
-
   .site-header--hidden {
     transform: translateY(calc(-100% - 0.75rem - env(safe-area-inset-top, 0px)));
     opacity: 0;
@@ -755,14 +743,17 @@ svg {
   }
 }
 
-/* Phone: simple brand | CTAs row (no center column) */
+/* Phone: brand | menu + Call — fixed pill height, no internal crush */
 @media (max-width: 767px) {
   .nav-pill {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    column-gap: 0.5rem;
+    column-gap: 0.45rem;
     max-width: 100%;
+    height: var(--nav-pill-h);
+    min-height: var(--nav-pill-h);
+    padding: 0.3rem 0.35rem 0.3rem 0.55rem;
   }
 
   .nav-left {
@@ -772,6 +763,33 @@ svg {
 
   .nav-right {
     flex: 0 0 auto;
+    gap: 0.35rem;
+  }
+
+  /* Kill 48px square tap min-width inside pill so Call doesn't shove the logo */
+  .nav-pill .tap-target {
+    min-height: 2.65rem;
+    min-width: 0;
+  }
+
+  .nav-pill .brand-lockup {
+    min-height: 2.65rem;
+    height: 2.65rem;
+    max-width: 100%;
+  }
+
+  .nav-pill .nav-menu-btn {
+    width: 2.65rem;
+    height: 2.65rem;
+    min-height: 2.65rem;
+    min-width: 2.65rem;
+  }
+
+  .nav-pill .nav-right .btn-primary {
+    min-height: 2.65rem;
+    height: 2.65rem;
+    padding: 0 0.95rem;
+    font-size: 0.8125rem;
   }
 }
 
@@ -866,7 +884,8 @@ svg {
   position: absolute;
   left: var(--container-pad);
   right: var(--container-pad);
-  top: calc(env(safe-area-inset-top, 0px) + 0.65rem + 3.65rem);
+  /* Sit just under sticky header (pill + pad + safe-area) */
+  top: var(--header-h);
   max-height: min(70dvh, 28rem);
   padding: 0.75rem 1rem 1.1rem;
   background: #fff;

@@ -31,7 +31,7 @@ export function CityHero({
   return (
     <section
       id="hero"
-      className="hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-6 pt-2 sm:pb-12 lg:py-16"
+      className="hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-6 pt-3 sm:pb-12 sm:pt-4 lg:py-16"
       aria-labelledby="hero-heading"
     >
       <HeroSkyline />

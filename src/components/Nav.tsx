@@ -65,7 +65,6 @@ export function Nav() {
 
   return (
     <>
-      <div className="site-header-spacer" aria-hidden />
       <header
         className={`site-header pointer-events-none${
           hiddenMobile && !menuOpen ? " site-header--hidden" : ""
