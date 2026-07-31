@@ -5,7 +5,6 @@ import {
   MOVES_DONE,
   PHONE_DISPLAY,
   PHONE_TEL,
-  REVIEW_COUNT,
   SERVICE_REGION,
 } from "@/lib/site";
 
@@ -18,16 +17,14 @@ export function TrustBar() {
     >
       <div className="site-container flex flex-col items-center gap-2 text-center sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-4 sm:text-left">
         <div className="flex flex-wrap items-center justify-center gap-x-1 gap-y-0 sm:justify-start">
-          <span className="trust-chip px-1 py-2">
-            <strong>{GOOGLE_RATING}★</strong> Google
-          </span>
           <a
             href={GOOGLE_MAPS_REVIEWS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="trust-chip"
+            className="trust-chip px-1 py-2"
+            data-cta="trust-google-rating"
           >
-            <strong>{REVIEW_COUNT}+</strong> reviews
+            <strong>{GOOGLE_RATING}★</strong> Google rated
           </a>
           <span className="trust-chip px-1 py-2">
             <strong>{MOVES_DONE}</strong> moves
