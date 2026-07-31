@@ -3,7 +3,6 @@ import { Hero } from "@/components/Hero";
 import { TrustMarquee } from "@/components/TrustMarquee";
 import { CustomerProof } from "@/components/CustomerProof";
 import { FeatureGrid } from "@/components/FeatureGrid";
-import { Process } from "@/components/Process";
 import { FeatureAlternating } from "@/components/FeatureAlternating";
 import { Integrations } from "@/components/Integrations";
 import { WhyToro } from "@/components/WhyToro";
@@ -18,9 +17,8 @@ import { ClientChrome } from "@/components/ClientChrome";
 import { homePageGraph } from "@/lib/schema";
 
 /**
- * DID-style homepage strategy (Toro layout kept):
- * Hero → customer proof (animated) → services → process → recent moves
- * → why Toro → reviews → FAQ → areas → close.
+ * Hero → trust marquee → proof → services (incl. how-it-works footer)
+ * → recent moves → why Toro → reviews → FAQ → areas → close.
  */
 export default function HomePage() {
   return (
@@ -35,7 +33,6 @@ export default function HomePage() {
         <TrustMarquee />
         <CustomerProof />
         <FeatureGrid />
-        <Process />
         <RecentMoves />
         <WhyToro />
         <Reviews />

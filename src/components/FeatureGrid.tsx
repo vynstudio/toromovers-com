@@ -1,9 +1,10 @@
 import Image from "next/image";
+import { process } from "@/lib/content";
 import { servicesHub } from "@/lib/services-hub";
 import { IconArrow } from "@/components/icons";
 
 /**
- * S1 services hub: 3 primary photo cards + 3 compact secondary links.
+ * S1 services hub + how-it-works footer (process no longer a separate section).
  */
 export function FeatureGrid() {
   return (
@@ -26,7 +27,6 @@ export function FeatureGrid() {
           </p>
         </header>
 
-        {/* Primary — full-service, labor-only, apartment */}
         <div className="services-hub-primary">
           {servicesHub.primary.map((item) => (
             <a
@@ -64,7 +64,6 @@ export function FeatureGrid() {
           ))}
         </div>
 
-        {/* Secondary — compact row / list */}
         <div className="services-hub-secondary" aria-label="More services">
           {servicesHub.secondary.map((item) => (
             <a
@@ -95,25 +94,44 @@ export function FeatureGrid() {
           ))}
         </div>
 
-        <div className="services-hub-actions">
-          <button
-            type="button"
-            data-open-quote
-            data-source="features-quote"
-            data-cta="features-quote"
-            className="btn-primary btn-fluid tap-target inline-flex"
-          >
-            {servicesHub.cta}
-            <IconArrow />
-          </button>
-          <a
-            href={servicesHub.galleryHref}
-            className="btn-outline btn-fluid tap-target inline-flex"
-            data-cta="services-gallery"
-          >
-            {servicesHub.galleryCta}
-            <IconArrow />
-          </a>
+        {/* How it works — footer of services (replaces standalone Process) */}
+        <div id="how-it-works" className="services-hub-footer">
+          <p className="services-hub-footer-label">{process.heading}</p>
+          <ol className="services-hub-steps">
+            {process.steps.map((step, i) => (
+              <li key={step.name} className="services-hub-step">
+                <span className="services-hub-step-num" aria-hidden>
+                  {i + 1}
+                </span>
+                <span className="services-hub-step-copy">
+                  <span className="services-hub-step-name">{step.name}</span>
+                  <span className="services-hub-step-text text-muted">
+                    {step.text}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ol>
+          <div className="services-hub-actions">
+            <button
+              type="button"
+              data-open-quote
+              data-source="features-quote"
+              data-cta="features-quote"
+              className="btn-primary btn-fluid tap-target inline-flex"
+            >
+              {process.cta}
+              <IconArrow />
+            </button>
+            <a
+              href={servicesHub.galleryHref}
+              className="btn-outline btn-fluid tap-target inline-flex"
+              data-cta="services-gallery"
+            >
+              {servicesHub.galleryCta}
+              <IconArrow />
+            </a>
+          </div>
         </div>
       </div>
     </section>

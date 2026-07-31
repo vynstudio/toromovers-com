@@ -1551,13 +1551,93 @@ select:focus-visible {
   height: 1rem;
 }
 
+/* Services footer: 3 steps + CTAs (replaces standalone Process) */
+.services-hub-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.services-hub-footer-label {
+  margin: 0 0 0.85rem;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.services-hub-steps {
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+
+@media (min-width: 640px) {
+  .services-hub-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}
+
+.services-hub-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  min-width: 0;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.85rem;
+  background: #f7f8fa;
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  text-align: left;
+}
+
+.services-hub-step-num {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.services-hub-step-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.services-hub-step-name {
+  font-size: 0.875rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  color: var(--foreground);
+}
+
+.services-hub-step-text {
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
 .services-hub-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  margin-top: 2rem;
+  margin-top: 0;
 }
 
 @media (min-width: 640px) {
@@ -1578,151 +1658,6 @@ select:focus-visible {
   }
 }
 
-/* Process strip — one row under services (not a full section) */
-.process-strip {
-  border-block: 1px solid var(--border);
-  background: var(--foreground);
-  color: #fff;
-  padding: 0.85rem 0;
-}
-
-@media (min-width: 768px) {
-  .process-strip {
-    padding: 0.75rem 0;
-  }
-}
-
-.process-strip-inner {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 0.85rem;
-}
-
-@media (min-width: 900px) {
-  .process-strip-inner {
-    flex-direction: row;
-    align-items: center;
-    gap: 1.25rem;
-  }
-}
-
-.process-strip-label {
-  margin: 0;
-  flex-shrink: 0;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-  white-space: nowrap;
-}
-
-.process-strip-steps {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-@media (min-width: 640px) {
-  .process-strip-steps {
-    flex-direction: row;
-    align-items: center;
-    gap: 0;
-  }
-}
-
-.process-strip-step {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  min-width: 0;
-  flex: 1 1 0;
-  position: relative;
-}
-
-.process-strip-num {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: 999px;
-  background: var(--accent);
-  color: #fff;
-  font-size: 0.7rem;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.process-strip-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  min-width: 0;
-}
-
-.process-strip-name {
-  font-size: 0.875rem;
-  font-weight: 650;
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-  color: #fff;
-}
-
-.process-strip-text {
-  font-size: 0.75rem;
-  line-height: 1.3;
-  color: rgba(255, 255, 255, 0.62) !important;
-}
-
-/* Connector between steps on tablet+ */
-.process-strip-join {
-  display: none;
-}
-
-@media (min-width: 640px) {
-  .process-strip-join {
-    display: block;
-    flex: 0 0 auto;
-    width: 1.25rem;
-    height: 1px;
-    margin-inline: 0.45rem;
-    background: rgba(255, 255, 255, 0.28);
-  }
-
-  .process-strip-step {
-    flex: 1 1 0;
-  }
-}
-
-@media (min-width: 900px) {
-  .process-strip-join {
-    width: 1.75rem;
-  }
-}
-
-.process-strip-cta {
-  flex-shrink: 0;
-  width: 100%;
-  justify-content: center;
-  min-height: 2.65rem !important;
-  padding: 0.55rem 1.1rem !important;
-  font-size: 0.8125rem !important;
-  border-radius: 9999px !important;
-}
-
-@media (min-width: 900px) {
-  .process-strip-cta {
-    width: auto;
-  }
-}
 
 .recent-moves-lead {
   margin: 0.75rem auto 0;
