@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
-import { LeadModal } from "@/components/LeadModal";
-import { CookieBanner } from "@/components/CookieBanner";
+import { ClientChrome } from "@/components/ClientChrome";
 import { RecentMoves } from "@/components/RecentMoves";
 import { ClosingCta } from "@/components/ClosingCta";
 import {
@@ -123,8 +122,7 @@ export default function OrlandoMoversGalleryPage() {
       </main>
       <Footer />
       <StickyCta />
-      <LeadModal />
-      <CookieBanner />
+      <ClientChrome />
     </>
   );
 }

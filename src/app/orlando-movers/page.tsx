@@ -1,20 +1,11 @@
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
+import { ClientChrome } from "@/components/ClientChrome";
 import { CityLanding } from "@/components/city/CityLanding";
 import { ORLANDO } from "@/lib/city-pages";
 import { cityPageGraph } from "@/lib/schema";
-
-const LeadModal = dynamic(
-  () => import("@/components/LeadModal").then((m) => m.LeadModal),
-  { ssr: false },
-);
-const CookieBanner = dynamic(
-  () => import("@/components/CookieBanner").then((m) => m.CookieBanner),
-  { ssr: false },
-);
 
 export const metadata: Metadata = {
   title: { absolute: ORLANDO.metadata.title },
@@ -57,8 +48,7 @@ export default function OrlandoMoversPage() {
       </main>
       <Footer />
       <StickyCta />
-      <LeadModal />
-      <CookieBanner />
+      <ClientChrome />
     </>
   );
 }
