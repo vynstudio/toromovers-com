@@ -5,7 +5,7 @@
 export const nav = {
   links: [
     { label: "Home", href: "/" },
-    { label: "About us", href: "/#why" },
+    { label: "About us", href: "/#proof" },
     { label: "Moving services", href: "/#services" },
     { label: "Resources", href: "/#faq" },
     { label: "Gallery", href: "/orlando-movers-gallery" },

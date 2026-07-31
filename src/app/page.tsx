@@ -5,7 +5,6 @@ import { CustomerProof } from "@/components/CustomerProof";
 import { FeatureGrid } from "@/components/FeatureGrid";
 import { FeatureAlternating } from "@/components/FeatureAlternating";
 import { Integrations } from "@/components/Integrations";
-import { WhyToro } from "@/components/WhyToro";
 import { RecentMoves } from "@/components/RecentMoves";
 import { Reviews } from "@/components/Reviews";
 import { Faq } from "@/components/Faq";
@@ -17,8 +16,8 @@ import { ClientChrome } from "@/components/ClientChrome";
 import { homePageGraph } from "@/lib/schema";
 
 /**
- * Hero → trust marquee → proof → services (incl. how-it-works footer)
- * → recent moves → why Toro → reviews → FAQ → areas → close.
+ * Hero → trust marquee → proof → services → recent moves
+ * → reviews → FAQ → areas → close.
  */
 export default function HomePage() {
   return (
@@ -34,7 +33,6 @@ export default function HomePage() {
         <CustomerProof />
         <FeatureGrid />
         <RecentMoves />
-        <WhyToro />
         <Reviews />
         <Faq />
         <Areas />
