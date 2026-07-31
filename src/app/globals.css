@@ -400,6 +400,52 @@ svg {
   }
 }
 
+/* Desktop skyline behind hero card — CSS bg only so phones never download it */
+.hero-skyline {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-with-skyline.hero-wash {
+    background: #1a2330;
+    min-height: min(72vh, 40rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-skyline {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background-image: url("/images/hero-orlando-skyline.jpg");
+    background-size: cover;
+    background-position: center 40%;
+    background-repeat: no-repeat;
+  }
+
+  .hero-skyline-veil {
+    position: absolute;
+    inset: 0;
+    /* Soft light wash so white card + nav stay readable */
+    background:
+      linear-gradient(
+        180deg,
+        rgba(247, 248, 250, 0.72) 0%,
+        rgba(247, 248, 250, 0.42) 42%,
+        rgba(247, 248, 250, 0.58) 100%
+      ),
+      radial-gradient(
+        90% 70% at 50% 40%,
+        rgba(255, 255, 255, 0.32) 0%,
+        transparent 70%
+      );
+  }
+}
+
 .card-elevated {
   box-shadow: var(--card-shadow);
   width: 100%;

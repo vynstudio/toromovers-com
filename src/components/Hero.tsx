@@ -1,4 +1,5 @@
 import { hero } from "@/lib/content";
+import { HeroSkyline } from "@/components/HeroSkyline";
 import { IconArrow } from "@/components/icons";
 import {
   GOOGLE_RATING,
@@ -8,16 +9,19 @@ import {
 
 /**
  * Mobile-first conversion hero — copy + CTAs only.
- * Customer photo lives in the separate CustomerProof section below.
+ * Desktop: Orlando skyline fills behind the card.
+ * Customer photo lives in CustomerProof below.
  */
 export function Hero() {
   return (
     <section
       id="hero"
-      className="hero-wash full-bleed relative w-full overflow-hidden pb-6 pt-2 sm:pb-12 lg:pb-16 lg:pt-4"
+      className="hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-6 pt-2 sm:pb-12 lg:pb-20 lg:pt-6"
       aria-labelledby="hero-heading"
     >
-      <div className="site-container-wide w-full">
+      <HeroSkyline />
+
+      <div className="site-container-wide relative z-[1] w-full">
         <div className="mx-auto max-w-3xl">
           <div className="card-elevated rounded-[1.25rem] bg-white px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:px-14 lg:py-14">
             <h1
