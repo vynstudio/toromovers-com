@@ -146,19 +146,19 @@ export default function RootLayout({
             __html: JSON.stringify(organizationGraph()),
           }}
         />
-        {/* Searchable Analytics — queue stub + deferred tracker */}
-        <Script id="searchable-queue" strategy="beforeInteractive">
+        {/* Analytics after paint — do not block LCP */}
+        <Script id="searchable-queue" strategy="lazyOnload">
           {`window.sa=window.sa||function(){(sa.q=sa.q||[]).push(arguments)}`}
         </Script>
         <Script
           id="searchable-tracker"
           src="https://searchable-tracker.searchable.workers.dev/s.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           data-domain="toromovers.com"
           data-site-token={SEARCHABLE_SITE_TOKEN}
         />
         {META_PIXEL_ID ? (
-          <Script id="meta-pixel" strategy="afterInteractive">
+          <Script id="meta-pixel" strategy="lazyOnload">
             {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;

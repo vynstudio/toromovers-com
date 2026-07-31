@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { Nav } from "@/components/Nav";
 import { Hero } from "@/components/Hero";
 import { TrustBar } from "@/components/TrustBar";
@@ -13,9 +14,17 @@ import { Areas } from "@/components/Areas";
 import { ClosingCta } from "@/components/ClosingCta";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
-import { LeadModal } from "@/components/LeadModal";
-import { CookieBanner } from "@/components/CookieBanner";
 import { homePageGraph } from "@/lib/schema";
+
+/** Heavy client chrome — load after first paint */
+const LeadModal = dynamic(
+  () => import("@/components/LeadModal").then((m) => m.LeadModal),
+  { ssr: false },
+);
+const CookieBanner = dynamic(
+  () => import("@/components/CookieBanner").then((m) => m.CookieBanner),
+  { ssr: false },
+);
 
 /**
  * DID-style homepage strategy (Toro layout kept):

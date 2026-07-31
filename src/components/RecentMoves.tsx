@@ -57,7 +57,8 @@ export function RecentMoves({
                     {g.label} service <IconArrow />
                   </a>
                 </div>
-                <MoveGrid items={g.items} isPage />
+                {/* Cap per group so gallery doesn't dump 40+ images at once */}
+                <MoveGrid items={g.items.slice(0, 6)} isPage />
               </div>
             ))}
           </div>
@@ -105,11 +106,12 @@ function MoveGrid({
                   fill
                   sizes={
                     isPage
-                      ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                      ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+                      : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 200px"
                   }
+                  quality={60}
+                  loading="lazy"
                   className="object-cover"
-                  priority={i < 2}
                 />
               </div>
               <figcaption className="recent-moves-cap">

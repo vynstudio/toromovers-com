@@ -40,7 +40,9 @@ export function FeatureGrid() {
                   src={item.image}
                   alt={item.imageAlt}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+                  quality={65}
+                  loading="lazy"
                   className="object-cover"
                 />
               </div>

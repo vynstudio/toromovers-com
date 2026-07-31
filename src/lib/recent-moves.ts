@@ -565,7 +565,8 @@ export const recentMoves: readonly MoveShot[] = [
   },
 ] as const;
 
-export const recentMovesHome = recentMoves.slice(0, 8);
+/** Homepage: only 6 thumbnails to keep LCP fast */
+export const recentMovesHome = recentMoves.slice(0, 6);
 
 export function recentMovesByService(): {
   id: MoveService;

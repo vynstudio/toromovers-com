@@ -1,12 +1,20 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
-import { LeadModal } from "@/components/LeadModal";
-import { CookieBanner } from "@/components/CookieBanner";
 import { CityLanding } from "@/components/city/CityLanding";
 import { ORLANDO } from "@/lib/city-pages";
 import { cityPageGraph } from "@/lib/schema";
+
+const LeadModal = dynamic(
+  () => import("@/components/LeadModal").then((m) => m.LeadModal),
+  { ssr: false },
+);
+const CookieBanner = dynamic(
+  () => import("@/components/CookieBanner").then((m) => m.CookieBanner),
+  { ssr: false },
+);
 
 export const metadata: Metadata = {
   title: { absolute: ORLANDO.metadata.title },
@@ -20,10 +28,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/images/hero-poster.webp",
-        width: 960,
-        height: 960,
-        alt: "Toro Movers crew handling a residential move in Central Florida",
+        url: "/images/hero-crew-real.jpg",
+        width: 1200,
+        height: 900,
+        alt: "Toro Movers crew on a real local move in Central Florida",
       },
     ],
   },

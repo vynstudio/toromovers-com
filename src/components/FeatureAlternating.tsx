@@ -28,7 +28,8 @@ export function FeatureAlternating() {
                   alt={f.image.alt}
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1023px) 90vw, 40vw"
-                  quality={75}
+                  quality={60}
+                  loading="lazy"
                   className={`object-cover ${f.image.position ?? "object-center"}`}
                 />
               </div>
