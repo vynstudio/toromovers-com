@@ -142,6 +142,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="flex min-h-full w-full min-w-0 flex-col font-sans">
+        {/* Refresh → homepage hero (before paint; avoids mid-page restore) */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if("scrollRestoration"in history)history.scrollRestoration="manual";var n=performance.getEntriesByType("navigation")[0];if(n&&n.type==="reload"){var p=location.pathname.replace(/\\/$/,"")||"/";if(p!=="/"||location.hash){location.replace("/");return}scrollTo(0,0)}else if((location.pathname==="/"||location.pathname==="")&&location.hash){history.replaceState(null,"","/");scrollTo(0,0)}}catch(e){}})();`,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

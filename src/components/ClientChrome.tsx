@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { ScrollToHero } from "@/components/ScrollToHero";
 
 /**
  * Heavy client-only chrome loaded after first paint.
@@ -19,6 +20,7 @@ const CookieBanner = dynamic(
 export function ClientChrome() {
   return (
     <>
+      <ScrollToHero />
       <LeadModal />
       <CookieBanner />
     </>
