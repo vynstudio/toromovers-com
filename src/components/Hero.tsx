@@ -5,7 +5,6 @@ import {
   GOOGLE_RATING,
   PHONE_DISPLAY,
   PHONE_TEL,
-  REVIEW_COUNT,
 } from "@/lib/site";
 
 /**
@@ -59,16 +58,7 @@ export function Hero() {
                 <strong className="font-semibold text-foreground">
                   {GOOGLE_RATING}★
                 </strong>{" "}
-                Google
-              </span>
-              <span aria-hidden className="text-border">
-                ·
-              </span>
-              <span>
-                <strong className="font-semibold text-foreground">
-                  {REVIEW_COUNT}+
-                </strong>{" "}
-                reviews
+                Google rated
               </span>
               <span aria-hidden className="hidden text-border sm:inline">
                 ·
