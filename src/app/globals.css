@@ -577,19 +577,22 @@ svg {
     height: 100%;
     object-fit: cover;
     object-position: center center;
+    /* Prefer sharper decode on modern displays */
+    image-rendering: auto;
+    transform: translateZ(0);
   }
 
   .hero-skyline-veil {
     position: absolute;
     inset: 0;
     z-index: 1;
-    /* Light veil so white card stays readable over video */
+    /* Lighter veil so full-HD skyline detail stays visible behind glass card */
     background:
       linear-gradient(
         180deg,
-        rgba(247, 248, 250, 0.42) 0%,
-        rgba(247, 248, 250, 0.2) 45%,
-        rgba(247, 248, 250, 0.36) 100%
+        rgba(247, 248, 250, 0.32) 0%,
+        rgba(247, 248, 250, 0.12) 45%,
+        rgba(247, 248, 250, 0.28) 100%
       );
   }
 }
@@ -605,6 +608,48 @@ svg {
   box-shadow: var(--card-shadow);
   width: 100%;
   max-width: 100%;
+}
+
+/*
+ * Frosted-glass panel — same surface as the hero card.
+ * Used by hero, split-band content, service/blog cards, review cards.
+ */
+.glass-surface {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@media (min-width: 1024px) {
+  .glass-surface {
+    background: rgba(255, 255, 255, 0.45);
+  }
+}
+
+/* High-contrast type over translucent glass */
+.glass-surface .fluid-h1,
+.glass-ink-title {
+  color: #000;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.glass-surface .fluid-lede,
+.glass-ink-body {
+  color: #171717;
+  font-weight: 500;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.glass-surface .btn-outline {
+  border-color: #171717;
+  background: rgba(255, 255, 255, 0.8);
+  color: #171717;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /*
@@ -1910,6 +1955,8 @@ select:focus-visible {
   max-width: 28rem;
   font-size: 0.85rem;
   line-height: 1.4;
+  color: #171717;
+  font-weight: 500;
 }
 
 .faq-accordion {
@@ -1923,10 +1970,12 @@ select:focus-visible {
 }
 
 .faq-details {
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 0.75rem;
-  background: #fafafa;
+  background: rgba(255, 255, 255, 0.55);
   overflow: hidden;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition:
     border-color 0.15s ease,
     background 0.15s ease,
@@ -1934,7 +1983,7 @@ select:focus-visible {
 }
 
 .faq-details[open] {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.82);
   border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
@@ -2018,7 +2067,8 @@ select:focus-visible {
   border-top: 1px solid var(--border);
   font-size: 0.8125rem;
   line-height: 1.45;
-  color: var(--muted);
+  color: #171717;
+  font-weight: 500;
   text-align: left;
 }
 
@@ -4200,16 +4250,25 @@ a.trust-chip {
   min-height: 0;
   padding: 0.95rem 1rem 1rem;
   border-radius: 1.15rem;
-  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
-  background: #fff;
-  box-shadow: 0 10px 28px rgba(10, 10, 10, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   text-decoration: none;
   color: inherit;
   text-align: left;
   transition:
     transform 0.18s ease,
     border-color 0.15s ease,
-    box-shadow 0.18s ease;
+    box-shadow 0.18s ease,
+    background 0.15s ease;
+}
+
+@media (min-width: 1024px) {
+  .rv-h-card {
+    background: rgba(255, 255, 255, 0.45);
+  }
 }
 
 .rv-h-card:hover,
@@ -4269,10 +4328,10 @@ a.trust-chip {
 
 .rv-h-name {
   font-size: 0.9rem;
-  font-weight: 650;
+  font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.2;
-  color: var(--foreground);
+  color: #000;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -4310,7 +4369,8 @@ a.trust-chip {
   margin: 0;
   font-size: 0.8125rem;
   line-height: 1.45;
-  color: var(--foreground);
+  color: #171717;
+  font-weight: 500;
   flex: 1 1 auto;
   overflow-wrap: anywhere;
   word-break: break-word;
@@ -4795,10 +4855,12 @@ a.trust-chip {
   text-align: center;
   gap: 0;
   padding: 1.05rem 1rem 1.15rem;
-  background: #fff;
-  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 1.05rem;
-  box-shadow: 0 6px 20px rgba(10, 10, 10, 0.045);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   min-height: 0;
   overflow: visible;
 }
@@ -4816,7 +4878,8 @@ a.trust-chip {
     height: auto;
     padding: 1.5rem 1.65rem 1.65rem;
     border-radius: 1.35rem;
-    box-shadow: 0 10px 32px rgba(10, 10, 10, 0.05);
+    background: rgba(255, 255, 255, 0.45);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
 }
 
@@ -4844,9 +4907,10 @@ a.trust-chip {
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.15;
-  color: var(--foreground);
+  color: #000;
   max-width: 22ch;
   text-align: center;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 @media (min-width: 1024px) {
@@ -4863,6 +4927,9 @@ a.trust-chip {
   line-height: 1.45;
   max-width: 34rem;
   text-align: center;
+  color: #171717;
+  font-weight: 500;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 @media (min-width: 640px) {
@@ -4894,6 +4961,14 @@ a.trust-chip {
   justify-content: center;
   width: 100%;
   min-height: 2.85rem;
+}
+
+.split-band-content .btn-outline {
+  border-color: #171717;
+  background: rgba(255, 255, 255, 0.8);
+  color: #171717;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /* Desktop: side-by-side CTAs again */
@@ -5077,17 +5152,26 @@ a.trust-chip {
   flex-direction: column;
   height: 100%;
   min-height: 0;
-  background: #fff;
-  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.45);
   border-radius: 1.1rem;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  box-shadow: 0 10px 32px rgba(10, 10, 10, 0.05);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+@media (min-width: 1024px) {
+  .svc-card {
+    background: rgba(255, 255, 255, 0.45);
+  }
 }
 
 .svc-card:hover,
@@ -5121,6 +5205,7 @@ a.trust-chip {
   min-height: 0;
   padding: 0.85rem 0.95rem 1rem;
   text-align: left;
+  background: transparent;
 }
 
 @media (min-width: 700px) {
@@ -5151,7 +5236,8 @@ a.trust-chip {
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.25;
-  color: var(--foreground);
+  color: #000;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -5164,6 +5250,8 @@ a.trust-chip {
   min-height: calc(1.4em * 3);
   font-size: 0.8125rem;
   line-height: 1.4;
+  color: #171717;
+  font-weight: 500;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -5223,10 +5311,13 @@ a.trust-chip {
   align-items: center;
   padding: 0.45rem 0.8rem;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: #f7f8fa;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   font-size: 0.8rem;
   font-weight: 600;
+  color: #0a0a0a;
   color: var(--foreground);
   text-decoration: none;
   transition:
@@ -5236,7 +5327,7 @@ a.trust-chip {
 
 .split-chip:hover,
 .split-chip:focus-visible {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85);
   border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
 }
 
@@ -5484,8 +5575,11 @@ a.trust-chip {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.65rem 0.5rem;
-  border-block: 1px solid var(--border);
-  background: color-mix(in srgb, var(--gray-soft) 65%, #fff);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-block: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 0.85rem;
 }
 
@@ -5521,14 +5615,14 @@ a.trust-chip {
   font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--foreground);
+  color: #000;
   line-height: 1.15;
 }
 
 .customer-proof-stat-label {
   font-size: 0.72rem;
   font-weight: 500;
-  color: var(--muted);
+  color: #262626;
   line-height: 1.25;
 }
 

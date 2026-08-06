@@ -70,7 +70,7 @@ export function HeroSkyline({ withVideo = false }: HeroSkylineProps) {
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
           poster={HERO_VIDEO_POSTER}
           src={videoSrc}
         />

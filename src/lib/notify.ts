@@ -187,7 +187,7 @@ function teamMessage(lead: LeadNotifyInput): string {
 
 function clientSms(lead: LeadNotifyInput): string {
   const n = firstName(lead.name);
-  return `Hi ${n} — Toro Movers! We got your quote request and will call soon with pricing & availability. See why Central Florida chooses us: ${GOOGLE_MAPS_REVIEWS_URL} Questions? ${PHONE_DISPLAY}. Reply STOP to opt out.`;
+  return `Hi ${n} — Toro Movers! We got your quote request and will call soon with pricing & availability. Reliable local crews for your move: ${GOOGLE_MAPS_REVIEWS_URL} Questions? ${PHONE_DISPLAY}. Reply STOP to opt out.`;
 }
 
 function clientEmail(lead: LeadNotifyInput): { subject: string; text: string; html: string } {
@@ -199,9 +199,9 @@ function clientEmail(lead: LeadNotifyInput): { subject: string; text: string; ht
     `We got your quote request. A team member will call or text you shortly with availability and clear, up-front pricing — no hidden fees.`,
     ``,
     lead.serviceType ? `What you selected: ${lead.serviceType}` : "",
-    `While you wait, here's why Central Florida chooses Toro Movers:`,
+    `While you wait, here's what you can count on from Toro Movers:`,
     `- ${GOOGLE_RATING}★ rated on Google, ${REVIEW_COUNT}+ reviews`,
-    `- Family-owned, local crew — not a national franchise hand-off`,
+    `- Family-owned local crew — committed to every job`,
     `- Bilingual English & Spanish communication`,
     `- Careful handling, on-time crews, up-front hourly rates`,
     ``,

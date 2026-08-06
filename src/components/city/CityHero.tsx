@@ -37,15 +37,15 @@ export function CityHero({
       <HeroSkyline />
       <div className="site-container-wide relative z-[1] flex w-full flex-1 items-center justify-center">
         <div className="mx-auto w-full max-w-3xl">
-          <div className="card-elevated rounded-[1.25rem] bg-white px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+          <div className="card-elevated glass-surface rounded-[1.25rem] px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:px-14 lg:py-14">
             <p className="city-hero-badge mx-auto mb-3">{badge}</p>
             <h1
               id="hero-heading"
-              className="fluid-h1 whitespace-pre-line text-foreground"
+              className="fluid-h1 whitespace-pre-line"
             >
               {h1}
             </h1>
-            <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-prose text-muted sm:mt-5">
+            <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-prose sm:mt-5">
               {lede}
             </p>
 
@@ -70,15 +70,15 @@ export function CityHero({
               </button>
             </div>
 
-            <p className="mt-5 text-xs text-muted sm:mt-6 sm:text-sm">
-              <strong className="font-semibold text-foreground">
+            <p className="mt-5 text-xs font-medium text-neutral-800 sm:mt-6 sm:text-sm">
+              <strong className="font-bold text-black">
                 {GOOGLE_RATING}★
               </strong>{" "}
               Google rated ·{" "}
               <a
                 href={discoverHref}
                 data-cta={`${source}-discover`}
-                className="font-medium text-foreground underline underline-offset-2"
+                className="font-medium text-black underline underline-offset-2"
               >
                 {discoverLabel}
               </a>

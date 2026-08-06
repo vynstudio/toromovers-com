@@ -35,7 +35,7 @@ export function Faq({
           {heading}
         </h2>
         {sub ? (
-          <p className="aeo-answer faq-sub-compact text-muted">{sub}</p>
+          <p className="aeo-answer faq-sub-compact">{sub}</p>
         ) : null}
       </header>
 

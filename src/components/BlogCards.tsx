@@ -35,7 +35,7 @@ export function BlogCards() {
                 <span className="svc-card-body">
                   <span className="svc-card-badge">{post.eyebrow}</span>
                   <span className="svc-card-title">{post.title}</span>
-                  <span className="svc-card-copy text-muted aeo-answer">
+                  <span className="svc-card-copy aeo-answer">
                     {post.teaser}
                   </span>
                   <span className="svc-card-link">

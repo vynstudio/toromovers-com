@@ -55,7 +55,7 @@ export function CustomerProof() {
         <h2 id="proof-heading" className="split-band-title">
           {customerProof.title}
         </h2>
-        <p className="aeo-answer split-band-lede text-muted">
+        <p className="aeo-answer split-band-lede">
           {customerProof.lede}
         </p>
 
