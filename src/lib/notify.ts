@@ -5,6 +5,13 @@
  * Fail-soft: never throws to callers.
  */
 
+import {
+  GOOGLE_MAPS_REVIEWS_URL,
+  GOOGLE_RATING,
+  PHONE_DISPLAY,
+  REVIEW_COUNT,
+} from "@/lib/site";
+
 export type NotifyResult = {
   ok: boolean;
   channel: string;
@@ -180,22 +187,27 @@ function teamMessage(lead: LeadNotifyInput): string {
 
 function clientSms(lead: LeadNotifyInput): string {
   const n = firstName(lead.name);
-  return `Hi ${n}, thanks for requesting a quote from Toro Movers (toromovers.com). We'll call or text you shortly with clear pricing. Reply STOP to opt out. — Toro · (689) 600-2720`;
+  return `Hi ${n} — Toro Movers! We got your quote request and will call soon with pricing & availability. See why Central Florida chooses us: ${GOOGLE_MAPS_REVIEWS_URL} Questions? ${PHONE_DISPLAY}. Reply STOP to opt out.`;
 }
 
 function clientEmail(lead: LeadNotifyInput): { subject: string; text: string; html: string } {
   const n = firstName(lead.name);
   const subject = "We got your quote request — Toro Movers";
   const text = [
-    `Hi ${n},`,
+    `Hi ${n} — Toro Movers here!`,
     ``,
-    `Thanks for requesting a free quote from Toro Movers.`,
-    ``,
-    `A team member will call or text you shortly with availability and clear pricing — no hidden fees.`,
+    `We got your quote request. A team member will call or text you shortly with availability and clear, up-front pricing — no hidden fees.`,
     ``,
     lead.serviceType ? `What you selected: ${lead.serviceType}` : "",
+    `While you wait, here's why Central Florida chooses Toro Movers:`,
+    `- ${GOOGLE_RATING}★ rated on Google, ${REVIEW_COUNT}+ reviews`,
+    `- Family-owned, local crew — not a national franchise hand-off`,
+    `- Bilingual English & Spanish communication`,
+    `- Careful handling, on-time crews, up-front hourly rates`,
     ``,
-    `Questions right away? Call or text (689) 600-2720.`,
+    `See our reviews: ${GOOGLE_MAPS_REVIEWS_URL}`,
+    ``,
+    `Questions right away? Call or text ${PHONE_DISPLAY}.`,
     ``,
     `— Toro Movers`,
     `Central Florida · toromovers.com`,

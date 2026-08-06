@@ -1,53 +1,48 @@
-import Image from "next/image";
 import { features } from "@/lib/content";
+import { IconArrow } from "@/components/icons";
+import { SplitBand } from "@/components/SplitBand";
+import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
+/**
+ * Discover split-bands — identical size/frame as every homepage section.
+ */
 export function FeatureAlternating() {
   return (
-    <section
-      id="discover"
-      className="full-bleed section-pad w-full bg-white"
-      aria-label="Discover Toro Movers"
-    >
-      <div className="site-container-wide flex flex-col gap-12 sm:gap-16 lg:gap-24">
-        {features.map((f) => {
-          const textFirstMobile = Boolean(f.mobileTextFirst);
-
-          return (
-            <article
-              key={f.id}
-              className="grid w-full items-center gap-5 sm:gap-8 lg:grid-cols-2 lg:gap-14 xl:gap-16"
+    <div id="discover" className="split-band-stack" aria-label="Discover Toro Movers">
+      {features.map((f, i) => (
+        <SplitBand
+          key={f.id}
+          reverse={f.reverse}
+          soft={i % 2 === 0}
+          image={f.image}
+        >
+          {f.eyebrow ? (
+            <p className="split-band-eyebrow">{f.eyebrow}</p>
+          ) : null}
+          <h2 className="split-band-title">{f.title}</h2>
+          <p className="aeo-answer split-band-lede text-muted">{f.body}</p>
+          <div className="split-band-actions">
+            <a
+              href={PHONE_TEL}
+              data-cta={`feature-${f.id}-call`}
+              className="btn-primary btn-fluid tap-target inline-flex"
             >
-              {/* Compact card — 4:3 + desktop max-height so it fits on screen */}
-              <div
-                className={`img-card relative aspect-[4/3] w-full lg:aspect-auto lg:h-[min(380px,46vh)] xl:h-[min(400px,42vh)] ${
-                  f.reverse ? "lg:order-2" : "lg:order-1"
-                } ${textFirstMobile ? "order-2" : "order-1"}`}
-              >
-                <Image
-                  src={f.image.src}
-                  alt={f.image.alt}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1023px) 90vw, 40vw"
-                  quality={60}
-                  loading="lazy"
-                  className={`object-cover ${f.image.position ?? "object-center"}`}
-                />
-              </div>
-
-              <div
-                className={`w-full min-w-0 text-center lg:text-left ${
-                  f.reverse ? "lg:order-1" : "lg:order-2"
-                } ${textFirstMobile ? "order-1" : "order-2"}`}
-              >
-                <h2 className="fluid-h2 text-foreground">{f.title}</h2>
-                <p className="aeo-answer fluid-lede mx-auto mt-3 max-w-prose text-muted sm:mt-4 lg:mx-0">
-                  {f.body}
-                </p>
-              </div>
-            </article>
-          );
-        })}
-      </div>
-    </section>
+              <span className="sm:hidden">Call now</span>
+              <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
+            </a>
+            <button
+              type="button"
+              data-open-quote
+              data-source={`feature-${f.id}-quote`}
+              data-cta={`feature-${f.id}-quote`}
+              className="btn-outline btn-fluid tap-target inline-flex"
+            >
+              Get a free quote
+              <IconArrow />
+            </button>
+          </div>
+        </SplitBand>
+      ))}
+    </div>
   );
 }

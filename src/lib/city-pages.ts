@@ -129,8 +129,8 @@ export const ORLANDO: CityPageContent = {
     },
   ],
   closing: {
-    title: "Get a clear Orlando moving quote before move day",
-    body: "Tell Toro Movers what you are moving, where you are going in Orlando, and what access looks like. We will help you choose the right crew, explain the up-front hourly rate, and make your local move easier to plan.",
+    title: "Request an Orlando moving estimate before move day",
+    body: "To get a moving estimate from Toro Movers in Orlando, call or text (689) 600-2720—or request a quote online. Share what you are moving, your Orlando addresses, and access details. We match crew size, explain up-front hourly rates, and help plan your local move.",
   },
   schema: { lat: 28.5384, lng: -81.3789 },
 };

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { CITY_QUEUE } from "@/lib/city-queue";
+import { blogPosts } from "@/lib/blog";
 
 /**
  * Design-owned sitemap entries.
@@ -31,6 +32,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     {
+      url: `${SITE_URL}/blog`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/contact`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/services`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: `${SITE_URL}/about`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
+    {
       url: `${SITE_URL}/privacy`,
       lastModified: now,
       changeFrequency: "yearly",
@@ -50,6 +75,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
+  const blogs: MetadataRoute.Sitemap = blogPosts.map((p) => ({
+    url: `${SITE_URL}/blog/${p.slug}`,
+    lastModified: new Date(p.date),
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   const designCities: MetadataRoute.Sitemap = CITY_QUEUE.filter(
     (c) => c.status === "live-design",
   ).map((c) => ({
@@ -59,5 +91,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: c.slug === "orlando-movers" ? 0.95 : 0.85,
   }));
 
-  return [...core, ...designCities];
+  return [...core, ...blogs, ...designCities];
 }

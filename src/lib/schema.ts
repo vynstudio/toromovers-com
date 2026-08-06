@@ -42,7 +42,7 @@ export function organizationGraph() {
           "@type": "ImageObject",
           url: `${SITE_URL}/logos/toro-lockup-navy.svg`,
         },
-        image: `${SITE_URL}/images/hero-crew-real.jpg`,
+        image: `${SITE_URL}/images/hero-crew-real.webp`,
         description: organizationDescription,
         slogan: SLOGAN,
         telephone: PHONE_E164,
@@ -167,11 +167,30 @@ export function homePageGraph() {
         about: { "@id": `${SITE_URL}/#movingcompany` },
         primaryImageOfPage: {
           "@type": "ImageObject",
-          url: `${SITE_URL}/images/hero-crew-real.jpg`,
+          url: `${SITE_URL}/images/hero-crew-real.webp`,
         },
         speakable: {
           "@type": "SpeakableSpecification",
-          cssSelector: ["h1", "#faq h2", "#faq h3", ".aeo-answer"],
+          cssSelector: [
+            "h1",
+            "#proof-heading",
+            "#closing-heading",
+            "#faq h2",
+            "#faq h3",
+            ".aeo-answer",
+          ],
+        },
+        potentialAction: {
+          "@type": "CommunicateAction",
+          name: "Get a free moving quote",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: `${SITE_URL}/contact`,
+            actionPlatform: [
+              "http://schema.org/DesktopWebPlatform",
+              "http://schema.org/MobileWebPlatform",
+            ],
+          },
         },
         inLanguage: "en-US",
       },

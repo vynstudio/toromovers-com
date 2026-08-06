@@ -23,6 +23,17 @@ export const reviewsHeading = "Why customers rate us 5 stars on Google";
 export const reviewsSub =
   "On time. Careful with furniture. Clear hourly pricing. A crew that actually shows up when they say they will — and treats the job like it’s their own home.";
 
+/** Split band — photo LEFT (band 3 after services RIGHT) */
+export const reviewsBand = {
+  eyebrow: "Google reviews",
+  reverse: false,
+  image: {
+    src: "/images/moves/real-05.webp",
+    alt: "Happy customer moment after a real Toro Movers local move",
+    position: "object-center",
+  },
+} as const;
+
 export const googleReviews: GoogleReview[] = [
   {
     name: "Stael G.",

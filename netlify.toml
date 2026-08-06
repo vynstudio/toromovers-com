@@ -393,11 +393,9 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/blog"
-  to = "https://live-toro-site.netlify.app/blog"
-  status = 200
-  force = true
+# /blog index + design-owned posts served by Next (this app).
+# Legacy engine posts keep explicit proxies below.
+# Do NOT add a catch-all /blog/* proxy or design posts will be shadowed.
 
 [[redirects]]
   from = "/blog/apartment-moving-checklist-orlando-renters"

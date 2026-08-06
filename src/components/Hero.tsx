@@ -1,5 +1,5 @@
 import { hero } from "@/lib/content";
-import { HeroSkyline } from "@/components/HeroSkyline";
+import { HeroSkyline, HERO_VIDEO_POSTER } from "@/components/HeroSkyline";
 import { IconArrow } from "@/components/icons";
 import {
   GOOGLE_RATING,
@@ -9,20 +9,29 @@ import {
 
 /**
  * Mobile-first conversion hero — copy + CTAs only.
- * Desktop: background video (lazy) + poster; mobile: light wash only.
+ * Desktop: poster first (preloaded) + lazy video; mobile: light wash only.
  */
 export function Hero() {
   return (
     <section
       id="hero"
-      className="hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-6 pt-3 sm:pb-12 sm:pt-4 lg:py-16"
+      className="hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-4 pt-2 sm:pb-12 sm:pt-4 lg:py-16"
       aria-labelledby="hero-heading"
     >
+      {/* Desktop-only poster preload — paints before video loads */}
+      <link
+        rel="preload"
+        as="image"
+        href="/images/hero-video-poster.webp"
+        type="image/webp"
+        media="(min-width: 1024px)"
+        fetchPriority="high"
+      />
       <HeroSkyline withVideo />
 
       <div className="site-container-wide relative z-[1] flex w-full flex-1 items-center justify-center">
         <div className="mx-auto w-full max-w-3xl">
-          <div className="card-elevated rounded-[1.25rem] bg-white px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+          <div className="card-elevated rounded-[1.25rem] bg-white/85 backdrop-blur-md px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:px-14 lg:py-14">
             <h1
               id="hero-heading"
               className="fluid-h1 whitespace-pre-line text-foreground"

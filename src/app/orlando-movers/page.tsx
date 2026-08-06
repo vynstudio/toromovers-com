@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/images/hero-crew-real.jpg",
+        url: "/images/hero-crew-real.webp",
         width: 1200,
         height: 900,
         alt: "Toro Movers crew on a real local move in Central Florida",

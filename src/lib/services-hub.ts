@@ -1,7 +1,6 @@
 /**
- * Homepage services hub — property-type focus first:
- * Residential · Townhome · Apartment (primary), then full menu.
- * Real work photos only.
+ * Homepage services hub — 3 main service cards that fit the split content card:
+ * Residential · Labor-only · Single item / delivery
  */
 
 export type ServiceHubItem = {
@@ -15,93 +14,77 @@ export type ServiceHubItem = {
 
 export const servicesHub = {
   eyebrow: "Moving services",
-  heading: "Residential, townhome & apartment movers in Orlando",
-  lead: "Toro Movers specializes in residential homes, townhomes, and apartments across Orlando and Central Florida—plus full-service, labor-only, commercial, packing, and loading help with up-front hourly rates.",
-  cta: "Get a free quote",
+  heading: "Orlando movers for homes, labor-only & single-item delivery",
+  lead: "Three clear ways to hire Toro Movers in Orlando and Central Florida—full home moves, labor-only loading, or single-item and delivery help with up-front hourly rates.",
+  cta: "Get a quote",
   galleryCta: "See recent moves",
   galleryHref: "/orlando-movers-gallery",
+  /** reverse=true → photo RIGHT (band 2 after proof LEFT) */
+  reverse: true,
+  image: {
+    src: "/images/moves/svc-primary-residential.webp",
+    alt: "Toro Movers residential crew on a real Orlando home move",
+    position: "object-center",
+  },
 
-  /** Highlighted property-type services */
+  /** Exactly 3 main services — fit inside white placeholder card */
   primary: [
     {
-      title: "Residential moving services",
-      body: "Houses and single-family homes across Orlando and Central Florida—careful furniture handling, HOA access, and placement room by room.",
+      title: "Residential moving service",
+      body: "Homes, townhomes & apartments—crew, truck, careful load, and room-by-room placement.",
       href: "/residential-movers",
-      image: "/images/moves/svc-primary-residential.jpg",
+      image: "/images/moves/svc-primary-residential.webp",
       imageAlt:
-        "Toro Movers crew carrying a large padded item to the truck on a real residential home move",
+        "Toro Movers crew carrying a padded item on a real residential home move",
       badge: "Homes",
     },
     {
-      title: "Townhome movers",
-      body: "Multi-level townhomes with stairs, tight turns, garages, and shared driveways—planned so walls, floors, and railings stay protected.",
-      href: "/residential-movers",
-      image: "/images/moves/svc-primary-townhome.jpg",
+      title: "Labor-only moving service",
+      body: "You have the U-Haul, POD, or truck—we load and unload by the hour.",
+      href: "/labor-only-moving",
+      image: "/images/moves/svc-labor.webp",
       imageAlt:
-        "Toro Movers carrying boxes on a multi-level walkway with stairs on a real townhome-style job",
-      badge: "Townhomes",
+        "Toro Movers stretch-wrapping furniture on a real labor-only job",
+      badge: "Labor-only",
     },
     {
-      title: "Apartment movers in Orlando",
-      body: "Stairs, elevators, loading zones, and complex move-in windows—planned before the crew arrives for Orlando apartments and condos.",
-      href: "/apartment-movers-orlando-fl",
-      image: "/images/moves/svc-primary-apartment.jpg",
+      title: "Single item & delivery service",
+      body: "One heavy piece, furniture delivery, or store pickup—planned access and careful handling.",
+      href: "/loading-unloading",
+      image: "/images/moves/svc-loading.webp",
       imageAlt:
-        "Toro Movers carrying boxes in an apartment hallway on a real Orlando-area apartment move",
-      badge: "Apartments",
+        "Toro Movers loading a large wrapped item for single-item delivery",
+      badge: "Delivery",
     },
   ] satisfies ServiceHubItem[],
 
-  /** Rest of the service menu */
+  /** Full menu kept for schema / future pages — not shown on homepage cards */
   secondary: [
     {
       title: "Full-service moving",
       body: "Truck, crew, load, transport, unload, and place—end to end.",
       href: "/full-service-moving",
-      image: "/images/moves/svc-full-service.jpg",
+      image: "/images/moves/svc-full-service.webp",
       imageAlt:
         "Toro Movers real job: furniture stretch-wrapped and padded for a full-service local move",
     },
     {
-      title: "Labor-only moving",
-      body: "You have the U-Haul, POD, or truck—we load and unload by the hour.",
-      href: "/labor-only-moving",
-      image: "/images/moves/svc-labor.jpg",
+      title: "Apartment movers in Orlando",
+      body: "Stairs, elevators, loading zones, and move-in windows planned before the crew arrives.",
+      href: "/apartment-movers-orlando-fl",
+      image: "/images/moves/svc-primary-apartment.webp",
       imageAlt:
-        "Toro Movers crew member stretch-wrapping furniture on a real labor-only job",
+        "Toro Movers carrying boxes in an apartment hallway on a real Orlando-area apartment move",
     },
     {
       title: "Commercial moving services",
       body: "Offices, retail, and small commercial spaces—after-hours when needed.",
       href: "/commercial-movers",
-      image: "/images/moves/svc-commercial.jpg",
+      image: "/images/moves/svc-commercial.webp",
       imageAlt: "Toro Movers real commercial and office-style move work",
-    },
-    {
-      title: "Packing & unpacking services",
-      body: "Protection, wrap, and careful packing with a full-service move.",
-      href: "/packing-services",
-      image: "/images/moves/svc-full-service.jpg",
-      imageAlt: "Furniture protection and packing on a real Toro Movers job",
-    },
-    {
-      title: "Loading & unloading services",
-      body: "Tight loads and careful unloads for trucks, PODS, and storage.",
-      href: "/loading-unloading",
-      image: "/images/moves/svc-loading.jpg",
-      imageAlt: "Wrapped furniture staged during a real Toro Movers loading job",
-    },
-    {
-      title: "Business moving partnership",
-      body: "Recurring office and partner moves with planned access and timing.",
-      href: "/commercial-movers",
-      image: "/images/moves/svc-commercial.jpg",
-      imageAlt: "Commercial move coordination with Toro Movers",
     },
   ] satisfies ServiceHubItem[],
 } as const;
 
-export const servicesHubItems = [
-  ...servicesHub.primary,
-  ...servicesHub.secondary,
-] as const;
+/** Homepage shows primary only (3 cards) */
+export const servicesHubItems = servicesHub.primary;

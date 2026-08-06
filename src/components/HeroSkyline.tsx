@@ -7,10 +7,13 @@ type HeroSkylineProps = {
   withVideo?: boolean;
 };
 
+/** Fast still shown until video is ready (LCP-friendly). */
+export const HERO_VIDEO_POSTER = "/images/hero-video-poster.webp";
+
 /**
  * Desktop-only hero backdrop.
- * - Always: poster/skyline CSS image (no mobile download of video)
- * - Optional video: injected only at lg+ after idle so LCP stays clean
+ * - Always: poster image first (CSS bg) so paint is instant
+ * - Optional video: injected only at lg+ after idle; poster stays under video
  */
 export function HeroSkyline({ withVideo = false }: HeroSkylineProps) {
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
@@ -67,7 +70,8 @@ export function HeroSkyline({ withVideo = false }: HeroSkylineProps) {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
+          poster={HERO_VIDEO_POSTER}
           src={videoSrc}
         />
       ) : null}

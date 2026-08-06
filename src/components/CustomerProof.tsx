@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { IconArrow } from "@/components/icons";
+import { SplitBand } from "@/components/SplitBand";
 import { customerProof } from "@/lib/content";
 import {
   GOOGLE_MAPS_REVIEWS_URL,
@@ -14,11 +14,10 @@ import {
 } from "@/lib/site";
 
 /**
- * Dense proof band: large photo + filled copy column
- * (stats, points, CTAs) — no empty dead zones.
+ * Proof split-band — same size/frame as every other section.
  */
 export function CustomerProof() {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -44,89 +43,74 @@ export function CustomerProof() {
   }, []);
 
   return (
-    <section
-      ref={ref}
-      id="proof"
-      className={`customer-proof full-bleed${visible ? " is-visible" : ""}`}
-      aria-labelledby="proof-heading"
-    >
-      <div className="customer-proof-inner site-container-wide">
-        <div className="customer-proof-stage">
-          <div className="customer-proof-frame">
-            <Image
-              src={customerProof.image.src}
-              alt={customerProof.image.alt}
-              fill
-              quality={88}
-              sizes="(max-width: 639px) 94vw, (max-width: 1023px) 80vw, 50vw"
-              className="customer-proof-img object-cover object-[center_28%]"
-            />
-            <div className="customer-proof-shine" aria-hidden />
-          </div>
-        </div>
+    <div ref={ref} className={visible ? "is-visible" : undefined}>
+      <SplitBand
+        id="proof"
+        soft
+        reverse={customerProof.reverse}
+        image={customerProof.image}
+        aria-labelledby="proof-heading"
+      >
+        <p className="split-band-eyebrow">{customerProof.eyebrow}</p>
+        <h2 id="proof-heading" className="split-band-title">
+          {customerProof.title}
+        </h2>
+        <p className="aeo-answer split-band-lede text-muted">
+          {customerProof.lede}
+        </p>
 
-        <div className="customer-proof-content">
-          <p className="customer-proof-eyebrow">{customerProof.eyebrow}</p>
-          <h2 id="proof-heading" className="customer-proof-title">
-            {customerProof.title}
-          </h2>
-          <p className="aeo-answer customer-proof-lede text-muted">
-            {customerProof.lede}
-          </p>
-
-          <ul className="customer-proof-stats" aria-label="Trust signals">
-            <li className="customer-proof-stat">
-              <a
-                href={GOOGLE_MAPS_REVIEWS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-cta="proof-google"
-                className="customer-proof-stat-link"
-              >
-                <span className="customer-proof-stat-value">
-                  {GOOGLE_RATING}★
-                </span>
-                <span className="customer-proof-stat-label">
-                  on Google
-                </span>
-              </a>
-            </li>
-            <li className="customer-proof-stat">
-              <span className="customer-proof-stat-value">{MOVES_DONE}</span>
-              <span className="customer-proof-stat-label">Orlando moves</span>
-            </li>
-            <li className="customer-proof-stat">
-              <span className="customer-proof-stat-value">EN · ES</span>
-              <span className="customer-proof-stat-label">bilingual movers</span>
-            </li>
-            <li className="customer-proof-stat">
-              <span className="customer-proof-stat-value">Family</span>
-              <span className="customer-proof-stat-label">owned · {SERVICE_REGION}</span>
-            </li>
-          </ul>
-
-          <div className="customer-proof-actions">
+        <ul className="customer-proof-stats" aria-label="Trust signals">
+          <li className="customer-proof-stat">
             <a
-              href={PHONE_TEL}
-              data-cta="proof-call"
-              className="btn-primary btn-fluid tap-target inline-flex"
+              href={GOOGLE_MAPS_REVIEWS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta="proof-google"
+              className="customer-proof-stat-link"
             >
-              <span className="sm:hidden">Call now</span>
-              <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
+              <span className="customer-proof-stat-value">
+                {GOOGLE_RATING}★
+              </span>
+              <span className="customer-proof-stat-label">on Google</span>
             </a>
-            <button
-              type="button"
-              data-open-quote
-              data-source="proof-quote"
-              data-cta="proof-quote"
-              className="btn-outline btn-fluid tap-target inline-flex"
-            >
-              {customerProof.ctaQuote}
-              <IconArrow />
-            </button>
-          </div>
+          </li>
+          <li className="customer-proof-stat">
+            <span className="customer-proof-stat-value">{MOVES_DONE}</span>
+            <span className="customer-proof-stat-label">Orlando moves</span>
+          </li>
+          <li className="customer-proof-stat">
+            <span className="customer-proof-stat-value">EN · ES</span>
+            <span className="customer-proof-stat-label">bilingual movers</span>
+          </li>
+          <li className="customer-proof-stat">
+            <span className="customer-proof-stat-value">Family</span>
+            <span className="customer-proof-stat-label">
+              owned · {SERVICE_REGION}
+            </span>
+          </li>
+        </ul>
+
+        <div className="split-band-actions">
+          <a
+            href={PHONE_TEL}
+            data-cta="proof-call"
+            className="btn-primary btn-fluid tap-target inline-flex"
+          >
+            <span className="sm:hidden">Call now</span>
+            <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
+          </a>
+          <button
+            type="button"
+            data-open-quote
+            data-source="proof-quote"
+            data-cta="proof-quote"
+            className="btn-outline btn-fluid tap-target inline-flex"
+          >
+            {customerProof.ctaQuote}
+            <IconArrow />
+          </button>
         </div>
-      </div>
-    </section>
+      </SplitBand>
+    </div>
   );
 }

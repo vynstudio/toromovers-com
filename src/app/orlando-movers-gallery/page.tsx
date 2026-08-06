@@ -116,8 +116,8 @@ export default function OrlandoMoversGalleryPage() {
         </header>
         <RecentMoves showAllLink={false} variant="page" />
         <ClosingCta
-          title="Ready for your Orlando move?"
-          body="Get a clear hourly quote for full-service, labor-only, or apartment moving. Local crew, bilingual support, up-front rates."
+          title="Request an Orlando moving estimate"
+          body="Call or text (689) 600-2720—or request a callback for immediate service—for full-service, labor-only, or apartment moving. Local crew, bilingual support, and up-front hourly rates."
         />
       </main>
       <Footer />

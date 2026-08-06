@@ -1,18 +1,27 @@
 // Homepage copy — mobile-first layout adapted for Toro Movers.
 // SEO/AEO answer-first copy. Real business facts only (phone, rating, services, area).
 
-/** Primary nav — Title Case IA (v1 plain links; dropdowns later) */
+/**
+ * Primary nav — professional local-service IA.
+ * Logo = Home. No “Resources→FAQ” primary item.
+ * Anchors until dedicated hub pages ship (Services/About/Areas steps).
+ */
 export const nav = {
   links: [
-    { label: "Home", href: "/" },
-    { label: "About us", href: "/#proof" },
-    { label: "Moving services", href: "/#services" },
-    { label: "Resources", href: "/#faq" },
-    { label: "Gallery", href: "/orlando-movers-gallery" },
+    { label: "Services", href: "/services" },
+    { label: "Areas", href: "/#areas" },
+    { label: "About", href: "/about" },
+    { label: "Reviews", href: "/#reviews" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact", href: "/contact" },
   ],
+  /** Principal conversion CTA — opens multi-step quote modal */
   cta: "Get a quote",
-  ctaHref: "#quote",
+  ctaHref: "/contact",
   ctaPhoneLabel: "Call",
+  /** Secondary path — contact page */
+  ctaSecondary: "Contact",
+  ctaSecondaryHref: "/contact",
 } as const;
 
 export const hero = {
@@ -31,9 +40,12 @@ export const customerProof = {
   title: "Why Central Florida chooses Toro for local moves",
   lede: "Toro Movers is a family-owned local moving company in Orlando. Customers hire us for on-time crews, careful handling, bilingual English and Spanish communication, and up-front hourly rates across Central Florida—not a national franchise hand-off.",
   ctaQuote: "Get a free quote",
+  /** reverse=false → photo LEFT (band 1) */
+  reverse: false,
   image: {
-    src: "/images/proof-customer-closeup.jpg",
+    src: "/images/proof-customer-closeup.webp",
     alt: "Toro Movers owner and a happy customer after a real local move in Central Florida",
+    position: "object-[center_28%]",
   },
 } as const;
 
@@ -47,6 +59,8 @@ export type ImageAsset = {
 
 export type FeatureBlock = {
   id: string;
+  /** Small label for AEO section context */
+  eyebrow?: string;
   title: string;
   body: string;
   image: ImageAsset;
@@ -55,40 +69,48 @@ export type FeatureBlock = {
   mobileTextFirst?: boolean;
 };
 
+/**
+ * Photo-band alternation (reverse = photo RIGHT), full homepage order:
+ * 1 Proof L · 2 Services R · 3 Reviews L · 4 FAQ R · 5 Areas L
+ * 6 comfort R · 7 precise L · 8 integrations R · 9 closing L
+ */
 export const features: FeatureBlock[] = [
   {
     id: "comfort",
-    title: "So smooth, you won't feel buried by move day",
-    body: "A good move starts before the first box is lifted. Toro Movers plans around the details that slow down Orlando moves: apartment access, stairs, elevator windows, parking, storage units, and rental trucks. You get a calm, clear plan with the right crew for the job.",
+    eyebrow: "Orlando move planning",
+    title: "Plan your Orlando move before the first box",
+    body: "A smooth Orlando move starts with logistics, not packing-day chaos. Toro Movers plans around apartment access, stairs, elevator windows, parking, storage units, and rental trucks—so you get a clear crew plan and up-front hourly rates before move day in Central Florida.",
     image: {
-      src: "/images/proof-protect.jpg",
-      alt: "Furniture stretch-wrapped by Toro Movers on a real local job",
+      src: "/images/proof-protect.webp",
+      alt: "Toro Movers stretch-wrapping furniture for protection on a real Orlando local move",
       position: "object-[center_42%]",
     },
-    reverse: false,
+    reverse: true,
   },
   {
     id: "precise",
-    title: "Precise is nice",
-    body: "Careful moving is not just about strength. Our crew loads furniture, boxes, and fragile items with attention to tight stairwells, doorways, floors, and truck space. Whether you need full-service movers or labor-only loading, the goal is simple: move efficiently without making a mess of your day.",
+    eyebrow: "Careful local movers",
+    title: "Careful furniture handling for apartments and homes",
+    body: "Careful moving is more than strength. Toro Movers protects furniture, boxes, and fragile items through tight stairwells, doorways, floors, and truck space—whether you hire full-service movers or labor-only loading and unloading for your Orlando or Central Florida move.",
     image: {
-      src: "/images/proof-apartment.jpg",
-      alt: "Wrapped furniture staged during a real Toro Movers apartment move",
+      src: "/images/proof-apartment.webp",
+      alt: "Wrapped furniture staged by Toro Movers during a real apartment move in Central Florida",
       position: "object-[center_32%]",
     },
-    reverse: true,
-    mobileTextFirst: true,
+    reverse: false,
   },
 ];
 
 export const integrations = {
-  title: "Better living through local coordination",
-  body: "Toro Movers works around the real logistics of Central Florida moves: apartment rules, HOA windows, elevators, stairs, loading zones, storage access, and U-Haul or POD loading. We help you plan the move around the building, not the other way around.",
-  cta: "Know your move better",
-  ctaHref: "#why",
+  eyebrow: "Building access & logistics",
+  title: "Central Florida movers who plan around the building",
+  body: "Toro Movers works around real apartment and HOA logistics across Central Florida: elevators, stairs, loading zones, storage access, and U-Haul or POD loading. Local crews help you plan the move around the building—not the other way around—with clear up-front hourly rates.",
+  ctaCall: "Call now",
+  ctaEstimate: "Get an estimate",
+  reverse: true,
   image: {
-    src: "/images/proof-loading.jpg",
-    alt: "Toro Movers crew carrying boxes on a real apartment move job",
+    src: "/images/proof-loading.webp",
+    alt: "Toro Movers crew carrying boxes on a real Central Florida apartment move",
     position: "object-[center_40%]",
   },
 } as const;
@@ -167,18 +189,37 @@ export const featureGrid = {
       icon: "map" as const,
     },
   ],
-  cta: "Get your quote",
-  ctaHref: "#quote",
+  cta: "Get a quote",
+  ctaHref: "/contact",
 } as const;
 
+/**
+ * Closing CTA band (city pages etc.) — quote-first conversion.
+ * Never use “get a clear quote.” Homepage no longer embeds a callback section.
+ */
 export const closing = {
-  title: "Get a clear moving quote before move day",
-  body: "Tell Toro Movers what you are moving, where you are going, and what access looks like. We will help you choose the right crew, explain the up-front hourly rate, and make your Orlando or Central Florida move easier to plan.",
-  cta: "start moving better",
-  // Primary conversion: phone
-  ctaHref: "tel:+16896002720",
+  eyebrow: "Book local movers",
+  title: "Get your Orlando moving estimate",
+  body: "Call or text (689) 600-2720—or get a free quote online. Share what you are moving, pickup and drop-off, and access details. We match crew size, explain up-front hourly rates, and help plan your Central Florida move.",
+  ctaPhone: "Call",
+  ctaQuote: "Get a quote",
+  formCta: "Request callback",
+  reverse: false,
+  image: {
+    src: "/images/moves/real-12.webp",
+    alt: "Toro Movers crew on a real local Orlando and Central Florida move",
+    position: "object-center",
+  },
+  secondaryRatingLabel: "Google rating · real local customers",
+  secondaryAreaLabel: "Local crews · same-week when available",
+  secondaryCta: "Get a quote",
+  secondaryNote: "Free quote online",
 } as const;
 
+/**
+ * Footer sitemap — professional local-service IA (crawlable + human findability).
+ * Anchors until dedicated hub pages ship.
+ */
 export const footer = {
   privacy: "Privacy Policy",
   privacyHref: "/privacy",
@@ -186,13 +227,61 @@ export const footer = {
   cookiesHref: "/cookies",
   terms: "Terms of Service",
   termsHref: "/terms",
+  columns: [
+    {
+      title: "Services",
+      links: [
+        { label: "All services", href: "/services" },
+        { label: "Residential moving", href: "/residential-movers" },
+        { label: "Labor-only moving", href: "/labor-only-moving" },
+        { label: "Single item & delivery", href: "/loading-unloading" },
+      ],
+    },
+    {
+      title: "Areas",
+      links: [
+        { label: "Service areas", href: "/#areas" },
+        { label: "Orlando movers", href: "/orlando-movers" },
+        { label: "Winter Park", href: "/winter-park-movers" },
+        { label: "Kissimmee", href: "/kissimmee-movers" },
+        { label: "Clermont", href: "/clermont-movers" },
+      ],
+    },
+    {
+      title: "Company",
+      links: [
+        { label: "About", href: "/about" },
+        { label: "Reviews", href: "/#reviews" },
+        { label: "Blog", href: "/blog" },
+        { label: "Gallery", href: "/orlando-movers-gallery" },
+        { label: "Recent moves", href: "/recent-moves" },
+      ],
+    },
+    {
+      title: "Contact",
+      links: [
+        { label: "Contact page", href: "/contact" },
+        { label: "Get a quote", href: "/contact" },
+        { label: "Call us", href: "tel:+16896002720" },
+        { label: "Email", href: "mailto:hello@toromovers.com" },
+      ],
+    },
+  ],
 } as const;
 
 // AEO: answer-first FAQs for featured snippets / AI answers
 // Visible FAQ text must match FAQ schema exactly (see schema.ts).
+// Band 4: photo RIGHT (after reviews LEFT)
 export const faq = {
+  eyebrow: "FAQ",
   heading: "Common questions",
   sub: "Straight answers from a local Orlando moving company",
+  image: {
+    src: "/images/hero-crew-real.webp",
+    alt: "Toro Movers crew on a real local Orlando moving job",
+    position: "object-[center_30%]",
+  },
+  reverse: true,
   items: [
     {
       q: "How much do movers cost in Orlando?",
@@ -220,7 +309,7 @@ export const faq = {
     },
     {
       q: "How do I get a moving quote from Toro Movers?",
-      a: "To get a moving quote, call or text Toro Movers at (689) 600-2720. Share your move date, pickup and drop-off locations, home or apartment type, stairs or elevators, and whether you need full-service movers or labor-only help.",
+      a: "To get a moving estimate from Toro Movers, call or text (689) 600-2720—or request a callback online for immediate service. Share what you are moving, pickup and drop-off locations, and access details (stairs, elevator, parking). We match crew size, explain up-front hourly rates, and help plan your Orlando or Central Florida move. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
     },
   ],
 } as const;
@@ -248,6 +337,13 @@ export const trust = {
 } as const;
 
 export const areasSnippet = {
+  eyebrow: "Coverage",
   heading: "Service areas",
   lead: "Toro Movers serves Orlando and Central Florida with local moving help for homes, apartments, storage units, U-Haul loading, POD loading, and labor-only moves. Pick your city below—or call if you’re nearby.",
+  reverse: false,
+  image: {
+    src: "/images/hero-orlando-skyline.webp",
+    alt: "Orlando skyline — Toro Movers Central Florida service area",
+    position: "object-[center_40%]",
+  },
 } as const;

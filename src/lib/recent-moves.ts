@@ -48,7 +48,7 @@ export const MOVE_SERVICE_ORDER: readonly {
 export const recentMoves: readonly MoveShot[] = [
   {
     id: "real-01",
-    src: "/images/moves/real-01.jpg",
+    src: "/images/moves/real-01.webp",
     alt: "Furniture fully stretch-wrapped and padded before a local move",
     title: "Furniture Protection — Stretch Wrap & Pads",
     description: "Toro Movers protects furniture with stretch wrap and pads on local Orlando and Central Florida jobs so pieces stay safe in transit.",
@@ -59,7 +59,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-02",
-    src: "/images/moves/real-02.jpg",
+    src: "/images/moves/real-02.webp",
     alt: "Toro Movers real job photo 02 — local moving work in Central Florida",
     title: "Apartment move — Orlando area — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -70,7 +70,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-03",
-    src: "/images/moves/real-03.jpg",
+    src: "/images/moves/real-03.webp",
     alt: "Toro Movers real job photo 03 — local moving work in Orlando metro",
     title: "Residential home move — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -81,7 +81,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-04",
-    src: "/images/moves/real-04.jpg",
+    src: "/images/moves/real-04.webp",
     alt: "Toro Movers real job photo 04 — local moving work in Orlando, FL",
     title: "Loading & unloading — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -92,7 +92,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-05",
-    src: "/images/moves/real-05.jpg",
+    src: "/images/moves/real-05.webp",
     alt: "Toro Movers real job photo 05 — local moving work in Central Florida",
     title: "Furniture protection — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -103,7 +103,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-06",
-    src: "/images/moves/real-06.jpg",
+    src: "/images/moves/real-06.webp",
     alt: "Toro Movers real job photo 06 — local moving work in Orlando metro",
     title: "Local crew on the job — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -114,7 +114,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-07",
-    src: "/images/moves/real-07.jpg",
+    src: "/images/moves/real-07.webp",
     alt: "Toro Movers crew moving a spa hot tub on a residential Central Florida job",
     title: "Specialty Residential Move — Hot Tub / Spa",
     description: "Residential movers handling oversized items carefully on a Central Florida home job—local crew, careful lifts, real work.",
@@ -125,7 +125,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-08",
-    src: "/images/moves/real-08.jpg",
+    src: "/images/moves/real-08.webp",
     alt: "Toro Movers real job photo 08 — local moving work in Central Florida",
     title: "Apartment move — Orlando area — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -136,7 +136,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-09",
-    src: "/images/moves/real-09.jpg",
+    src: "/images/moves/real-09.webp",
     alt: "Toro Movers real job photo 09 — local moving work in Orlando metro",
     title: "Residential home move — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -147,7 +147,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-10",
-    src: "/images/moves/real-10.jpg",
+    src: "/images/moves/real-10.webp",
     alt: "Toro Movers real job photo 10 — local moving work in Orlando, FL",
     title: "Loading & unloading — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -158,7 +158,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-11",
-    src: "/images/moves/real-11.jpg",
+    src: "/images/moves/real-11.webp",
     alt: "Toro Movers real job photo 11 — local moving work in Central Florida",
     title: "Furniture protection — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -169,7 +169,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-12",
-    src: "/images/moves/real-12.jpg",
+    src: "/images/moves/real-12.webp",
     alt: "Toro Movers real job photo 12 — local moving work in Orlando metro",
     title: "Local crew on the job — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -180,7 +180,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-13",
-    src: "/images/moves/real-13.jpg",
+    src: "/images/moves/real-13.webp",
     alt: "Toro Movers real job photo 13 — local moving work in Orlando, FL",
     title: "Full-service local move — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -191,7 +191,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-14",
-    src: "/images/moves/real-14.jpg",
+    src: "/images/moves/real-14.webp",
     alt: "Wrapped furniture staged during an apartment move with Toro Movers",
     title: "Apartment Placement — Protected Furniture",
     description: "Apartment movers wrap sofas and seating for safe carries through hallways and elevators on Orlando-area jobs.",
@@ -202,7 +202,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-15",
-    src: "/images/moves/real-15.jpg",
+    src: "/images/moves/real-15.webp",
     alt: "Toro Movers real job photo 15 — local moving work in Orlando metro",
     title: "Residential home move — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -213,7 +213,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-16",
-    src: "/images/moves/real-16.jpg",
+    src: "/images/moves/real-16.webp",
     alt: "Toro Movers real job photo 16 — local moving work in Orlando, FL",
     title: "Loading & unloading — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -224,7 +224,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-17",
-    src: "/images/moves/real-17.jpg",
+    src: "/images/moves/real-17.webp",
     alt: "Toro Movers real job photo 17 — local moving work in Central Florida",
     title: "Furniture protection — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -235,7 +235,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-18",
-    src: "/images/moves/real-18.jpg",
+    src: "/images/moves/real-18.webp",
     alt: "Toro Movers real job photo 18 — local moving work in Orlando metro",
     title: "Local crew on the job — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -246,7 +246,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-19",
-    src: "/images/moves/real-19.jpg",
+    src: "/images/moves/real-19.webp",
     alt: "Toro Movers real job photo 19 — local moving work in Orlando, FL",
     title: "Full-service local move — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -257,7 +257,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-20",
-    src: "/images/moves/real-20.jpg",
+    src: "/images/moves/real-20.webp",
     alt: "Toro Movers real job photo 20 — local moving work in Central Florida",
     title: "Apartment move — Orlando area — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -268,7 +268,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-21",
-    src: "/images/moves/real-21.jpg",
+    src: "/images/moves/real-21.webp",
     alt: "Toro Movers real job photo 21 — local moving work in Orlando metro",
     title: "Residential home move — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -279,7 +279,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-22",
-    src: "/images/moves/real-22.jpg",
+    src: "/images/moves/real-22.webp",
     alt: "Toro Movers real job photo 22 — local moving work in Orlando, FL",
     title: "Loading & unloading — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -290,7 +290,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-23",
-    src: "/images/moves/real-23.jpg",
+    src: "/images/moves/real-23.webp",
     alt: "Toro Movers real job photo 23 — local moving work in Central Florida",
     title: "Furniture protection — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -301,7 +301,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-24",
-    src: "/images/moves/real-24.jpg",
+    src: "/images/moves/real-24.webp",
     alt: "Toro Movers real job photo 24 — local moving work in Orlando metro",
     title: "Local crew on the job — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -312,7 +312,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-25",
-    src: "/images/moves/real-25.jpg",
+    src: "/images/moves/real-25.webp",
     alt: "Toro Movers real job photo 25 — local moving work in Orlando, FL",
     title: "Full-service local move — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -323,7 +323,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-26",
-    src: "/images/moves/real-26.jpg",
+    src: "/images/moves/real-26.webp",
     alt: "Toro Movers crew carrying boxes in an apartment hallway on a local move",
     title: "Apartment Hallway Load — Orlando Area",
     description: "Apartment movers stack and carry boxes through common hallways carefully on Orlando and Central Florida jobs.",
@@ -334,7 +334,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-27",
-    src: "/images/moves/real-27.jpg",
+    src: "/images/moves/real-27.webp",
     alt: "Toro Movers real job photo 27 — local moving work in Orlando metro",
     title: "Residential home move — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -345,7 +345,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-28",
-    src: "/images/moves/real-28.jpg",
+    src: "/images/moves/real-28.webp",
     alt: "Toro Movers real job photo 28 — local moving work in Orlando, FL",
     title: "Loading & unloading — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -356,7 +356,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-29",
-    src: "/images/moves/real-29.jpg",
+    src: "/images/moves/real-29.webp",
     alt: "Toro Movers real job photo 29 — local moving work in Central Florida",
     title: "Furniture protection — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -367,7 +367,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-30",
-    src: "/images/moves/real-30.jpg",
+    src: "/images/moves/real-30.webp",
     alt: "Toro Movers real job photo 30 — local moving work in Orlando metro",
     title: "Local crew on the job — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -378,7 +378,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-31",
-    src: "/images/moves/real-31.jpg",
+    src: "/images/moves/real-31.webp",
     alt: "Toro Movers real job photo 31 — local moving work in Orlando, FL",
     title: "Full-service local move — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -389,7 +389,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-32",
-    src: "/images/moves/real-32.jpg",
+    src: "/images/moves/real-32.webp",
     alt: "Toro Movers real job photo 32 — local moving work in Central Florida",
     title: "Apartment move — Orlando area — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -400,7 +400,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-33",
-    src: "/images/moves/real-33.jpg",
+    src: "/images/moves/real-33.webp",
     alt: "Toro Movers real job photo 33 — local moving work in Orlando metro",
     title: "Residential home move — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -411,7 +411,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-34",
-    src: "/images/moves/real-34.jpg",
+    src: "/images/moves/real-34.webp",
     alt: "Toro Movers real job photo 34 — local moving work in Orlando, FL",
     title: "Loading & unloading — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -422,7 +422,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-35",
-    src: "/images/moves/real-35.jpg",
+    src: "/images/moves/real-35.webp",
     alt: "Toro Movers real job photo 35 — local moving work in Central Florida",
     title: "Furniture protection — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -433,7 +433,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-36",
-    src: "/images/moves/real-36.jpg",
+    src: "/images/moves/real-36.webp",
     alt: "Toro Movers real job photo 36 — local moving work in Orlando metro",
     title: "Local crew on the job — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -444,7 +444,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-37",
-    src: "/images/moves/real-37.jpg",
+    src: "/images/moves/real-37.webp",
     alt: "Toro Movers real job photo 37 — local moving work in Orlando, FL",
     title: "Full-service local move — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -455,7 +455,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-38",
-    src: "/images/moves/real-38.jpg",
+    src: "/images/moves/real-38.webp",
     alt: "Toro Movers crew member stretch-wrapping furniture on an apartment move",
     title: "Crew Wrap & Protect — Apartment Move",
     description: "Local bilingual crew wraps furniture on site—professional protection for apartment and home moves.",
@@ -466,7 +466,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-39",
-    src: "/images/moves/real-39.jpg",
+    src: "/images/moves/real-39.webp",
     alt: "Toro Movers real job photo 39 — local moving work in Orlando metro",
     title: "Residential home move — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -477,7 +477,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-40",
-    src: "/images/moves/real-40.jpg",
+    src: "/images/moves/real-40.webp",
     alt: "Toro Movers real job photo 40 — local moving work in Orlando, FL",
     title: "Loading & unloading — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -488,7 +488,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-41",
-    src: "/images/moves/real-41.jpg",
+    src: "/images/moves/real-41.webp",
     alt: "Toro Movers real job photo 41 — local moving work in Central Florida",
     title: "Furniture protection — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -499,7 +499,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-42",
-    src: "/images/moves/real-42.jpg",
+    src: "/images/moves/real-42.webp",
     alt: "Toro Movers real job photo 42 — local moving work in Orlando metro",
     title: "Local crew on the job — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -510,7 +510,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-43",
-    src: "/images/moves/real-43.jpg",
+    src: "/images/moves/real-43.webp",
     alt: "Toro Movers real job photo 43 — local moving work in Orlando, FL",
     title: "Full-service local move — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -521,7 +521,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-44",
-    src: "/images/moves/real-44.jpg",
+    src: "/images/moves/real-44.webp",
     alt: "Toro Movers real job photo 44 — local moving work in Central Florida",
     title: "Apartment move — Orlando area — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -532,7 +532,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-45",
-    src: "/images/moves/real-45.jpg",
+    src: "/images/moves/real-45.webp",
     alt: "Toro Movers real job photo 45 — local moving work in Orlando metro",
     title: "Residential home move — Orlando metro",
     description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -543,7 +543,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-46",
-    src: "/images/moves/real-46.jpg",
+    src: "/images/moves/real-46.webp",
     alt: "Toro Movers real job photo 46 — local moving work in Orlando, FL",
     title: "Loading & unloading — Orlando, FL",
     description: "Real Toro Movers work on a local job in Orlando, FL. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
@@ -554,7 +554,7 @@ export const recentMoves: readonly MoveShot[] = [
   },
   {
     id: "real-47",
-    src: "/images/moves/real-47.jpg",
+    src: "/images/moves/real-47.webp",
     alt: "Toro Movers real job photo 47 — local moving work in Central Florida",
     title: "Furniture protection — Central Florida",
     description: "Real Toro Movers work on a local job in Central Florida. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",

@@ -5,7 +5,7 @@ import { PHONE_TEL } from "@/lib/site";
 import { IconArrow } from "@/components/icons";
 
 /**
- * Mobile sticky conversion bar — Call + Get quote.
+ * Mobile sticky conversion bar — Call + Get quote (principal CTA).
  * Matches top nav pill colors (white shell, accent Call, outline Quote).
  * Appears when the mobile nav hides (past hero). Desktop: never shown.
  */
