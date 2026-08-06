@@ -31,14 +31,14 @@ export function Hero() {
 
       <div className="site-container-wide relative z-[1] flex w-full flex-1 items-center justify-center">
         <div className="mx-auto w-full max-w-3xl">
-          <div className="card-elevated rounded-[1.25rem] bg-white/85 backdrop-blur-md px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+          <div className="card-elevated rounded-[1.25rem] border border-white/40 bg-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-xl px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:bg-white/45 lg:px-14 lg:py-14">
             <h1
               id="hero-heading"
-              className="fluid-h1 whitespace-pre-line text-foreground"
+              className="fluid-h1 whitespace-pre-line font-semibold tracking-tight text-black [text-shadow:0_1px_0_rgba(255,255,255,0.55)]"
             >
               {hero.h1}
             </h1>
-            <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-prose text-muted sm:mt-5">
+            <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-prose font-medium text-neutral-900 [text-shadow:0_1px_0_rgba(255,255,255,0.4)] sm:mt-5">
               {hero.lede}
             </p>
 
@@ -56,15 +56,15 @@ export function Hero() {
                 data-open-quote
                 data-source="hero-quote"
                 data-cta="hero-quote"
-                className="btn-outline btn-fluid tap-target inline-flex w-full"
+                className="btn-outline btn-fluid tap-target inline-flex w-full !border-neutral-900 !bg-white/80 !text-neutral-900 backdrop-blur-sm"
               >
                 Get a free quote
                 <IconArrow />
               </button>
             </div>
 
-            <p className="mt-5 text-xs text-muted sm:mt-6 sm:text-sm">
-              <strong className="font-semibold text-foreground">
+            <p className="mt-5 text-xs font-medium text-neutral-800 sm:mt-6 sm:text-sm">
+              <strong className="font-bold text-black">
                 {GOOGLE_RATING}★
               </strong>{" "}
               Google rated · Local Orlando crew
