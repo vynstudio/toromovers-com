@@ -30,7 +30,7 @@ export function Areas() {
       <h2 id="areas-heading" className="split-band-title">
         {areasSnippet.heading}
       </h2>
-      <p className="aeo-answer split-band-lede">
+      <p className="aeo-answer split-band-lede text-muted">
         {areasSnippet.lead}
       </p>
 

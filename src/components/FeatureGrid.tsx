@@ -37,7 +37,7 @@ export function FeatureGrid() {
                     <span className="svc-card-badge">{item.badge}</span>
                   ) : null}
                   <span className="svc-card-title">{item.title}</span>
-                  <span className="svc-card-copy">{item.body}</span>
+                  <span className="svc-card-copy text-muted">{item.body}</span>
                   <span className="svc-card-link">
                     View service <span aria-hidden>→</span>
                   </span>
