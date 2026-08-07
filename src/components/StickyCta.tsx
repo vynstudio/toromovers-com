@@ -21,11 +21,8 @@ export function StickyCta() {
         return;
       }
 
-      const hero = document.getElementById("hero");
-      // Match Nav hide threshold so bars never stack
-      const pastHero = hero
-        ? hero.getBoundingClientRect().bottom < 48
-        : window.scrollY > 120;
+      // Match Nav hide threshold so bars never stack (and never both hide)
+      const pastHero = window.scrollY > 24;
 
       const quote = document.getElementById("quote");
       const nearQuote =

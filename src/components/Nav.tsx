@@ -8,7 +8,9 @@ import { BUSINESS_NAME, PHONE_TEL } from "@/lib/site";
 /**
  * Desktop: sticky top pill + Title Case links + CTAs.
  * Mobile: logo + menu + Call; sheet opens for full nav.
- * Hides past hero on phone so sticky bottom CTAs take over.
+ * Hides on any downward scroll on phone so the sticky pill (position:
+ * sticky, transparent shell) never overlaps hero/page text mid-scroll —
+ * sticky bottom CTAs take over as the conversion path once hidden.
  */
 export function Nav() {
   const [hiddenMobile, setHiddenMobile] = useState(false);
@@ -28,13 +30,7 @@ export function Nav() {
         return;
       }
 
-      const hero = document.getElementById("hero");
-      if (!hero) {
-        setHiddenMobile(window.scrollY > 120);
-        return;
-      }
-
-      setHiddenMobile(hero.getBoundingClientRect().bottom < 48);
+      setHiddenMobile(window.scrollY > 24);
     };
 
     update();
