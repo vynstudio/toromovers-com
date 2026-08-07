@@ -5670,9 +5670,15 @@ a.trust-chip {
   width: 100%;
   border-block: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
   background: #fff;
-  /* Mobile: still show a compact static-friendly strip */
   padding: 0.85rem 0;
   overflow: hidden;
+}
+
+/* Mobile: drop the section entirely — not rendering as intended there */
+@media (max-width: 767px) {
+  .trust-marquee {
+    display: none;
+  }
 }
 
 @media (min-width: 1024px) {
