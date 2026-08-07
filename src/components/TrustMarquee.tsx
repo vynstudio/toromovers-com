@@ -17,7 +17,7 @@ const TRUST_ITEMS = [
   "Up-front hourly rates",
   "Full-service & labor-only",
   "Apartment specialists",
-  "Local crew — not a franchise hand-off",
+  "Local crew, committed to every job",
   "Clear communication",
   "Same-week scheduling",
   "Real job photos — no stock",

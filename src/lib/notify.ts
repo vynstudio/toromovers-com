@@ -201,7 +201,7 @@ function clientEmail(lead: LeadNotifyInput): { subject: string; text: string; ht
     lead.serviceType ? `What you selected: ${lead.serviceType}` : "",
     `While you wait, here's why Central Florida chooses Toro Movers:`,
     `- ${GOOGLE_RATING}★ rated on Google, ${REVIEW_COUNT}+ reviews`,
-    `- Family-owned, local crew — not a national franchise hand-off`,
+    `- Family-owned local crew — committed to every job`,
     `- Bilingual English & Spanish communication`,
     `- Careful handling, on-time crews, up-front hourly rates`,
     ``,

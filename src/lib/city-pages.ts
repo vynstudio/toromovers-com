@@ -100,7 +100,7 @@ export const ORLANDO: CityPageContent = {
     },
     {
       q: "Are you a local Orlando moving company?",
-      a: "Yes, Toro Movers is a family-owned local moving company serving Orlando and Central Florida. You work with a local crew instead of a franchise hand-off, which helps keep communication, scheduling, and move-day expectations clear.",
+      a: "Yes, Toro Movers is a family-owned local moving company serving Orlando and Central Florida. You work directly with our local crew, which helps keep communication, scheduling, and move-day expectations clear.",
     },
     {
       q: "What is the difference between full-service and labor-only moving?",

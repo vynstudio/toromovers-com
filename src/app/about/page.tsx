@@ -64,7 +64,7 @@ export default function AboutPage() {
                 </p>
                 <p className="about-page-body text-muted">
                   {LEGAL_NAME} operates as {BUSINESS_NAME} — local crews based
-                  around {SERVICE_BASE_CITY}, not a national franchise hand-off.
+                  around {SERVICE_BASE_CITY}, committed to every job.
                   We plan apartments, homes, labor-only loads, and single-item
                   deliveries around real building access: stairs, elevators,
                   loading zones, and parking. Our slogan says it simply:{" "}
