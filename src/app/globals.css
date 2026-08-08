@@ -4775,13 +4775,14 @@ a.trust-chip {
   }
 }
 
-/* Homepage speed pass: drop the decorative proof/FAQ/areas photos on
-   mobile (desktop split-band layout keeps them — cuts 3 of 9 homepage
-   image requests on the size that matters most for LCP/mobile speed). */
+/* Homepage speed pass: drop the decorative proof/FAQ photos on mobile
+   (desktop split-band layout keeps them — cuts image requests on the
+   size that matters most for LCP/mobile speed). #areas is excluded:
+   its visual is now an inline coverage-map SVG, not a network image,
+   so hiding it there saved nothing and just hid useful content. */
 @media (max-width: 1023px) {
   #proof .split-band-stage,
-  #faq .split-band-stage,
-  #areas .split-band-stage {
+  #faq .split-band-stage {
     display: none;
   }
 }

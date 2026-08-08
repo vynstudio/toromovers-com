@@ -16,6 +16,8 @@ type SplitBandProps = {
   soft?: boolean;
   /** Required for desktop split; shown compact under content on mobile */
   image?: SplitBandImage | null;
+  /** Custom media (e.g. inline SVG) instead of a photo — takes the same frame */
+  media?: ReactNode;
   "aria-labelledby"?: string;
   "aria-label"?: string;
   className?: string;
@@ -31,10 +33,12 @@ export function SplitBand({
   reverse = false,
   soft = false,
   image,
+  media,
   className = "",
   children,
   ...aria
 }: SplitBandProps) {
+  const hasVisual = Boolean(image || media);
   return (
     <section
       id={id}
@@ -42,7 +46,7 @@ export function SplitBand({
         "split-band full-bleed w-full",
         soft ? "split-band--soft" : "split-band--plain",
         reverse ? "split-band--reverse" : "",
-        !image ? "split-band--no-photo" : "",
+        !hasVisual ? "split-band--no-photo" : "",
         className,
       ]
         .filter(Boolean)
@@ -50,18 +54,22 @@ export function SplitBand({
       {...aria}
     >
       <div className="split-band-inner site-container-wide">
-        {image ? (
+        {hasVisual ? (
           <div className="split-band-stage">
             <div className="split-band-frame">
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(max-width: 1023px) 100vw, 50vw"
-                quality={70}
-                loading="lazy"
-                className={`object-cover ${image.position ?? "object-center"}`}
-              />
+              {media ? (
+                media
+              ) : (
+                <Image
+                  src={image!.src}
+                  alt={image!.alt}
+                  fill
+                  sizes="(max-width: 1023px) 100vw, 50vw"
+                  quality={70}
+                  loading="lazy"
+                  className={`object-cover ${image!.position ?? "object-center"}`}
+                />
+              )}
             </div>
           </div>
         ) : null}

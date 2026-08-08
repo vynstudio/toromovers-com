@@ -1,6 +1,7 @@
 import { areasSnippet } from "@/lib/content";
 import { IconArrow } from "@/components/icons";
 import { SplitBand } from "@/components/SplitBand";
+import { CoverageMap } from "@/components/CoverageMap";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 const AREA_LINKS = [
@@ -23,7 +24,7 @@ export function Areas() {
     <SplitBand
       id="areas"
       reverse={areasSnippet.reverse}
-      image={areasSnippet.image}
+      media={<CoverageMap />}
       aria-labelledby="areas-heading"
     >
       <p className="split-band-eyebrow">{areasSnippet.eyebrow}</p>
