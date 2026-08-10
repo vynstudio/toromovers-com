@@ -74,8 +74,8 @@ export const blogPosts: readonly BlogPost[] = [
     date: "2026-07-28",
     dateLabel: "Jul 28, 2026",
     image: {
-      src: "/images/moves/svc-primary-apartment.webp",
-      alt: "Toro Movers handling boxes in an apartment hallway on a real Orlando-area complex move",
+      src: "/images/moves/real-21.webp",
+      alt: "Toro Movers crew carrying furniture up stairs on a real Orlando-area complex move",
       position: "object-[center_30%]",
     },
     body: [

@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: "/images/hero-crew-real.webp",
+        url: "/images/moves/real-23.webp",
         width: 1200,
         height: 900,
         alt: "Toro Movers crew on a real local move in Central Florida",
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: titleDefault,
     description,
-    images: ["/images/hero-crew-real.webp"],
+    images: ["/images/moves/real-23.webp"],
   },
   robots: {
     index: true,

@@ -72,15 +72,15 @@ export const servicesHub = {
       title: "Apartment movers in Orlando",
       body: "Stairs, elevators, loading zones, and move-in windows planned before the crew arrives.",
       href: "/apartment-movers-orlando-fl",
-      image: "/images/moves/svc-primary-apartment.webp",
+      image: "/images/moves/real-21.webp",
       imageAlt:
-        "Toro Movers carrying boxes in an apartment hallway on a real Orlando-area apartment move",
+        "Toro Movers crew carrying furniture up stairs on a real Orlando-area apartment move",
     },
     {
       title: "Commercial moving services",
       body: "Offices, retail, and small commercial spaces—after-hours when needed.",
       href: "/commercial-movers",
-      image: "/images/moves/svc-commercial.webp",
+      image: "/images/moves/real-42.webp",
       imageAlt: "Toro Movers real commercial and office-style move work",
     },
   ] satisfies ServiceHubItem[],

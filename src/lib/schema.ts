@@ -42,7 +42,7 @@ export function organizationGraph() {
           "@type": "ImageObject",
           url: `${SITE_URL}/logos/toro-lockup-navy.svg`,
         },
-        image: `${SITE_URL}/images/hero-crew-real.webp`,
+        image: `${SITE_URL}/images/moves/real-23.webp`,
         description: organizationDescription,
         slogan: SLOGAN,
         telephone: PHONE_E164,
@@ -167,7 +167,7 @@ export function homePageGraph() {
         about: { "@id": `${SITE_URL}/#movingcompany` },
         primaryImageOfPage: {
           "@type": "ImageObject",
-          url: `${SITE_URL}/images/hero-crew-real.webp`,
+          url: `${SITE_URL}/images/moves/real-23.webp`,
         },
         speakable: {
           "@type": "SpeakableSpecification",

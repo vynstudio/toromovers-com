@@ -43,8 +43,8 @@ export const customerProof = {
   /** reverse=false → photo LEFT (band 1) */
   reverse: false,
   image: {
-    src: "/images/proof-customer-closeup.webp",
-    alt: "Toro Movers owner and a happy customer after a real local move in Central Florida",
+    src: "/images/moves/real-45.webp",
+    alt: "Toro Movers crew securing furniture on a real local move in Central Florida",
     position: "object-[center_28%]",
   },
 } as const;
@@ -109,8 +109,8 @@ export const integrations = {
   ctaEstimate: "Get an estimate",
   reverse: true,
   image: {
-    src: "/images/proof-loading.webp",
-    alt: "Toro Movers crew carrying boxes on a real Central Florida apartment move",
+    src: "/images/moves/real-16.webp",
+    alt: "Toro Movers crew carrying furniture through a hallway on a real Central Florida move",
     position: "object-[center_40%]",
   },
 } as const;
@@ -277,7 +277,7 @@ export const faq = {
   heading: "Common questions",
   sub: "Straight answers from a local Orlando moving company",
   image: {
-    src: "/images/hero-crew-real.webp",
+    src: "/images/moves/real-23.webp",
     alt: "Toro Movers crew on a real local Orlando moving job",
     position: "object-[center_30%]",
   },

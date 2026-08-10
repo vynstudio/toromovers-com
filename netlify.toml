@@ -137,6 +137,14 @@
   status = 200
   force = true
 
+# Deposit page. /book is the legacy path and 301s to /bookings on the engine,
+# so /bookings MUST stay proxied or /book dead-ends in a 404.
+[[redirects]]
+  from = "/bookings"
+  to = "https://live-toro-site.netlify.app/bookings"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/book"
   to = "https://live-toro-site.netlify.app/book"
