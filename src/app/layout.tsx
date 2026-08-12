@@ -68,12 +68,15 @@ export const metadata: Metadata = {
     siteName: BUSINESS_NAME,
     title: titleDefault,
     description,
+    // Purpose-built 1200x630 JPEG share card. Do NOT point this at a .webp
+    // photo — iMessage and some WhatsApp clients won't render webp previews,
+    // and raw photos crop unpredictably at card aspect ratios.
     images: [
       {
-        url: "/images/moves/real-23.webp",
+        url: "/og/default.jpg",
         width: 1200,
-        height: 900,
-        alt: "Toro Movers crew on a real local move in Central Florida",
+        height: 630,
+        alt: "Toro Movers — Orlando and Central Florida movers who quote up front",
       },
     ],
   },
@@ -81,7 +84,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: titleDefault,
     description,
-    images: ["/images/moves/real-23.webp"],
+    images: ["/og/default.jpg"],
   },
   robots: {
     index: true,
