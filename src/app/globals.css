@@ -5968,3 +5968,44 @@ a.trust-chip {
     transition: none;
   }
 }
+
+/* Illustration variant of the premium card: art sits in a tinted panel and the
+   title moves into the body (white-on-art would be unreadable on flat vector). */
+.svc-card-frame--art {
+  aspect-ratio: 16 / 10;
+  background:
+    radial-gradient(120% 90% at 50% 115%, rgba(27, 42, 82, 0.10) 0%, transparent 60%),
+    linear-gradient(180deg, #f7f9fc 0%, #eef2f9 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+}
+
+.svc-card-art {
+  width: 84%;
+  height: auto;
+  display: block;
+  transition: transform 0.25s ease;
+}
+
+.svc-card--premium:hover .svc-card-art {
+  transform: translateY(-3px) scale(1.03);
+}
+
+.svc-card-heading {
+  display: block;
+  font-size: 1.22rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-card-art,
+  .svc-card--premium:hover .svc-card-art {
+    transform: none;
+    transition: none;
+  }
+}

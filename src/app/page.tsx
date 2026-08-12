@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { TrustMarquee } from "@/components/TrustMarquee";
 import { CustomerProof } from "@/components/CustomerProof";
 import { FeatureGrid } from "@/components/FeatureGrid";
+import { RecentMoves } from "@/components/RecentMoves";
 import { BlogCards } from "@/components/BlogCards";
 import { Reviews } from "@/components/Reviews";
 import { Faq } from "@/components/Faq";
@@ -33,6 +34,8 @@ export default function HomePage() {
         <CustomerProof />
         <SectionDivider />
         <FeatureGrid />
+        <SectionDivider />
+        <RecentMoves />
         <SectionDivider />
         <Reviews />
         <SectionDivider />

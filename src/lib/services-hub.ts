@@ -14,6 +14,8 @@ export type ServiceHubItem = {
   points?: readonly string[];
   /** Overrides the default "View service" CTA when the link isn't a service page. */
   linkLabel?: string;
+  /** Flat illustration shown instead of a photo on the homepage cards. */
+  illustration?: "local" | "long-distance" | "labor-only";
 };
 
 export const servicesHub = {
@@ -41,6 +43,7 @@ export const servicesHub = {
       imageAlt:
         "Toro Movers crew carrying a padded item on a real Central Florida home move",
       badge: "Local",
+      illustration: "local",
       points: [
         "Truck and crew included",
         "Up-front hourly rate",
@@ -56,6 +59,7 @@ export const servicesHub = {
       imageAlt:
         "Toro Movers loading a box truck at the curb on a real Central Florida move",
       badge: "Long distance",
+      illustration: "long-distance",
       points: [
         "Route planned with you",
         "Written scope before booking",
@@ -70,6 +74,7 @@ export const servicesHub = {
       imageAlt:
         "Toro Movers stretch-wrapping furniture on a real labor-only job",
       badge: "Labor only",
+      illustration: "labor-only",
       points: [
         "Your truck, our crew",
         "Load, unload or both",
