@@ -43,9 +43,13 @@ export const customerProof = {
   /** reverse=false → photo LEFT (band 1) */
   reverse: false,
   image: {
-    src: "/images/moves/real-45.webp",
-    alt: "Toro Movers crew securing furniture on a real local move in Central Florida",
-    position: "object-[center_28%]",
+    // Owner + customer, cut out of the original 4284x5712 shot and composed on
+    // brand navy at 2400x1350. Composed as 16:9 with the subjects centred and
+    // ~86% of frame height, so object-cover cannot clip them in either the
+    // mobile 16:9 frame or the taller desktop split.
+    src: "/images/proof-customer-blue.webp",
+    alt: "Toro Movers owner with a happy Central Florida customer",
+    position: "object-center",
   },
 } as const;
 
