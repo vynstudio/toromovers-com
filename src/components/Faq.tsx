@@ -29,7 +29,7 @@ export function Faq({
       soft
       reverse={faq.reverse}
       image={VECTORS_ONLY ? undefined : faq.image}
-      media={VECTORS_ONLY ? <VectorSlot kind="labor-only" /> : undefined}
+      media={VECTORS_ONLY ? <VectorSlot kind="access" /> : undefined}
       aria-labelledby="faq-heading"
     >
       <header className="faq-head">

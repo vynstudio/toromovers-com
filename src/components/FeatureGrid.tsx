@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { servicesHub } from "@/lib/services-hub";
-import { SERVICE_ILLUSTRATIONS } from "@/components/ServiceIllustrations";
+import { VectorSlot } from "@/components/ServiceIllustrations";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
 
 /**
  * Services — 3 premium cards, same section height as the split bands.
@@ -17,9 +18,7 @@ export function FeatureGrid() {
       <div className="site-container-wide svc-band-inner">
         <ul className="svc-cards" aria-label="Main moving services">
           {servicesHub.primary.map((item) => {
-            const Illustration = item.illustration
-              ? SERVICE_ILLUSTRATIONS[item.illustration]
-              : null;
+            const useVector = VECTORS_ONLY && item.illustration;
 
             return (
               <li key={item.href + item.title} className="svc-cards-item">
@@ -30,11 +29,11 @@ export function FeatureGrid() {
                 >
                   <span
                     className={`svc-card-frame${
-                      Illustration ? " svc-card-frame--art" : ""
+                      useVector ? " svc-card-frame--art" : ""
                     }`}
                   >
-                    {Illustration ? (
-                      <Illustration className="svc-card-art" />
+                    {useVector ? (
+                      <VectorSlot kind={item.illustration ?? "local"} />
                     ) : (
                       <>
                         <Image

@@ -1,5 +1,5 @@
 /**
- * TEMPORARY — photos off, brand vectors on.
- * Flip to `false` to restore job photos on every surface.
+ * TEMPORARY — job photos off except the family-trust proof band.
+ * Flip to `false` to restore photos on every surface.
  */
 export const VECTORS_ONLY = true;

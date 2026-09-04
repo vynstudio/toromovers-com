@@ -6,6 +6,8 @@
  * Shared 320x200 viewBox keeps all three optically the same size in the card.
  */
 
+import Image from "next/image";
+
 const NAVY = "#1B2A52";
 const NAVY_DEEP = "#101C3A";
 const RED = "#C8102E";
@@ -187,12 +189,29 @@ export const SERVICE_ILLUSTRATIONS = {
   crew: IllustrationCrew,
 } as const;
 
-export type ServiceIllustrationKey = keyof typeof SERVICE_ILLUSTRATIONS;
+export type ServiceIllustrationKey =
+  | "local"
+  | "long-distance"
+  | "labor-only"
+  | "packing"
+  | "access"
+  | "crew";
+
+export const VECTOR_ART: Record<ServiceIllustrationKey, string> = {
+  local: "/images/vectors/local.webp",
+  "long-distance": "/images/vectors/long-distance.webp",
+  "labor-only": "/images/vectors/labor-only.webp",
+  packing: "/images/vectors/packing.webp",
+  access: "/images/vectors/access.webp",
+  crew: "/images/vectors/local.webp",
+};
 
 const CYCLE: ServiceIllustrationKey[] = [
   "local",
   "long-distance",
   "labor-only",
+  "packing",
+  "access",
 ];
 
 export function illustrationKeyAt(i: number): ServiceIllustrationKey {
@@ -200,7 +219,7 @@ export function illustrationKeyAt(i: number): ServiceIllustrationKey {
   return CYCLE[((i % n) + n) % n];
 }
 
-/** Temporary photo replacement — brand SVG in the same frame. */
+/** High-end vector illustration in the photo frame. */
 export function VectorSlot({
   kind = "local",
   className = "",
@@ -208,10 +227,16 @@ export function VectorSlot({
   kind?: ServiceIllustrationKey;
   className?: string;
 }) {
-  const Art = SERVICE_ILLUSTRATIONS[kind];
   return (
     <div className={`vec-slot ${className}`.trim()}>
-      <Art className="vec-slot-art" />
+      <Image
+        src={VECTOR_ART[kind]}
+        alt=""
+        fill
+        sizes="(max-width: 1023px) 100vw, 50vw"
+        quality={80}
+        className="object-cover object-center"
+      />
     </div>
   );
 }
