@@ -48,6 +48,7 @@ export function CustomerProof() {
         id="proof"
         soft
         reverse={customerProof.reverse}
+        image={customerProof.image}
         aria-labelledby="proof-heading"
       >
         <p className="split-band-eyebrow">{customerProof.eyebrow}</p>

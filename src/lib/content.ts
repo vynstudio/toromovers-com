@@ -41,6 +41,11 @@ export const customerProof = {
   lede: "Toro Movers is a family-owned local moving company in Orlando. Customers hire us for on-time crews, careful handling, bilingual English and Spanish communication, and up-front hourly rates across Central Florida.",
   ctaQuote: "Get a free quote",
   reverse: false,
+  image: {
+    src: "/images/proof-customer.webp",
+    alt: "Toro Movers with a customer on a Central Florida canal after a local move",
+    position: "object-[center_38%]",
+  },
 } as const;
 
 /** src + alt + focal point for real job photos inside landscape/tall frames. */
