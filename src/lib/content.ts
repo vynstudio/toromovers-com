@@ -43,9 +43,10 @@ export const customerProof = {
   /** reverse=false → photo LEFT (band 1) */
   reverse: false,
   image: {
-    src: "/images/moves/real-45.webp",
-    alt: "Toro Movers crew securing furniture on a real local move in Central Florida",
-    position: "object-[center_28%]",
+    // Pexels / RDNE — free commercial stock (photo 7464684)
+    src: "/images/proof-local-crew.webp",
+    alt: "Local moving crew with their van, ready for a residential job",
+    position: "object-[center_72%]",
   },
 } as const;
 
