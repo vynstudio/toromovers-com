@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
@@ -31,10 +30,10 @@ export const metadata: Metadata = {
     url: `${SITE_URL}/about`,
     images: [
       {
-        url: customerProof.image.src,
+        url: "/og/default.jpg",
         width: 1200,
-        height: 1500,
-        alt: customerProof.image.alt,
+        height: 630,
+        alt: `${BUSINESS_NAME} — Orlando and Central Florida movers`,
       },
     ],
   },
@@ -53,7 +52,7 @@ export default function AboutPage() {
           aria-labelledby="about-heading"
         >
           <div className="site-container about-page-inner">
-            <div className="about-page-grid">
+            <div className="about-page-grid about-page-grid--copy-only">
               <div className="about-page-copy">
                 <p className="split-band-eyebrow">About us</p>
                 <h1 id="about-heading" className="about-page-title">
@@ -144,20 +143,6 @@ export default function AboutPage() {
                   >
                     Read Google reviews →
                   </a>
-                </div>
-              </div>
-
-              <div className="about-page-photo">
-                <div className="about-page-frame">
-                  <Image
-                    src={customerProof.image.src}
-                    alt={customerProof.image.alt}
-                    fill
-                    sizes="(max-width: 899px) 92vw, 42vw"
-                    quality={80}
-                    priority
-                    className={`object-cover ${customerProof.image.position ?? "object-center"}`}
-                  />
                 </div>
               </div>
             </div>

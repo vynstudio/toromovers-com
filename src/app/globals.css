@@ -3860,6 +3860,10 @@ a.trust-chip {
     gap: 2.5rem;
     align-items: center;
   }
+
+  .about-page-grid--copy-only {
+    grid-template-columns: minmax(0, 36rem);
+  }
 }
 
 .about-page-title {

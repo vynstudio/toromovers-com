@@ -40,14 +40,7 @@ export const customerProof = {
   title: "Why Central Florida chooses Toro for local moves",
   lede: "Toro Movers is a family-owned local moving company in Orlando. Customers hire us for on-time crews, careful handling, bilingual English and Spanish communication, and up-front hourly rates across Central Florida.",
   ctaQuote: "Get a free quote",
-  /** reverse=false → photo LEFT (band 1) */
   reverse: false,
-  image: {
-    // Pexels / RDNE — free commercial stock (photo 7464684)
-    src: "/images/proof-local-crew.webp",
-    alt: "Local moving crew with their van, ready for a residential job",
-    position: "object-[center_72%]",
-  },
 } as const;
 
 /** src + alt + focal point for real job photos inside landscape/tall frames. */
