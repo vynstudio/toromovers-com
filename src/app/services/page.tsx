@@ -5,6 +5,11 @@ import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
 import { servicesHub } from "@/lib/services-hub";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
+import {
+  VectorSlot,
+  illustrationKeyAt,
+} from "@/components/ServiceIllustrations";
 import {
   BUSINESS_NAME,
   PHONE_DISPLAY,
@@ -76,14 +81,18 @@ export default function ServicesPage() {
                     data-cta={`services-hub-${item.href.replace(/\//g, "")}`}
                   >
                     <span className="services-hub-card-frame">
-                      <Image
-                        src={item.image}
-                        alt={item.imageAlt}
-                        fill
-                        sizes="(max-width: 639px) 92vw, (max-width: 1023px) 45vw, 30vw"
-                        quality={75}
-                        className="object-cover object-center"
-                      />
+                      {VECTORS_ONLY ? (
+                        <VectorSlot kind={item.illustration ?? "local"} />
+                      ) : (
+                        <Image
+                          src={item.image}
+                          alt={item.imageAlt}
+                          fill
+                          sizes="(max-width: 639px) 92vw, (max-width: 1023px) 45vw, 30vw"
+                          quality={75}
+                          className="object-cover object-center"
+                        />
+                      )}
                     </span>
                     <span className="services-hub-card-body">
                       {item.badge ? (
@@ -109,7 +118,7 @@ export default function ServicesPage() {
               className="services-hub-grid services-hub-grid--secondary"
               aria-label="Additional moving services"
             >
-              {servicesHub.secondary.map((item) => (
+              {servicesHub.secondary.map((item, i) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
@@ -117,14 +126,18 @@ export default function ServicesPage() {
                     data-cta={`services-hub-${item.href.replace(/\//g, "")}`}
                   >
                     <span className="services-hub-card-frame services-hub-card-frame--sm">
-                      <Image
-                        src={item.image}
-                        alt={item.imageAlt}
-                        fill
-                        sizes="(max-width: 639px) 92vw, 30vw"
-                        quality={70}
-                        className="object-cover object-center"
-                      />
+                      {VECTORS_ONLY ? (
+                        <VectorSlot kind={illustrationKeyAt(i)} />
+                      ) : (
+                        <Image
+                          src={item.image}
+                          alt={item.imageAlt}
+                          fill
+                          sizes="(max-width: 639px) 92vw, 30vw"
+                          quality={70}
+                          className="object-cover object-center"
+                        />
+                      )}
                     </span>
                     <span className="services-hub-card-body">
                       <span className="services-hub-card-title">

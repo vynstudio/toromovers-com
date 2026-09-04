@@ -147,10 +147,71 @@ export function IllustrationLaborOnly({ className }: Props) {
   );
 }
 
+/** Proof / about — crew with a customer at a local house. */
+export function IllustrationCrew({ className }: Props) {
+  return (
+    <svg {...base} className={className}>
+      <ellipse cx="160" cy="154" rx="128" ry="36" fill={PALE} />
+      <path d="M38 108 L78 76 L118 108 Z" fill={NAVY} />
+      <rect x="48" y="108" width="60" height="42" rx="3" fill={WHITE} />
+      <rect x="70" y="124" width="16" height="26" rx="2" fill={RED} />
+      <rect x="54" y="114" width="12" height="12" rx="2" fill={PALE_2} />
+      <rect x="90" y="114" width="12" height="12" rx="2" fill={PALE_2} />
+      <rect x="148" y="98" width="70" height="40" rx="4" fill={WHITE} />
+      <rect x="148" y="98" width="70" height="10" rx="4" fill={PALE_2} />
+      <rect x="156" y="116" width="54" height="5" rx="2.5" fill={RED} />
+      <path d="M218 108 h20 l14 18 v12 h-34 Z" fill={NAVY} />
+      <rect x="146" y="138" width="108" height="6" rx="3" fill={NAVY_DEEP} />
+      <circle cx="170" cy="148" r="10" fill={NAVY_DEEP} />
+      <circle cx="170" cy="148" r="4" fill={PALE} />
+      <circle cx="236" cy="148" r="10" fill={NAVY_DEEP} />
+      <circle cx="236" cy="148" r="4" fill={PALE} />
+      <circle cx="268" cy="92" r="11" fill={SAND} />
+      <path d="M257 90 a11 11 0 0 1 22 0 Z" fill={NAVY} />
+      <path d="M256 104 h24 a9 9 0 0 1 9 9 v22 h-42 v-22 a9 9 0 0 1 9 -9 Z" fill={NAVY} />
+      <rect x="258" y="134" width="10" height="22" rx="4" fill={NAVY_DEEP} />
+      <rect x="272" y="134" width="10" height="22" rx="4" fill={NAVY_DEEP} />
+      <circle cx="236" cy="100" r="10" fill={SAND} />
+      <path d="M226 98 a10 10 0 0 1 20 0 Z" fill={RED} />
+      <path d="M226 112 h20 a8 8 0 0 1 8 8 v18 h-36 v-18 a8 8 0 0 1 8 -8 Z" fill={WHITE} />
+      <rect x="228" y="138" width="9" height="18" rx="4" fill={NAVY_DEEP} />
+      <rect x="240" y="138" width="9" height="18" rx="4" fill={NAVY_DEEP} />
+    </svg>
+  );
+}
+
 export const SERVICE_ILLUSTRATIONS = {
   local: IllustrationLocal,
   "long-distance": IllustrationLongDistance,
   "labor-only": IllustrationLaborOnly,
+  crew: IllustrationCrew,
 } as const;
 
 export type ServiceIllustrationKey = keyof typeof SERVICE_ILLUSTRATIONS;
+
+const CYCLE: ServiceIllustrationKey[] = [
+  "local",
+  "long-distance",
+  "labor-only",
+];
+
+export function illustrationKeyAt(i: number): ServiceIllustrationKey {
+  const n = CYCLE.length;
+  return CYCLE[((i % n) + n) % n];
+}
+
+/** Temporary photo replacement — brand SVG in the same frame. */
+export function VectorSlot({
+  kind = "local",
+  className = "",
+}: {
+  kind?: ServiceIllustrationKey;
+  className?: string;
+}) {
+  const Art = SERVICE_ILLUSTRATIONS[kind];
+  return (
+    <div className={`vec-slot ${className}`.trim()}>
+      <Art className="vec-slot-art" />
+    </div>
+  );
+}

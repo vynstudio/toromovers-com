@@ -5,6 +5,8 @@ import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
 import { customerProof } from "@/lib/content";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
+import { VectorSlot } from "@/components/ServiceIllustrations";
 import {
   BUSINESS_NAME,
   GOOGLE_MAPS_REVIEWS_URL,
@@ -149,15 +151,19 @@ export default function AboutPage() {
 
               <div className="about-page-photo">
                 <div className="about-page-frame">
-                  <Image
-                    src={customerProof.image.src}
-                    alt={customerProof.image.alt}
-                    fill
-                    sizes="(max-width: 899px) 92vw, 42vw"
-                    quality={80}
-                    priority
-                    className={`object-cover ${customerProof.image.position ?? "object-center"}`}
-                  />
+                  {VECTORS_ONLY ? (
+                    <VectorSlot kind="crew" />
+                  ) : (
+                    <Image
+                      src={customerProof.image.src}
+                      alt={customerProof.image.alt}
+                      fill
+                      sizes="(max-width: 899px) 92vw, 42vw"
+                      quality={80}
+                      priority
+                      className={`object-cover ${customerProof.image.position ?? "object-center"}`}
+                    />
+                  )}
                 </div>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import { HeroSkyline } from "@/components/HeroSkyline";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { IconArrow } from "@/components/icons";
 import {
   GOOGLE_RATING,
@@ -31,10 +32,12 @@ export function CityHero({
   return (
     <section
       id="hero"
-      className="hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-6 pt-3 sm:pb-12 sm:pt-4 lg:py-16"
+      className={`hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-6 pt-3 sm:pb-12 sm:pt-4 lg:py-16${
+        VECTORS_ONLY ? " hero-vectors" : ""
+      }`}
       aria-labelledby="hero-heading"
     >
-      <HeroSkyline />
+      {VECTORS_ONLY ? null : <HeroSkyline />}
       <div className="site-container-wide relative z-[1] flex w-full flex-1 items-center justify-center">
         <div className="mx-auto w-full max-w-3xl">
           <div className="card-elevated rounded-[1.25rem] bg-white px-5 py-7 text-center sm:rounded-[1.5rem] sm:px-10 sm:py-12 lg:px-14 lg:py-14">

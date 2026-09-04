@@ -6,6 +6,11 @@ import {
   type MoveShot,
 } from "@/lib/recent-moves";
 import { IconArrow } from "@/components/icons";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
+import {
+  VectorSlot,
+  illustrationKeyAt,
+} from "@/components/ServiceIllustrations";
 
 type RecentMovesProps = {
   items?: readonly MoveShot[];
@@ -100,19 +105,23 @@ function MoveGrid({
           <a href={shot.href} className="recent-moves-card-link">
             <figure className="recent-moves-card">
               <div className="recent-moves-frame">
-                <Image
-                  src={shot.src}
-                  alt={shot.alt}
-                  fill
-                  sizes={
-                    isPage
-                      ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
-                      : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 200px"
-                  }
-                  quality={60}
-                  loading="lazy"
-                  className="object-cover object-center"
-                />
+                {VECTORS_ONLY ? (
+                  <VectorSlot kind={illustrationKeyAt(i)} />
+                ) : (
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    fill
+                    sizes={
+                      isPage
+                        ? "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 360px"
+                        : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 200px"
+                    }
+                    quality={60}
+                    loading="lazy"
+                    className="object-cover object-center"
+                  />
+                )}
               </div>
               <figcaption className="recent-moves-cap">
                 <span className="recent-moves-cap-title">{shot.title}</span>

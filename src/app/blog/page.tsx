@@ -7,6 +7,11 @@ import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
 import { blogHref, blogPosts } from "@/lib/blog";
 import { BUSINESS_NAME, SITE_URL } from "@/lib/site";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
+import {
+  VectorSlot,
+  illustrationKeyAt,
+} from "@/components/ServiceIllustrations";
 
 export const metadata: Metadata = {
   title: "Moving tips & guides for Orlando",
@@ -37,7 +42,7 @@ export default function BlogIndexPage() {
           </p>
 
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-            {blogPosts.map((post) => (
+            {blogPosts.map((post, i) => (
               <li key={post.slug}>
                 <Link
                   href={blogHref(post.slug)}
@@ -45,14 +50,18 @@ export default function BlogIndexPage() {
                   data-cta={`blog-index-${post.slug}`}
                 >
                   <span className="svc-card-frame">
-                    <Image
-                      src={post.image.src}
-                      alt={post.image.alt}
-                      fill
-                      sizes="(max-width: 639px) 90vw, 33vw"
-                      quality={75}
-                      className={`object-cover ${post.image.position ?? "object-center"}`}
-                    />
+                    {VECTORS_ONLY ? (
+                      <VectorSlot kind={illustrationKeyAt(i)} />
+                    ) : (
+                      <Image
+                        src={post.image.src}
+                        alt={post.image.alt}
+                        fill
+                        sizes="(max-width: 639px) 90vw, 33vw"
+                        quality={75}
+                        className={`object-cover ${post.image.position ?? "object-center"}`}
+                      />
+                    )}
                   </span>
                   <span className="svc-card-body">
                     <span className="svc-card-badge">{post.eyebrow}</span>

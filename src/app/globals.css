@@ -5993,6 +5993,38 @@ a.trust-chip {
   transition: transform 0.25s ease;
 }
 
+/* Temporary vectors-only photo replacement */
+.vec-slot {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(120% 90% at 50% 115%, rgba(27, 42, 82, 0.10) 0%, transparent 60%),
+    linear-gradient(180deg, #f7f9fc 0%, #eef2f9 100%);
+}
+.vec-slot-art {
+  width: 86%;
+  height: auto;
+  max-height: 86%;
+  display: block;
+}
+.split-band-frame:has(.vec-slot),
+.about-page-frame:has(.vec-slot),
+.recent-moves-frame:has(.vec-slot),
+.svc-card-frame:has(.vec-slot),
+.services-hub-card-frame:has(.vec-slot) {
+  background: #eef2f9;
+}
+@media (min-width: 1024px) {
+  .hero-with-skyline.hero-wash.hero-vectors {
+    background:
+      radial-gradient(80% 55% at 18% 12%, rgba(200, 16, 46, 0.18) 0%, transparent 52%),
+      linear-gradient(165deg, #1b2a52 0%, #101c3a 100%);
+  }
+}
+
 .svc-card--premium:hover .svc-card-art {
   transform: translateY(-3px) scale(1.03);
 }

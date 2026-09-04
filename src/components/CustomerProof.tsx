@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { IconArrow } from "@/components/icons";
 import { SplitBand } from "@/components/SplitBand";
 import { customerProof } from "@/lib/content";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
+import { VectorSlot } from "@/components/ServiceIllustrations";
 import {
   GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
@@ -48,7 +50,8 @@ export function CustomerProof() {
         id="proof"
         soft
         reverse={customerProof.reverse}
-        image={customerProof.image}
+        image={VECTORS_ONLY ? undefined : customerProof.image}
+        media={VECTORS_ONLY ? <VectorSlot kind="crew" /> : undefined}
         aria-labelledby="proof-heading"
       >
         <p className="split-band-eyebrow">{customerProof.eyebrow}</p>

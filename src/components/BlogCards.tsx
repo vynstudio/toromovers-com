@@ -1,5 +1,10 @@
 import Image from "next/image";
 import { blogPosts, blogHref } from "@/lib/blog";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
+import {
+  VectorSlot,
+  illustrationKeyAt,
+} from "@/components/ServiceIllustrations";
 
 /**
  * Homepage — 3 blog cards (compacted former feature + integration sections).
@@ -14,7 +19,7 @@ export function BlogCards() {
     >
       <div className="site-container-wide svc-band-inner">
         <ul className="svc-cards" aria-label="Blog guides">
-          {blogPosts.map((post) => (
+          {blogPosts.map((post, i) => (
             <li key={post.slug} className="svc-cards-item">
               <a
                 href={blogHref(post.slug)}
@@ -22,15 +27,19 @@ export function BlogCards() {
                 data-cta={`blog-${post.slug}`}
               >
                 <span className="svc-card-frame">
-                  <Image
-                    src={post.image.src}
-                    alt={post.image.alt}
-                    fill
-                    sizes="(max-width: 1023px) 100vw, 33vw"
-                    quality={68}
-                    loading="lazy"
-                    className={`object-cover ${post.image.position ?? "object-center"}`}
-                  />
+                  {VECTORS_ONLY ? (
+                    <VectorSlot kind={illustrationKeyAt(i)} />
+                  ) : (
+                    <Image
+                      src={post.image.src}
+                      alt={post.image.alt}
+                      fill
+                      sizes="(max-width: 1023px) 100vw, 33vw"
+                      quality={68}
+                      loading="lazy"
+                      className={`object-cover ${post.image.position ?? "object-center"}`}
+                    />
+                  )}
                 </span>
                 <span className="svc-card-body">
                   <span className="svc-card-badge">{post.eyebrow}</span>

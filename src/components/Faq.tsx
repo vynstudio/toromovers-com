@@ -1,5 +1,7 @@
 import { faq } from "@/lib/content";
 import { SplitBand } from "@/components/SplitBand";
+import { VECTORS_ONLY } from "@/lib/vectors-temp";
+import { VectorSlot } from "@/components/ServiceIllustrations";
 
 export type FaqItem = { q: string; a: string };
 
@@ -26,7 +28,8 @@ export function Faq({
       id="faq"
       soft
       reverse={faq.reverse}
-      image={faq.image}
+      image={VECTORS_ONLY ? undefined : faq.image}
+      media={VECTORS_ONLY ? <VectorSlot kind="labor-only" /> : undefined}
       aria-labelledby="faq-heading"
     >
       <header className="faq-head">
