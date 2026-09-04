@@ -20,7 +20,6 @@ const TRUST_ITEMS = [
   "Local crew, committed to every job",
   "Clear communication",
   "Same-week scheduling",
-  "Real job photos — no stock",
   "Orlando & Central Florida",
   "Careful loading & placement",
 ] as const;

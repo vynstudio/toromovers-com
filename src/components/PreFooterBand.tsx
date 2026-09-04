@@ -62,7 +62,7 @@ export function PreFooterBand() {
               <IconArrow />
             </a>
             <p className="pre-footer-meta text-muted">
-              Real job photos · homes, apartments &amp; labor-only
+              Homes, apartments &amp; labor-only
             </p>
           </div>
         </div>
