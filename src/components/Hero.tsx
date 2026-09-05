@@ -1,6 +1,5 @@
 import { hero } from "@/lib/content";
 import { HeroSkyline } from "@/components/HeroSkyline";
-import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { IconArrow } from "@/components/icons";
 import {
   GOOGLE_RATING,
@@ -16,24 +15,18 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className={`hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-4 pt-2 sm:pb-12 sm:pt-4 lg:py-16${
-        VECTORS_ONLY ? " hero-vectors" : ""
-      }`}
+      className="hero-wash hero-with-skyline full-bleed relative w-full overflow-hidden pb-4 pt-2 sm:pb-12 sm:pt-4 lg:py-16"
       aria-labelledby="hero-heading"
     >
-      {VECTORS_ONLY ? null : (
-        <>
-          <link
-            rel="preload"
-            as="image"
-            href="/images/hero-video-poster.webp"
-            type="image/webp"
-            media="(min-width: 1024px)"
-            fetchPriority="high"
-          />
-          <HeroSkyline withVideo />
-        </>
-      )}
+      <link
+        rel="preload"
+        as="image"
+        href="/images/hero-video-poster.webp"
+        type="image/webp"
+        media="(min-width: 1024px)"
+        fetchPriority="high"
+      />
+      <HeroSkyline withVideo />
 
       <div className="site-container-wide relative z-[1] flex w-full flex-1 items-center justify-center">
         <div className="mx-auto w-full max-w-3xl">
