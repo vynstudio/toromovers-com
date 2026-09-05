@@ -27,7 +27,7 @@ export type MoveShot = {
 export const recentMovesHeading = {
   eyebrow: "Recent moves",
   title: "See us in action",
-  lead: "Real Toro Movers job photos—furniture protection, apartment carries, residential moves, and loading across Orlando and Central Florida.",
+  lead: "Furniture protection, apartment carries, residential moves, and loading across Orlando and Central Florida.",
   cta: "View full gallery",
   ctaHref: "/orlando-movers-gallery",
 } as const;
@@ -495,9 +495,10 @@ export function recentMovesByService(): {
 }
 
 export const recentMovesPageMeta = {
-  title: "Orlando Movers Gallery | Real Job Photos",
-  description: "Real Toro Movers job photos from Orlando and Central Florida—apartment moves, home moves, packing, and loading. Family-owned local crew. No stock photos.",
+  title: "Orlando Movers Gallery",
+  description:
+    "Furniture protection, apartment moves, home moves, packing, and loading across Orlando and Central Florida. Family-owned local crew.",
   path: "/orlando-movers-gallery",
   h1: "Orlando movers gallery",
-  sub: "Real job photos from local moves",
+  sub: "Local moving across Central Florida",
 } as const;
