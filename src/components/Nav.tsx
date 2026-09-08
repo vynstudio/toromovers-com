@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { nav } from "@/lib/content";
-import { BUSINESS_NAME, PHONE_TEL } from "@/lib/site";
+import { BUSINESS_NAME, PHONE_TEL, QUOTE_PATH } from "@/lib/site";
 
 /**
  * Desktop: sticky top pill + Title Case links + CTAs.
@@ -144,15 +144,13 @@ export function Nav() {
             >
               {nav.ctaPhoneLabel}
             </a>
-            <button
-              type="button"
-              data-open-quote
-              data-source="nav-quote"
+            <a
+              href={QUOTE_PATH}
               data-cta="nav-quote"
               className="btn-primary tap-target nav-cta nav-cta-quote"
             >
               {nav.cta}
-            </button>
+            </a>
           </div>
         </nav>
       </header>
@@ -198,16 +196,14 @@ export function Nav() {
             >
               Call now
             </a>
-            <button
-              type="button"
-              data-open-quote
-              data-source="nav-menu-quote"
+            <a
+              href={QUOTE_PATH}
               data-cta="nav-menu-quote"
               className="btn-outline btn-fluid tap-target inline-flex w-full justify-center"
               onClick={closeMenu}
             >
               {nav.cta}
-            </button>
+            </a>
           </div>
         </div>
       </div>

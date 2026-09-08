@@ -5,6 +5,7 @@ import {
   GOOGLE_RATING,
   PHONE_DISPLAY,
   PHONE_TEL,
+  QUOTE_PATH,
 } from "@/lib/site";
 
 type CityHeroProps = {
@@ -61,16 +62,14 @@ export function CityHero({
                 <span className="sm:hidden">Call now</span>
                 <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
               </a>
-              <button
-                type="button"
-                data-open-quote
-                data-source={source}
+              <a
+                href={QUOTE_PATH}
                 data-cta={`${source}-quote`}
                 className="btn-outline btn-fluid tap-target inline-flex w-full"
               >
                 Get a free quote
                 <IconArrow />
-              </button>
+              </a>
             </div>
 
             <p className="mt-5 text-xs text-muted sm:mt-6 sm:text-sm">

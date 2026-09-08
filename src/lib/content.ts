@@ -15,9 +15,9 @@ export const nav = {
     { label: "Blog", href: "/blog" },
     { label: "Contact", href: "/contact" },
   ],
-  /** Principal conversion CTA — opens multi-step quote modal */
+  /** Principal conversion CTA — live quote funnel */
   cta: "Get a quote",
-  ctaHref: "/contact",
+  ctaHref: "/get-my-price",
   ctaPhoneLabel: "Call",
   /** Secondary path — contact page */
   ctaSecondary: "Contact",

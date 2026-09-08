@@ -49,9 +49,8 @@
   force = true
 
 # --- Engine: APIs & funnels ---
-# IMPORTANT: Do NOT proxy /api/lead — that is the design-site quote modal
-# (LeadModal). Engine /api/lead requires x-lead-secret and returns 401,
-# which surfaces as "Couldn't send" in the modal.
+# /api/lead stays on this site for the homepage callback form only.
+# Scrapped multi-step quote modal. Quote CTAs go to /get-my-price.
 
 [[redirects]]
   from = "/api/crm/*"
@@ -111,6 +110,18 @@
   from = "/api/review-request/*"
   to = "https://live-toro-site.netlify.app/api/review-request/:splat"
   status = 200
+  force = true
+
+[[redirects]]
+  from = "/get-a-quote"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/get-a-quote/*"
+  to = "/get-my-price"
+  status = 301
   force = true
 
 [[redirects]]

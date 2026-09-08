@@ -17,6 +17,20 @@ const nextConfig: NextConfig = {
   // Slightly smaller JS/CSS in production
   compress: true,
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: "/get-a-quote",
+        destination: "/get-my-price",
+        permanent: true,
+      },
+      {
+        source: "/get-a-quote/:path*",
+        destination: "/get-my-price",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -14,6 +14,7 @@ import {
   BUSINESS_NAME,
   PHONE_DISPLAY,
   PHONE_TEL,
+  QUOTE_PATH,
   SERVICE_REGION,
   SITE_URL,
 } from "@/lib/site";
@@ -59,15 +60,13 @@ export default function ServicesPage() {
                 >
                   Call {PHONE_DISPLAY}
                 </a>
-                <button
-                  type="button"
-                  data-open-quote
-                  data-source="services-hub-quote"
+                <a
+                  href={QUOTE_PATH}
                   data-cta="services-hub-quote"
                   className="btn-outline tap-target"
                 >
                   {servicesHub.cta}
-                </button>
+                </a>
               </div>
             </header>
 
@@ -157,15 +156,13 @@ export default function ServicesPage() {
 
             <p className="services-hub-foot text-muted">
               Not sure which option fits?{" "}
-              <button
-                type="button"
-                data-open-quote
-                data-source="services-hub-foot"
+              <a
+                href={QUOTE_PATH}
                 data-cta="services-hub-foot-quote"
                 className="services-hub-foot-btn"
               >
                 Get a free quote
-              </button>{" "}
+              </a>{" "}
               or{" "}
               <a href="/contact" data-cta="services-hub-foot-contact">
                 request a callback

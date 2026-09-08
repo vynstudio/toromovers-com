@@ -5,6 +5,7 @@ import {
   GOOGLE_RATING,
   PHONE_DISPLAY,
   PHONE_TEL,
+  QUOTE_PATH,
 } from "@/lib/site";
 
 /**
@@ -50,16 +51,14 @@ export function Hero() {
                 <span className="sm:hidden">Call now</span>
                 <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
               </a>
-              <button
-                type="button"
-                data-open-quote
-                data-source="hero-quote"
+              <a
+                href={QUOTE_PATH}
                 data-cta="hero-quote"
                 className="btn-outline btn-fluid tap-target inline-flex w-full !border-neutral-900 !bg-white/80 !text-neutral-900 backdrop-blur-sm"
               >
                 Get a free quote
                 <IconArrow />
-              </button>
+              </a>
             </div>
 
             <p className="mt-5 text-xs font-medium text-neutral-800 sm:mt-6 sm:text-sm">

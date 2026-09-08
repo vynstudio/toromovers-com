@@ -13,6 +13,7 @@ import {
   HOURS_NOTE,
   PHONE_DISPLAY,
   PHONE_TEL,
+  QUOTE_PATH,
   SERVICE_BASE_CITY,
   SERVICE_REGION,
   SITE_URL,
@@ -60,15 +61,13 @@ export default function ContactPage() {
                 >
                   Call {PHONE_DISPLAY}
                 </a>
-                <button
-                  type="button"
-                  data-open-quote
-                  data-source="contact-page-quote"
+                <a
+                  href={QUOTE_PATH}
                   data-cta="contact-page-quote"
                   className="btn-outline tap-target"
                 >
                   Get a free quote
-                </button>
+                </a>
               </div>
             </header>
 

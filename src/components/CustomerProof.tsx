@@ -10,6 +10,7 @@ import {
   MOVES_DONE,
   PHONE_DISPLAY,
   PHONE_TEL,
+  QUOTE_PATH,
   SERVICE_REGION,
 } from "@/lib/site";
 
@@ -99,16 +100,14 @@ export function CustomerProof() {
             <span className="sm:hidden">Call now</span>
             <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
           </a>
-          <button
-            type="button"
-            data-open-quote
-            data-source="proof-quote"
+          <a
+            href={QUOTE_PATH}
             data-cta="proof-quote"
             className="btn-outline btn-fluid tap-target inline-flex"
           >
             {customerProof.ctaQuote}
             <IconArrow />
-          </button>
+          </a>
         </div>
       </SplitBand>
     </div>

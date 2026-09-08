@@ -6,6 +6,7 @@ import {
   HOURS_LABEL,
   PHONE_DISPLAY,
   PHONE_TEL,
+  QUOTE_PATH,
   SERVICE_REGION,
 } from "@/lib/site";
 
@@ -68,16 +69,14 @@ export function ClosingCta({ title, body }: ClosingCtaProps = {}) {
             {closing.ctaPhone} {PHONE_DISPLAY}
           </span>
         </a>
-        <button
-          type="button"
-          data-open-quote
-          data-source="closing-cta"
+        <a
+          href={QUOTE_PATH}
           data-cta="closing-form"
           className="btn-outline btn-fluid tap-target inline-flex"
         >
           {closing.ctaQuote}
           <IconArrow />
-        </button>
+        </a>
       </div>
       <p className="mt-3 text-center text-xs text-muted">{HOURS_LABEL}</p>
     </SplitBand>

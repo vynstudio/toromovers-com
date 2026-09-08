@@ -14,6 +14,7 @@ import {
   MOVES_DONE,
   PHONE_DISPLAY,
   PHONE_TEL,
+  QUOTE_PATH,
   REVIEW_COUNT,
   SERVICE_BASE_CITY,
   SERVICE_REGION,
@@ -119,15 +120,13 @@ export default function AboutPage() {
                   >
                     Call {PHONE_DISPLAY}
                   </a>
-                  <button
-                    type="button"
-                    data-open-quote
-                    data-source="about-quote"
+                  <a
+                    href={QUOTE_PATH}
                     data-cta="about-quote"
                     className="btn-outline tap-target"
                   >
                     Get a free quote
-                  </button>
+                  </a>
                   <a
                     href="/contact"
                     data-cta="about-callback"

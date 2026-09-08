@@ -7,7 +7,7 @@ import { ClosingCta } from "@/components/ClosingCta";
 import { Areas } from "@/components/Areas";
 import { IconArrow } from "@/components/icons";
 import type { CityPageContent } from "@/lib/city-pages";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH } from "@/lib/site";
 
 /**
  * City SEO landing — homepage design system, city-only copy.
@@ -132,15 +132,13 @@ export function CityLanding({ city }: { city: CityPageContent }) {
             >
               Call {PHONE_DISPLAY}
             </a>
-            <button
-              type="button"
-              data-open-quote
-              data-source={`city-${city.slug}-why`}
+            <a
+              href={QUOTE_PATH}
               className="btn-outline btn-fluid tap-target inline-flex w-full sm:w-auto"
             >
               Get a free quote
               <IconArrow />
-            </button>
+            </a>
           </div>
         </div>
       </section>

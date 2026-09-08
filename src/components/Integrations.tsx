@@ -1,7 +1,7 @@
 import { integrations } from "@/lib/content";
 import { IconArrow } from "@/components/icons";
 import { SplitBand } from "@/components/SplitBand";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH } from "@/lib/site";
 
 /**
  * Integrations split-band — same size as every section.
@@ -30,16 +30,14 @@ export function Integrations() {
           <span className="sm:hidden">Call now</span>
           <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
         </a>
-        <button
-          type="button"
-          data-open-quote
-          data-source="integrations-quote"
+        <a
+          href={QUOTE_PATH}
           data-cta="integrations-quote"
           className="btn-outline btn-fluid tap-target inline-flex"
         >
           Get a free quote
           <IconArrow />
-        </button>
+        </a>
       </div>
     </SplitBand>
   );

@@ -6,7 +6,7 @@ import { HOURS_LABEL, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 /**
  * Homepage conversion close — callback form only (no photo / placeholder).
- * Secondary path; principal CTA remains “Get a quote” (modal).
+ * Secondary path; principal CTA remains “Get a quote” (/get-my-price).
  */
 export function LeadSection() {
   return (

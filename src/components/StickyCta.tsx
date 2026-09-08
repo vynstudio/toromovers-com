@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PHONE_TEL } from "@/lib/site";
+import { PHONE_TEL, QUOTE_PATH } from "@/lib/site";
 import { IconArrow } from "@/components/icons";
 
 /**
@@ -64,16 +64,14 @@ export function StickyCta() {
         >
           <span className="sticky-cta-label">Call now</span>
         </a>
-        <button
-          type="button"
-          data-open-quote
-          data-source="sticky-quote"
+        <a
+          href={QUOTE_PATH}
           data-cta="sticky-quote"
           className="btn-outline tap-target inline-flex"
         >
           <span className="sticky-cta-label">Get quote</span>
           <IconArrow className="h-3.5 w-3.5 shrink-0" />
-        </button>
+        </a>
       </div>
     </div>
   );

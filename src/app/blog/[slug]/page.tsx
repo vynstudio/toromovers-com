@@ -16,6 +16,7 @@ import {
   BUSINESS_NAME,
   PHONE_DISPLAY,
   PHONE_TEL,
+  QUOTE_PATH,
   SITE_URL,
 } from "@/lib/site";
 import { IconArrow } from "@/components/icons";
@@ -125,16 +126,14 @@ export default async function BlogPostPage({ params }: Props) {
             >
               Call {PHONE_DISPLAY}
             </a>
-            <button
-              type="button"
-              data-open-quote
-              data-source={`blog-${post.slug}`}
+            <a
+              href={QUOTE_PATH}
               data-cta="blog-quote"
               className="btn-outline btn-fluid tap-target inline-flex justify-center"
             >
               Get a free quote
               <IconArrow />
-            </button>
+            </a>
           </div>
         </article>
       </main>
