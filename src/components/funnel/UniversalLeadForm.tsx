@@ -3,16 +3,13 @@
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
+import {
+  resolveServiceParam,
+  type ServiceType,
+} from "@/lib/funnel-service";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
 
-export type ServiceType =
-  | "full_service_move"
-  | "labor_only"
-  | "same_building_move"
-  | "special_item_move"
-  | "pod_storage_container"
-  | "rental_truck_labor"
-  | "single_item_move";
+export type { ServiceType };
 
 const services: Array<{ value: ServiceType; title: string; description: string; icon: string }> = [
   { value: "full_service_move", title: "Full-Service Move", description: "Truck + professional movers included", icon: "🚚" },
@@ -63,8 +60,20 @@ export default function UniversalLeadForm({ source = "ads_landing_page", initial
 
   useEffect(() => {
     captureAttribution();
-    trackFunnelEvent("form_start", { form_location: source, service_type: resolvedInitialService || undefined });
+    trackFunnelEvent("form_start", {
+      form_location: source,
+      service_type: resolvedInitialService || undefined,
+    });
   }, [resolvedInitialService, source]);
+
+  useEffect(() => {
+    if (resolvedInitialService) return;
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl =
+      resolveServiceParam(params.get("service") || undefined) ||
+      resolveServiceParam(params.get("servicetype") || undefined);
+    if (fromUrl) setService(fromUrl);
+  }, [resolvedInitialService]);
 
   function chooseService(next: ServiceType) {
     setService(next);

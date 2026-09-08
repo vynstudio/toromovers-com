@@ -1,7 +1,7 @@
 # =============================================================================
-# Hybrid hosting: DESIGN owns toromovers.com homepage + legal pages.
-# SEO / funnel / CRM engine proxies to live-toro-site (status 200 rewrite).
-# Engine assetPrefix points at live-toro-site.netlify.app for /_next assets.
+# live-toro-site now builds THIS repo (vynstudio/toromovers-com) and owns
+# toromovers.com. Do NOT 200-rewrite routes this Next app serves onto
+# live-toro-site.netlify.app — that is the same site and Netlify 404s.
 # =============================================================================
 
 [build]
@@ -112,6 +112,7 @@
   status = 200
   force = true
 
+# This app owns /get-my-price (src/app/get-my-price/page.tsx).
 [[redirects]]
   from = "/get-a-quote"
   to = "/get-my-price"
@@ -122,30 +123,6 @@
   from = "/get-a-quote/*"
   to = "/get-my-price"
   status = 301
-  force = true
-
-[[redirects]]
-  from = "/get-my-price"
-  to = "https://live-toro-site.netlify.app/get-my-price"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/get-my-price/*"
-  to = "https://live-toro-site.netlify.app/get-my-price/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/es/get-my-price"
-  to = "https://live-toro-site.netlify.app/es/get-my-price"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/es/get-my-price/*"
-  to = "https://live-toro-site.netlify.app/es/get-my-price/:splat"
-  status = 200
   force = true
 
 # Deposit page. /book is the legacy path and 301s to /bookings on the engine,
@@ -277,12 +254,6 @@
   force = true
 
 [[redirects]]
-  from = "/thank-you"
-  to = "https://live-toro-site.netlify.app/thank-you"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/thank-you-full-service"
   to = "https://live-toro-site.netlify.app/thank-you-full-service"
   status = 200
@@ -330,23 +301,7 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/opengraph-image"
-  to = "https://live-toro-site.netlify.app/opengraph-image"
-  status = 200
-  force = true
 
-[[redirects]]
-  from = "/robots.txt"
-  to = "https://live-toro-site.netlify.app/robots.txt"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/sitemap.xml"
-  to = "https://live-toro-site.netlify.app/sitemap.xml"
-  status = 200
-  force = true
 
 [[redirects]]
   from = "/email-preview"
@@ -380,11 +335,7 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/favicon.ico"
-  to = "https://live-toro-site.netlify.app/favicon.ico"
-  status = 200
-  force = true
+
 
 [[redirects]]
   from = "/manifest.webmanifest"
@@ -757,8 +708,4 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/about"
-  to = "https://live-toro-site.netlify.app/about"
-  status = 200
-  force = true
+
