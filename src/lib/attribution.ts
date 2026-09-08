@@ -2,7 +2,7 @@ export type Attribution = Record<string, string>;
 
 const KEYS = [
   "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "utm_id",
-  "gclid", "gbraid", "wbraid", "fbclid", "msclkid", "ttclid",
+  "gclid", "gbraid", "wbraid", "fbclid", "fbp", "fbc", "msclkid", "ttclid",
 ] as const;
 const STORAGE_KEY = "toro_ads_attribution_v1";
 

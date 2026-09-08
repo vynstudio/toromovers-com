@@ -112,7 +112,19 @@
   status = 200
   force = true
 
-# This app owns /get-my-price (src/app/get-my-price/page.tsx).
+# This app owns /get-my-price. Legacy quote URLs 301 here and keep ?query.
+[[redirects]]
+  from = "/free-quote"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/free-quote/*"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/get-a-quote"
   to = "/get-my-price"
@@ -121,6 +133,30 @@
 
 [[redirects]]
   from = "/get-a-quote/*"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/get-quote"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/get-quote/*"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quote"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quote/*"
   to = "/get-my-price"
   status = 301
   force = true
@@ -217,35 +253,7 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/quote"
-  to = "https://live-toro-site.netlify.app/quote"
-  status = 200
-  force = true
 
-[[redirects]]
-  from = "/quote/*"
-  to = "https://live-toro-site.netlify.app/quote/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/get-quote"
-  to = "https://live-toro-site.netlify.app/get-quote"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/get-quote/*"
-  to = "https://live-toro-site.netlify.app/get-quote/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/quote-prep"
-  to = "https://live-toro-site.netlify.app/quote-prep"
-  status = 200
-  force = true
 
 [[redirects]]
   from = "/checklist"
