@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
@@ -11,14 +12,62 @@ import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
 
 export type { ServiceType };
 
-const services: Array<{ value: ServiceType; title: string; description: string; icon: string }> = [
-  { value: "full_service_move", title: "Full-Service Move", description: "Truck + professional movers included", icon: "🚚" },
-  { value: "labor_only", title: "Labor Only", description: "Loading, unloading, or moving help", icon: "💪" },
-  { value: "same_building_move", title: "Same-Building Move", description: "Moving within one building or complex", icon: "🏢" },
-  { value: "special_item_move", title: "Special Item Move", description: "Piano, safe, appliance, or heavy furniture", icon: "🎹" },
-  { value: "pod_storage_container", title: "POD / Storage Container", description: "Load or unload a POD or container", icon: "📦" },
-  { value: "rental_truck_labor", title: "U-Haul / Rental Truck", description: "You provide the truck; we provide the movers", icon: "🚐" },
-  { value: "single_item_move", title: "Single-Item Move", description: "One item, furniture pickup, or a small move", icon: "🛋️" },
+const services: Array<{
+  value: ServiceType;
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+}> = [
+  {
+    value: "full_service_move",
+    title: "Full-Service Move",
+    description: "Truck + professional movers included",
+    image: "/images/services/full-service-move.webp",
+    alt: "Two movers loading a sofa into a moving truck",
+  },
+  {
+    value: "labor_only",
+    title: "Labor Only",
+    description: "Loading, unloading, or moving help",
+    image: "/images/services/labor-only.webp",
+    alt: "Mover stacking boxes in a truck while another pushes a hand truck",
+  },
+  {
+    value: "same_building_move",
+    title: "Same-Building Move",
+    description: "Moving within one building or complex",
+    image: "/images/services/same-building-move.webp",
+    alt: "Two movers carrying a dresser toward an elevator",
+  },
+  {
+    value: "special_item_move",
+    title: "Special Item Move",
+    description: "Piano, safe, appliance, or heavy furniture",
+    image: "/images/services/special-item-move.webp",
+    alt: "Two movers rolling a strapped piano on a dolly",
+  },
+  {
+    value: "pod_storage_container",
+    title: "POD / Storage Container",
+    description: "Load or unload a POD or container",
+    image: "/images/services/pod-storage-container.webp",
+    alt: "Mover loading boxes into a portable storage container",
+  },
+  {
+    value: "rental_truck_labor",
+    title: "U-Haul / Rental Truck",
+    description: "You provide the truck; we provide the movers",
+    image: "/images/services/rental-truck-move.webp",
+    alt: "Two movers loading a dresser into a rental truck",
+  },
+  {
+    value: "single_item_move",
+    title: "Single-Item Move",
+    description: "One item, furniture pickup, or a small move",
+    image: "/images/services/single-item-move.webp",
+    alt: "One mover carrying a couch from a house to the curb",
+  },
 ];
 
 const choices: Record<ServiceType, string[]> = {
@@ -121,7 +170,7 @@ export default function UniversalLeadForm({ source = "ads_landing_page", initial
   return <section id="quote-form" className="rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-black/5 sm:p-8">
     <div className="mb-6 flex items-center justify-between gap-4"><div><p className="text-sm font-bold uppercase tracking-widest text-zinc-500">Free moving quote</p><h2 className="mt-1 text-2xl font-black tracking-tight">{step === 1 ? (selectedService ? `Your move: ${selectedService.title}` : "What kind of moving help do you need?") : step === 2 ? "Tell us about the move" : step === 3 ? "Where and when are you moving?" : "How can we reach you?"}</h2></div><span className="text-sm font-bold text-zinc-500">Step {step} of 4</span></div>
     <div className="mb-7 h-2 overflow-hidden rounded-full bg-zinc-100"><div className="h-full rounded-full bg-black transition-all" style={{ width: `${progress}%` }} /></div>
-    {step === 1 && <div><p className="mb-4 text-sm text-zinc-600">{selectedService ? "We selected this based on your link. Choose another option if needed." : "Choose the option that best matches the help you need."}</p><div className="grid gap-3">{services.map((item) => <button type="button" key={item.value} onClick={() => chooseService(item.value)} className={`group flex items-center gap-4 rounded-2xl border p-4 text-left transition ${service === item.value ? "border-black bg-zinc-100" : "border-zinc-200 hover:border-black hover:bg-zinc-50"}`}><span className="grid h-12 w-12 place-items-center rounded-xl bg-zinc-100 text-2xl group-hover:bg-black group-hover:text-white">{item.icon}</span><span><span className="block font-extrabold">{item.title}</span><span className="mt-0.5 block text-sm text-zinc-600">{item.description}</span></span></button>)}</div>{service && <button type="button" onClick={() => completeStep(2, "service_selected")} className="mt-5 w-full rounded-xl bg-black px-5 py-3 font-bold text-white">Continue with {selectedService?.title}</button>}</div>}
+    {step === 1 && <div><p className="mb-4 text-sm text-zinc-600">{selectedService ? "We selected this based on your link. Choose another option if needed." : "Choose the option that best matches the help you need."}</p><div className="grid gap-3">{services.map((item) => <button type="button" key={item.value} onClick={() => chooseService(item.value)} className={`flex items-center gap-3 rounded-2xl border p-3 text-left transition sm:gap-4 sm:p-4 ${service === item.value ? "border-black bg-zinc-100" : "border-zinc-200 hover:border-black hover:bg-zinc-50"}`}><span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-zinc-100 sm:h-[4.5rem] sm:w-[4.5rem]"><Image src={item.image} alt={item.alt} fill sizes="72px" className="object-contain" /></span><span><span className="block font-extrabold">{item.title}</span><span className="mt-0.5 block text-sm text-zinc-600">{item.description}</span></span></button>)}</div>{service && <button type="button" onClick={() => completeStep(2, "service_selected")} className="mt-5 w-full rounded-xl bg-black px-5 py-3 font-bold text-white">Continue with {selectedService?.title}</button>}</div>}
     {step === 2 && service && <div><p className="mb-4 text-sm text-zinc-600">Choose the option that best describes your move.</p><ChoiceGrid options={choices[service]} value={detail} onChange={setDetail} /><label className="mt-5 block text-sm font-bold">Anything else we should know?<textarea value={notes} onChange={(event) => setNotes(event.target.value)} className="mt-2 min-h-24 w-full rounded-xl border border-zinc-300 p-3 font-normal" placeholder="Add details about items, access, or your move." /></label><div className="mt-5 flex gap-3"><button type="button" onClick={() => setStep(1)} className="rounded-xl px-5 py-3 font-bold">Back</button><button type="button" disabled={!detail} onClick={() => completeStep(3, "service_details")} className="flex-1 rounded-xl bg-black px-5 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-40">Continue</button></div></div>}
     {step === 3 && <div className="space-y-4"><label className="block text-sm font-bold">When are you moving?<input type="date" value={moveDate} onChange={(event) => setMoveDate(event.target.value)} className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal" /></label><label className="block text-sm font-bold">Moving from (address or ZIP)<input value={origin} onChange={(event) => setOrigin(event.target.value)} className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal" placeholder="Pickup address or ZIP" /></label><label className="block text-sm font-bold">Moving to (address or ZIP)<input value={destination} onChange={(event) => setDestination(event.target.value)} className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal" placeholder="Destination address or ZIP" /></label><label className="block text-sm font-bold">Access details<select value={access} onChange={(event) => setAccess(event.target.value)} className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"><option value="">Select one</option><option>Ground floor</option><option>Stairs</option><option>Elevator</option><option>Long carry</option><option>Not sure</option></select></label><div className="flex gap-3"><button type="button" onClick={() => setStep(2)} className="rounded-xl px-5 py-3 font-bold">Back</button><button type="button" disabled={!moveDate || !origin} onClick={() => completeStep(4, "move_logistics")} className="flex-1 rounded-xl bg-black px-5 py-3 font-bold text-white disabled:cursor-not-allowed disabled:opacity-40">Continue</button></div></div>}
     {step === 4 && <form onSubmit={submit} className="space-y-4"><label className="block text-sm font-bold">Full name<input required value={name} onChange={(event) => setName(event.target.value)} className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal" autoComplete="name" /></label><label className="block text-sm font-bold">Mobile phone<input required inputMode="tel" value={phone} onChange={(event) => setPhone(formatUsPhone(event.target.value))} className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal" placeholder="(321) 758-0094" autoComplete="tel" /></label><label className="block text-sm font-bold">Email address<input required type="email" value={email} onChange={(event) => setEmail(event.target.value)} className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal" autoComplete="email" /></label><label className="flex items-start gap-3 text-sm text-zinc-700"><input required checked={consent} onChange={(event) => setConsent(event.target.checked)} type="checkbox" className="mt-1 h-4 w-4" /><span>I agree to receive calls and texts from Toro Movers about my quote. Reply STOP to opt out.</span></label>{error && <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm font-medium text-red-700">{error}</p>}<div className="flex gap-3"><button type="button" onClick={() => setStep(3)} className="rounded-xl px-5 py-3 font-bold">Back</button><button disabled={submitting} type="submit" className="flex-1 rounded-xl bg-black px-5 py-3 font-bold text-white disabled:opacity-50">{submitting ? "Sending request…" : "Get My Free Quote"}</button></div><p className="text-center text-xs text-zinc-500">Usually responds in minutes.</p></form>}
