@@ -35,6 +35,12 @@ export async function POST(req: Request) {
     return NextResponse.json(session);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Could not start checkout.";
+    if (message.includes("STRIPE_SECRET_KEY")) {
+      return NextResponse.json(
+        { error: "Stripe is not configured yet." },
+        { status: 503 },
+      );
+    }
     const clientError =
       message.startsWith("Enter") || message.startsWith("Amount must");
     if (!clientError) console.error("[pay/checkout]", err);

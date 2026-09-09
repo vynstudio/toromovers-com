@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useCallback, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   EmbeddedCheckout,
@@ -9,10 +9,8 @@ import {
 import { PAYMENT_KIND, PAYMENT_KINDS, type PaymentKind } from "@/lib/payments";
 import { PHONE_DISPLAY } from "@/lib/site";
 
-const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "";
-const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
-
 export default function PayFlow({ initialKind = "deposit" }: { initialKind?: PaymentKind }) {
+  const [stripePromise, setStripePromise] = useState<ReturnType<typeof loadStripe> | null>(null);
   const [kind, setKind] = useState<PaymentKind>(initialKind);
   const spec = PAYMENT_KIND[kind];
   const [amount, setAmount] = useState<number>(spec.defaultUsd);
@@ -21,6 +19,15 @@ export default function PayFlow({ initialKind = "deposit" }: { initialKind?: Pay
   const [clientSecret, setClientSecret] = useState("");
   const [error, setError] = useState("");
   const [starting, setStarting] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/pay/config")
+      .then((res) => res.json())
+      .then((data: { publishableKey?: string }) => {
+        if (data.publishableKey) setStripePromise(loadStripe(data.publishableKey));
+      })
+      .catch(() => {});
+  }, []);
 
   const selected = custom ? Number.parseFloat(custom) : amount;
   const valid =
