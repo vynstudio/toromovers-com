@@ -1,7 +1,16 @@
 import type { NextConfig } from "next";
 import path from "path";
 
+/** Publishable key only — never put STRIPE_SECRET_KEY here (it would ship to the browser). */
+const stripePublishableKey =
+  process.env.STRIPE_PUBLISHABLE_KEY ||
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
+  "";
+
 const nextConfig: NextConfig = {
+  env: {
+    STRIPE_PK: stripePublishableKey,
+  },
   images: {
     // WebP first for faster mobile decode; AVIF when browser supports it
     formats: ["image/webp", "image/avif"],

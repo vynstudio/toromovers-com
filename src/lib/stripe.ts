@@ -1,5 +1,5 @@
 import Stripe from "stripe";
-import { runtimeEnv } from "@/lib/env";
+import { runtimeEnv, stripePublishableKey } from "@/lib/env";
 import { SITE_URL } from "@/lib/site";
 import { PAYMENT_KIND, withCardFee, type PaymentKind } from "@/lib/payments";
 
@@ -33,7 +33,7 @@ export async function createPaymentSession(opts: {
   kind: PaymentKind;
   amountUsd: number;
   note?: string;
-}): Promise<{ clientSecret: string }> {
+}): Promise<{ clientSecret: string; publishableKey: string }> {
   const spec = PAYMENT_KIND[opts.kind];
   if (!Number.isFinite(opts.amountUsd)) {
     throw new Error("Enter an amount.");
@@ -93,5 +93,8 @@ export async function createPaymentSession(opts: {
   if (!session.client_secret) {
     throw new Error("Could not start checkout.");
   }
-  return { clientSecret: session.client_secret };
+  return {
+    clientSecret: session.client_secret,
+    publishableKey: stripePublishableKey(),
+  };
 }

@@ -16,7 +16,13 @@ import {
 } from "@/lib/payments";
 import { PHONE_DISPLAY } from "@/lib/site";
 
-export default function PayFlow({ initialKind = "deposit" }: { initialKind?: PaymentKind }) {
+export default function PayFlow({
+  initialKind = "deposit",
+  publishableKey = "",
+}: {
+  initialKind?: PaymentKind;
+  publishableKey?: string;
+}) {
   const [stripePromise, setStripePromise] = useState<ReturnType<typeof loadStripe> | null>(null);
   const [kind, setKind] = useState<PaymentKind>(initialKind);
   const spec = PAYMENT_KIND[kind];
@@ -28,13 +34,18 @@ export default function PayFlow({ initialKind = "deposit" }: { initialKind?: Pay
   const [starting, setStarting] = useState(false);
 
   useEffect(() => {
+    const baked = publishableKey || process.env.STRIPE_PK || "";
+    if (baked) {
+      setStripePromise(loadStripe(baked));
+      return;
+    }
     fetch("/api/pay/config")
       .then((res) => res.json())
       .then((data: { publishableKey?: string }) => {
         if (data.publishableKey) setStripePromise(loadStripe(data.publishableKey));
       })
       .catch(() => {});
-  }, []);
+  }, [publishableKey]);
 
   const selected = custom ? Number.parseFloat(custom) : amount;
   const valid =
@@ -57,10 +68,6 @@ export default function PayFlow({ initialKind = "deposit" }: { initialKind?: Pay
       setError(`Enter an amount between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`);
       return;
     }
-    if (!stripePromise) {
-      setError(`Checkout is not connected yet. Call ${PHONE_DISPLAY}.`);
-      return;
-    }
     setStarting(true);
     setError("");
     try {
@@ -69,10 +76,20 @@ export default function PayFlow({ initialKind = "deposit" }: { initialKind?: Pay
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ kind, amountUsd: selected, note }),
       });
-      const data = (await response.json()) as { clientSecret?: string; error?: string };
+      const data = (await response.json()) as {
+        clientSecret?: string;
+        publishableKey?: string;
+        error?: string;
+      };
       if (!response.ok || !data.clientSecret) {
         throw new Error(data.error || "Could not start checkout.");
       }
+      const pk = data.publishableKey || publishableKey || process.env.STRIPE_PK || "";
+      const promise = stripePromise || (pk ? loadStripe(pk) : null);
+      if (!promise) {
+        throw new Error(`Checkout is not connected yet. Call ${PHONE_DISPLAY}.`);
+      }
+      if (!stripePromise) setStripePromise(promise);
       setClientSecret(data.clientSecret);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not start checkout.");

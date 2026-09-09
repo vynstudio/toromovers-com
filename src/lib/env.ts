@@ -6,3 +6,11 @@ export function runtimeEnv(...names: string[]): string {
   }
   return "";
 }
+
+export function stripePublishableKey(): string {
+  return runtimeEnv(
+    "STRIPE_PK",
+    "STRIPE_PUBLISHABLE_KEY",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+  );
+}

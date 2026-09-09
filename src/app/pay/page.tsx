@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PayFlow from "@/components/pay/PayFlow";
+import { stripePublishableKey } from "@/lib/env";
 import { parsePaymentKind } from "@/lib/payments";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
@@ -43,7 +44,7 @@ export default async function PayPage({
           </p>
         </div>
         <div className="rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-black/5 sm:p-8">
-          <PayFlow initialKind={initialKind} />
+          <PayFlow initialKind={initialKind} publishableKey={stripePublishableKey()} />
         </div>
       </section>
     </main>
