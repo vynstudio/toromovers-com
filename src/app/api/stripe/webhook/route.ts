@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
+import { runtimeEnv } from "@/lib/env";
 import { formatUsd, getStripe } from "@/lib/stripe";
 import { sendTelegram } from "@/lib/notify";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
-  const secret = process.env.STRIPE_WEBHOOK_SECRET;
-  if (!process.env.STRIPE_SECRET_KEY || !secret) {
+  const secret = runtimeEnv("STRIPE_WEBHOOK_SECRET");
+  if (!runtimeEnv("STRIPE_SECRET_KEY") || !secret) {
     return NextResponse.json({ error: "webhook_unconfigured" }, { status: 503 });
   }
 

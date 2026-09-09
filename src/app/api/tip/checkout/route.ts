@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
+import { runtimeEnv } from "@/lib/env";
 import { createPaymentSession } from "@/lib/stripe";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 /** @deprecated Use POST /api/pay/checkout with kind=tip */
 export async function POST(req: Request) {
-  if (!process.env.STRIPE_SECRET_KEY) {
+  if (!runtimeEnv("STRIPE_SECRET_KEY")) {
     return NextResponse.json(
       { error: "Stripe is not configured yet." },
       { status: 503 },

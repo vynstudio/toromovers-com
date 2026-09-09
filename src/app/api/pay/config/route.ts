@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
+import { runtimeEnv } from "@/lib/env";
 
-/** Publishable key for Embedded Checkout. Read at runtime so Netlify rebuilds pick it up. */
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
+/** Publishable key for Embedded Checkout. Read at request time, not build time. */
 export async function GET() {
-  const publishableKey =
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ||
-    process.env.STRIPE_PUBLISHABLE_KEY ||
-    "";
+  const publishableKey = runtimeEnv(
+    "STRIPE_PUBLISHABLE_KEY",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY",
+  );
   return NextResponse.json({
     publishableKey,
-    configured: Boolean(process.env.STRIPE_SECRET_KEY && publishableKey),
+    configured: Boolean(runtimeEnv("STRIPE_SECRET_KEY") && publishableKey),
   });
 }

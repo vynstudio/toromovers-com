@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
   // Slightly smaller JS/CSS in production
   compress: true,
   poweredByHeader: false,
+  serverExternalPackages: ["stripe"],
   async redirects() {
     const toFunnel = [
       "/free-quote",

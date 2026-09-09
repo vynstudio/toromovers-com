@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
+import { runtimeEnv } from "@/lib/env";
 import { getStripe } from "@/lib/stripe";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function GET(req: Request) {
-  if (!process.env.STRIPE_SECRET_KEY) {
+  if (!runtimeEnv("STRIPE_SECRET_KEY")) {
     return NextResponse.json(
       { error: "Stripe is not configured yet." },
       { status: 503 },
