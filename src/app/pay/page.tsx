@@ -5,11 +5,13 @@ import { parsePaymentKind } from "@/lib/payments";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Pay Toro Movers — deposit, balance, or tip",
+  title: "Pay Toro Movers — deposit or remaining balance",
   description:
-    "Pay a move deposit, pay your balance in full, or tip the Toro Movers crew. Secure card checkout on toromovers.com.",
+    "Pay a move deposit or the remaining balance after your deposit. Secure card checkout on toromovers.com.",
   alternates: { canonical: "/pay" },
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function PayPage({
   searchParams,
@@ -18,6 +20,20 @@ export default async function PayPage({
 }) {
   const params = await searchParams;
   const initialKind = parsePaymentKind(params.type || params.kind);
+  const quoteToken = Array.isArray(params.q) ? params.q[0] : params.q || "";
+  const quoteNumber = Array.isArray(params.quote)
+    ? params.quote[0]
+    : params.quote || (Array.isArray(params.quote_number) ? params.quote_number[0] : params.quote_number) || "";
+  const heading =
+    initialKind === "tip"
+      ? "Tip the Toro Movers crew."
+      : initialKind === "balance"
+        ? "Pay your remaining balance."
+        : "Pay your move deposit.";
+  const intro =
+    initialKind === "tip"
+      ? "Send a post-move tip to the crew. You never leave this page."
+      : "Pay a deposit to hold your move date after payment succeeds, or pay the remaining balance. You never leave this page.";
   return (
     <main className="min-h-screen bg-zinc-50 text-zinc-950">
       <header className="border-b border-zinc-200 bg-white">
@@ -35,16 +51,16 @@ export default async function PayPage({
           <p className="text-sm font-extrabold uppercase tracking-widest text-zinc-500">
             Secure checkout
           </p>
-          <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-5xl">
-            Pay Toro Movers.
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-zinc-600">
-            Leave a deposit to hold your crew, pay the move in full, or tip after the job.
-            You never leave this page.
-          </p>
+          <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-5xl">{heading}</h1>
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-zinc-600">{intro}</p>
         </div>
         <div className="rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-black/5 sm:p-8">
-          <PayFlow initialKind={initialKind} publishableKey={stripePublishableKey()} />
+          <PayFlow
+            initialKind={initialKind}
+            publishableKey={stripePublishableKey()}
+            quoteToken={quoteToken}
+            quoteNumber={quoteNumber}
+          />
         </div>
       </section>
     </main>
