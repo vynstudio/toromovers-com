@@ -6,7 +6,14 @@ import {
   EmbeddedCheckout,
   EmbeddedCheckoutProvider,
 } from "@stripe/react-stripe-js";
-import { PAYMENT_KIND, PAYMENT_KINDS, type PaymentKind } from "@/lib/payments";
+import {
+  CARD_FEE_RATE,
+  PAYMENT_KIND,
+  PAYMENT_KINDS,
+  formatUsd,
+  withCardFee,
+  type PaymentKind,
+} from "@/lib/payments";
 import { PHONE_DISPLAY } from "@/lib/site";
 
 export default function PayFlow({ initialKind = "deposit" }: { initialKind?: PaymentKind }) {
@@ -32,6 +39,9 @@ export default function PayFlow({ initialKind = "deposit" }: { initialKind?: Pay
   const selected = custom ? Number.parseFloat(custom) : amount;
   const valid =
     Number.isFinite(selected) && selected >= spec.minUsd && selected <= spec.maxUsd;
+  const breakdown = valid
+    ? withCardFee(Math.round(selected * 100))
+    : { baseCents: 0, feeCents: 0, totalCents: 0 };
 
   function chooseKind(next: PaymentKind) {
     setKind(next);
@@ -148,6 +158,22 @@ export default function PayFlow({ initialKind = "deposit" }: { initialKind?: Pay
           className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
         />
       </label>
+      {valid && (
+        <div className="rounded-xl bg-zinc-50 p-4 text-sm">
+          <div className="flex justify-between">
+            <span>{spec.shortLabel}</span>
+            <span className="font-semibold">{formatUsd(breakdown.baseCents)}</span>
+          </div>
+          <div className="mt-1 flex justify-between text-zinc-600">
+            <span>Card fee {Math.round(CARD_FEE_RATE * 1000) / 10}%</span>
+            <span>{formatUsd(breakdown.feeCents)}</span>
+          </div>
+          <div className="mt-2 flex justify-between border-t border-zinc-200 pt-2 font-extrabold">
+            <span>You pay</span>
+            <span>{formatUsd(breakdown.totalCents)}</span>
+          </div>
+        </div>
+      )}
       {error && (
         <p role="alert" className="rounded-xl bg-red-50 p-3 text-sm font-medium text-red-700">
           {error}
@@ -160,11 +186,12 @@ export default function PayFlow({ initialKind = "deposit" }: { initialKind?: Pay
       >
         {starting
           ? "Opening checkout…"
-          : `${spec.cta} · $${Number.isFinite(selected) ? selected : ""}`}
+          : `${spec.cta} · ${valid ? formatUsd(breakdown.totalCents) : ""}`}
       </button>
       <p className="text-center text-xs text-zinc-500">
-        Card details go to Stripe. You stay on toromovers.com.
+        Paying with a card adds 3.5% automatically.
       </p>
+      <p className="text-center text-xs text-zinc-500">You never leave this page.</p>
     </form>
   );
 }
