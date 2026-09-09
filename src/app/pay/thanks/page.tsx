@@ -14,6 +14,7 @@ function ThanksBody() {
   const [kind, setKind] = useState("");
   const [email, setEmail] = useState("");
   const [amount, setAmount] = useState<number | null>(null);
+  const [quoteNumber, setQuoteNumber] = useState("");
 
   useEffect(() => {
     if (!sessionId) {
@@ -25,9 +26,10 @@ function ThanksBody() {
       .then((data) => {
         if (data.status === "complete") {
           setStatus("complete");
-          setKind(data.kind || "");
+          setKind(data.payment_type || data.kind || "");
           setEmail(data.customer_email || "");
           setAmount(typeof data.amount_total === "number" ? data.amount_total : null);
+          setQuoteNumber(data.quote_number || "");
         } else if (data.status === "open") {
           setStatus("open");
         } else {
@@ -48,12 +50,18 @@ function ThanksBody() {
       ? new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
-          maximumFractionDigits: 0,
+          minimumFractionDigits: 2,
         }).format(amount / 100)
       : "";
 
   const noun =
-    kind === "deposit" ? "deposit" : kind === "tip" || kind === "crew_tip" ? "tip" : "payment";
+    kind === "deposit"
+      ? "deposit"
+      : kind === "tip" || kind === "crew_tip"
+        ? "tip"
+        : kind === "balance"
+          ? "remaining balance"
+          : "payment";
 
   let heading = "We could not confirm that payment.";
   if (status === "complete") heading = "Payment received.";
@@ -62,7 +70,11 @@ function ThanksBody() {
   let body = "One moment.";
   if (status === "complete") {
     const receipt = email ? ` A receipt goes to ${email}.` : "";
-    body = `Your ${dollars} ${noun} is in.${receipt} Toro Movers has it.`;
+    const quote = quoteNumber ? ` Quote ${quoteNumber} is on the payment record.` : "";
+    body = `Your ${dollars} ${noun} is in.${receipt}${quote} Toro Movers has it.`;
+    if (kind === "deposit") {
+      body += " Your move date is held now that this deposit succeeded.";
+    }
   } else if (status === "error") {
     body = `If you were charged, we still have it. Call ${PHONE_DISPLAY} and we will confirm.`;
   }

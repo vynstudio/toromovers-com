@@ -1,25 +1,41 @@
 import Stripe from "stripe";
 import { runtimeEnv, stripePublishableKey } from "@/lib/env";
 import { SITE_URL } from "@/lib/site";
-import { PAYMENT_KIND, withCardFee, type PaymentKind } from "@/lib/payments";
+import {
+  CUSTOM_TIP_MAX_USD,
+  PAYMENT_KIND,
+  PROCESSING_FEE_LABEL,
+  balanceSummary,
+  centsToDollarString,
+  clipField,
+  depositSummary,
+  dollarsToCents,
+  parseTipType,
+  parseUsd,
+  type PaymentKind,
+  type QuoteFields,
+  type TipType,
+} from "@/lib/payments";
+import { resolveQuoteInput } from "@/lib/quote-pay";
 
 export { formatUsd } from "@/lib/payments";
+
+const STRIPE_API_VERSION = "2026-08-26.dahlia" as const;
 
 export function getStripe(): Stripe {
   const key = runtimeEnv("STRIPE_SECRET_KEY");
   if (!key) {
     throw new Error("STRIPE_SECRET_KEY is not set");
   }
-  return new Stripe(key, { apiVersion: "2026-08-26.dahlia", typescript: true });
+  if (!key.startsWith("sk_live_") && !key.startsWith("rk_live_") && !key.startsWith("sk_test_") && !key.startsWith("rk_test_")) {
+    throw new Error("STRIPE_SECRET_KEY is not set");
+  }
+  return new Stripe(key, { apiVersion: STRIPE_API_VERSION, typescript: true });
 }
 
 export function payReturnUrl(): string {
   const base = SITE_URL.replace(/\/$/, "");
   return `${base}/pay/thanks?session_id={CHECKOUT_SESSION_ID}`;
-}
-
-export function dollarsToCents(value: number): number {
-  return Math.round(value * 100);
 }
 
 function randomSuffix(): string {
@@ -29,67 +45,303 @@ function randomSuffix(): string {
   return out;
 }
 
-export async function createPaymentSession(opts: {
-  kind: PaymentKind;
-  amountUsd: number;
-  note?: string;
-}): Promise<{ clientSecret: string; publishableKey: string }> {
-  const spec = PAYMENT_KIND[opts.kind];
-  if (!Number.isFinite(opts.amountUsd)) {
-    throw new Error("Enter an amount.");
+function meta(values: Record<string, string | number | undefined | null>): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(values)) {
+    if (value === undefined || value === null) continue;
+    const text = String(value).trim();
+    if (!text) continue;
+    out[key] = text.slice(0, 500);
   }
-  if (opts.amountUsd < spec.minUsd || opts.amountUsd > spec.maxUsd) {
+  return out;
+}
+
+function lineItem(name: string, unitAmount: number, description?: string) {
+  return {
+    quantity: 1,
+    price_data: {
+      currency: "usd" as const,
+      unit_amount: unitAmount,
+      product_data: description ? { name, description } : { name },
+    },
+  };
+}
+
+function depositCreditFromSession(session: Stripe.Checkout.Session): number {
+  const type = session.metadata?.payment_type || session.metadata?.kind || "";
+  if (type !== "deposit") return 0;
+  if (session.payment_status && session.payment_status !== "paid") return 0;
+  const amount = session.metadata?.deposit_amount;
+  if (amount) {
+    const usd = parseUsd(amount);
+    if (Number.isFinite(usd) && usd > 0) return dollarsToCents(usd);
+  }
+  const cents = Number.parseInt(session.metadata?.amount_cents || "0", 10);
+  return Number.isFinite(cents) && cents > 0 ? cents : 0;
+}
+
+/** Sum successful deposit amounts for a quote. Does not include Processing Fee (3.5%). */
+export async function lookupDepositCreditCents(
+  quoteNumber: string,
+  moveReference = "",
+): Promise<number> {
+  const needle = clipField(quoteNumber, 80);
+  const reference = clipField(moveReference, 80);
+  if (!needle && !reference) return 0;
+  const stripe = getStripe();
+  let sessions: Stripe.Checkout.Session[] = [];
+  try {
+    const listed = await stripe.checkout.sessions.list({ limit: 100, status: "complete" });
+    sessions = listed.data.filter((session) => {
+      const metaQuote = clipField(session.metadata?.quote_number, 80);
+      const metaRef = clipField(session.metadata?.move_reference, 80);
+      return (needle && metaQuote === needle) || (reference && metaRef === reference);
+    });
+  } catch (err) {
+    console.error("[stripe] deposit lookup", err);
+    return 0;
+  }
+  return sessions.reduce((sum, session) => sum + depositCreditFromSession(session), 0);
+}
+
+export type CreatePaymentInput = {
+  kind: PaymentKind;
+  amountUsd?: number;
+  note?: string;
+  quoteToken?: string;
+  quote?: Partial<QuoteFields>;
+  quoteTotalUsd?: unknown;
+  tipType?: unknown;
+  customTipUsd?: unknown;
+};
+
+type BuiltSession = {
+  params: Stripe.Checkout.SessionCreateParams;
+  kind: PaymentKind;
+};
+
+function quoteContext(input: CreatePaymentInput): {
+  fields: QuoteFields;
+  quoteTotalCents: number | null;
+} {
+  const note = clipField(input.note, 200);
+  const resolved = resolveQuoteInput({
+    token: typeof input.quoteToken === "string" ? input.quoteToken : "",
+    fields: { ...input.quote, customer_note: note || input.quote?.customer_note },
+    quoteTotalUsd: input.quoteTotalUsd,
+  });
+  const fields = resolved.fields;
+  if (note && !fields.customer_note) fields.customer_note = note;
+  return { fields, quoteTotalCents: resolved.quoteTotalCents };
+}
+
+async function buildDepositSession(input: CreatePaymentInput): Promise<BuiltSession> {
+  const spec = PAYMENT_KIND.deposit;
+  const amountUsd = parseUsd(input.amountUsd);
+  if (!Number.isFinite(amountUsd)) throw new Error("Enter an amount.");
+  if (amountUsd < spec.minUsd || amountUsd > spec.maxUsd) {
     throw new Error(
       `Amount must be between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`,
     );
   }
-  const amountCents = dollarsToCents(opts.amountUsd);
-  const { feeCents, totalCents } = withCardFee(amountCents);
-  const note = (opts.note || "").trim().slice(0, 200);
-  const stripe = getStripe();
-  const session = await stripe.checkout.sessions.create({
+  const { fields } = quoteContext(input);
+  const depositCents = dollarsToCents(amountUsd);
+  const summary = depositSummary(depositCents);
+  const params: Stripe.Checkout.SessionCreateParams = {
     ui_mode: "embedded_page",
     mode: "payment",
     submit_type: "pay",
-    integration_identifier: `toro-${opts.kind}-${randomSuffix()}`,
+    integration_identifier: `toro-deposit-${randomSuffix()}`,
     return_url: payReturnUrl(),
     customer_creation: "always",
     billing_address_collection: "auto",
-    metadata: {
-      kind: opts.kind,
-      amount_cents: String(amountCents),
-      fee_cents: String(feeCents),
-      total_cents: String(totalCents),
-      note,
-    },
+    metadata: meta({
+      kind: "deposit",
+      payment_type: "deposit",
+      deposit_amount: centsToDollarString(summary.depositCents),
+      processing_fee: centsToDollarString(summary.processingFeeCents),
+      total_charged: centsToDollarString(summary.totalChargedCents),
+      quote_number: fields.quote_number,
+      move_reference: fields.move_reference,
+      customer_name: fields.customer_name,
+      customer_email: fields.customer_email,
+      move_date: fields.move_date,
+      pickup_address: fields.pickup_address,
+      delivery_address: fields.delivery_address,
+      customer_note: fields.customer_note,
+      amount_cents: summary.depositCents,
+      fee_cents: summary.processingFeeCents,
+      total_cents: summary.totalChargedCents,
+    }),
     line_items: [
-      {
-        quantity: 1,
-        price_data: {
-          currency: "usd",
-          unit_amount: amountCents,
-          product_data: {
-            name: spec.productName,
-            description: note || spec.label,
-          },
-        },
-      },
-      ...(feeCents > 0
-        ? [
-            {
-              quantity: 1,
-              price_data: {
-                currency: "usd" as const,
-                unit_amount: feeCents,
-                product_data: {
-                  name: "Card processing 3.5%",
-                },
-              },
-            },
-          ]
+      lineItem(spec.productName, summary.depositCents, fields.customer_note || spec.label),
+      ...(summary.processingFeeCents > 0
+        ? [lineItem(PROCESSING_FEE_LABEL, summary.processingFeeCents)]
         : []),
     ],
+  };
+  if (fields.customer_email.includes("@")) params.customer_email = fields.customer_email;
+  return { params, kind: "deposit" };
+}
+
+async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSession> {
+  const spec = PAYMENT_KIND.balance;
+  const { fields, quoteTotalCents } = quoteContext(input);
+  if (!quoteTotalCents || quoteTotalCents <= 0) {
+    throw new Error("Enter the approved quote total.");
+  }
+  const depositCredit = await lookupDepositCreditCents(fields.quote_number, fields.move_reference);
+  const tipType: TipType = parseTipType(input.tipType);
+  const customTipUsd = parseUsd(input.customTipUsd);
+  const customTipCents =
+    tipType === "custom" && Number.isFinite(customTipUsd) ? dollarsToCents(customTipUsd) : 0;
+  if (tipType === "custom") {
+    if (!Number.isFinite(customTipUsd) || customTipUsd < 0) {
+      throw new Error("Enter a custom tip of $0 or more.");
+    }
+    if (customTipUsd > CUSTOM_TIP_MAX_USD) {
+      throw new Error(`Custom tip must be at most $${CUSTOM_TIP_MAX_USD.toLocaleString("en-US")}.`);
+    }
+  }
+  const summary = balanceSummary({
+    quoteTotalCents,
+    depositPaidCents: depositCredit,
+    tipType,
+    customTipCents,
   });
+  if (!summary.payable) {
+    throw new Error("This move has no remaining balance.");
+  }
+  const remainingUsd = summary.remainingCents / 100;
+  if (remainingUsd > spec.maxUsd) {
+    throw new Error(
+      `Amount must be between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`,
+    );
+  }
+  if (summary.totalChargedCents > dollarsToCents(spec.maxUsd) + dollarsToCents(CUSTOM_TIP_MAX_USD)) {
+    throw new Error("Amount is above the maximum supported for card checkout.");
+  }
+  const lineItems = [
+    lineItem(spec.productName, summary.remainingCents, fields.quote_number || spec.label),
+  ];
+  if (summary.tipCents > 0) {
+    lineItems.push(lineItem("Optional crew tip", summary.tipCents));
+  }
+  if (summary.processingFeeCents > 0) {
+    lineItems.push(lineItem(PROCESSING_FEE_LABEL, summary.processingFeeCents));
+  }
+  const params: Stripe.Checkout.SessionCreateParams = {
+    ui_mode: "embedded_page",
+    mode: "payment",
+    submit_type: "pay",
+    integration_identifier: `toro-balance-${randomSuffix()}`,
+    return_url: payReturnUrl(),
+    customer_creation: "always",
+    billing_address_collection: "auto",
+    metadata: meta({
+      kind: "balance",
+      payment_type: "balance",
+      quote_total: centsToDollarString(summary.quoteTotalCents),
+      deposit_credit: centsToDollarString(summary.depositPaidCents),
+      remaining_balance_before_tip: centsToDollarString(summary.remainingCents),
+      tip_type: summary.tipType,
+      tip_percentage: summary.tipPercentage ? String(summary.tipPercentage) : "0",
+      tip_amount: centsToDollarString(summary.tipCents),
+      processing_fee: centsToDollarString(summary.processingFeeCents),
+      total_charged: centsToDollarString(summary.totalChargedCents),
+      quote_number: fields.quote_number,
+      move_reference: fields.move_reference,
+      customer_name: fields.customer_name,
+      customer_email: fields.customer_email,
+      move_date: fields.move_date,
+      pickup_address: fields.pickup_address,
+      delivery_address: fields.delivery_address,
+      customer_note: fields.customer_note,
+      amount_cents: summary.remainingCents,
+      fee_cents: summary.processingFeeCents,
+      total_cents: summary.totalChargedCents,
+    }),
+    line_items: lineItems,
+  };
+  if (fields.customer_email.includes("@")) params.customer_email = fields.customer_email;
+  return { params, kind: "balance" };
+}
+
+async function buildTipSession(input: CreatePaymentInput): Promise<BuiltSession> {
+  const spec = PAYMENT_KIND.tip;
+  const amountUsd = parseUsd(input.amountUsd);
+  if (!Number.isFinite(amountUsd)) throw new Error("Enter an amount.");
+  if (amountUsd < spec.minUsd || amountUsd > spec.maxUsd) {
+    throw new Error(
+      `Amount must be between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`,
+    );
+  }
+  const { fields } = quoteContext(input);
+  const tipCents = dollarsToCents(amountUsd);
+  const summary = depositSummary(tipCents);
+  const params: Stripe.Checkout.SessionCreateParams = {
+    ui_mode: "embedded_page",
+    mode: "payment",
+    submit_type: "pay",
+    integration_identifier: `toro-tip-${randomSuffix()}`,
+    return_url: payReturnUrl(),
+    customer_creation: "always",
+    billing_address_collection: "auto",
+    metadata: meta({
+      kind: "tip",
+      payment_type: "tip",
+      tip_type: "custom",
+      tip_percentage: "0",
+      tip_amount: centsToDollarString(tipCents),
+      processing_fee: centsToDollarString(summary.processingFeeCents),
+      total_charged: centsToDollarString(summary.totalChargedCents),
+      quote_number: fields.quote_number,
+      move_reference: fields.move_reference,
+      customer_name: fields.customer_name,
+      customer_email: fields.customer_email,
+      move_date: fields.move_date,
+      pickup_address: fields.pickup_address,
+      delivery_address: fields.delivery_address,
+      customer_note: fields.customer_note,
+      amount_cents: tipCents,
+      fee_cents: summary.processingFeeCents,
+      total_cents: summary.totalChargedCents,
+    }),
+    line_items: [
+      lineItem(spec.productName, tipCents, fields.customer_note || spec.label),
+      ...(summary.processingFeeCents > 0
+        ? [lineItem(PROCESSING_FEE_LABEL, summary.processingFeeCents)]
+        : []),
+    ],
+  };
+  if (fields.customer_email.includes("@")) params.customer_email = fields.customer_email;
+  return { params, kind: "tip" };
+}
+
+async function createEmbeddedSession(
+  params: Stripe.Checkout.SessionCreateParams,
+): Promise<Stripe.Checkout.Session> {
+  // Stripe API 2026-08-26.dahlia rejects ui_mode=embedded. Use embedded_page.
+  const session = await getStripe().checkout.sessions.create({
+    ...params,
+    ui_mode: "embedded_page",
+  });
+  if (!session.client_secret) {
+    throw new Error("Could not start checkout.");
+  }
+  return session;
+}
+
+export async function createPaymentSession(
+  input: CreatePaymentInput,
+): Promise<{ clientSecret: string; publishableKey: string }> {
+  const built =
+    input.kind === "deposit"
+      ? await buildDepositSession(input)
+      : input.kind === "balance"
+        ? await buildBalanceSession(input)
+        : await buildTipSession(input);
+  const session = await createEmbeddedSession(built.params);
   if (!session.client_secret) {
     throw new Error("Could not start checkout.");
   }

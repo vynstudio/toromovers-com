@@ -20,12 +20,17 @@ export async function GET(req: Request) {
 
   try {
     const session = await getStripe().checkout.sessions.retrieve(sessionId);
+    const metadata = session.metadata || {};
     return NextResponse.json({
       status: session.status,
-      kind: session.metadata?.kind || null,
+      kind: metadata.payment_type || metadata.kind || null,
+      payment_type: metadata.payment_type || metadata.kind || null,
       amount_total: session.amount_total,
-      customer_email: session.customer_details?.email || null,
+      customer_email: session.customer_details?.email || metadata.customer_email || null,
       payment_status: session.payment_status,
+      quote_number: metadata.quote_number || null,
+      total_charged: metadata.total_charged || null,
+      customer_name: metadata.customer_name || null,
     });
   } catch (err) {
     console.error("[pay/status]", err);

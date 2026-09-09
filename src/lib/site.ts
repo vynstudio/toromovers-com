@@ -22,7 +22,11 @@ export const PHONE_E164 = "+16896002720";
 /** Live quote funnel (engine). The multi-step LeadFunnel project was scrapped. */
 export const QUOTE_PATH = "/get-my-price";
 export const PAY_PATH = "/pay";
+export const PAY_DEPOSIT_PATH = "/pay?type=deposit";
+export const PAY_BALANCE_PATH = "/pay?type=balance";
 export const TIP_PATH = "/pay?type=tip";
+export const PAY_DEPOSIT_URL = "https://toromovers.com/pay?type=deposit";
+export const PAY_BALANCE_URL = "https://toromovers.com/pay?type=balance";
 
 export const EMAIL = "hello@toromovers.com";
 export const EMAIL_HREF = "mailto:hello@toromovers.com";
