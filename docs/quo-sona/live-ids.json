@@ -26,9 +26,10 @@
     "trigger": "incoming-call"
   },
   "knowledge": {
-    "id": "ARDb433e248e65f458b89baeba975df2fb1",
+    "id": "ARD265491b9f5e941239375aa767f2412ea",
     "title": "Toro Movers — After-Hours Knowledge Base",
-    "status": "completed"
+    "status": "completed",
+    "note": "Short facts only. Sona still collects name, phone, and service or message."
   },
   "jobsAttachedToSona": [
     {
