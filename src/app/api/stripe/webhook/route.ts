@@ -26,13 +26,20 @@ export async function POST(req: Request) {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
-    if (session.metadata?.kind === "crew_tip") {
-      const cents = session.amount_total || Number(session.metadata.amount_cents || 0);
-      const note = session.metadata.note || "";
+    const kind = session.metadata?.kind || "";
+    if (kind === "deposit" || kind === "balance" || kind === "tip" || kind === "crew_tip") {
+      const cents = session.amount_total || Number(session.metadata?.amount_cents || 0);
+      const note = session.metadata?.note || "";
       const email = session.customer_details?.email || "unknown";
+      const title =
+        kind === "deposit"
+          ? "DEPOSIT received — Toro Movers"
+          : kind === "balance"
+            ? "PAYMENT received — Toro Movers"
+            : "TIP received — Toro Movers";
       await sendTelegram(
         [
-          "TIP received — Toro Movers",
+          title,
           `Amount: ${formatUsd(cents)}`,
           `From: ${email}`,
           note ? `Note: ${note}` : "",

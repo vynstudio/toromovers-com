@@ -6,13 +6,16 @@ import {
   EmbeddedCheckout,
   EmbeddedCheckoutProvider,
 } from "@stripe/react-stripe-js";
-import { TIP_PRESETS_USD } from "@/lib/stripe";
+import { PAYMENT_KIND, PAYMENT_KINDS, type PaymentKind } from "@/lib/payments";
+import { PHONE_DISPLAY } from "@/lib/site";
 
 const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "";
 const stripePromise = publishableKey ? loadStripe(publishableKey) : null;
 
-export default function TipFlow() {
-  const [amount, setAmount] = useState<number>(20);
+export default function PayFlow({ initialKind = "deposit" }: { initialKind?: PaymentKind }) {
+  const [kind, setKind] = useState<PaymentKind>(initialKind);
+  const spec = PAYMENT_KIND[kind];
+  const [amount, setAmount] = useState<number>(spec.defaultUsd);
   const [custom, setCustom] = useState("");
   const [note, setNote] = useState("");
   const [clientSecret, setClientSecret] = useState("");
@@ -21,25 +24,33 @@ export default function TipFlow() {
 
   const selected = custom ? Number.parseFloat(custom) : amount;
   const valid =
-    Number.isFinite(selected) && selected >= 5 && selected <= 500;
+    Number.isFinite(selected) && selected >= spec.minUsd && selected <= spec.maxUsd;
+
+  function chooseKind(next: PaymentKind) {
+    setKind(next);
+    setAmount(PAYMENT_KIND[next].defaultUsd);
+    setCustom("");
+    setClientSecret("");
+    setError("");
+  }
 
   const startCheckout = async (event: FormEvent) => {
     event.preventDefault();
     if (!valid) {
-      setError("Choose a tip between $5 and $500.");
+      setError(`Enter an amount between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`);
       return;
     }
     if (!stripePromise) {
-      setError("Tip checkout is not connected yet. Call (321) 758-0094.");
+      setError(`Checkout is not connected yet. Call ${PHONE_DISPLAY}.`);
       return;
     }
     setStarting(true);
     setError("");
     try {
-      const response = await fetch("/api/tip/checkout", {
+      const response = await fetch("/api/pay/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amountUsd: selected, note }),
+        body: JSON.stringify({ kind, amountUsd: selected, note }),
       });
       const data = (await response.json()) as { clientSecret?: string; error?: string };
       if (!response.ok || !data.clientSecret) {
@@ -75,8 +86,24 @@ export default function TipFlow() {
 
   return (
     <form onSubmit={startCheckout} className="space-y-5">
+      <div className="grid gap-2 sm:grid-cols-3">
+        {PAYMENT_KINDS.map((item) => (
+          <button
+            type="button"
+            key={item}
+            onClick={() => chooseKind(item)}
+            className={`rounded-xl border p-3 text-sm font-extrabold ${
+              kind === item
+                ? "border-black bg-black text-white"
+                : "border-zinc-200 bg-white hover:border-black"
+            }`}
+          >
+            {PAYMENT_KIND[item].label}
+          </button>
+        ))}
+      </div>
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {TIP_PRESETS_USD.map((preset) => (
+        {spec.presetsUsd.map((preset) => (
           <button
             type="button"
             key={preset}
@@ -100,17 +127,17 @@ export default function TipFlow() {
           inputMode="decimal"
           value={custom}
           onChange={(event) => setCustom(event.target.value.replace(/[^\d.]/g, ""))}
-          placeholder="25"
+          placeholder={String(spec.defaultUsd)}
           className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
         />
       </label>
       <label className="block text-sm font-bold">
-        Note for the crew (optional)
+        Note (optional)
         <input
           value={note}
           onChange={(event) => setNote(event.target.value)}
           maxLength={200}
-          placeholder="Thanks for taking care of the piano."
+          placeholder={spec.notePlaceholder}
           className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
         />
       </label>
@@ -124,10 +151,12 @@ export default function TipFlow() {
         disabled={starting || !valid}
         className="w-full rounded-xl bg-black px-5 py-3 font-bold text-white disabled:opacity-40"
       >
-        {starting ? "Opening checkout…" : `Continue with $${Number.isFinite(selected) ? selected : ""}`}
+        {starting
+          ? "Opening checkout…"
+          : `${spec.cta} · $${Number.isFinite(selected) ? selected : ""}`}
       </button>
       <p className="text-center text-xs text-zinc-500">
-        Card details go to Stripe, not Toro. Minimum $5.
+        Card details go to Stripe. You stay on toromovers.com.
       </p>
     </form>
   );
