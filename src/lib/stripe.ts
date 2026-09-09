@@ -1,6 +1,8 @@
 import Stripe from "stripe";
 import { SITE_URL } from "@/lib/site";
-import { PAYMENT_KIND, type PaymentKind } from "@/lib/payments";
+import { PAYMENT_KIND, withCardFee, type PaymentKind } from "@/lib/payments";
+
+export { formatUsd } from "@/lib/payments";
 
 export function getStripe(): Stripe {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -17,14 +19,6 @@ export function payReturnUrl(): string {
 
 export function dollarsToCents(value: number): number {
   return Math.round(value * 100);
-}
-
-export function formatUsd(cents: number): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  }).format(cents / 100);
 }
 
 function randomSuffix(): string {
@@ -49,6 +43,7 @@ export async function createPaymentSession(opts: {
     );
   }
   const amountCents = dollarsToCents(opts.amountUsd);
+  const { feeCents, totalCents } = withCardFee(amountCents);
   const note = (opts.note || "").trim().slice(0, 200);
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
@@ -62,6 +57,8 @@ export async function createPaymentSession(opts: {
     metadata: {
       kind: opts.kind,
       amount_cents: String(amountCents),
+      fee_cents: String(feeCents),
+      total_cents: String(totalCents),
       note,
     },
     line_items: [
@@ -76,6 +73,20 @@ export async function createPaymentSession(opts: {
           },
         },
       },
+      ...(feeCents > 0
+        ? [
+            {
+              quantity: 1,
+              price_data: {
+                currency: "usd" as const,
+                unit_amount: feeCents,
+                product_data: {
+                  name: "Card processing 3.5%",
+                },
+              },
+            },
+          ]
+        : []),
     ],
   });
   if (!session.client_secret) {

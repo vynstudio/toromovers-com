@@ -1,6 +1,31 @@
 export const PAYMENT_KINDS = ["deposit", "balance", "tip"] as const;
 export type PaymentKind = (typeof PAYMENT_KINDS)[number];
 
+/** Card processing surcharge added to every checkout. */
+export const CARD_FEE_RATE = 0.035;
+
+export function cardFeeCents(baseCents: number): number {
+  return Math.round(baseCents * CARD_FEE_RATE);
+}
+
+export function withCardFee(baseCents: number): {
+  baseCents: number;
+  feeCents: number;
+  totalCents: number;
+} {
+  const feeCents = cardFeeCents(baseCents);
+  return { baseCents, feeCents, totalCents: baseCents + feeCents };
+}
+
+export function formatUsd(cents: number): string {
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(cents / 100);
+}
+
 export const PAYMENT_KIND: Record<
   PaymentKind,
   {
