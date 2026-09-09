@@ -261,6 +261,7 @@ export const footer = {
       links: [
         { label: "Contact page", href: "/contact" },
         { label: "Get a quote", href: "/contact" },
+        { label: "Pay or tip", href: "/pay" },
         { label: "Call us", href: "tel:+16896002720" },
         { label: "Email", href: "mailto:hello@toromovers.com" },
       ],
