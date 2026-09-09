@@ -1,0 +1,49 @@
+{
+  "inbox": {
+    "phoneNumberId": "PN3sKfvpYp",
+    "e164": "+16896002720",
+    "display": "(689) 600-2720",
+    "orgId": "ORIjhkc0BA"
+  },
+  "publishedIncomingCallFlow": {
+    "id": "WDb223a7b75a9b464b93f73f3a8008c3a5",
+    "name": "Sona call flow",
+    "enabled": true,
+    "initialStep": "Business hours",
+    "duringHours": "Ring users (30s) → if missed → Sona",
+    "afterHours": "Sona",
+    "sonaFallback": "Voicemail (not a person)",
+    "greeting": "Thanks for calling Toro Movers. Our team is currently away, but I can take your first and last name, phone number, and the service you need or a short message. A team member will follow up as soon as possible. How can I help?"
+  },
+  "disabledForwardAllCalls": {
+    "id": "WD631ff259fd2b42d08e2d0a9613d19421",
+    "name": "Forward all calls",
+    "enabled": false,
+    "wasForwardingTo": "+13217580094"
+  },
+  "sonaAgent": {
+    "id": "ATD236dade5df9943d5803007671ac2c236",
+    "trigger": "incoming-call"
+  },
+  "knowledge": {
+    "id": "ARDb433e248e65f458b89baeba975df2fb1",
+    "title": "Toro Movers — After-Hours Knowledge Base",
+    "status": "completed"
+  },
+  "jobsAttachedToSona": [
+    {
+      "id": "AJD334337abd8cf471398e11f4721f9f349",
+      "name": "After-Hours Message Intake",
+      "attached": true,
+      "collects": ["first name", "last name", "phone number", "service type or message"]
+    }
+  ],
+  "jobsCreatedNotAttached": [
+    {
+      "id": "AJDf6cd93d5121d4819b35a75d44b1e76f6",
+      "name": "Missed Call Follow-Up",
+      "attached": false,
+      "reason": "disabled_pending_compliance"
+    }
+  ]
+}

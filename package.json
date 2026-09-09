@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test:quo-after-hours": "node --experimental-strip-types --test src/lib/quo-after-hours.test.ts"
   },
   "dependencies": {
     "@netlify/plugin-nextjs": "^5.15.12",
