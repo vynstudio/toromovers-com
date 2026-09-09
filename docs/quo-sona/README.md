@@ -3,6 +3,12 @@
 Public number: **(689) 600-2720** (`+16896002720`)
 Website: https://toromovers.com
 
+**Live on inbox `PN3sKfvpYp`.** IDs: `live-ids.json`. Screenshot: `published-call-flow.png`.
+
+Forward-all to `+13217580094` (Sabina’s 321 number) is **disabled**. After-hours and missed calls go to Sona, then voicemail — not a person.
+
+Missed-call SMS job exists (`AJDf6cd93d5121d4819b35a75d44b1e76f6`) but is **not attached** until compliance is approved.
+
 ## What the public API can and cannot do
 
 Quo’s public API (`https://api.openphone.com` / `https://api.quo.com`) can:
