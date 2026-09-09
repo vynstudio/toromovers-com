@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
+import { runtimeEnv } from "@/lib/env";
 import { isPaymentKind } from "@/lib/payments";
 import { createPaymentSession } from "@/lib/stripe";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function POST(req: Request) {
-  if (!process.env.STRIPE_SECRET_KEY) {
+  if (!runtimeEnv("STRIPE_SECRET_KEY")) {
     return NextResponse.json(
       { error: "Stripe is not configured yet." },
       { status: 503 },
@@ -43,7 +47,17 @@ export async function POST(req: Request) {
     }
     const clientError =
       message.startsWith("Enter") || message.startsWith("Amount must");
-    if (!clientError) console.error("[pay/checkout]", err);
+    if (!clientError) {
+      const extra =
+        err && typeof err === "object"
+          ? {
+              type: "type" in err ? err.type : undefined,
+              code: "code" in err ? err.code : undefined,
+              param: "param" in err ? err.param : undefined,
+            }
+          : {};
+      console.error("[pay/checkout]", message, extra);
+    }
     return NextResponse.json(
       { error: clientError ? message : "Could not start checkout. Please try again." },
       { status: clientError ? 400 : 500 },

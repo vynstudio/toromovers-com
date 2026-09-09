@@ -1,15 +1,16 @@
 import Stripe from "stripe";
+import { runtimeEnv } from "@/lib/env";
 import { SITE_URL } from "@/lib/site";
 import { PAYMENT_KIND, withCardFee, type PaymentKind } from "@/lib/payments";
 
 export { formatUsd } from "@/lib/payments";
 
 export function getStripe(): Stripe {
-  const key = process.env.STRIPE_SECRET_KEY;
+  const key = runtimeEnv("STRIPE_SECRET_KEY");
   if (!key) {
     throw new Error("STRIPE_SECRET_KEY is not set");
   }
-  return new Stripe(key);
+  return new Stripe(key, { apiVersion: "2026-08-26.dahlia", typescript: true });
 }
 
 export function payReturnUrl(): string {
@@ -47,7 +48,7 @@ export async function createPaymentSession(opts: {
   const note = (opts.note || "").trim().slice(0, 200);
   const stripe = getStripe();
   const session = await stripe.checkout.sessions.create({
-    ui_mode: "embedded",
+    ui_mode: "embedded_page",
     mode: "payment",
     submit_type: "pay",
     integration_identifier: `toro-${opts.kind}-${randomSuffix()}`,
