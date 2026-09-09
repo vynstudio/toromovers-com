@@ -15,6 +15,7 @@ import {
   type PaymentKind,
 } from "@/lib/payments";
 import { PHONE_DISPLAY } from "@/lib/site";
+import { STRIPE_PUBLISHABLE_KEY } from "@/lib/stripe-public";
 
 export default function PayFlow({
   initialKind = "deposit",
@@ -34,7 +35,7 @@ export default function PayFlow({
   const [starting, setStarting] = useState(false);
 
   useEffect(() => {
-    const baked = publishableKey || process.env.STRIPE_PK || "";
+    const baked = publishableKey || process.env.STRIPE_PK || STRIPE_PUBLISHABLE_KEY;
     if (baked) {
       setStripePromise(loadStripe(baked));
       return;
@@ -84,7 +85,11 @@ export default function PayFlow({
       if (!response.ok || !data.clientSecret) {
         throw new Error(data.error || "Could not start checkout.");
       }
-      const pk = data.publishableKey || publishableKey || process.env.STRIPE_PK || "";
+      const pk =
+        data.publishableKey ||
+        publishableKey ||
+        process.env.STRIPE_PK ||
+        STRIPE_PUBLISHABLE_KEY;
       const promise = stripePromise || (pk ? loadStripe(pk) : null);
       if (!promise) {
         throw new Error(`Checkout is not connected yet. Call ${PHONE_DISPLAY}.`);
