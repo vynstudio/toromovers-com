@@ -13,7 +13,7 @@
     "duringHours": "Ring users (30s) → if missed → Sona",
     "afterHours": "Sona",
     "sonaFallback": "Voicemail (not a person)",
-    "greeting": "Thanks for calling Toro Movers. Our team is currently away, but I can collect your move details for a quote request. A Toro Movers team member will follow up as soon as possible during business hours. How can I help?"
+    "greeting": "Thanks for calling Toro Movers. Our team is currently away, but I can take your first and last name, phone number, and the service you need or a short message. A team member will follow up as soon as possible. How can I help?"
   },
   "disabledForwardAllCalls": {
     "id": "WD631ff259fd2b42d08e2d0a9613d19421",
@@ -32,29 +32,10 @@
   },
   "jobsAttachedToSona": [
     {
-      "id": "AJD70e04111eee94866afbc35c8eb59a4f0",
-      "name": "After-Hours Moving Quote Intake",
-      "attached": true
-    },
-    {
-      "id": "AJDa546fe958bd842c4899b24d46b247a06",
-      "name": "Urgent or Same-Day Move Request",
-      "attached": true
-    },
-    {
-      "id": "AJDf741d4fd51ce4bf39153d57612d33883",
-      "name": "Booking Change or Cancellation Request",
-      "attached": true
-    },
-    {
-      "id": "AJD19abdd51f3f345d1930665cff3d3081e",
-      "name": "Damage or Service Concern Intake",
-      "attached": true
-    },
-    {
-      "id": "AJD50380133ed354741b028e6038e09ee8b",
-      "name": "Spanish Moving Lead Intake",
-      "attached": true
+      "id": "AJD334337abd8cf471398e11f4721f9f349",
+      "name": "After-Hours Message Intake",
+      "attached": true,
+      "collects": ["first name", "last name", "phone number", "service type or message"]
     }
   ],
   "jobsCreatedNotAttached": [

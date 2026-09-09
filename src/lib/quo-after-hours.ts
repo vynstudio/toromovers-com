@@ -1,5 +1,6 @@
 export const SONA_GREETING =
-  "Thanks for calling Toro Movers. Our team is currently away, but I can collect your move details for a quote request. A Toro Movers team member will follow up as soon as possible during business hours. How can I help?";
+  "Thanks for calling Toro Movers. Our team is currently away, but I can take your first and last name, phone number, and the service you need or a short message. A team member will follow up as soon as possible. How can I help?";
+export const JOB_SIMPLE = "After-Hours Message Intake";
 export const SPANISH_ACKNOWLEDGMENT =
   "Gracias por comunicarse con Toro Movers. Nuestro equipo no está disponible en este momento, pero puedo recopilar los detalles de su mudanza para una solicitud de cotización. Un miembro del equipo de Toro Movers le dará seguimiento lo antes posible durante horario laboral.";
 export const MISSED_CALL_SMS =
@@ -76,8 +77,12 @@ type JobResult = { name?: string; result?: { data?: Array<{ name?: string; value
 
 const FIELD_ALIASES: Record<string, keyof AfterHoursLead> = {
   name: "customer_name",
+  first_name: "customer_name",
+  last_name: "customer_name",
   full_name: "customer_name",
   customer_name: "customer_name",
+  message: "customer_message_summary",
+  service_or_message: "customer_message_summary",
   phone: "phone",
   phone_number: "phone",
   best_phone_number: "phone",
@@ -185,6 +190,9 @@ export function classifyJobs(input: {
   ) {
     names.add(JOB_QUOTE);
   }
+  if (/\b(message intake|first and last name|leave a message)\b/i.test(blob) || (input.jobNames || []).includes(JOB_SIMPLE)) {
+    names.add(JOB_SIMPLE);
+  }
   if (names.size === 0) names.add(JOB_UNKNOWN);
   return [...names];
 }
@@ -210,15 +218,29 @@ export function primaryJob(jobs: string[]): string {
   if (jobs.includes(JOB_URGENT)) return JOB_URGENT;
   if (jobs.includes(JOB_SPANISH)) return JOB_SPANISH;
   if (jobs.includes(JOB_QUOTE)) return JOB_QUOTE;
+  if (jobs.includes(JOB_SIMPLE)) return JOB_SIMPLE;
   return JOB_UNKNOWN;
 }
 
 function applyField(lead: AfterHoursLead, name: string, value: unknown) {
-  const key = FIELD_ALIASES[normalizeKey(name)];
-  if (!key) return;
+  const raw = normalizeKey(name);
   if (value == null) return;
   const text = String(value).trim();
   if (!text) return;
+  if (raw === "first_name") {
+    lead.customer_name = lead.customer_name.includes(text)
+      ? lead.customer_name
+      : [text, lead.customer_name].filter(Boolean).join(" ").trim();
+    return;
+  }
+  if (raw === "last_name") {
+    lead.customer_name = lead.customer_name.includes(text)
+      ? lead.customer_name
+      : [lead.customer_name, text].filter(Boolean).join(" ").trim();
+    return;
+  }
+  const key = FIELD_ALIASES[raw];
+  if (!key) return;
   if (!lead[key]) (lead[key] as string) = text;
 }
 

@@ -7,6 +7,8 @@ Website: https://toromovers.com
 
 Forward-all to `+13217580094` (Sabina’s 321 number) is **disabled**. After-hours and missed calls go to Sona, then voicemail — not a person.
 
+Sona now collects only **first name, last name, phone number, and the service they need or a short message**.
+
 Missed-call SMS job exists (`AJDf6cd93d5121d4819b35a75d44b1e76f6`) but is **not attached** until compliance is approved.
 
 ## What the public API can and cannot do

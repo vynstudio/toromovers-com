@@ -28,6 +28,25 @@ function job(name: string, data: Record<string, string>) {
 test("greeting has no Sharon and stays on after-hours collection", () => {
   assert.equal(SONA_GREETING.includes("Sharon"), false);
   assert.match(SONA_GREETING, /currently away/);
+  assert.match(SONA_GREETING, /first and last name/);
+});
+
+test("simple intake captures name, phone, and service or message", () => {
+  const lead = leadFromSonaEvent({
+    fromPhone: "+14075550111",
+    jobs: [
+      job("After-Hours Message Intake", {
+        first_name: "Alex",
+        last_name: "Rivera",
+        phone: "+14075550111",
+        service_or_message: "labor-only loading for a POD",
+      }),
+    ],
+    summary: ["Caller left name, number, and a labor-only message."],
+  });
+  assert.equal(lead.customer_name, "Alex Rivera");
+  assert.equal(lead.phone, "+14075550111");
+  assert.match(lead.customer_message_summary, /labor-only/i);
 });
 
 test("1 full-service quote inquiry", () => {
