@@ -253,7 +253,7 @@ export const footer = {
         { label: "Reviews", href: "/#reviews" },
         { label: "Blog", href: "/blog" },
         { label: "Gallery", href: "/orlando-movers-gallery" },
-        { label: "Recent moves", href: "/recent-moves" },
+        { label: "Recent moves", href: "/orlando-movers-gallery" },
       ],
     },
     {
