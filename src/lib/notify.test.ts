@@ -143,7 +143,13 @@ test("notifyLead posts team SMS to Quo v1 with raw auth and no dated version hea
     assert.ok(team, "expected team Quo SMS");
     assert.equal(team.headers.authorization, "test-quo-key");
     assert.equal(team.headers["quo-api-version"], undefined);
-    assert.equal(team.body.from, DEFAULT_QUO_FROM);
+    assert.equal(team.body.from, "+16896002720");
+    assert.deepEqual(team.body.to, ["+13217580094"]);
+    assert.notEqual(
+      team.body.from,
+      (team.body.to as string[])[0],
+      "FROM workspace 689 must not be swapped with TO personal 321",
+    );
     assert.match(String(team.body.content), /Ada Perez/);
     assert.match(String(team.body.content), /CONFIRMED/);
     assert.ok(results.some((item) => item.channel === "sms-team" && item.ok));

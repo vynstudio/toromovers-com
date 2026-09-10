@@ -1,7 +1,7 @@
 /**
  * Outbound notifications for toromovers.com leads.
- * - Internal: Telegram + Quo SMS to the team inbox
- * - Client: SMS (Quo) + email (Resend from hello@toromovers.com)
+ * - Internal: Telegram + Quo SMS FROM workspace 689 TO personal 321
+ * - Client: SMS (Quo FROM 689) + email (Resend from hello@toromovers.com)
  * Fail-soft: never throws to callers. Missing QUO_API_KEY skips SMS; lead still accepted.
  */
 
@@ -27,7 +27,9 @@ export const QUO_V1_MESSAGE_URLS = [
 ] as const;
 /** Dated API only — never attach this to v1 send-message. */
 export const QUO_API_VERSION = "2026-03-30";
+/** Quo workspace / sending number (689-600-2720). Never use this as LEAD_SMS_TO. */
 export const DEFAULT_QUO_FROM = "+16896002720";
+/** Personal alert destination (321-758-0094). Not a Quo number. Never swap with FROM. */
 export const DEFAULT_LEAD_SMS_TO = "+13217580094";
 export const QUO_SMS_MAX_CHARS = 1600;
 
@@ -450,7 +452,7 @@ export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]>
   // Internal — Telegram always
   results.push(await sendTelegram(teamMessage(lead)));
 
-  // Internal — Quo SMS to the team inbox with full client details
+  // Internal — Quo SMS: FROM workspace 689 → TO personal 321 (do not swap)
   results.push(
     await sendQuoMessage({
       to: leadSmsTo(),
