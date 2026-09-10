@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
-import { CITY_QUEUE } from "@/lib/city-queue";
+import { allCityPages } from "@/lib/city-pages";
 import { blogPosts } from "@/lib/blog";
 
 /**
@@ -88,13 +88,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  const designCities: MetadataRoute.Sitemap = CITY_QUEUE.filter(
-    (c) => c.status === "live-design",
-  ).map((c) => ({
+  const designCities: MetadataRoute.Sitemap = allCityPages().map((c) => ({
     url: `${SITE_URL}${c.href}`,
     lastModified: now,
     changeFrequency: "monthly" as const,
-    priority: c.slug === "orlando-movers" ? 0.95 : 0.85,
+    priority: c.slug === "orlando-movers" || c.slug === "central-florida-movers" ? 0.95 : 0.85,
   }));
 
   return [...core, ...blogs, ...designCities];

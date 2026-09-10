@@ -345,20 +345,8 @@
 # --- Engine: SEO money pages (exact) ---
 
 [[redirects]]
-  from = "/altamonte-springs-movers"
-  to = "https://live-toro-site.netlify.app/altamonte-springs-movers"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/apartment-movers-orlando-fl"
   to = "https://live-toro-site.netlify.app/apartment-movers-orlando-fl"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/apopka-movers"
-  to = "https://live-toro-site.netlify.app/apopka-movers"
   status = 200
   force = true
 
@@ -439,20 +427,8 @@
   force = true
 
 [[redirects]]
-  from = "/central-florida-movers"
-  to = "https://live-toro-site.netlify.app/central-florida-movers"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/central-florida-moving-checklist"
   to = "https://live-toro-site.netlify.app/central-florida-moving-checklist"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/clermont-movers"
-  to = "https://live-toro-site.netlify.app/clermont-movers"
   status = 200
   force = true
 
@@ -463,26 +439,8 @@
   force = true
 
 [[redirects]]
-  from = "/davenport-movers"
-  to = "https://live-toro-site.netlify.app/davenport-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/fern-park-movers"
-  to = "https://live-toro-site.netlify.app/fern-park-movers"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/full-service-moving"
   to = "https://live-toro-site.netlify.app/full-service-moving"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/kissimmee-movers"
-  to = "https://live-toro-site.netlify.app/kissimmee-movers"
   status = 200
   force = true
 
@@ -493,37 +451,13 @@
   force = true
 
 [[redirects]]
-  from = "/lake-mary-movers"
-  to = "https://live-toro-site.netlify.app/lake-mary-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/lakeland-movers"
-  to = "https://live-toro-site.netlify.app/lakeland-movers"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/loading-unloading"
   to = "https://live-toro-site.netlify.app/loading-unloading"
   status = 200
   force = true
 
-[[redirects]]
-  from = "/maitland-movers"
-  to = "https://live-toro-site.netlify.app/maitland-movers"
-  status = 200
-  force = true
-
 # /orlando-movers is served by this design site (homepage shell + city copy).
 # Do not proxy to the engine — design owns the page.
-
-[[redirects]]
-  from = "/oviedo-movers"
-  to = "https://live-toro-site.netlify.app/oviedo-movers"
-  status = 200
-  force = true
 
 [[redirects]]
   from = "/residential-movers"
@@ -532,44 +466,8 @@
   force = true
 
 [[redirects]]
-  from = "/sanford-movers"
-  to = "https://live-toro-site.netlify.app/sanford-movers"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/service-areas"
   to = "https://live-toro-site.netlify.app/service-areas"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/st-cloud-movers"
-  to = "https://live-toro-site.netlify.app/st-cloud-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/windermere-movers"
-  to = "https://live-toro-site.netlify.app/windermere-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/winter-garden-movers"
-  to = "https://live-toro-site.netlify.app/winter-garden-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/winter-haven-movers"
-  to = "https://live-toro-site.netlify.app/winter-haven-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/winter-park-movers"
-  to = "https://live-toro-site.netlify.app/winter-park-movers"
   status = 200
   force = true
 
@@ -617,76 +515,24 @@
   status = 200
   force = true
 
+
+# Legacy engine city aliases → live design city pages
 [[redirects]]
   from = "/movers-orlando"
-  to = "https://live-toro-site.netlify.app/movers-orlando"
-  status = 200
+  to = "/orlando-movers"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/movers-lake-mary"
-  to = "https://live-toro-site.netlify.app/movers-lake-mary"
-  status = 200
+  to = "/lake-mary-movers"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/movers-winter-park"
-  to = "https://live-toro-site.netlify.app/movers-winter-park"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/casselberry-movers"
-  to = "https://live-toro-site.netlify.app/casselberry-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/longwood-movers"
-  to = "https://live-toro-site.netlify.app/longwood-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/celebration-movers"
-  to = "https://live-toro-site.netlify.app/celebration-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/poinciana-movers"
-  to = "https://live-toro-site.netlify.app/poinciana-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/ocoee-movers"
-  to = "https://live-toro-site.netlify.app/ocoee-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/mount-dora-movers"
-  to = "https://live-toro-site.netlify.app/mount-dora-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/leesburg-movers"
-  to = "https://live-toro-site.netlify.app/leesburg-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/tavares-movers"
-  to = "https://live-toro-site.netlify.app/tavares-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/minneola-movers"
-  to = "https://live-toro-site.netlify.app/minneola-movers"
-  status = 200
+  to = "/winter-park-movers"
+  status = 301
   force = true
 
 [[redirects]]
