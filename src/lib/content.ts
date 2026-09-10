@@ -231,7 +231,7 @@ export const footer = {
       title: "Services",
       links: [
         { label: "All services", href: "/services" },
-        { label: "Residential moving", href: "/services" },
+        { label: "Residential moving", href: "/full-service-moving" },
         { label: "Labor-only moving", href: "/labor-only-moving" },
         { label: "Single item & delivery", href: "/services" },
       ],
