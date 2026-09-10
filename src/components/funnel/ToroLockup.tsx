@@ -8,29 +8,37 @@ type ToroLockupProps = {
 
 /**
  * One lockup unit: official bull + TORO (#0A0A0A) + MOVERS (#E20613).
- * Font-size drives bull and wordmark together so letters never clip.
- * Parent should be `@container w-full min-w-0` so `cqi` tracks available width.
+ * Bull sits in a fixed em box so global img { height: auto } cannot blow
+ * the SVG up to its viewBox and clip the wordmark.
  */
 export function ToroLockup({ href = "/", className = "" }: ToroLockupProps) {
   const inner = (
     <>
-      <SafeImage
-        src="/logos/toro-bull-black.svg"
-        alt=""
-        width={72}
-        height={56}
-        className="h-[1.12em] w-auto shrink-0"
-        unoptimized
-        priority
-      />
-      <span className="whitespace-nowrap font-black uppercase leading-none tracking-[-0.045em]">
+      <span className="funnel-lockup-mark" aria-hidden>
+        <SafeImage
+          src="/logos/toro-bull-black.svg"
+          alt=""
+          width={72}
+          height={56}
+          className="funnel-lockup-bull"
+          unoptimized
+          priority
+          style={{
+            width: "100%",
+            height: "100%",
+            maxWidth: "100%",
+            objectFit: "contain",
+          }}
+        />
+      </span>
+      <span className="funnel-lockup-wordmark">
         <span className="text-[#0A0A0A]">TORO</span>
         <span className="ml-[0.18em] text-[#E20613]">MOVERS</span>
       </span>
     </>
   );
 
-  const classes = `inline-flex max-w-full items-center gap-[0.32em] no-underline text-[clamp(1.05rem,7.2cqi,1.7rem)] ${className}`;
+  const classes = `funnel-lockup ${className}`.trim();
 
   if (!href) {
     return (
