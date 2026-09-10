@@ -25,6 +25,52 @@ export type BlogPost = {
 export const blogPosts: readonly BlogPost[] = [
 
   {
+    slug: "full-service-vs-labor-only-orlando",
+    eyebrow: "Choosing your move type",
+    title: "Full-service vs labor-only movers in Orlando",
+    teaser:
+      "Truck and crew end-to-end, or loading help on your U-Haul or POD—how to choose for an Orlando or Central Florida move.",
+    description:
+      "Full-service vs labor-only movers in Orlando: what each includes, who each fits, and how Toro Movers quotes up-front hourly rates. Call (689) 600-2720.",
+    date: "2026-09-10",
+    dateLabel: "Sep 10, 2026",
+    image: {
+      src: "/images/moves/svc-labor.webp",
+      alt: "Toro Movers packing furniture on a real Central Florida moving job",
+      position: "object-[center_28%]",
+    },
+    body: [
+      "Full-service vs labor-only movers in Orlando comes down to one question: do you already have the truck? Full-service includes the crew, truck, loading, transport, unloading, and placement. Labor-only is for customers who already have a U-Haul, POD, trailer, or rental truck and only need loading or unloading help.",
+      "Choose full-service when you want one local team door to door and do not want to rent or drive a truck. It fits homes, townhomes, and apartments across Orlando and Central Florida when access, parking, and placement all need coordinating with the same crew.",
+      "Choose labor-only when the vehicle is already handled. You save the truck portion of the job and pay for careful loading or unloading by the hour—including tight packs for PODs and rental trucks. Stairs, elevators, and long carries still matter, so share access details either way.",
+      "Both options from Toro Movers use up-front hourly rates explained before move day. The total still depends on crew size, time on site, access, and readiness—not a fake website rate card. For deeper cost factors, read /blog/how-much-does-a-local-move-cost-orlando. For dedicated pages, see /full-service-moving and /labor-only-moving.",
+      "Not sure which fits? Call or text (689) 600-2720 with addresses, home type, and whether you have a truck. We will recommend crew size and the clearer option. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+    ],
+    faqs: [
+      {
+        q: "What is the difference between full-service and labor-only moving?",
+        a: "Full-service includes the crew, truck, loading, transportation, unloading, and placement. Labor-only is for customers who already have a U-Haul, POD, trailer, or rental truck and only need movers for loading, unloading, or rearranging heavy items.",
+      },
+      {
+        q: "Which option is usually cheaper?",
+        a: "Labor-only is often less expensive because you supply the truck. Full-service costs more because it includes the vehicle and transport, but it removes the DIY truck work.",
+      },
+      {
+        q: "Can Toro do either option in Orlando?",
+        a: "Yes. Toro Movers offers full-service local moving and labor-only loading and unloading across Orlando and Central Florida with up-front hourly rates.",
+      },
+      {
+        q: "How do I choose for an apartment move?",
+        a: "If you need the truck and placement end to end, choose full-service. If you already booked a U-Haul or POD, labor-only may fit. Share stairs, elevator windows, and parking either way.",
+      },
+      {
+        q: "How do I get a quote?",
+        a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, whether you have a truck, and access details. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "how-much-does-a-local-move-cost-orlando",
     eyebrow: "Orlando moving costs",
     title: "How much do movers cost in Orlando?",

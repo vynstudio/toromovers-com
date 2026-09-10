@@ -178,12 +178,6 @@
 
 # SEO money pages (dead self-proxies) → live design equivalents
 [[redirects]]
-  from = "/full-service-moving"
-  to = "/services"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/loading-unloading"
   to = "/services"
   status = 301
@@ -191,7 +185,7 @@
 
 [[redirects]]
   from = "/residential-movers"
-  to = "/services"
+  to = "/full-service-moving"
   status = 301
   force = true
 
@@ -221,7 +215,7 @@
 
 [[redirects]]
   from = "/home-moves"
-  to = "/services"
+  to = "/full-service-moving"
   status = 301
   force = true
 
@@ -252,12 +246,6 @@
 
 [[redirects]]
   from = "/blog/best-time-to-move-central-florida"
-  to = "/blog"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/blog/full-service-vs-labor-only-orlando"
   to = "/blog"
   status = 301
   force = true

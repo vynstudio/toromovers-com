@@ -38,7 +38,7 @@ export const servicesHub = {
     {
       title: "Local moving",
       body: "Homes, townhomes and apartments across Central Florida — crew, truck, careful load and room-by-room placement.",
-      href: "/services",
+      href: "/full-service-moving",
       image: "/images/moves/svc-primary-residential.webp",
       imageAlt:
         "Toro Movers crew carrying a padded item on a real Central Florida home move",
@@ -88,7 +88,7 @@ export const servicesHub = {
     {
       title: "Full-service moving",
       body: "Truck, crew, load, transport, unload, and place—end to end.",
-      href: "/services",
+      href: "/full-service-moving",
       image: "/images/moves/svc-full-service.webp",
       imageAlt:
         "Toro Movers real job: furniture stretch-wrapped and padded for a full-service local move",
