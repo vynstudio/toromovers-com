@@ -188,7 +188,7 @@ export async function sendEmail(opts: {
   }
   if (!sender) {
     console.error(
-      "[notify/email] RESEND_FROM_EMAIL missing or invalid — set it to hello@toromovers.net (current verified). Switch to hello@toromovers.com only after toromovers.com is verified in Resend.",
+      "[notify/email] RESEND_FROM_EMAIL missing or invalid — set production to hello@toromovers.net (verified). Do not force unverified hello@toromovers.com; switch only after Resend verifies toromovers.com.",
     );
     return {
       ok: false,

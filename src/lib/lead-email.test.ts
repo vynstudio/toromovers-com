@@ -28,10 +28,10 @@ test("parseBareEmail unwraps quotes and display names", () => {
 test("resendSender uses RESEND_FROM_EMAIL as-is and does not guess a from-address", () => {
   const prev = process.env.RESEND_FROM_EMAIL;
   try {
-    process.env.RESEND_FROM_EMAIL = "hello@toromovers.com";
-    const com = resendSender();
-    assert.equal(com?.from, "Toro Movers <hello@toromovers.com>");
-    assert.equal(com?.replyTo, "hello@toromovers.com");
+    process.env.RESEND_FROM_EMAIL = "hello@toromovers.net";
+    const sender = resendSender();
+    assert.equal(sender?.from, "Toro Movers <hello@toromovers.net>");
+    assert.equal(sender?.replyTo, "hello@toromovers.net");
 
     delete process.env.RESEND_FROM_EMAIL;
     assert.equal(resendSender(), null);
@@ -85,7 +85,7 @@ test("formatResendError explains domain verification and invalid from", () => {
         name: "validation_error",
       }),
     ),
-    /only after toromovers\.com is verified/,
+    /only after Resend verifies toromovers\.com/,
   );
   assert.match(
     formatResendError(

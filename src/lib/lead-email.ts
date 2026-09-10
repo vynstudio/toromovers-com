@@ -54,9 +54,9 @@ export function parseBareEmail(raw: string): string | null {
 
 /**
  * Resend 422/403 is usually a domain mismatch: `from` must be on a domain
- * verified in Resend. Current verified: hello@toromovers.net.
- * hello@toromovers.com 403s until toromovers.com is verified — switch only
- * after that. Never hardcode from; read RESEND_FROM_EMAIL only (bare
+ * verified in Resend. Production now: hello@toromovers.net (verified).
+ * Do not force unverified hello@toromovers.com (HTTP 403) — switch only
+ * after Resend verifies toromovers.com. Never hardcode from; read RESEND_FROM_EMAIL only (bare
  * address; wrap once). Also avoid double-wrapping and a display name in
  * `reply_to`.
  */
@@ -97,7 +97,7 @@ export function formatResendError(status: number, body: string): string {
   const lower = message.toLowerCase();
   if (status === 422 || status === 403) {
     if (lower.includes("not verified") || lower.includes("verify a domain")) {
-      return `HTTP ${status} domain not verified — RESEND_FROM_EMAIL must match a verified Resend domain (current verified: hello@toromovers.net). Switch to hello@toromovers.com only after toromovers.com is verified`;
+      return `HTTP ${status} domain not verified — RESEND_FROM_EMAIL must match a verified Resend domain (production now: hello@toromovers.net). Switch to hello@toromovers.com only after Resend verifies toromovers.com`;
     }
     if (lower.includes("invalid") && lower.includes("from")) {
       return `HTTP ${status} invalid from — set RESEND_FROM_EMAIL to a bare address on the verified domain`;
