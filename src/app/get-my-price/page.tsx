@@ -5,8 +5,9 @@ import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Get Your Free Moving Quote | Toro Movers",
+  title: "Get Your Free Moving Quote",
   description: "Choose the moving help you need and request a free quote from Toro Movers.",
+  robots: { index: false, follow: false },
   alternates: { canonical: "/get-my-price" },
 };
 

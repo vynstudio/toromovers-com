@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Pay Toro Movers — deposit or remaining balance",
   description:
     "Pay a move deposit or the remaining balance after your deposit. Secure card checkout on toromovers.com.",
+  robots: { index: false, follow: false },
   alternates: { canonical: "/pay" },
 };
 

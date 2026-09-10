@@ -49,8 +49,6 @@ export const POSTAL_CODE = "32789";
 
 export const SOCIAL = {
   facebook: "https://www.facebook.com/722514634274519",
-  instagram: "https://www.instagram.com/", // update when live
-  x: "https://x.com/", // update when live
 } as const;
 
 export const SOCIAL_PROFILES = [
