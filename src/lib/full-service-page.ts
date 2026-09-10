@@ -5,9 +5,9 @@ import { SITE_URL } from "@/lib/site";
 export const fullServicePage = {
   path: "/full-service-moving",
   metadata: {
-    title: "Full-service movers in Orlando | Truck, crew & placement",
+    title: "Full-service movers in Orlando | Truck & crew",
     description:
-      "Full-service local movers in Orlando & Central Florida—truck, crew, load, transport, unload, and placement with up-front hourly rates. Call Toro Movers at (689) 600-2720.",
+      "Full-service Orlando movers—truck, crew, load, haul, unload & place. Up-front hourly rates. Call (689) 600-2720.",
     ogTitle: "Full-service movers in Orlando",
     ogDescription:
       "Local crew and truck for Orlando homes and apartments—load, haul, unload, and place with clear hourly pricing before move day.",

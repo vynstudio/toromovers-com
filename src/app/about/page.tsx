@@ -23,8 +23,8 @@ import {
 } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "About us · Family-owned Orlando movers",
-  description: `${BUSINESS_NAME} is a family-owned local moving company in ${SERVICE_BASE_CITY} serving ${SERVICE_REGION}. ${GOOGLE_RATING}★ Google, bilingual crews, up-front hourly rates. Call ${PHONE_DISPLAY}.`,
+  title: "About us | Family-owned Orlando movers",
+  description: `Family-owned local movers in ${SERVICE_BASE_CITY} serving ${SERVICE_REGION}. ${GOOGLE_RATING}★ Google, bilingual crews, up-front rates. Call ${PHONE_DISPLAY}.`,
   alternates: { canonical: "/about" },
   openGraph: {
     title: `About ${BUSINESS_NAME}`,

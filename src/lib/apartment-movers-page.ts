@@ -5,9 +5,9 @@ import { SITE_URL } from "@/lib/site";
 export const apartmentMoversPage = {
   path: "/apartment-movers-orlando-fl",
   metadata: {
-    title: "Apartment movers in Orlando | Stairs, elevators & condos",
+    title: "Apartment movers Orlando | Stairs & elevators",
     description:
-      "Apartment movers in Orlando & Central Florida from Toro Movers—walk-ups, elevators, loading zones, and move-in windows planned before move day. Up-front hourly rates. Call (689) 600-2720.",
+      "Orlando apartment movers for walk-ups, elevators & loading zones—planned before move day. Up-front hourly rates. Call (689) 600-2720.",
     ogTitle: "Apartment movers in Orlando",
     ogDescription:
       "Local crews for Orlando apartments and condos—stairs, elevators, and building rules planned with up-front hourly rates.",

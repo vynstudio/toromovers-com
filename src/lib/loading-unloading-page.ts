@@ -5,9 +5,9 @@ import { SITE_URL } from "@/lib/site";
 export const loadingUnloadingPage = {
   path: "/loading-unloading",
   metadata: {
-    title: "Loading & unloading help in Orlando | Single-item movers",
+    title: "Loading & unloading help | Orlando movers",
     description:
-      "Need loading or unloading help in Orlando—or a single-item furniture move? Toro Movers offers short hourly jobs for trucks, storage, and heavy pieces. Call (689) 600-2720.",
+      "Loading, unloading & single-item help in Orlando for trucks, storage & heavy pieces. Hourly rates. Call (689) 600-2720.",
     ogTitle: "Loading & unloading help in Orlando",
     ogDescription:
       "Short loading jobs, single-item furniture moves, and truck unload help from a local Central Florida crew—with up-front hourly rates.",
