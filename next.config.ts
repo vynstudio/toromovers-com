@@ -26,7 +26,7 @@ const nextConfig: NextConfig = {
   // Slightly smaller JS/CSS in production
   compress: true,
   poweredByHeader: false,
-  serverExternalPackages: ["stripe"],
+  serverExternalPackages: ["stripe", "@netlify/blobs"],
   async redirects() {
     const toFunnel = [
       "/free-quote",
@@ -34,10 +34,17 @@ const nextConfig: NextConfig = {
       "/get-quote",
       "/quote",
     ];
-    return toFunnel.flatMap((source) => [
-      { source, destination: "/get-my-price", permanent: true },
-      { source: `${source}/:path*`, destination: "/get-my-price", permanent: true },
-    ]);
+    const toChecklist = ["/job-size", "/your-move", "/movingday-checklist"];
+    return [
+      ...toFunnel.flatMap((source) => [
+        { source, destination: "/get-my-price", permanent: true },
+        { source: `${source}/:path*`, destination: "/get-my-price", permanent: true },
+      ]),
+      ...toChecklist.flatMap((source) => [
+        { source, destination: "/move-day-checklist", permanent: true },
+        { source: `${source}/:path*`, destination: "/move-day-checklist", permanent: true },
+      ]),
+    ];
   },
 };
 

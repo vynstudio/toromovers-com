@@ -7,6 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
+        disallow: ["/move-day-checklist"],
       },
       // Explicit allow for major AI / answer-engine crawlers (AEO)
       {
