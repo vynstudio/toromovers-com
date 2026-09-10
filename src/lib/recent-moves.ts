@@ -37,11 +37,11 @@ export const MOVE_SERVICE_ORDER: readonly {
   label: string;
   href: string;
 }[] = [
-  { id: "full-service", label: "Full-service", href: "/full-service-moving" },
-  { id: "apartment", label: "Apartment moves", href: "/apartment-movers-orlando-fl" },
-  { id: "residential", label: "Residential / homes", href: "/residential-movers" },
-  { id: "labor-only", label: "Labor-only / loading", href: "/labor-only-moving" },
-  { id: "packing", label: "Packing & protection", href: "/full-service-moving" },
+  { id: "full-service", label: "Full-service", href: "/services" },
+  { id: "apartment", label: "Apartment moves", href: "/services" },
+  { id: "residential", label: "Residential / homes", href: "/services" },
+  { id: "labor-only", label: "Labor-only / loading", href: "/services" },
+  { id: "packing", label: "Packing & protection", href: "/services" },
   { id: "crew", label: "Local crew", href: "/orlando-movers" },
 ] as const;
 
@@ -55,7 +55,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Orlando, FL",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-02",
@@ -66,7 +66,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "apartment",
     serviceLabel: "Apartment moving",
     area: "Central Florida",
-    href: "/apartment-movers-orlando-fl",
+    href: "/services",
   },
   {
     id: "real-03",
@@ -77,7 +77,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "residential",
     serviceLabel: "Residential moving",
     area: "Orlando metro",
-    href: "/residential-movers",
+    href: "/services",
   },
   {
     id: "real-04",
@@ -88,7 +88,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "labor-only",
     serviceLabel: "Labor-only / loading",
     area: "Orlando, FL",
-    href: "/labor-only-moving",
+    href: "/services",
   },
   {
     id: "real-05",
@@ -99,7 +99,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-09",
@@ -110,7 +110,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "residential",
     serviceLabel: "Residential moving",
     area: "Orlando metro",
-    href: "/residential-movers",
+    href: "/services",
   },
   {
     id: "real-10",
@@ -121,7 +121,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "labor-only",
     serviceLabel: "Labor-only / loading",
     area: "Orlando, FL",
-    href: "/labor-only-moving",
+    href: "/services",
   },
   {
     id: "real-11",
@@ -132,7 +132,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-12",
@@ -154,7 +154,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "full-service",
     serviceLabel: "Full-service moving",
     area: "Orlando, FL",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-14",
@@ -165,7 +165,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "apartment",
     serviceLabel: "Apartment moving",
     area: "Central Florida",
-    href: "/apartment-movers-orlando-fl",
+    href: "/services",
   },
   {
     id: "real-15",
@@ -176,7 +176,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "residential",
     serviceLabel: "Residential moving",
     area: "Orlando metro",
-    href: "/residential-movers",
+    href: "/services",
   },
   {
     id: "real-16",
@@ -187,7 +187,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "labor-only",
     serviceLabel: "Labor-only / loading",
     area: "Orlando, FL",
-    href: "/labor-only-moving",
+    href: "/services",
   },
   {
     id: "real-17",
@@ -198,7 +198,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-18",
@@ -220,7 +220,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "full-service",
     serviceLabel: "Full-service moving",
     area: "Orlando, FL",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-20",
@@ -231,7 +231,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "apartment",
     serviceLabel: "Apartment moving",
     area: "Central Florida",
-    href: "/apartment-movers-orlando-fl",
+    href: "/services",
   },
   {
     id: "real-21",
@@ -242,7 +242,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "residential",
     serviceLabel: "Residential moving",
     area: "Orlando metro",
-    href: "/residential-movers",
+    href: "/services",
   },
   {
     id: "real-22",
@@ -253,7 +253,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "labor-only",
     serviceLabel: "Labor-only / loading",
     area: "Orlando, FL",
-    href: "/labor-only-moving",
+    href: "/services",
   },
   {
     id: "real-23",
@@ -264,7 +264,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-24",
@@ -286,7 +286,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "full-service",
     serviceLabel: "Full-service moving",
     area: "Orlando, FL",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-28",
@@ -297,7 +297,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "labor-only",
     serviceLabel: "Labor-only / loading",
     area: "Orlando, FL",
-    href: "/labor-only-moving",
+    href: "/services",
   },
   {
     id: "real-29",
@@ -308,7 +308,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-30",
@@ -330,7 +330,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "residential",
     serviceLabel: "Residential moving",
     area: "Orlando metro",
-    href: "/residential-movers",
+    href: "/services",
   },
   {
     id: "real-34",
@@ -341,7 +341,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "labor-only",
     serviceLabel: "Labor-only / loading",
     area: "Orlando, FL",
-    href: "/labor-only-moving",
+    href: "/services",
   },
   {
     id: "real-35",
@@ -352,7 +352,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-36",
@@ -374,7 +374,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-39",
@@ -385,7 +385,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "residential",
     serviceLabel: "Residential moving",
     area: "Orlando metro",
-    href: "/residential-movers",
+    href: "/services",
   },
   {
     id: "real-40",
@@ -396,7 +396,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "labor-only",
     serviceLabel: "Labor-only / loading",
     area: "Orlando, FL",
-    href: "/labor-only-moving",
+    href: "/services",
   },
   {
     id: "real-41",
@@ -407,7 +407,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-42",
@@ -429,7 +429,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "full-service",
     serviceLabel: "Full-service moving",
     area: "Orlando, FL",
-    href: "/full-service-moving",
+    href: "/services",
   },
   {
     id: "real-44",
@@ -440,7 +440,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "apartment",
     serviceLabel: "Apartment moving",
     area: "Central Florida",
-    href: "/apartment-movers-orlando-fl",
+    href: "/services",
   },
   {
     id: "real-45",
@@ -451,7 +451,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "residential",
     serviceLabel: "Residential moving",
     area: "Orlando metro",
-    href: "/residential-movers",
+    href: "/services",
   },
   {
     id: "real-46",
@@ -462,7 +462,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "labor-only",
     serviceLabel: "Labor-only / loading",
     area: "Orlando, FL",
-    href: "/labor-only-moving",
+    href: "/services",
   },
   {
     id: "real-47",
@@ -473,7 +473,7 @@ export const recentMoves: readonly MoveShot[] = [
     service: "packing",
     serviceLabel: "Packing & protection",
     area: "Central Florida",
-    href: "/full-service-moving",
+    href: "/services",
   },
 ] as const;
 

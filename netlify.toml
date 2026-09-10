@@ -1,5 +1,5 @@
 # =============================================================================
-# live-toro-site now builds THIS repo (vynstudio/toromovers-com) and owns
+# live-toro-site builds THIS repo (vynstudio/toromovers-com) and owns
 # toromovers.com. Do NOT 200-rewrite routes this Next app serves onto
 # live-toro-site.netlify.app — that is the same site and Netlify 404s.
 # =============================================================================
@@ -23,7 +23,7 @@
   status = 301
   force = true
 
-# Legacy brand domains (moved with this site)
+# Legacy brand domains
 [[redirects]]
   from = "https://toromovers.net/*"
   to = "https://toromovers.com/:splat"
@@ -48,69 +48,10 @@
   status = 301
   force = true
 
-# --- Engine: APIs & funnels ---
-# /api/lead stays on this site for the homepage callback form only.
-# Scrapped multi-step quote modal. Quote CTAs go to /get-my-price.
-
-[[redirects]]
-  from = "/api/crm/*"
-  to = "https://live-toro-site.netlify.app/api/crm/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/webhooks/*"
-  to = "https://live-toro-site.netlify.app/api/webhooks/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/job-size"
-  to = "https://live-toro-site.netlify.app/api/job-size"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/job-size/*"
-  to = "https://live-toro-site.netlify.app/api/job-size/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/intake"
-  to = "https://live-toro-site.netlify.app/api/intake"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/intake/*"
-  to = "https://live-toro-site.netlify.app/api/intake/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/lead-magnet"
-  to = "https://live-toro-site.netlify.app/api/lead-magnet"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/lead-magnet/*"
-  to = "https://live-toro-site.netlify.app/api/lead-magnet/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/review-request"
-  to = "https://live-toro-site.netlify.app/api/review-request"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/api/review-request/*"
-  to = "https://live-toro-site.netlify.app/api/review-request/:splat"
-  status = 200
-  force = true
+# /api/lead is owned by this Next app (src/app/api/lead). Do not proxy it.
+# Former engine API/funnel 200-proxies (/api/crm, /api/intake, /bookings, etc.)
+# were verified 404 on live-toro-site.netlify.app (GET+POST) — removed.
+# Re-add only if a separate engine host is restored.
 
 # This app owns /get-my-price. Legacy quote URLs 301 here and keep ?query.
 [[redirects]]
@@ -161,41 +102,7 @@
   status = 301
   force = true
 
-# Deposit page. /book is the legacy path and 301s to /bookings on the engine,
-# so /bookings MUST stay proxied or /book dead-ends in a 404.
-[[redirects]]
-  from = "/bookings"
-  to = "https://live-toro-site.netlify.app/bookings"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/book"
-  to = "https://live-toro-site.netlify.app/book"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/book/*"
-  to = "https://live-toro-site.netlify.app/book/:splat"
-  status = 200
-  force = true
-
-# /move-day-checklist is served by this Next app. Do not proxy it back
-# onto live-toro-site.netlify.app — that is the same site and 404s.
-
-[[redirects]]
-  from = "/move-details"
-  to = "https://live-toro-site.netlify.app/move-details"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/move-details/*"
-  to = "https://live-toro-site.netlify.app/move-details/:splat"
-  status = 200
-  force = true
-
+# Checklist aliases → design-owned page
 [[redirects]]
   from = "/job-size"
   to = "/move-day-checklist"
@@ -233,288 +140,278 @@
   force = true
 
 [[redirects]]
-  from = "/intake"
-  to = "https://live-toro-site.netlify.app/intake"
-  status = 200
+  from = "/move-details"
+  to = "/move-day-checklist"
+  status = 301
   force = true
 
 [[redirects]]
-  from = "/intake/*"
-  to = "https://live-toro-site.netlify.app/intake/:splat"
-  status = 200
+  from = "/move-details/*"
+  to = "/move-day-checklist"
+  status = 301
   force = true
-
-
 
 [[redirects]]
   from = "/checklist"
-  to = "https://live-toro-site.netlify.app/checklist"
-  status = 200
+  to = "/move-day-checklist"
+  status = 301
+  force = true
+
+# Payments: dead engine booking paths → live /pay
+[[redirects]]
+  from = "/bookings"
+  to = "/pay"
+  status = 301
   force = true
 
 [[redirects]]
-  from = "/thank-you-full-service"
-  to = "https://live-toro-site.netlify.app/thank-you-full-service"
-  status = 200
+  from = "/book"
+  to = "/pay"
+  status = 301
   force = true
 
 [[redirects]]
-  from = "/thank-you-labor"
-  to = "https://live-toro-site.netlify.app/thank-you-labor"
-  status = 200
+  from = "/book/*"
+  to = "/pay"
+  status = 301
   force = true
 
-[[redirects]]
-  from = "/thank-you-checklist"
-  to = "https://live-toro-site.netlify.app/thank-you-checklist"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/ads/*"
-  to = "https://live-toro-site.netlify.app/ads/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/es/ads/*"
-  to = "https://live-toro-site.netlify.app/es/ads/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/es/*"
-  to = "https://live-toro-site.netlify.app/es/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/packing-services"
-  to = "https://live-toro-site.netlify.app/packing-services"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/apartment-movers"
-  to = "https://live-toro-site.netlify.app/apartment-movers"
-  status = 200
-  force = true
-
-
-
-[[redirects]]
-  from = "/email-preview"
-  to = "https://live-toro-site.netlify.app/email-preview"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/email-preview/*"
-  to = "https://live-toro-site.netlify.app/email-preview/:splat"
-  status = 200
-  force = true
-
-# --- Engine: public assets used by SEO pages ---
-
-[[redirects]]
-  from = "/hero/*"
-  to = "https://live-toro-site.netlify.app/hero/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/city/*"
-  to = "https://live-toro-site.netlify.app/city/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/bull.svg"
-  to = "https://live-toro-site.netlify.app/bull.svg"
-  status = 200
-  force = true
-
-
-
-[[redirects]]
-  from = "/manifest.webmanifest"
-  to = "https://live-toro-site.netlify.app/manifest.webmanifest"
-  status = 200
-  force = true
-
-# --- Engine: SEO money pages (exact) ---
-
-[[redirects]]
-  from = "/apartment-movers-orlando-fl"
-  to = "https://live-toro-site.netlify.app/apartment-movers-orlando-fl"
-  status = 200
-  force = true
-
-# /blog index + design-owned posts served by Next (this app).
-# Legacy engine posts keep explicit proxies below.
-# Do NOT add a catch-all /blog/* proxy or design posts will be shadowed.
-
-[[redirects]]
-  from = "/blog/apartment-moving-checklist-orlando-renters"
-  to = "https://live-toro-site.netlify.app/blog/apartment-moving-checklist-orlando-renters"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/best-time-to-move-central-florida"
-  to = "https://live-toro-site.netlify.app/blog/best-time-to-move-central-florida"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/full-service-vs-labor-only-orlando"
-  to = "https://live-toro-site.netlify.app/blog/full-service-vs-labor-only-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/furniture-disassembly-protection-movers-orlando"
-  to = "https://live-toro-site.netlify.app/blog/furniture-disassembly-protection-movers-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/hidden-moving-fees-orlando"
-  to = "https://live-toro-site.netlify.app/blog/hidden-moving-fees-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/how-much-does-a-local-move-cost-orlando"
-  to = "https://live-toro-site.netlify.app/blog/how-much-does-a-local-move-cost-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/how-to-choose-a-moving-company-orlando"
-  to = "https://live-toro-site.netlify.app/blog/how-to-choose-a-moving-company-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/how-to-prepare-for-a-local-move-in-orlando"
-  to = "https://live-toro-site.netlify.app/blog/how-to-prepare-for-a-local-move-in-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/labor-only-moving-orlando"
-  to = "https://live-toro-site.netlify.app/blog/labor-only-moving-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/moving-into-storage-orlando"
-  to = "https://live-toro-site.netlify.app/blog/moving-into-storage-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/tipping-movers-orlando"
-  to = "https://live-toro-site.netlify.app/blog/tipping-movers-orlando"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/blog/what-youre-paying-for-orlando-movers"
-  to = "https://live-toro-site.netlify.app/blog/what-youre-paying-for-orlando-movers"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/central-florida-moving-checklist"
-  to = "https://live-toro-site.netlify.app/central-florida-moving-checklist"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/commercial-movers"
-  to = "https://live-toro-site.netlify.app/commercial-movers"
-  status = 200
-  force = true
-
+# SEO money pages (dead self-proxies) → live design equivalents
 [[redirects]]
   from = "/full-service-moving"
-  to = "https://live-toro-site.netlify.app/full-service-moving"
-  status = 200
+  to = "/services"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/labor-only-moving"
-  to = "https://live-toro-site.netlify.app/labor-only-moving"
-  status = 200
+  to = "/services"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/loading-unloading"
-  to = "https://live-toro-site.netlify.app/loading-unloading"
-  status = 200
+  to = "/services"
+  status = 301
   force = true
-
-# /orlando-movers is served by this design site (homepage shell + city copy).
-# Do not proxy to the engine — design owns the page.
 
 [[redirects]]
   from = "/residential-movers"
-  to = "https://live-toro-site.netlify.app/residential-movers"
-  status = 200
+  to = "/services"
+  status = 301
   force = true
 
 [[redirects]]
-  from = "/service-areas"
-  to = "https://live-toro-site.netlify.app/service-areas"
-  status = 200
+  from = "/commercial-movers"
+  to = "/services"
+  status = 301
   force = true
 
-# --- Engine: legacy ad / city aliases ---
+[[redirects]]
+  from = "/apartment-movers"
+  to = "/services"
+  status = 301
+  force = true
 
 [[redirects]]
-  from = "/movers-orlando-lp"
-  to = "https://live-toro-site.netlify.app/movers-orlando-lp"
-  status = 200
+  from = "/apartment-movers-orlando-fl"
+  to = "/services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/packing-services"
+  to = "/services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/apartment-moves"
+  to = "/services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home-moves"
+  to = "/services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/commercial-moves"
+  to = "/services"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/loading-help"
-  to = "https://live-toro-site.netlify.app/loading-help"
-  status = 200
+  to = "/services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/service-areas"
+  to = "/central-florida-movers"
+  status = 301
+  force = true
+
+# Legacy engine blog posts → blog hub (design owns /blog + live posts)
+[[redirects]]
+  from = "/blog/apartment-moving-checklist-orlando-renters"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/best-time-to-move-central-florida"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/full-service-vs-labor-only-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/furniture-disassembly-protection-movers-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/hidden-moving-fees-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/how-much-does-a-local-move-cost-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-choose-a-moving-company-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/how-to-prepare-for-a-local-move-in-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/labor-only-moving-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/moving-into-storage-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/tipping-movers-orlando"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blog/what-youre-paying-for-orlando-movers"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/central-florida-moving-checklist"
+  to = "/move-day-checklist"
+  status = 301
+  force = true
+
+# Ads / Spanish / engine LP shells → live funnel or home
+[[redirects]]
+  from = "/ads/*"
+  to = "/lp/local-movers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/ads/*"
+  to = "/lp/local-movers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/es/*"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/movers-orlando-lp"
+  to = "/lp/local-movers"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/lp"
-  to = "https://live-toro-site.netlify.app/lp"
-  status = 200
+  to = "/lp/local-movers"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/funnel"
-  to = "https://live-toro-site.netlify.app/funnel"
-  status = 200
+  to = "/get-my-price"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/moving"
-  to = "https://live-toro-site.netlify.app/moving"
-  status = 200
+  to = "/services"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/mudanza"
-  to = "https://live-toro-site.netlify.app/mudanza"
-  status = 200
+  to = "/"
+  status = 301
   force = true
 
 [[redirects]]
-  from = "/pages/*"
-  to = "https://live-toro-site.netlify.app/pages/:splat"
-  status = 200
+  from = "/intake"
+  to = "/get-my-price"
+  status = 301
   force = true
 
+[[redirects]]
+  from = "/intake/*"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thank-you-full-service"
+  to = "/thank-you"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thank-you-labor"
+  to = "/thank-you"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thank-you-checklist"
+  to = "/thank-you"
+  status = 301
+  force = true
 
 # Legacy engine city aliases → live design city pages
 [[redirects]]
@@ -535,22 +432,4 @@
   status = 301
   force = true
 
-[[redirects]]
-  from = "/apartment-moves"
-  to = "https://live-toro-site.netlify.app/apartment-moves"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/home-moves"
-  to = "https://live-toro-site.netlify.app/home-moves"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/commercial-moves"
-  to = "https://live-toro-site.netlify.app/commercial-moves"
-  status = 200
-  force = true
-
-
+# NOTE: deliberately NO /manifest.webmanifest proxy — public/manifest.webmanifest must win.

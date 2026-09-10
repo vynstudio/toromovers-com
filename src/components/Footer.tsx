@@ -11,7 +11,7 @@ import {
   SERVICE_REGION,
   SOCIAL,
 } from "@/lib/site";
-import { IconFacebook, IconInstagram, IconX } from "@/components/icons";
+import { IconFacebook } from "@/components/icons";
 
 /** Hide placeholder social profiles until real handles ship. */
 function isLiveSocial(url: string) {
@@ -31,8 +31,6 @@ function isLiveSocial(url: string) {
 export function Footer() {
   const socials = [
     { href: SOCIAL.facebook, label: "Facebook", Icon: IconFacebook },
-    { href: SOCIAL.x, label: "X", Icon: IconX },
-    { href: SOCIAL.instagram, label: "Instagram", Icon: IconInstagram },
   ].filter((s) => isLiveSocial(s.href));
 
   return (

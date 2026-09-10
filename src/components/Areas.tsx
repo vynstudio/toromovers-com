@@ -55,7 +55,7 @@ export function Areas() {
           <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
         </a>
         <a
-          href="/service-areas"
+          href="/central-florida-movers"
           className="btn-outline btn-fluid tap-target inline-flex"
           data-cta="areas-all"
         >

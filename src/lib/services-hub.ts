@@ -38,7 +38,7 @@ export const servicesHub = {
     {
       title: "Local moving",
       body: "Homes, townhomes and apartments across Central Florida — crew, truck, careful load and room-by-room placement.",
-      href: "/full-service-moving",
+      href: "/services",
       image: "/images/moves/svc-primary-residential.webp",
       imageAlt:
         "Toro Movers crew carrying a padded item on a real Central Florida home move",
@@ -69,7 +69,7 @@ export const servicesHub = {
     {
       title: "Labor only",
       body: "You have the U-Haul, POD or rental truck — we bring the crew and load or unload it by the hour.",
-      href: "/labor-only-moving",
+      href: "/services",
       image: "/images/moves/svc-labor.webp",
       imageAlt:
         "Toro Movers stretch-wrapping furniture on a real labor-only job",
@@ -88,7 +88,7 @@ export const servicesHub = {
     {
       title: "Full-service moving",
       body: "Truck, crew, load, transport, unload, and place—end to end.",
-      href: "/full-service-moving",
+      href: "/services",
       image: "/images/moves/svc-full-service.webp",
       imageAlt:
         "Toro Movers real job: furniture stretch-wrapped and padded for a full-service local move",
@@ -96,7 +96,7 @@ export const servicesHub = {
     {
       title: "Apartment movers in Orlando",
       body: "Stairs, elevators, loading zones, and move-in windows planned before the crew arrives.",
-      href: "/apartment-movers-orlando-fl",
+      href: "/services",
       image: "/images/moves/real-21.webp",
       imageAlt:
         "Toro Movers crew carrying furniture up stairs on a real Orlando-area apartment move",
@@ -104,7 +104,7 @@ export const servicesHub = {
     {
       title: "Commercial moving services",
       body: "Offices, retail, and small commercial spaces—after-hours when needed.",
-      href: "/commercial-movers",
+      href: "/services",
       image: "/images/moves/real-42.webp",
       imageAlt: "Toro Movers real commercial and office-style move work",
     },

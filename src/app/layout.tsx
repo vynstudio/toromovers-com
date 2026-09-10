@@ -58,9 +58,6 @@ export const metadata: Metadata = {
     email: true,
     address: true,
   },
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_US",

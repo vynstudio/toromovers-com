@@ -3,8 +3,10 @@ import UniversalLeadForm from "@/components/funnel/UniversalLeadForm";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export const metadata = {
-  title: "Local Movers in Central Florida | Free Quote | Toro Movers",
+  title: "Local Movers in Central Florida | Free Quote",
   description: "Get a free quote from Toro Movers for local moving, labor-only help, rental truck loading, PODs, and more in Central Florida.",
+  robots: { index: false, follow: false },
+  alternates: { canonical: "/lp/local-movers" },
 };
 
 const services = [
