@@ -12,12 +12,9 @@ import {
 } from "./site.ts";
 
 /**
- * Send-SMS is v1-only: POST /v1/messages.
- * The dated 2026-03-30 API requires `Quo-Api-Version` but cannot send yet
- * (retry/mark-read only). Do not send that header on this call — it selects
- * the 2026 contract and silently breaks outbound SMS.
- * @see https://www.quo.com/docs/mdx/api-reference/messages/send-a-text-message
- * @see https://www.quo.com/docs/2026-03-30/versioning
+ * Send-SMS: POST https://api.quo.com/v1/messages
+ * Headers: Authorization (raw key), Quo-Api-Version: 2026-03-30, User-Agent (Cloudflare).
+ * Team alerts ALWAYS go to process.env.LEAD_SMS_TO || +13217580094 — not lead.phone.
  */
 export const QUO_MESSAGES_URL = "https://api.quo.com/v1/messages";
 export const OPENPHONE_MESSAGES_URL = "https://api.openphone.com/v1/messages";
@@ -25,7 +22,7 @@ export const QUO_V1_MESSAGE_URLS = [
   QUO_MESSAGES_URL,
   OPENPHONE_MESSAGES_URL,
 ] as const;
-/** Dated API only — never attach this to v1 send-message. */
+/** Dated Quo API version. Required by current send-message examples. */
 export const QUO_API_VERSION = "2026-03-30";
 /** Quo workspace / sending number (689-600-2720). Never use this as LEAD_SMS_TO. */
 export const DEFAULT_QUO_FROM = "+16896002720";
@@ -146,6 +143,7 @@ export function quoRequestHeaders(
 ): Record<string, string> {
   return {
     Authorization: quoAuthorization(apiKey, auth),
+    "Quo-Api-Version": QUO_API_VERSION,
     "Content-Type": "application/json",
     Accept: "application/json",
     "User-Agent": QUO_USER_AGENT,
@@ -549,20 +547,22 @@ function escapeHtml(s: string) {
 }
 
 /**
- * Soft lead: Telegram + team Quo SMS.
- * Full lead: Telegram + team Quo SMS + client SMS (+ client email if address present).
+ * Soft + full leads: Telegram AND team Quo SMS to LEAD_SMS_TO (personal 321).
+ * Full leads also: client SMS to lead.phone (if consent) + client email.
  * Missing QUO_API_KEY never blocks lead acceptance.
  */
 export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]> {
   const results: NotifyResult[] = [];
 
-  // Internal — Telegram always
   results.push(await sendTelegram(teamMessage(lead)));
 
-  // Internal — Quo SMS: FROM workspace 689 → TO personal 321 (do not swap)
+  // ALWAYS send team SMS to LEAD_SMS_TO. This is independent of the client
+  // phone. Production missed Diler because an older notifyLead only texted
+  // lead.phone (customer) and never read this env var.
+  const teamTo = (process.env.LEAD_SMS_TO || DEFAULT_LEAD_SMS_TO).trim();
   results.push(
     await sendQuoMessage({
-      to: leadSmsTo(),
+      to: teamTo,
       from: quoFromNumber(),
       content: formatTeamLeadSms(lead),
       channel: "sms-team",
@@ -573,7 +573,7 @@ export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]>
     return results;
   }
 
-  // Client SMS
+  // Client SMS — customer number only, never LEAD_SMS_TO
   if (lead.consentSms === false) {
     results.push({ ok: false, channel: "sms-client", detail: "no SMS consent" });
   } else {

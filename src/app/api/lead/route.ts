@@ -4,8 +4,8 @@ import { notifyLead } from "@/lib/notify";
 /**
  * Lead intake for toromovers.com
  *
- * Soft lead (name+phone): Telegram + Quo team SMS.
- * Full lead: Telegram + Quo team SMS + client SMS/email from hello@toromovers.com.
+ * Soft + full leads: Telegram + team Quo SMS to LEAD_SMS_TO (always).
+ * Full lead: also client SMS/email from hello@toromovers.com.
  *
  * Optional: also forwards to toromovers.net CRM when configured.
  */
