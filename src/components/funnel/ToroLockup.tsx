@@ -20,7 +20,7 @@ export function ToroLockup({
   const inner = (
     <>
       <SafeImage
-        src="/logos/toro-bull-head.svg"
+        src="/logos/toro-bull-black.svg"
         alt=""
         width={bull}
         height={Math.round(bull * 0.87)}
