@@ -138,12 +138,16 @@ export default async function BlogPostPage({ params }: Props) {
 
           <p className="mt-6 text-sm text-muted">
             Related:{" "}
-            <a className="underline underline-offset-4" href="/apartment-movers-orlando-fl">
-              Apartment movers in Orlando
-            </a>
-            {" · "}
             <a className="underline underline-offset-4" href="/labor-only-moving">
               Labor-only movers
+            </a>
+            {" · "}
+            <a className="underline underline-offset-4" href="/loading-unloading">
+              Loading & unloading
+            </a>
+            {" · "}
+            <a className="underline underline-offset-4" href="/full-service-moving">
+              Full-service moving
             </a>
             {" · "}
             <a className="underline underline-offset-4" href="/services">
