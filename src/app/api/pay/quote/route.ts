@@ -17,6 +17,7 @@ export async function GET(req: Request) {
   });
   const needle = resolved.fields.quote_number;
   let depositPaidCents = 0;
+  let depositLookupFailed = false;
   if (needle && runtimeEnv("STRIPE_SECRET_KEY")) {
     try {
       depositPaidCents = await lookupDepositCreditCents(
@@ -25,10 +26,11 @@ export async function GET(req: Request) {
       );
     } catch (err) {
       console.error("[pay/quote] deposit lookup", err);
+      depositLookupFailed = true;
     }
   }
   const remainingCents =
-    resolved.quoteTotalCents != null
+    resolved.quoteTotalCents != null && !depositLookupFailed
       ? remainingMoveBalanceCents(resolved.quoteTotalCents, depositPaidCents)
       : null;
   return NextResponse.json({
@@ -37,6 +39,7 @@ export async function GET(req: Request) {
     signed: resolved.signed,
     depositPaidCents,
     remainingCents,
-    noDepositApplied: depositPaidCents <= 0,
+    noDepositApplied: !depositLookupFailed && depositPaidCents <= 0,
+    depositLookupFailed,
   });
 }

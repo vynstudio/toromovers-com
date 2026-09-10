@@ -1,0 +1,470 @@
+/* Isolated /pay + /pay/thanks styles. Do not reuse funnel copy or layout. */
+
+.pay-page {
+  --pay-ink: #0a0a0a;
+  --pay-accent: #e20613;
+  --pay-accent-hover: #b80510;
+  --pay-accent-soft: #fce6e8;
+  --pay-muted: #5c5c5c;
+  --pay-border: #e8e8e8;
+  --pay-bg: #f6f6f6;
+  --pay-card: #ffffff;
+  min-height: 100vh;
+  background: var(--pay-bg);
+  color: var(--pay-ink);
+}
+
+.pay-header {
+  border-bottom: 1px solid var(--pay-border);
+  background: var(--pay-card);
+}
+
+.pay-header-inner {
+  display: flex;
+  max-width: 42rem;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+}
+
+.pay-lockup {
+  display: inline-flex;
+  min-width: 0;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.4em;
+  color: inherit;
+  font-size: clamp(1.05rem, 5vw, 1.35rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.pay-lockup-mark {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.55em;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.pay-lockup-mark img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.pay-lockup-movers {
+  color: var(--pay-accent);
+  margin-left: 0.18em;
+}
+
+.pay-call {
+  display: inline-flex;
+  min-height: 2.75rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: var(--pay-accent);
+  padding: 0.55rem 1rem;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.pay-call:hover {
+  background: var(--pay-accent-hover);
+}
+
+.pay-main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2.25rem 1.25rem 4rem;
+}
+
+.pay-intro {
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.pay-kicker {
+  margin: 0;
+  color: var(--pay-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.pay-intro h1 {
+  margin: 0.7rem 0 0;
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.pay-lede {
+  max-width: 36rem;
+  margin: 0.85rem auto 0;
+  color: var(--pay-muted);
+  line-height: 1.6;
+}
+
+.pay-card {
+  background: var(--pay-card);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.06);
+  padding: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .pay-card {
+    padding: 1.75rem;
+  }
+}
+
+.pay-banner {
+  margin-bottom: 1rem;
+  border-radius: 0.9rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.pay-banner--warn {
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.pay-banner--error {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.pay-banner--info {
+  background: var(--pay-accent-soft);
+  color: var(--pay-ink);
+}
+
+.pay-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.pay-tab,
+.pay-preset,
+.pay-submit,
+.pay-ghost {
+  font: inherit;
+  cursor: pointer;
+}
+
+.pay-tab {
+  border: 1px solid var(--pay-border);
+  border-radius: 0.9rem;
+  background: #fff;
+  padding: 0.8rem 0.7rem;
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.pay-tab:hover,
+.pay-preset:hover {
+  border-color: var(--pay-ink);
+}
+
+.pay-tab.is-on,
+.pay-preset.is-on {
+  border-color: var(--pay-ink);
+  background: var(--pay-ink);
+  color: #fff;
+}
+
+.pay-presets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+@media (min-width: 640px) {
+  .pay-presets {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.pay-preset {
+  border: 1px solid var(--pay-border);
+  border-radius: 0.9rem;
+  background: #fff;
+  padding: 0.9rem 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.pay-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.pay-label input,
+.pay-input {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  border: 1px solid #d4d4d8;
+  border-radius: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  font: inherit;
+  font-weight: 500;
+  background: #fff;
+}
+
+.pay-label input:read-only,
+.pay-input:read-only {
+  background: #fafafa;
+}
+
+.pay-label input:focus,
+.pay-input:focus,
+.pay-tab:focus-visible,
+.pay-preset:focus-visible,
+.pay-submit:focus-visible {
+  outline: 2px solid var(--pay-accent);
+  outline-offset: 2px;
+}
+
+.pay-fields {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .pay-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .pay-fields .pay-span-2 {
+    grid-column: span 2;
+  }
+}
+
+.pay-details {
+  border: 1px solid var(--pay-border);
+  border-radius: 0.9rem;
+  padding: 0.35rem 0.9rem 0.9rem;
+}
+
+.pay-details > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.7rem 0;
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.pay-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.pay-tip-option {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  border: 1px solid var(--pay-border);
+  border-radius: 0.9rem;
+  background: #fff;
+  padding: 0.8rem 1rem;
+  font-size: 0.875rem;
+}
+
+.pay-tip-option.is-on {
+  border-color: var(--pay-ink);
+  background: var(--pay-ink);
+  color: #fff;
+}
+
+.pay-tip-option input {
+  accent-color: currentColor;
+}
+
+.pay-summary {
+  border-radius: 0.9rem;
+  background: #f7f7f7;
+  padding: 1rem 1.1rem;
+  font-size: 0.9rem;
+}
+
+.pay-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pay-summary-row + .pay-summary-row {
+  margin-top: 0.35rem;
+}
+
+.pay-summary-row.is-muted {
+  color: var(--pay-muted);
+}
+
+.pay-summary-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.65rem;
+  border-top: 1px solid #e4e4e7;
+  padding-top: 0.65rem;
+  font-weight: 900;
+}
+
+.pay-submit {
+  width: 100%;
+  min-height: 3.15rem;
+  border: 0;
+  border-radius: 0.9rem;
+  background: var(--pay-accent);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.pay-submit:hover:not(:disabled) {
+  background: var(--pay-accent-hover);
+}
+
+.pay-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.pay-ghost {
+  border: 0;
+  background: none;
+  color: var(--pay-ink);
+  font-size: 0.875rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  padding: 0;
+}
+
+.pay-help {
+  margin: 0;
+  text-align: center;
+  color: var(--pay-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.pay-checkout {
+  display: grid;
+  gap: 1rem;
+}
+
+.pay-checkout-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+/* Stripe iframe: global `iframe { height: auto }` collapses embeds. */
+.pay-embed {
+  position: relative;
+  width: 100%;
+  min-height: 28rem;
+  overflow: visible;
+  background: #fff;
+  border-radius: 0.75rem;
+}
+
+.pay-embed iframe,
+.pay-page iframe {
+  width: 100% !important;
+  max-width: 100%;
+  min-height: 28rem;
+  display: block;
+  border: 0;
+  background: #fff;
+}
+
+.pay-embed-frame {
+  width: 100%;
+  min-height: 28rem;
+}
+
+.pay-thanks-main {
+  display: grid;
+  place-items: center;
+  padding: 2.5rem 1.25rem 4rem;
+}
+
+.pay-thanks-card {
+  width: 100%;
+  max-width: 32rem;
+  text-align: center;
+}
+
+.pay-thanks-mark {
+  display: grid;
+  width: 4rem;
+  height: 4rem;
+  margin: 0 auto;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--pay-ink);
+  color: #fff;
+  font-size: 1.75rem;
+}
+
+.pay-thanks-card h1 {
+  margin: 0.75rem 0 0;
+  font-size: clamp(1.6rem, 4vw, 2.15rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.pay-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .pay-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.pay-secondary {
+  display: inline-flex;
+  min-height: 3.15rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d4d4d8;
+  border-radius: 0.9rem;
+  padding: 0.75rem 1.4rem;
+  color: inherit;
+  font-weight: 800;
+  text-decoration: none;
+}

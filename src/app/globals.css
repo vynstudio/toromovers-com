@@ -429,10 +429,15 @@ body {
 /* -------------------------------------------------------------------------- */
 img,
 video,
-iframe,
 svg {
   max-width: 100%;
   height: auto;
+}
+
+/* Do not force iframe height:auto — Stripe Embedded Checkout sizes its iframe.
+   height:auto collapses the deposit/balance embed to a sliver on /pay. */
+iframe {
+  max-width: 100%;
 }
 
 .img-card,

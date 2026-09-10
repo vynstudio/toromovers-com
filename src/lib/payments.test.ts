@@ -19,6 +19,13 @@ import {
   verifyQuoteToken,
   resolveQuoteInput,
 } from "./quote-pay.ts";
+import {
+  PAY_ACCENT,
+  PAY_DISPLAY_NAME,
+  stripeCheckoutBranding,
+  stripeCheckoutCustomText,
+  stripeStatementSuffix,
+} from "./pay-brand.ts";
 
 
 test("fee label is exactly Processing Fee (3.5%)", () => {
@@ -154,3 +161,32 @@ test("PDF pay URLs do not include raw amounts", () => {
   assert.equal(deposit.includes("1560"), false);
   assert.equal(deposit.includes("sk_"), false);
 });
+
+test("embedded checkout branding is Toro red on Inter", () => {
+  const branding = stripeCheckoutBranding();
+  assert.equal(branding.button_color, PAY_ACCENT);
+  assert.equal(PAY_ACCENT, "#E20613");
+  assert.equal(branding.display_name, PAY_DISPLAY_NAME);
+  assert.equal(branding.font_family, "inter");
+  assert.equal(branding.border_style, "rounded");
+  assert.equal(stripeStatementSuffix().length <= 22, true);
+});
+
+test("checkout button copy matches deposit vs remaining balance", () => {
+  assert.equal(stripeCheckoutCustomText("deposit").submit.message, "Pay deposit");
+  assert.equal(
+    stripeCheckoutCustomText("balance").submit.message,
+    "Pay remaining balance",
+  );
+  assert.match(stripeCheckoutCustomText("deposit").after_submit.message, /689/);
+});
+
+test("invalid quote token is unsigned so /pay can warn", () => {
+  const resolved = resolveQuoteInput({
+    token: "not.a.token",
+    secret: "test-quote-secret",
+  });
+  assert.equal(resolved.signed, false);
+  assert.equal(resolved.quoteTotalCents, null);
+});
+

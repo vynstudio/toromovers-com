@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { PayShell } from "@/components/pay/PayShell";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 function ThanksBody() {
@@ -80,22 +81,24 @@ function ThanksBody() {
   }
 
   return (
-    <section className="max-w-xl rounded-3xl bg-white p-8 text-center text-zinc-950 shadow-2xl sm:p-12">
-      <div className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-black text-3xl text-white">
-        {status === "complete" ? "✓" : status === "loading" ? "…" : "!"}
-      </div>
-      <p className="mt-6 text-sm font-extrabold uppercase tracking-widest text-zinc-500">
-        Toro Movers
-      </p>
-      <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">{heading}</h1>
-      <p className="mt-5 leading-7 text-zinc-600">{body}</p>
-      <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <a href={PHONE_TEL} className="rounded-xl bg-black px-6 py-4 font-extrabold text-white">
-          Call {PHONE_DISPLAY}
-        </a>
-        <Link href="/" className="rounded-xl border border-zinc-300 px-6 py-4 font-extrabold">
-          Back to Toro Movers
-        </Link>
+    <section className="pay-thanks-main">
+      <div className="pay-card pay-thanks-card">
+        <div className="pay-thanks-mark" aria-hidden>
+          {status === "complete" ? "✓" : status === "loading" ? "…" : "!"}
+        </div>
+        <p className="pay-kicker" style={{ marginTop: "1.25rem" }}>
+          Toro Movers
+        </p>
+        <h1>{heading}</h1>
+        <p className="pay-lede">{body}</p>
+        <div className="pay-actions">
+          <a href={PHONE_TEL} className="pay-call" style={{ minHeight: "3.15rem" }}>
+            Call {PHONE_DISPLAY}
+          </a>
+          <Link href="/" className="pay-secondary">
+            Back to Toro Movers
+          </Link>
+        </div>
       </div>
     </section>
   );
@@ -103,10 +106,10 @@ function ThanksBody() {
 
 export default function PayThanksPage() {
   return (
-    <main className="grid min-h-screen place-items-center bg-zinc-950 px-5 text-white">
+    <PayShell>
       <Suspense>
         <ThanksBody />
       </Suspense>
-    </main>
+    </PayShell>
   );
 }

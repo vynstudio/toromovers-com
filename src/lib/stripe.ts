@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { runtimeEnv, stripePublishableKey } from "@/lib/env";
-import { SITE_URL } from "@/lib/site";
+import { PHONE_DISPLAY, SITE_URL } from "@/lib/site";
 import {
   CUSTOM_TIP_MAX_USD,
   PAYMENT_KIND,
@@ -17,6 +17,11 @@ import {
   type TipType,
 } from "@/lib/payments";
 import { resolveQuoteInput } from "@/lib/quote-pay";
+import {
+  stripeCheckoutBranding,
+  stripeCheckoutCustomText,
+  stripeStatementSuffix,
+} from "@/lib/pay-brand";
 
 export { formatUsd } from "@/lib/payments";
 
@@ -80,7 +85,42 @@ function depositCreditFromSession(session: Stripe.Checkout.Session): number {
   return Number.isFinite(cents) && cents > 0 ? cents : 0;
 }
 
-/** Sum successful deposit amounts for a quote. Does not include Processing Fee (3.5%). */
+function sessionMatchesQuote(
+  session: Stripe.Checkout.Session,
+  needle: string,
+  reference: string,
+): boolean {
+  const metaQuote = clipField(session.metadata?.quote_number, 80);
+  const metaRef = clipField(session.metadata?.move_reference, 80);
+  return Boolean((needle && metaQuote === needle) || (reference && metaRef === reference));
+}
+
+const DEPOSIT_LOOKUP_PAGES = 20;
+
+async function listDepositSessions(
+  stripe: Stripe,
+  needle: string,
+  reference: string,
+): Promise<Stripe.Checkout.Session[]> {
+  const matches: Stripe.Checkout.Session[] = [];
+  let startingAfter: string | undefined;
+  for (let page = 0; page < DEPOSIT_LOOKUP_PAGES; page += 1) {
+    const listed = await stripe.checkout.sessions.list({
+      limit: 100,
+      status: "complete",
+      ...(startingAfter ? { starting_after: startingAfter } : {}),
+    });
+    for (const session of listed.data) {
+      if (sessionMatchesQuote(session, needle, reference)) matches.push(session);
+    }
+    if (!listed.has_more) return matches;
+    startingAfter = listed.data.at(-1)?.id;
+    if (!startingAfter) return matches;
+  }
+  return matches;
+}
+
+/** Sum successful deposit amounts for a quote. Does not include Processing Fee (3.5%). Throws if Stripe is unreachable so remaining-balance checkout cannot silently skip a deposit credit. */
 export async function lookupDepositCreditCents(
   quoteNumber: string,
   moveReference = "",
@@ -89,18 +129,7 @@ export async function lookupDepositCreditCents(
   const reference = clipField(moveReference, 80);
   if (!needle && !reference) return 0;
   const stripe = getStripe();
-  let sessions: Stripe.Checkout.Session[] = [];
-  try {
-    const listed = await stripe.checkout.sessions.list({ limit: 100, status: "complete" });
-    sessions = listed.data.filter((session) => {
-      const metaQuote = clipField(session.metadata?.quote_number, 80);
-      const metaRef = clipField(session.metadata?.move_reference, 80);
-      return (needle && metaQuote === needle) || (reference && metaRef === reference);
-    });
-  } catch (err) {
-    console.error("[stripe] deposit lookup", err);
-    return 0;
-  }
+  const sessions = await listDepositSessions(stripe, needle, reference);
   return sessions.reduce((sum, session) => sum + depositCreditFromSession(session), 0);
 }
 
@@ -118,6 +147,7 @@ export type CreatePaymentInput = {
 type BuiltSession = {
   params: Stripe.Checkout.SessionCreateParams;
   kind: PaymentKind;
+  fields: QuoteFields;
 };
 
 function quoteContext(input: CreatePaymentInput): {
@@ -181,7 +211,7 @@ async function buildDepositSession(input: CreatePaymentInput): Promise<BuiltSess
     ],
   };
   if (fields.customer_email.includes("@")) params.customer_email = fields.customer_email;
-  return { params, kind: "deposit" };
+  return { params, kind: "deposit", fields };
 }
 
 async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSession> {
@@ -190,7 +220,13 @@ async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSess
   if (!quoteTotalCents || quoteTotalCents <= 0) {
     throw new Error("Enter the approved quote total.");
   }
-  const depositCredit = await lookupDepositCreditCents(fields.quote_number, fields.move_reference);
+  let depositCredit = 0;
+  try {
+    depositCredit = await lookupDepositCreditCents(fields.quote_number, fields.move_reference);
+  } catch (err) {
+    console.error("[stripe] deposit lookup for balance", err);
+    throw new Error(`Could not verify the deposit on this quote. Call ${PHONE_DISPLAY}.`);
+  }
   const tipType: TipType = parseTipType(input.tipType);
   const customTipUsd = parseUsd(input.customTipUsd);
   const customTipCents =
@@ -264,7 +300,7 @@ async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSess
     line_items: lineItems,
   };
   if (fields.customer_email.includes("@")) params.customer_email = fields.customer_email;
-  return { params, kind: "balance" };
+  return { params, kind: "balance", fields };
 }
 
 async function buildTipSession(input: CreatePaymentInput): Promise<BuiltSession> {
@@ -315,15 +351,38 @@ async function buildTipSession(input: CreatePaymentInput): Promise<BuiltSession>
     ],
   };
   if (fields.customer_email.includes("@")) params.customer_email = fields.customer_email;
-  return { params, kind: "tip" };
+  return { params, kind: "tip", fields };
 }
 
-async function createEmbeddedSession(
-  params: Stripe.Checkout.SessionCreateParams,
-): Promise<Stripe.Checkout.Session> {
+function sessionPresentation(
+  kind: PaymentKind,
+  fields: QuoteFields,
+): Pick<
+  Stripe.Checkout.SessionCreateParams,
+  "locale" | "branding_settings" | "custom_text" | "payment_intent_data" | "client_reference_id"
+> {
+  const spec = PAYMENT_KIND[kind];
+  const who = fields.quote_number
+    ? `${spec.shortLabel} ${fields.quote_number}`
+    : spec.productName;
+  return {
+    locale: "en",
+    branding_settings: stripeCheckoutBranding(),
+    custom_text: stripeCheckoutCustomText(kind),
+    payment_intent_data: {
+      description: clipField(`Toro Movers — ${who}`, 1000),
+      statement_descriptor_suffix: stripeStatementSuffix(),
+    },
+    client_reference_id:
+      clipField(fields.quote_number || fields.move_reference, 200) || undefined,
+  };
+}
+
+async function createEmbeddedSession(built: BuiltSession): Promise<Stripe.Checkout.Session> {
   // Stripe API 2026-08-26.dahlia rejects ui_mode=embedded. Use embedded_page.
   const session = await getStripe().checkout.sessions.create({
-    ...params,
+    ...built.params,
+    ...sessionPresentation(built.kind, built.fields),
     ui_mode: "embedded_page",
   });
   if (!session.client_secret) {
@@ -341,7 +400,7 @@ export async function createPaymentSession(
       : input.kind === "balance"
         ? await buildBalanceSession(input)
         : await buildTipSession(input);
-  const session = await createEmbeddedSession(built.params);
+  const session = await createEmbeddedSession(built);
   if (!session.client_secret) {
     throw new Error("Could not start checkout.");
   }
