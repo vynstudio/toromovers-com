@@ -10,6 +10,7 @@
     "test:payments": "node --experimental-strip-types --test src/lib/payments.test.ts"
   },
   "dependencies": {
+    "@netlify/blobs": "^10.7.13",
     "@netlify/plugin-nextjs": "^5.15.12",
     "@stripe/react-stripe-js": "^6.9.0",
     "@stripe/stripe-js": "^9.15.0",

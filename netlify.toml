@@ -181,29 +181,8 @@
   status = 200
   force = true
 
-[[redirects]]
-  from = "/move-day-checklist"
-  to = "https://live-toro-site.netlify.app/move-day-checklist"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/move-day-checklist/*"
-  to = "https://live-toro-site.netlify.app/move-day-checklist/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/movingday-checklist"
-  to = "https://live-toro-site.netlify.app/movingday-checklist"
-  status = 200
-  force = true
-
-[[redirects]]
-  from = "/movingday-checklist/*"
-  to = "https://live-toro-site.netlify.app/movingday-checklist/:splat"
-  status = 200
-  force = true
+# /move-day-checklist is served by this Next app. Do not proxy it back
+# onto live-toro-site.netlify.app — that is the same site and 404s.
 
 [[redirects]]
   from = "/move-details"
@@ -219,26 +198,38 @@
 
 [[redirects]]
   from = "/job-size"
-  to = "https://live-toro-site.netlify.app/job-size"
-  status = 200
+  to = "/move-day-checklist"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/job-size/*"
-  to = "https://live-toro-site.netlify.app/job-size/:splat"
-  status = 200
+  to = "/move-day-checklist"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/your-move"
-  to = "https://live-toro-site.netlify.app/your-move"
-  status = 200
+  to = "/move-day-checklist"
+  status = 301
   force = true
 
 [[redirects]]
   from = "/your-move/*"
-  to = "https://live-toro-site.netlify.app/your-move/:splat"
-  status = 200
+  to = "/move-day-checklist"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/movingday-checklist"
+  to = "/move-day-checklist"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/movingday-checklist/*"
+  to = "/move-day-checklist"
+  status = 301
   force = true
 
 [[redirects]]
