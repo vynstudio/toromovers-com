@@ -6,7 +6,7 @@
  * Shared 320x200 viewBox keeps all three optically the same size in the card.
  */
 
-import Image from "next/image";
+import { SafeImage } from "@/components/SafeImage";
 
 const NAVY = "#1B2A52";
 const NAVY_DEEP = "#101C3A";
@@ -228,8 +228,8 @@ export function VectorSlot({
   className?: string;
 }) {
   return (
-    <div className={`vec-slot ${className}`.trim()}>
-      <Image
+    <div className={`vec-slot ${className}`.trim()} aria-hidden>
+      <SafeImage
         src={VECTOR_ART[kind]}
         alt=""
         fill

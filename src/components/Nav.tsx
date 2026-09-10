@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { SafeImage } from "@/components/SafeImage";
 import { useEffect, useState } from "react";
 import { nav } from "@/lib/content";
 import { BUSINESS_NAME, PHONE_TEL, QUOTE_PATH } from "@/lib/site";
@@ -76,7 +76,7 @@ export function Nav() {
               onClick={closeMenu}
             >
               <span className="brand-mark" aria-hidden>
-                <Image
+                <SafeImage
                   src="/logos/toro-bull-black.svg"
                   alt=""
                   width={32}
