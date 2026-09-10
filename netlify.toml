@@ -178,12 +178,6 @@
 
 # SEO money pages (dead self-proxies) → live design equivalents
 [[redirects]]
-  from = "/loading-unloading"
-  to = "/services"
-  status = 301
-  force = true
-
-[[redirects]]
   from = "/residential-movers"
   to = "/full-service-moving"
   status = 301
@@ -227,7 +221,7 @@
 
 [[redirects]]
   from = "/loading-help"
-  to = "/services"
+  to = "/loading-unloading"
   status = 301
   force = true
 
