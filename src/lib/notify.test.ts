@@ -3,11 +3,15 @@ import test from "node:test";
 import {
   DEFAULT_LEAD_SMS_TO,
   DEFAULT_QUO_FROM,
+  DEFAULT_QUO_FROM_PHONE_NUMBER_ID,
   OPENPHONE_MESSAGES_URL,
   QUO_MESSAGES_URL,
+  QUO_USER_AGENT,
   formatTeamLeadSms,
+  looksLikeCloudflareChallenge,
   normalizeQuoApiKey,
   notifyLead,
+  quoFromCandidates,
   redactQuoLog,
   sendQuoMessage,
   type LeadNotifyInput,
@@ -42,6 +46,7 @@ function stubEnv(overrides: Record<string, string | undefined>) {
   const keys = [
     "QUO_API_KEY",
     "QUO_FROM_NUMBER",
+    "QUO_FROM_PHONE_NUMBER_ID",
     "LEAD_SMS_TO",
     "TELEGRAM_BOT_TOKEN",
     "TELEGRAM_CHAT_ID",
@@ -79,6 +84,34 @@ test("team SMS includes client details and confirmation", () => {
 test("normalizeQuoApiKey strips accidental Bearer prefix", () => {
   assert.equal(normalizeQuoApiKey("  Bearer secret-key  "), "secret-key");
   assert.equal(normalizeQuoApiKey("secret-key"), "secret-key");
+});
+
+test("quoFromCandidates keeps 689 first and PN id second, never 321", () => {
+  const restore = stubEnv({
+    QUO_FROM_NUMBER: "+16896002720",
+    LEAD_SMS_TO: "+13217580094",
+  });
+  try {
+    const froms = quoFromCandidates();
+    assert.deepEqual(froms, ["+16896002720", DEFAULT_QUO_FROM_PHONE_NUMBER_ID]);
+    assert.equal(froms.includes("+13217580094"), false);
+  } finally {
+    restore();
+  }
+});
+
+test("looksLikeCloudflareChallenge detects HTML interstitial, not JSON 403", () => {
+  assert.equal(
+    looksLikeCloudflareChallenge(403, "<!DOCTYPE html><html>Just a moment</html>"),
+    true,
+  );
+  assert.equal(
+    looksLikeCloudflareChallenge(
+      403,
+      JSON.stringify({ error: { message: "Forbidden" } }),
+    ),
+    false,
+  );
 });
 
 test("redactQuoLog never echoes the API key", () => {
@@ -143,6 +176,8 @@ test("notifyLead posts team SMS to Quo v1 with raw auth and no dated version hea
     assert.ok(team, "expected team Quo SMS");
     assert.equal(team.headers.authorization, "test-quo-key");
     assert.equal(team.headers["quo-api-version"], undefined);
+    assert.equal(team.headers["user-agent"], QUO_USER_AGENT);
+    assert.equal(team.headers.accept, "application/json");
     assert.equal(team.body.from, "+16896002720");
     assert.deepEqual(team.body.to, ["+13217580094"]);
     assert.notEqual(
@@ -256,6 +291,49 @@ test("sendQuoMessage falls back to api.openphone.com after 404 on api.quo.com", 
     assert.equal(calls[1]?.url, OPENPHONE_MESSAGES_URL);
     assert.equal(calls[1]?.headers.authorization, "test-quo-key");
     assert.equal(calls[1]?.body.to[0], DEFAULT_LEAD_SMS_TO);
+  } finally {
+    globalThis.fetch = originalFetch;
+    restore();
+  }
+});
+
+test("sendQuoMessage retries from as phoneNumberId when E.164 from is rejected", async () => {
+  const restore = stubEnv({
+    QUO_API_KEY: "test-quo-key",
+    QUO_FROM_NUMBER: "+16896002720",
+    LEAD_SMS_TO: "+13217580094",
+  });
+  const calls: FetchCall[] = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = (async (url, init) => {
+    const body = JSON.parse(String(init?.body || "{}"));
+    calls.push({
+      url: String(url),
+      headers: headerMap(init),
+      body,
+    });
+    if (body.from === "+16896002720") {
+      return new Response(
+        JSON.stringify({
+          error: { message: "Invalid from", key: "InvalidPhoneNumber" },
+        }),
+        { status: 400 },
+      );
+    }
+    return new Response("{}", { status: 202 });
+  }) as typeof fetch;
+
+  try {
+    const result = await sendQuoMessage({
+      to: DEFAULT_LEAD_SMS_TO,
+      content: "hello",
+      channel: "sms-team",
+    });
+    assert.equal(result.ok, true);
+    assert.equal(calls[0]?.body.from, "+16896002720");
+    assert.equal(calls[1]?.body.from, DEFAULT_QUO_FROM_PHONE_NUMBER_ID);
+    assert.deepEqual(calls[1]?.body.to, ["+13217580094"]);
+    assert.equal(calls[1]?.headers["user-agent"], QUO_USER_AGENT);
   } finally {
     globalThis.fetch = originalFetch;
     restore();

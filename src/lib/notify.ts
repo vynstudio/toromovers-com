@@ -31,7 +31,15 @@ export const QUO_API_VERSION = "2026-03-30";
 export const DEFAULT_QUO_FROM = "+16896002720";
 /** Personal alert destination (321-758-0094). Not a Quo number. Never swap with FROM. */
 export const DEFAULT_LEAD_SMS_TO = "+13217580094";
+/** Quo phone number id for workspace 689. Same sender as DEFAULT_QUO_FROM; used if E.164 `from` is rejected. */
+export const DEFAULT_QUO_FROM_PHONE_NUMBER_ID = "PN3sKfvpYp";
 export const QUO_SMS_MAX_CHARS = 1600;
+/**
+ * Cloudflare in front of api.quo.com 403s some default/empty/urllib-style User-Agents.
+ * Node/undici often sends `node` or omits UA in serverless runtimes. Send a browser-like UA.
+ */
+export const QUO_USER_AGENT =
+  "Mozilla/5.0 (compatible; ToroMoversLead/1.0; +https://toromovers.com) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
 
 export type NotifyResult = {
@@ -99,8 +107,61 @@ export function quoFromNumber(): string {
   ).trim();
 }
 
+export function quoFromPhoneNumberId(): string {
+  return (
+    process.env.QUO_FROM_PHONE_NUMBER_ID ||
+    DEFAULT_QUO_FROM_PHONE_NUMBER_ID
+  ).trim();
+}
+
+export function isQuoPhoneNumberId(raw: string): boolean {
+  return /^PN[A-Za-z0-9]+$/.test(raw.trim());
+}
+
+/** FROM candidates: E.164 689 first, then workspace phoneNumberId. Never include LEAD_SMS_TO. */
+export function quoFromCandidates(explicitFrom?: string): string[] {
+  const values: string[] = [];
+  const add = (raw: string | null | undefined) => {
+    const value = (raw || "").trim();
+    if (!value || values.includes(value)) return;
+    values.push(value);
+  };
+  const explicit = (explicitFrom || "").trim();
+  if (explicit) {
+    if (isQuoPhoneNumberId(explicit)) add(explicit);
+    else add(e164(explicit) || explicit);
+  }
+  add(e164(quoFromNumber()) || quoFromNumber());
+  add(quoFromPhoneNumberId());
+  return values.filter((value) => e164(value) !== e164(leadSmsTo()));
+}
+
 export function leadSmsTo(): string {
   return (process.env.LEAD_SMS_TO || DEFAULT_LEAD_SMS_TO).trim();
+}
+
+export function quoRequestHeaders(
+  apiKey: string,
+  auth: "raw" | "bearer",
+): Record<string, string> {
+  return {
+    Authorization: quoAuthorization(apiKey, auth),
+    "Content-Type": "application/json",
+    Accept: "application/json",
+    "User-Agent": QUO_USER_AGENT,
+  };
+}
+
+export function looksLikeCloudflareChallenge(status: number, body: string): boolean {
+  if (![403, 429, 503].includes(status)) return false;
+  const lower = body.toLowerCase();
+  return (
+    lower.includes("<!doctype html") ||
+    lower.includes("<html") ||
+    lower.includes("just a moment") ||
+    lower.includes("cf-challenge") ||
+    lower.includes("attention required")
+  );
 }
 
 export function redactQuoLog(text: string, apiKey?: string): string {
@@ -144,9 +205,11 @@ function summarizeQuoError(status: number, body: string): string {
 type QuoAttempt = {
   url: string;
   auth: "raw" | "bearer";
+  from: string;
   status?: number;
   detail: string;
   ok: boolean;
+  cloudflare?: boolean;
 };
 
 async function postQuoV1Message(opts: {
@@ -158,35 +221,58 @@ async function postQuoV1Message(opts: {
   to: string;
 }): Promise<QuoAttempt> {
   const { url, apiKey, auth, content, from, to } = opts;
+  const fromLabel = isQuoPhoneNumberId(from) ? from : `…${from.slice(-4)}`;
   try {
     const res = await fetch(url, {
       method: "POST",
-      headers: {
-        Authorization: quoAuthorization(apiKey, auth),
-        "Content-Type": "application/json",
-      },
+      headers: quoRequestHeaders(apiKey, auth),
       body: JSON.stringify({ content, from, to: [to] }),
     });
     const rawBody = await res.text().catch(() => "");
     const safeBody = redactQuoLog(rawBody, apiKey);
+    const cloudflare = looksLikeCloudflareChallenge(res.status, rawBody);
     if (!res.ok) {
       const detail = redactQuoLog(
-        `${summarizeQuoError(res.status, rawBody)} host=${hostOf(url)} auth=${auth}`,
+        [
+          summarizeQuoError(res.status, rawBody),
+          cloudflare ? "cloudflare_challenge" : "",
+          `host=${hostOf(url)}`,
+          `auth=${auth}`,
+          `from=${fromLabel}`,
+        ]
+          .filter(Boolean)
+          .join(" "),
         apiKey,
       );
       console.error("[quo] SMS failed", detail, safeBody);
-      return { url, auth, status: res.status, detail, ok: false };
+      return {
+        url,
+        auth,
+        from,
+        status: res.status,
+        detail,
+        ok: false,
+        cloudflare,
+      };
     }
-    return { url, auth, status: res.status, detail: `HTTP ${res.status}`, ok: true };
+    return {
+      url,
+      auth,
+      from,
+      status: res.status,
+      detail: `HTTP ${res.status}`,
+      ok: true,
+    };
   } catch (err) {
     const thrown = err instanceof Error ? err.message : "threw";
-    const detail = `threw host=${hostOf(url)} auth=${auth} ${redactQuoLog(thrown, apiKey)}`;
+    const detail = `threw host=${hostOf(url)} auth=${auth} from=${fromLabel} ${redactQuoLog(thrown, apiKey)}`;
     console.error("[quo] SMS threw", detail);
-    return { url, auth, detail, ok: false };
+    return { url, auth, from, detail, ok: false };
   }
 }
 
 const QUO_HOST_RETRY_STATUSES = new Set([404, 405, 408, 429, 500, 502, 503, 504]);
+const QUO_FROM_RETRY_STATUSES = new Set([400, 403, 409, 422]);
 
 function succeededQuoSend(
   attempt: QuoAttempt,
@@ -195,11 +281,18 @@ function succeededQuoSend(
   channel: string,
 ): NotifyResult | null {
   if (!attempt.ok) return null;
-  if (url !== QUO_MESSAGES_URL || attempt.auth !== "raw") {
+  const usedFallback =
+    url !== QUO_MESSAGES_URL ||
+    attempt.auth !== "raw" ||
+    isQuoPhoneNumberId(attempt.from);
+  if (usedFallback) {
     console.info("[quo] SMS sent via fallback", {
       host: hostOf(url),
       auth: attempt.auth,
       status: attempt.status,
+      from: isQuoPhoneNumberId(attempt.from)
+        ? attempt.from
+        : `…${attempt.from.slice(-4)}`,
       to: to.slice(-4),
     });
   }
@@ -226,9 +319,12 @@ export async function sendQuoMessage(opts: {
     };
   }
   const to = e164(opts.to);
-  const from = e164(opts.from || quoFromNumber()) || quoFromNumber();
+  const fromValues = quoFromCandidates(opts.from);
   if (!to) {
     return { ok: false, channel, detail: "invalid phone" };
+  }
+  if (!fromValues.length) {
+    return { ok: false, channel, detail: "invalid from" };
   }
   const content = opts.content.trim().slice(0, QUO_SMS_MAX_CHARS);
   if (!content) {
@@ -236,38 +332,49 @@ export async function sendQuoMessage(opts: {
   }
 
   let last: QuoAttempt | undefined;
-  for (const url of QUO_V1_MESSAGE_URLS) {
-    const raw = await postQuoV1Message({
-      url,
-      apiKey,
-      auth: "raw",
-      content,
-      from,
-      to,
-    });
-    last = raw;
-    const rawOk = succeededQuoSend(raw, url, to, channel);
-    if (rawOk) return rawOk;
-
-    if (raw.status === 401) {
-      const bearer = await postQuoV1Message({
+  urlLoop: for (const url of QUO_V1_MESSAGE_URLS) {
+    for (const from of fromValues) {
+      const raw = await postQuoV1Message({
         url,
         apiKey,
-        auth: "bearer",
+        auth: "raw",
         content,
         from,
         to,
       });
-      last = bearer;
-      const bearerOk = succeededQuoSend(bearer, url, to, channel);
-      if (bearerOk) return bearerOk;
-      continue;
-    }
+      last = raw;
+      const rawOk = succeededQuoSend(raw, url, to, channel);
+      if (rawOk) return rawOk;
 
-    if (raw.status === undefined || QUO_HOST_RETRY_STATUSES.has(raw.status)) {
-      continue;
+      if (raw.status === 401) {
+        const bearer = await postQuoV1Message({
+          url,
+          apiKey,
+          auth: "bearer",
+          content,
+          from,
+          to,
+        });
+        last = bearer;
+        const bearerOk = succeededQuoSend(bearer, url, to, channel);
+        if (bearerOk) return bearerOk;
+        continue urlLoop;
+      }
+
+      if (raw.cloudflare) {
+        continue urlLoop;
+      }
+
+      if (raw.status !== undefined && QUO_FROM_RETRY_STATUSES.has(raw.status)) {
+        continue;
+      }
+
+      if (raw.status === undefined || QUO_HOST_RETRY_STATUSES.has(raw.status)) {
+        continue urlLoop;
+      }
+
+      break urlLoop;
     }
-    break;
   }
 
   return {
