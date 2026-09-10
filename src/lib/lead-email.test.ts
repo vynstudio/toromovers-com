@@ -25,6 +25,27 @@ test("parseBareEmail unwraps quotes and display names", () => {
   assert.equal(parseBareEmail("not-an-email"), null);
 });
 
+test("resendSender uses RESEND_FROM_EMAIL as-is for .net or .com and does not guess", () => {
+  const prev = process.env.RESEND_FROM_EMAIL;
+  try {
+    process.env.RESEND_FROM_EMAIL = "hello@toromovers.net";
+    const net = resendSender();
+    assert.equal(net?.from, "Toro Movers <hello@toromovers.net>");
+    assert.equal(net?.replyTo, "hello@toromovers.net");
+
+    process.env.RESEND_FROM_EMAIL = "hello@toromovers.com";
+    const com = resendSender();
+    assert.equal(com?.from, "Toro Movers <hello@toromovers.com>");
+    assert.equal(com?.replyTo, "hello@toromovers.com");
+
+    delete process.env.RESEND_FROM_EMAIL;
+    assert.equal(resendSender(), null);
+  } finally {
+    if (prev === undefined) delete process.env.RESEND_FROM_EMAIL;
+    else process.env.RESEND_FROM_EMAIL = prev;
+  }
+});
+
 test("resendSender never double-wraps from and uses a bare reply_to", () => {
   const prev = process.env.RESEND_FROM_EMAIL;
   process.env.RESEND_FROM_EMAIL = "Toro Movers <hello@toromovers.com>";
@@ -49,7 +70,7 @@ test("formatResendError explains domain verification and invalid from", () => {
         name: "validation_error",
       }),
     ),
-    /domain not verified/,
+    /RESEND_FROM_EMAIL must match a verified Resend domain/,
   );
   assert.match(
     formatResendError(

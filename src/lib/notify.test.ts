@@ -119,6 +119,34 @@ test("notifyLead does not SMS LEAD_SMS_TO; team is Telegram only", async () => {
   }
 });
 
+test("sendEmail sends from hello@toromovers.net when that is RESEND_FROM_EMAIL", async () => {
+  const restore = stubEnv({
+    RESEND_API_KEY: "re_test",
+    RESEND_FROM_EMAIL: "hello@toromovers.net",
+  });
+  let body: Record<string, unknown> = {};
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = (async (_url, init) => {
+    body = JSON.parse(String(init?.body || "{}"));
+    return new Response("{}", { status: 200 });
+  }) as typeof fetch;
+
+  try {
+    const result = await sendEmail({
+      to: "ada@example.com",
+      subject: "Hi",
+      html: "<p>Hi</p>",
+      text: "Hi",
+    });
+    assert.equal(result.ok, true);
+    assert.equal(body.from, "Toro Movers <hello@toromovers.net>");
+    assert.equal(body.reply_to, "hello@toromovers.net");
+  } finally {
+    globalThis.fetch = originalFetch;
+    restore();
+  }
+});
+
 test("sendEmail unwraps a pre-wrapped RESEND_FROM_EMAIL to avoid Resend 422", async () => {
   const restore = stubEnv({
     RESEND_API_KEY: "re_test",
@@ -181,6 +209,31 @@ test("sendEmail surfaces Resend 422 domain verification without logging the key"
   } finally {
     globalThis.fetch = originalFetch;
     console.error = originalError;
+    restore();
+  }
+});
+
+test("sendEmail does not guess a from-domain when RESEND_FROM_EMAIL is unset", async () => {
+  const restore = stubEnv({ RESEND_API_KEY: "re_test" });
+  let fetched = false;
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = (async () => {
+    fetched = true;
+    return new Response("{}", { status: 200 });
+  }) as typeof fetch;
+
+  try {
+    const result = await sendEmail({
+      to: "ada@example.com",
+      subject: "Hi",
+      html: "<p>Hi</p>",
+      text: "Hi",
+    });
+    assert.equal(result.ok, false);
+    assert.match(String(result.detail), /RESEND_FROM_EMAIL/);
+    assert.equal(fetched, false);
+  } finally {
+    globalThis.fetch = originalFetch;
     restore();
   }
 });

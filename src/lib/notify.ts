@@ -194,9 +194,13 @@ export async function sendEmail(opts: {
   }
   if (!sender) {
     console.error(
-      "[notify/email] invalid RESEND_FROM_EMAIL — use hello@toromovers.com (domain must be verified in Resend)",
+      "[notify/email] RESEND_FROM_EMAIL missing or invalid — set it to a from-address on the domain verified in Resend (hello@toromovers.net or hello@toromovers.com). Do not guess.",
     );
-    return { ok: false, channel: "email", detail: "invalid RESEND_FROM_EMAIL" };
+    return {
+      ok: false,
+      channel: "email",
+      detail: "RESEND_FROM_EMAIL missing or invalid",
+    };
   }
   if (!to) {
     return { ok: false, channel: "email", detail: "invalid recipient email" };

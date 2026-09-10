@@ -28,8 +28,6 @@ const INK = FUNNEL_INK;
 const ACCENT = FUNNEL_ACCENT;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const DEFAULT_RESEND_FROM_EMAIL = EMAIL;
-
 function firstName(name: string) {
   return name.trim().split(/\s+/)[0] || "there";
 }
@@ -55,18 +53,18 @@ export function parseBareEmail(raw: string): string | null {
 }
 
 /**
- * Resend 422 "Invalid from field" happens when we wrap an already-wrapped
- * address (`Toro Movers <Toro Movers <hello@…>>`) or put a display name in
- * `reply_to`. Always emit `Name <email>` once and a bare `reply_to`.
+ * Resend 422 is usually a domain mismatch: `from` must be on a domain
+ * verified in Resend. Live may use hello@toromovers.net or
+ * hello@toromovers.com — never guess. Read RESEND_FROM_EMAIL only.
+ * Also avoid double-wrapping (`Toro Movers <Toro Movers <…>>`) and
+ * putting a display name in `reply_to`.
  */
 export function resendSender(fromRaw?: string): {
   from: string;
   replyTo: string;
   email: string;
 } | null {
-  const email = parseBareEmail(
-    fromRaw || process.env.RESEND_FROM_EMAIL || DEFAULT_RESEND_FROM_EMAIL,
-  );
+  const email = parseBareEmail(fromRaw || process.env.RESEND_FROM_EMAIL || "");
   if (!email) return null;
   return {
     email,
@@ -93,10 +91,10 @@ export function formatResendError(status: number, body: string): string {
   const lower = message.toLowerCase();
   if (status === 422 || status === 403) {
     if (lower.includes("not verified") || lower.includes("verify a domain")) {
-      return `HTTP ${status} domain not verified — verify toromovers.com in Resend and set RESEND_FROM_EMAIL=hello@toromovers.com`;
+      return `HTTP ${status} domain not verified — RESEND_FROM_EMAIL must match a verified Resend domain (hello@toromovers.net or hello@toromovers.com, whichever is verified)`;
     }
     if (lower.includes("invalid") && lower.includes("from")) {
-      return `HTTP ${status} invalid from — use hello@toromovers.com or Toro Movers <hello@toromovers.com>`;
+      return `HTTP ${status} invalid from — set RESEND_FROM_EMAIL to a bare address on the verified domain`;
     }
   }
   return message ? `HTTP ${status} ${message}` : `HTTP ${status}`;

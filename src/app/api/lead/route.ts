@@ -4,7 +4,7 @@ import { notifyLead } from "@/lib/notify";
 /**
  * Lead intake for toromovers.com
  *
- * Team: Telegram only. Full lead: client SMS + email from hello@toromovers.com.
+ * Team: Telegram only. Full lead: client SMS + Resend confirmation email.
  *
  * Optional: also forwards to toromovers.net CRM when configured.
  */
