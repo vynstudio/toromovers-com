@@ -69,13 +69,23 @@ test("formatResendError explains domain verification and invalid from", () => {
   );
   assert.match(
     formatResendError(
-      422,
+      403,
       JSON.stringify({
         message: "The toromovers.com domain is not verified. Please, add and verify your domain.",
         name: "validation_error",
       }),
     ),
-    /hello@toromovers\.com/,
+    /hello@toromovers\.net/,
+  );
+  assert.match(
+    formatResendError(
+      403,
+      JSON.stringify({
+        message: "The toromovers.com domain is not verified. Please, add and verify your domain.",
+        name: "validation_error",
+      }),
+    ),
+    /only after toromovers\.com is verified/,
   );
   assert.match(
     formatResendError(

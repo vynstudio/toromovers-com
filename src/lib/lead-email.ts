@@ -53,11 +53,12 @@ export function parseBareEmail(raw: string): string | null {
 }
 
 /**
- * Resend 422 is usually a domain mismatch: `from` must be on a domain
- * verified in Resend. Public from-address example is hello@toromovers.com.
- * Never hardcode .com or .net — read RESEND_FROM_EMAIL only (bare address;
- * wrap once). Also avoid double-wrapping (`Toro Movers <Toro Movers <…>>`)
- * and putting a display name in `reply_to`.
+ * Resend 422/403 is usually a domain mismatch: `from` must be on a domain
+ * verified in Resend. Current verified: hello@toromovers.net.
+ * hello@toromovers.com 403s until toromovers.com is verified — switch only
+ * after that. Never hardcode from; read RESEND_FROM_EMAIL only (bare
+ * address; wrap once). Also avoid double-wrapping and a display name in
+ * `reply_to`.
  */
 
 /** Hosted PNG for email clients (Outlook does not render SVG). Light-header mark. */
@@ -96,7 +97,7 @@ export function formatResendError(status: number, body: string): string {
   const lower = message.toLowerCase();
   if (status === 422 || status === 403) {
     if (lower.includes("not verified") || lower.includes("verify a domain")) {
-      return `HTTP ${status} domain not verified — RESEND_FROM_EMAIL must match a verified Resend domain (example: hello@toromovers.com)`;
+      return `HTTP ${status} domain not verified — RESEND_FROM_EMAIL must match a verified Resend domain (current verified: hello@toromovers.net). Switch to hello@toromovers.com only after toromovers.com is verified`;
     }
     if (lower.includes("invalid") && lower.includes("from")) {
       return `HTTP ${status} invalid from — set RESEND_FROM_EMAIL to a bare address on the verified domain`;
