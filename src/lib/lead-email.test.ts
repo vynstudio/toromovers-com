@@ -80,7 +80,7 @@ test("formatResendError explains domain verification and invalid from", () => {
         name: "validation_error",
       }),
     ),
-    /hello@toromovers\.net/,
+    /hello@toromovers\.com/,
   );
   assert.match(
     formatResendError(
