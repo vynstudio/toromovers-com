@@ -17,7 +17,12 @@ import {
 /**
  * Proof split-band — same size/frame as every other section.
  */
-export function CustomerProof() {
+export function CustomerProof({
+  showRegionLinks = true,
+}: {
+  /** Homepage only: secondary CF hub links under the quote/call CTAs. */
+  showRegionLinks?: boolean;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -109,6 +114,23 @@ export function CustomerProof() {
             <IconArrow />
           </a>
         </div>
+
+        {showRegionLinks ? (
+          <p className="mt-4 text-sm text-muted">
+            {customerProof.regionLinks.map((link, i) => (
+              <span key={link.label}>
+                {i > 0 ? " / " : null}
+                <a
+                  href={link.href}
+                  data-cta="proof-region"
+                  className="font-medium text-foreground underline underline-offset-2"
+                >
+                  {link.label}
+                </a>
+              </span>
+            ))}
+          </p>
+        ) : null}
       </SplitBand>
     </div>
   );

@@ -646,29 +646,21 @@ const CENTRAL_FLORIDA: CityPageContent = {
   name: "Central Florida",
   badge: "Central Florida movers",
   metadata: {
-    title: "Central Florida Movers | Orlando Metro Moving Company",
+    title: "Central Florida Movers | Local Moves Across the Region",
     description:
-      "Local movers serving Orlando and Central Florida. Family-owned, bilingual, up-front hourly pricing for apartments, homes, and loading help.",
+      "Central Florida movers for local jobs in Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, and nearby cities. Up-front hourly rates. Call (689) 600-2720.",
   },
-  h1: "Central Florida Movers for Local Orlando-Metro Moves",
+  h1: "Central Florida Movers for Local Home & Apartment Moves",
   lede:
-    "Toro Movers is a family-owned Central Florida moving company — full-service, labor-only, and apartment moves with up-front hourly rates across the Orlando metro.",
+    "Toro Movers handles local home and apartment moves across Central Florida — full-service, labor-only, and up-front hourly rates. Call or text (689) 600-2720.",
   about: {
-    h2: "Local movers across the Orlando metro",
-    body: "Toro Movers serves Orlando and surrounding cities including Winter Park, Kissimmee, Lake Mary, Sanford, Altamonte Springs, Oviedo, Winter Garden, Clermont, and more. We focus on local Central Florida moves — not long-distance or interstate.",
+    h2: "Cities we serve in Central Florida",
+    body: "Dedicated local pages cover Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, Lake Mary, Altamonte Springs, Oviedo, Apopka, Windermere, Maitland, St. Cloud, Davenport, Fern Park, Lakeland, Winter Haven, and nearby west and Lake County cities. Orlando is a surrounding city we also serve.",
   },
   sections: [
     {
-      h2: "Cities we serve in Central Florida",
-      body: "Dedicated local pages cover Orlando, Winter Park, Kissimmee, Lake Mary, Sanford, Altamonte Springs, Oviedo, Winter Garden, Clermont, Apopka, Windermere, Maitland, St. Cloud, Davenport, Fern Park, Lakeland, Winter Haven, and nearby west and Lake County cities.",
-    },
-    {
-      h2: "Full-service and labor-only across the metro",
+      h2: "Full-service and labor-only across the region",
       body: "Need the truck and crew, or only loading help for a U-Haul or POD? Toro quotes both models with up-front hourly rates so you know the structure before move day.",
-    },
-    {
-      h2: "Local crew, not a long-distance franchise",
-      body: "Toro Movers stays on local Central Florida jobs. That keeps scheduling tighter and pricing on the clock instead of a long-haul flat rate.",
     },
     {
       h2: "Up-front hourly moving rates",
@@ -676,32 +668,32 @@ const CENTRAL_FLORIDA: CityPageContent = {
     },
   ],
   neighborhoods: [
-    "Orlando",
     "Winter Park",
     "Kissimmee",
-    "Lake Mary",
+    "Clermont",
     "Sanford",
     "Winter Garden",
-    "Clermont",
+    "Lake Mary",
     "Oviedo",
     "Windermere",
     "Lakeland",
+    "Orlando",
   ],
   why: {
-    h2: "Why Central Florida customers choose Toro Movers",
-    body: "Family-owned, bilingual English and Spanish, 5-star Google rated, and priced by the hour. You work with a local crew for apartments, homes, storage, and rental-truck labor across the metro.",
+    h2: "Local-only region moves",
+    body: "Toro Movers stays on local Central Florida jobs — homes, apartments, storage, and rental-truck labor. We do not run long-distance or interstate moves. You work with a local crew, bilingual English and Spanish, with up-front hourly pricing.",
   },
   faqs: [
     {
-      q: "What areas does Toro Movers serve?",
-      a: "Orlando and the surrounding Central Florida metro — Winter Park, Maitland, Oviedo, Winter Garden, Kissimmee, Sanford, Apopka, Altamonte Springs, Lake Mary, Clermont, Davenport, St. Cloud, Windermere, and nearby cities.",
+      q: "What cities do Central Florida movers from Toro cover?",
+      a: "Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, Lake Mary, Altamonte Springs, Oviedo, Apopka, Windermere, Maitland, St. Cloud, Davenport, and nearby cities. Orlando is a surrounding city we also serve.",
     },
     {
       q: "Do you do long-distance or out-of-state moves?",
-      a: "No. Toro Movers focuses on local moves across the Orlando metro and Central Florida.",
+      a: "No. Toro Movers focuses on local-only region moves across Central Florida.",
     },
     {
-      q: "How do you price a move?",
+      q: "How do you price a Central Florida move?",
       a: "Up-front hourly pricing with crew size agreed before the day. You pay for the time the move takes.",
     },
     {

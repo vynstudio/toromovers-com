@@ -24,7 +24,10 @@ export function CityLanding({ city }: { city: CityPageContent }) {
         discoverLabel={`${city.name} services`}
         source={`city-${city.slug}`}
       />
-      <CustomerProof />
+      {/* Homepage proof H2 is Orlando-only; region hub keeps unique CF H2s. */}
+      {city.slug === "central-florida-movers" ? null : (
+        <CustomerProof showRegionLinks={false} />
+      )}
 
       {/* About + SEO sections */}
       <section
@@ -149,7 +152,11 @@ export function CityLanding({ city }: { city: CityPageContent }) {
 
       <Faq
         eyebrow="FAQ"
-        heading={`${city.name} movers — common questions`}
+        heading={
+          city.slug === "central-florida-movers"
+            ? "Central Florida movers FAQs"
+            : `${city.name} movers — common questions`
+        }
         sub={`Straight answers from a local ${city.name} moving company`}
         items={city.faqs}
         groupName={`toro-faq-${city.slug}`}

@@ -9,11 +9,15 @@ export const SLOGAN = "Moving People Forward";
 
 /** Site-wide SEO description — 120–160 chars for SERP (audit target). */
 export const SITE_DESCRIPTION =
-  "Family-owned Orlando movers for Central Florida. Full-service, labor-only & apartment moves. Up-front hourly rates. Call (689) 600-2720.";
+  "Toro Movers helps you book full-service, labor-only, and apartment moves in Orlando. Up-front hourly rates. Call or text (689) 600-2720.";
 
-/** Default browser tab / OG title — 50–60 chars (audit target). */
+/**
+ * Default browser tab / OG title — homepage brand title (includes “Toro Movers”).
+ * Child routes that set a string `title` get `%s · Toro Movers` from root layout.
+ * Homepage and other absolute titles must use `{ absolute }` so the brand is not doubled.
+ */
 export const SITE_TITLE =
-  "Toro Movers | Orlando & Central Florida Movers";
+  "Toro Movers | Book Orlando Movers — Full-Service & Labor-Only";
 
 export const PHONE_DISPLAY = "(689) 600-2720";
 export const PHONE_TEL = "tel:+16896002720";
