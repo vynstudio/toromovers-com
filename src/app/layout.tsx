@@ -41,7 +41,6 @@ export const metadata: Metadata = {
   keywords: [
     "movers Orlando",
     "Orlando movers",
-    "Central Florida movers",
     "local moving company Orlando",
     "apartment movers Orlando",
     "labor only movers Orlando",

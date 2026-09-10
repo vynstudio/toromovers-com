@@ -210,7 +210,7 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "central-florida-movers-building-access",
     eyebrow: "Building access & logistics",
-    title: "Central Florida movers | Building access",
+    title: "Orlando movers | Building access",
     teaser:
       "Plan HOA windows, elevators, loading zones, and U-Haul or POD access with a local crew—and clear up-front hourly rates in Central Florida.",
     description:
