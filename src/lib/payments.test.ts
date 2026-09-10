@@ -3,11 +3,13 @@ import test from "node:test";
 import {
   CARD_FEE_RATE,
   CUSTOM_TIP_MAX_USD,
+  DEPOSIT_LOOKUP_PAGES,
   PAYMENT_KIND,
   PROCESSING_FEE_LABEL,
   balanceSummary,
   depositSummary,
   dollarsToCents,
+  isCheckoutEmail,
   parsePaymentKind,
   remainingMoveBalanceCents,
   tipAmountCents,
@@ -188,5 +190,22 @@ test("invalid quote token is unsigned so /pay can warn", () => {
   });
   assert.equal(resolved.signed, false);
   assert.equal(resolved.quoteTotalCents, null);
+});
+
+test("checkout requires a real email", () => {
+  assert.equal(isCheckoutEmail("alex@example.com"), true);
+  assert.equal(isCheckoutEmail("alex@"), false);
+  assert.equal(isCheckoutEmail(""), false);
+  assert.equal(isCheckoutEmail("not-an-email"), false);
+});
+
+test("deposit lookup scans beyond the first 100 sessions", () => {
+  assert.equal(DEPOSIT_LOOKUP_PAGES >= 20, true);
+});
+
+test("pay placeholders are not fake filled amounts or dates", () => {
+  assert.doesNotMatch(PAYMENT_KIND.tip.notePlaceholder, /piano/i);
+  assert.doesNotMatch(PAYMENT_KIND.deposit.notePlaceholder, /\d{4}/);
+  assert.equal(PAYMENT_KIND.deposit.notePlaceholder.includes("1560"), false);
 });
 

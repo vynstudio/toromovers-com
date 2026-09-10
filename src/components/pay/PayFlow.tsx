@@ -12,11 +12,11 @@ import {
   PAYMENT_KIND,
   PRIMARY_PAYMENT_KINDS,
   PROCESSING_FEE_LABEL,
-  TIP_PERCENT_BY_TYPE,
   balanceSummary,
   depositSummary,
   dollarsToCents,
   formatUsd,
+  isCheckoutEmail,
   parseTipType,
   parseUsd,
   tipAmountCents,
@@ -25,7 +25,6 @@ import {
   type TipType,
 } from "@/lib/payments";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
-import { STRIPE_PUBLISHABLE_KEY } from "@/lib/stripe-public";
 
 const TIP_OPTIONS: { type: TipType; label: string }[] = [
   { type: "none", label: "No tip" },
@@ -34,6 +33,34 @@ const TIP_OPTIONS: { type: TipType; label: string }[] = [
   { type: "25_percent", label: "25% tip" },
   { type: "custom", label: "Custom tip amount" },
 ];
+
+function headingFor(kind: PaymentKind): { title: string; intro: string } {
+  if (kind === "tip") {
+    return {
+      title: "Tip the Toro Movers crew.",
+      intro: "Send a post-move tip to the crew. Card details stay on this page.",
+    };
+  }
+  if (kind === "balance") {
+    return {
+      title: "Pay your remaining balance.",
+      intro:
+        "Pay the remaining balance after your deposit. Card details stay on this page.",
+    };
+  }
+  return {
+    title: "Pay your move deposit.",
+    intro:
+      "Pay a deposit to hold your move date after payment succeeds. Card details stay on this page.",
+  };
+}
+
+function syncKindUrl(next: PaymentKind) {
+  if (typeof window === "undefined") return;
+  const url = new URL(window.location.href);
+  url.searchParams.set("type", next);
+  window.history.replaceState(window.history.state, "", `${url.pathname}${url.search}${url.hash}`);
+}
 
 function dollarsInput(value: string, fallback = 0): number {
   const parsed = parseUsd(value);
@@ -103,7 +130,7 @@ export default function PayFlow({
   const [ready, setReady] = useState(checkoutReady);
 
   useEffect(() => {
-    const baked = publishableKey || process.env.STRIPE_PK || STRIPE_PUBLISHABLE_KEY;
+    const baked = publishableKey || process.env.STRIPE_PK || "";
     if (baked) {
       setStripePromise(loadStripe(baked));
     }
@@ -196,7 +223,10 @@ export default function PayFlow({
     customTipValid &&
     balanceBreakdown.remainingCents / 100 <= PAYMENT_KIND.balance.maxUsd;
   const tipValid = depositValid;
-  const valid = kind === "balance" ? balanceValid : kind === "tip" ? tipValid : depositValid;
+  const emailValid = isCheckoutEmail(quote.customer_email);
+  const kindValid =
+    kind === "balance" ? balanceValid : kind === "tip" ? tipValid : depositValid;
+  const valid = emailValid && kindValid;
   const todayCents =
     kind === "balance" ? balanceBreakdown.totalChargedCents : depositBreakdown.totalChargedCents;
 
@@ -207,6 +237,7 @@ export default function PayFlow({
     setClientSecret("");
     setChargedCents(0);
     setError("");
+    syncKindUrl(next);
     if (next !== "balance") {
       setTipType("none");
       setCustomTip("");
@@ -246,6 +277,10 @@ export default function PayFlow({
     event.preventDefault();
     if (!ready) {
       setError(`Checkout is not connected yet. Call ${PHONE_DISPLAY}.`);
+      return;
+    }
+    if (!isCheckoutEmail(quote.customer_email)) {
+      setError("Enter a customer email.");
       return;
     }
     if (kind === "balance" && lookupState === "error") {
@@ -300,10 +335,7 @@ export default function PayFlow({
         throw new Error(data.error || "Could not start checkout.");
       }
       const pk =
-        data.publishableKey ||
-        publishableKey ||
-        process.env.STRIPE_PK ||
-        STRIPE_PUBLISHABLE_KEY;
+        data.publishableKey || publishableKey || process.env.STRIPE_PK || "";
       const promise = stripePromise || (pk ? loadStripe(pk) : null);
       if (!promise) {
         throw new Error(`Checkout is not connected yet. Call ${PHONE_DISPLAY}.`);
@@ -328,8 +360,7 @@ export default function PayFlow({
 
   const detailsFilled = Boolean(
     quote.customer_name ||
-      quote.customer_email ||
-      quote.move_date ||
+    quote.move_date ||
       quote.pickup_address ||
       quote.delivery_address ||
       (kind === "deposit" && quote.quote_number),
@@ -373,9 +404,23 @@ export default function PayFlow({
           },
         ];
 
+  const copy = headingFor(kind);
+  const ctaLabel = starting
+    ? "Opening checkout…"
+    : kindValid
+      ? `${spec.cta} · ${formatUsd(todayCents)}`
+      : spec.cta;
+
   if (clientSecret && stripePromise) {
     return (
-      <div className="pay-checkout">
+      <>
+        <div className="pay-intro">
+          <p className="pay-kicker">Secure checkout</p>
+          <h1>{copy.title}</h1>
+          <p className="pay-lede">{copy.intro}</p>
+        </div>
+        <div className="pay-card">
+          <div className="pay-checkout">
         <div className="pay-checkout-bar">
           <button
             type="button"
@@ -406,11 +451,20 @@ export default function PayFlow({
           </a>
           .
         </p>
-      </div>
+          </div>
+        </div>
+      </>
     );
   }
 
   return (
+    <>
+      <div className="pay-intro">
+        <p className="pay-kicker">Secure checkout</p>
+        <h1>{copy.title}</h1>
+        <p className="pay-lede">{copy.intro}</p>
+      </div>
+      <div className="pay-card">
     <form onSubmit={startCheckout} className="space-y-5">
       {!ready && (
         <p className="pay-banner pay-banner--warn" role="status">
@@ -466,7 +520,7 @@ export default function PayFlow({
               inputMode="decimal"
               value={custom}
               onChange={(event) => setCustom(event.target.value.replace(/[^\d.]/g, ""))}
-              placeholder={String(spec.defaultUsd)}
+              placeholder="Other amount"
             />
           </label>
         </>
@@ -483,7 +537,7 @@ export default function PayFlow({
                 setQuote((current) => ({ ...current, quote_number: event.target.value }))
               }
               onBlur={(event) => refreshDeposit(event.target.value)}
-              placeholder="Q-1042"
+              placeholder="Quote number"
             />
           </label>
           <label className="pay-label">
@@ -493,7 +547,7 @@ export default function PayFlow({
               value={quoteTotal}
               readOnly={quoteTotalLocked}
               onChange={(event) => setQuoteTotal(event.target.value.replace(/[^\d.]/g, ""))}
-              placeholder="1560.00"
+              placeholder="Approved total"
             />
           </label>
           <p className="text-sm text-zinc-600">
@@ -519,12 +573,6 @@ export default function PayFlow({
                       ? dollarsToCents(Math.max(0, customTipUsd))
                       : 0
                     : tipAmountCents(remaining, option.type);
-                const percent =
-                  option.type === "15_percent" ||
-                  option.type === "20_percent" ||
-                  option.type === "25_percent"
-                    ? TIP_PERCENT_BY_TYPE[option.type]
-                    : null;
                 return (
                   <label
                     key={option.type}
@@ -541,7 +589,6 @@ export default function PayFlow({
                         }}
                       />
                       {option.label}
-                      {percent != null ? ` · ${percent}%` : ""}
                     </span>
                     <span className="font-semibold">{formatUsd(amountForOption)}</span>
                   </label>
@@ -555,13 +602,27 @@ export default function PayFlow({
                   inputMode="decimal"
                   value={customTip}
                   onChange={(event) => setCustomTip(event.target.value.replace(/[^\d.]/g, ""))}
-                  placeholder="0.00"
+                  placeholder="Custom amount"
                 />
               </label>
             )}
           </fieldset>
         </div>
       )}
+
+      <label className="pay-label">
+        Customer email
+        <input
+          type="email"
+          required
+          autoComplete="email"
+          value={quote.customer_email}
+          onChange={(event) =>
+            setQuote((current) => ({ ...current, customer_email: event.target.value }))
+          }
+          placeholder="Email for receipt"
+        />
+      </label>
 
       <details className="pay-details" open={detailsFilled || undefined}>
         <summary>Move details (optional)</summary>
@@ -576,23 +637,13 @@ export default function PayFlow({
             />
           </label>
           <label className="pay-label">
-            Customer email
-            <input
-              type="email"
-              value={quote.customer_email}
-              onChange={(event) =>
-                setQuote((current) => ({ ...current, customer_email: event.target.value }))
-              }
-            />
-          </label>
-          <label className="pay-label">
             Move date
             <input
               value={quote.move_date}
               onChange={(event) =>
                 setQuote((current) => ({ ...current, move_date: event.target.value }))
               }
-              placeholder="August 22, 2026"
+              placeholder="Move date"
             />
           </label>
           <label className="pay-label">
@@ -622,7 +673,7 @@ export default function PayFlow({
                 onChange={(event) =>
                   setQuote((current) => ({ ...current, quote_number: event.target.value }))
                 }
-                placeholder="Q-1042"
+                placeholder="Quote number"
               />
             </label>
           )}
@@ -659,9 +710,7 @@ export default function PayFlow({
         </p>
       )}
       <button type="submit" disabled={starting || !valid || !ready} className="pay-submit">
-        {starting
-          ? "Opening checkout…"
-          : `${spec.cta} · ${valid ? formatUsd(todayCents) : ""}`}
+        {ctaLabel}
       </button>
       {kind === "deposit" && (
         <p className="pay-help">The move date is held after this deposit payment succeeds.</p>
@@ -679,5 +728,7 @@ export default function PayFlow({
         anything looks off.
       </p>
     </form>
+      </div>
+    </>
   );
 }

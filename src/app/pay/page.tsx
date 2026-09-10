@@ -27,34 +27,17 @@ export default async function PayPage({
     : params.quote ||
       (Array.isArray(params.quote_number) ? params.quote_number[0] : params.quote_number) ||
       "";
-  const heading =
-    initialKind === "tip"
-      ? "Tip the Toro Movers crew."
-      : initialKind === "balance"
-        ? "Pay your remaining balance."
-        : "Pay your move deposit.";
-  const intro =
-    initialKind === "tip"
-      ? "Send a post-move tip to the crew. Card details stay on this page."
-      : "Pay a deposit to hold your move date after payment succeeds, or pay the remaining balance. Card details stay on this page.";
   const checkoutReady = Boolean(runtimeEnv("STRIPE_SECRET_KEY") && stripePublishableKey());
   return (
     <PayShell>
       <section className="pay-main">
-        <div className="pay-intro">
-          <p className="pay-kicker">Secure checkout</p>
-          <h1>{heading}</h1>
-          <p className="pay-lede">{intro}</p>
-        </div>
-        <div className="pay-card">
-          <PayFlow
-            initialKind={initialKind}
-            publishableKey={stripePublishableKey()}
-            quoteToken={quoteToken}
-            quoteNumber={quoteNumber}
-            checkoutReady={checkoutReady}
-          />
-        </div>
+        <PayFlow
+          initialKind={initialKind}
+          publishableKey={stripePublishableKey()}
+          quoteToken={quoteToken}
+          quoteNumber={quoteNumber}
+          checkoutReady={checkoutReady}
+        />
       </section>
     </PayShell>
   );

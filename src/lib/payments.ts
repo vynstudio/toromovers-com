@@ -237,12 +237,25 @@ export const PAYMENT_KIND: Record<
     maxUsd: 500,
     presetsUsd: [10, 20, 40, 60],
     defaultUsd: 20,
-    notePlaceholder: "Thanks for taking care of the piano.",
+    notePlaceholder: "Note for the crew (optional)",
     cta: "Send tip",
   },
 };
 
 export const CUSTOM_TIP_MAX_USD = 5_000;
+
+/** Checkout Session pages (100 each) scanned when crediting a deposit to remaining balance. */
+export const DEPOSIT_LOOKUP_PAGES = 20;
+
+export function isCheckoutEmail(value: unknown): boolean {
+  if (typeof value !== "string") return false;
+  const email = value.trim();
+  const at = email.indexOf("@");
+  if (at < 1 || email.includes(" ")) return false;
+  const domain = email.slice(at + 1);
+  const dot = domain.lastIndexOf(".");
+  return dot > 0 && dot < domain.length - 1;
+}
 
 export function isPaymentKind(value: unknown): value is PaymentKind {
   return typeof value === "string" && PAYMENT_KINDS.includes(value as PaymentKind);

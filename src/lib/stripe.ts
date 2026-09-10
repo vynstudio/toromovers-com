@@ -8,8 +8,10 @@ import {
   balanceSummary,
   centsToDollarString,
   clipField,
+  DEPOSIT_LOOKUP_PAGES,
   depositSummary,
   dollarsToCents,
+  isCheckoutEmail,
   parseTipType,
   parseUsd,
   type PaymentKind,
@@ -94,8 +96,6 @@ function sessionMatchesQuote(
   const metaRef = clipField(session.metadata?.move_reference, 80);
   return Boolean((needle && metaQuote === needle) || (reference && metaRef === reference));
 }
-
-const DEPOSIT_LOOKUP_PAGES = 20;
 
 async function listDepositSessions(
   stripe: Stripe,
@@ -400,6 +400,9 @@ export async function createPaymentSession(
       : input.kind === "balance"
         ? await buildBalanceSession(input)
         : await buildTipSession(input);
+  if (!isCheckoutEmail(built.fields.customer_email)) {
+    throw new Error("Enter a customer email.");
+  }
   const session = await createEmbeddedSession(built);
   if (!session.client_secret) {
     throw new Error("Could not start checkout.");
