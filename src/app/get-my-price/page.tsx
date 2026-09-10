@@ -1,13 +1,33 @@
+import type { Metadata } from "next";
 import UniversalLeadForm from "@/components/funnel/UniversalLeadForm";
+import { ToroLockup } from "@/components/funnel/ToroLockup";
 import { resolveServiceParam } from "@/lib/funnel-service";
+import {
+  FUNNEL_CTA,
+  FUNNEL_FLOOR_RATE,
+  FUNNEL_LOCAL_NOTE,
+  FUNNEL_RATE_NOTE,
+  FUNNEL_SLA,
+  FUNNEL_TRUST_CHIPS,
+} from "@/lib/funnel-offer";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
-  title: "Get Your Free Moving Quote",
-  description: "Choose the moving help you need and request a free quote from Toro Movers.",
-  robots: { index: false, follow: false },
+export const metadata: Metadata = {
+  title: "Get my free moving quote",
+  description:
+    "Get a free local moving quote from Toro Movers. From $75/mover/hour. Central Florida only. Call (689) 600-2720.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
   alternates: { canonical: "/get-my-price" },
 };
 
@@ -18,9 +38,56 @@ export default async function GetMyPricePage({
 }) {
   const params = await searchParams;
   const initialService =
-    resolveServiceParam(params.service) || resolveServiceParam(params.servicetype);
-  return <main className="min-h-screen bg-zinc-50 text-zinc-950">
-    <header className="border-b border-zinc-200 bg-white"><div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-5 py-4"><a href="/" className="text-lg font-black tracking-tight">TORO MOVERS</a><a className="font-bold underline underline-offset-4" href={PHONE_TEL}>Call {PHONE_DISPLAY}</a></div></header>
-    <section className="mx-auto max-w-3xl px-5 py-10 sm:py-16"><div className="mb-8 text-center"><p className="text-sm font-extrabold uppercase tracking-widest text-zinc-500">Central Florida moving help</p><h1 className="mt-3 text-3xl font-black tracking-tight sm:text-5xl">Get your free moving quote.</h1><p className="mx-auto mt-4 max-w-2xl leading-7 text-zinc-600">Tell us what kind of help you need, add a few move details, and Toro Movers will help you plan the next step.</p></div><UniversalLeadForm source="get_my_price" initialService={initialService} /></section>
-  </main>;
+    resolveServiceParam(params.service) ||
+    resolveServiceParam(params.servicetype);
+
+  return (
+    <main className="min-h-screen bg-white text-[#0A0A0A]">
+      <header className="border-b border-zinc-200 bg-white">
+        <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col items-stretch gap-2.5 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5 sm:py-3.5">
+          <ToroLockup />
+          <a
+            className="inline-flex min-h-12 w-full shrink-0 items-center justify-center rounded-xl bg-[#E20613] px-4 py-2.5 text-sm font-extrabold whitespace-nowrap text-white transition hover:bg-[#B80510] sm:min-h-0 sm:w-auto"
+            href={PHONE_TEL}
+          >
+            Call {PHONE_DISPLAY}
+          </a>
+        </div>
+      </header>
+
+      <section className="mx-auto max-w-3xl px-5 py-10 sm:py-14">
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
+            Local moving {FUNNEL_FLOOR_RATE}.
+          </h1>
+          <p className="mx-auto mt-3 max-w-xl text-lg font-semibold text-[#0A0A0A]">
+            {FUNNEL_CTA}.
+          </p>
+          <p className="mx-auto mt-2 max-w-xl text-sm font-medium text-zinc-600">
+            {FUNNEL_RATE_NOTE}
+          </p>
+          <ul className="mx-auto mt-5 flex max-w-2xl flex-wrap items-center justify-center gap-2">
+            {FUNNEL_TRUST_CHIPS.map((chip) => (
+              <li
+                key={chip}
+                className="rounded-full bg-[#FCE6E8] px-3 py-1.5 text-xs font-bold text-[#0A0A0A] sm:text-sm"
+              >
+                {chip}
+              </li>
+            ))}
+          </ul>
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-zinc-600">
+            {FUNNEL_SLA}.
+          </p>
+          <p className="mx-auto mt-2 max-w-xl text-sm text-zinc-500">
+            {FUNNEL_LOCAL_NOTE}
+          </p>
+        </div>
+        <UniversalLeadForm
+          source="get_my_price"
+          initialService={initialService}
+        />
+      </section>
+    </main>
+  );
 }
