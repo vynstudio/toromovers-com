@@ -85,7 +85,8 @@ export async function POST(req: Request) {
       message.startsWith("Amount") ||
       message.startsWith("Custom tip") ||
       message.startsWith("This move") ||
-      message.startsWith("Choose");
+      message.startsWith("Choose") ||
+      message.startsWith("Could not verify");
     if (!clientError) {
       const extra =
         err && typeof err === "object"
