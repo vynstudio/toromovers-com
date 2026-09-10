@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import PayFlow from "@/components/pay/PayFlow";
 import { PayShell } from "@/components/pay/PayShell";
 import { runtimeEnv, stripePublishableKey } from "@/lib/env";
-import { parsePaymentKind } from "@/lib/payments";
+import { firstQueryValue, parsePayLink } from "@/lib/payments";
 
 export const metadata: Metadata = {
   title: "Pay Toro Movers — deposit or remaining balance",
@@ -20,23 +20,20 @@ export default async function PayPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const params = await searchParams;
-  const initialKind = parsePaymentKind(params.type || params.kind);
-  const quoteToken = Array.isArray(params.q) ? params.q[0] : params.q || "";
-  const quoteNumber = Array.isArray(params.quote)
-    ? params.quote[0]
-    : params.quote ||
-      (Array.isArray(params.quote_number) ? params.quote_number[0] : params.quote_number) ||
-      "";
+  const link = parsePayLink(params);
+  const quoteToken = firstQueryValue(params.q);
+  const quoteNumber =
+    firstQueryValue(params.quote) || firstQueryValue(params.quote_number);
   const heading =
-    initialKind === "tip"
+    link.kind === "tip"
       ? "Tip the Toro Movers crew."
-      : initialKind === "balance"
+      : link.kind === "balance"
         ? "Pay your remaining balance."
         : "Pay your move deposit.";
   const intro =
-    initialKind === "tip"
-      ? "Send a post-move tip to the crew. Card details stay on this page."
-      : "Pay a deposit to hold your move date after payment succeeds, or pay the remaining balance. Card details stay on this page.";
+    link.kind === "tip"
+      ? "Send a post-move tip to the crew. Card details stay on this page. Stripe processes the payment."
+      : "Pay a deposit to hold your move date after payment succeeds, or pay the remaining balance. You can add an optional tip here. Card details stay on this page. Stripe processes the payment.";
   const checkoutReady = Boolean(runtimeEnv("STRIPE_SECRET_KEY") && stripePublishableKey());
   return (
     <PayShell>
@@ -48,7 +45,10 @@ export default async function PayPage({
         </div>
         <div className="pay-card">
           <PayFlow
-            initialKind={initialKind}
+            initialKind={link.kind}
+            initialMode={link.mode}
+            amountCents={link.amountCents}
+            amountLocked={link.amountLocked}
             publishableKey={stripePublishableKey()}
             quoteToken={quoteToken}
             quoteNumber={quoteNumber}

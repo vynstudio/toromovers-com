@@ -57,6 +57,7 @@ export async function POST(req: Request) {
           kind === "balance" && meta.remaining_balance_before_tip
             ? `Remaining: $${meta.remaining_balance_before_tip}`
             : "",
+          meta.mode ? `Mode: ${meta.mode}` : "",
           meta.tip_amount && meta.tip_amount !== "0.00" ? `Tip: $${meta.tip_amount}` : "",
           meta.processing_fee ? `Processing fee: $${meta.processing_fee}` : "",
           meta.customer_note ? `Note: ${meta.customer_note}` : "",

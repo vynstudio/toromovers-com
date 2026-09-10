@@ -205,6 +205,28 @@
   }
 }
 
+.pay-tip-chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .pay-tip-chips {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.pay-tip-chips .pay-preset {
+  font-size: 0.8rem;
+  padding: 0.75rem 0.35rem;
+}
+
+.pay-preset:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
 .pay-preset {
   border: 1px solid var(--pay-border);
   border-radius: 0.9rem;

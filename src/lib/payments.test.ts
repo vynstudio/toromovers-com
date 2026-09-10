@@ -5,15 +5,19 @@ import {
   CUSTOM_TIP_MAX_USD,
   PAYMENT_KIND,
   PROCESSING_FEE_LABEL,
+  amountMeetsLinkFloor,
   balanceSummary,
   balanceTipLabel,
   checkoutCtaLabel,
   depositSummary,
   dollarsToCents,
   isCheckoutEmail,
+  parseAmountCents,
+  parsePayLink,
   parsePaymentKind,
   remainingMoveBalanceCents,
   tipAmountCents,
+  withTipAndProcessingFee,
 } from "./payments.ts";
 import {
   payloadToQuoteFields,
@@ -49,6 +53,46 @@ test("full alias routes to remaining-balance", () => {
   assert.equal(parsePaymentKind("full"), "balance");
   assert.equal(parsePaymentKind("payment"), "balance");
   assert.equal(parsePaymentKind("tip"), "tip");
+  assert.equal(parsePaymentKind("fixed"), "deposit");
+});
+
+test("pay link query params lock amount unless mode=fixed", () => {
+  assert.equal(parseAmountCents("49500"), 49500);
+  assert.equal(parseAmountCents("495.00"), null);
+  assert.equal(parseAmountCents("-100"), null);
+  assert.equal(parseAmountCents("0"), null);
+
+  const deposit = parsePayLink({ mode: "deposit", amount: "49500" });
+  assert.equal(deposit.kind, "deposit");
+  assert.equal(deposit.mode, "deposit");
+  assert.equal(deposit.amountCents, 49500);
+  assert.equal(deposit.amountLocked, true);
+
+  const fixed = parsePayLink({ mode: "fixed", amount: "80000" });
+  assert.equal(fixed.kind, "deposit");
+  assert.equal(fixed.mode, "fixed");
+  assert.equal(fixed.amountCents, 80000);
+  assert.equal(fixed.amountLocked, false);
+
+  const balance = parsePayLink({ mode: "balance", amount: "146000" });
+  assert.equal(balance.kind, "balance");
+  assert.equal(balance.amountLocked, true);
+
+  const typed = parsePayLink({ type: "deposit" });
+  assert.equal(typed.kind, "deposit");
+  assert.equal(typed.amountLocked, false);
+
+  const modeWins = parsePayLink({ mode: "balance", type: "deposit", amount: "49500" });
+  assert.equal(modeWins.kind, "balance");
+  assert.equal(modeWins.mode, "balance");
+
+  const tipLink = parsePayLink({ type: "tip" });
+  assert.equal(tipLink.kind, "tip");
+  assert.equal(tipLink.amountLocked, false);
+
+  assert.equal(amountMeetsLinkFloor(49500, 49500, true), true);
+  assert.equal(amountMeetsLinkFloor(49499, 49500, true), false);
+  assert.equal(amountMeetsLinkFloor(2500, 49500, false), true);
 });
 
 test("deposit $100 adds 3.5% processing fee", () => {
@@ -56,6 +100,26 @@ test("deposit $100 adds 3.5% processing fee", () => {
   assert.equal(summary.depositCents, 10000);
   assert.equal(summary.processingFeeCents, 350);
   assert.equal(summary.totalChargedCents, 10350);
+  assert.equal(summary.tipCents, 0);
+});
+
+test("deposit $100 + 10% tip charges fee on amount + tip", () => {
+  const summary = depositSummary(dollarsToCents(100), "10_percent");
+  assert.equal(summary.depositCents, 10000);
+  assert.equal(summary.tipCents, 1000);
+  assert.equal(summary.subtotalCents, 11000);
+  assert.equal(summary.processingFeeCents, 385);
+  assert.equal(summary.totalChargedCents, 11385);
+  const feeOnAmountOnly = depositSummary(dollarsToCents(100)).processingFeeCents;
+  assert.notEqual(summary.processingFeeCents, feeOnAmountOnly);
+});
+
+test("custom $800 + no tip is amount plus 3.5% fee", () => {
+  const summary = withTipAndProcessingFee(dollarsToCents(800), "none");
+  assert.equal(summary.baseCents, 80000);
+  assert.equal(summary.tipCents, 0);
+  assert.equal(summary.processingFeeCents, 2800);
+  assert.equal(summary.totalChargedCents, 82800);
 });
 
 test("deposit presets convert to Stripe cents", () => {
@@ -97,12 +161,25 @@ test("zero remaining is not payable", () => {
   assert.equal(summary.payable, false);
 });
 
+test("locked remaining on a balance link cannot go below the amount param", () => {
+  const summary = balanceSummary({
+    quoteTotalCents: 0,
+    depositPaidCents: 0,
+    tipType: "none",
+    remainingOverrideCents: 49500,
+  });
+  assert.equal(summary.remainingCents, 49500);
+  assert.equal(summary.payable, true);
+  assert.equal(summary.processingFeeCents, 1733);
+  assert.equal(summary.totalChargedCents, 51233);
+});
+
 test("example remaining $1460 with 20% tip and 3.5% fee", () => {
   const remaining = dollarsToCents(1460);
   assert.equal(tipAmountCents(remaining, "none"), 0);
+  assert.equal(tipAmountCents(remaining, "10_percent"), 14600);
   assert.equal(tipAmountCents(remaining, "15_percent"), 21900);
   assert.equal(tipAmountCents(remaining, "20_percent"), 29200);
-  assert.equal(tipAmountCents(remaining, "25_percent"), 36500);
 
   const summary = balanceSummary({
     quoteTotalCents: dollarsToCents(1560),
@@ -193,7 +270,7 @@ test("invalid quote token is unsigned so /pay can warn", () => {
   assert.equal(resolved.quoteTotalCents, null);
 });
 
-test("checkout email is required and rejects placeholders", () => {
+test("checkout email is optional and rejects placeholders", () => {
   assert.equal(isCheckoutEmail("alex@example.com"), true);
   assert.equal(isCheckoutEmail("  alex@example.com  "), true);
   assert.equal(isCheckoutEmail(""), false);
@@ -210,12 +287,12 @@ test("balance CTA never trails a middot without an amount", () => {
   assert.equal(checkoutCtaLabel("Pay deposit", 10350), "Pay deposit · $103.50");
 });
 
-test("balance tip labels do not duplicate the percentage", () => {
-  assert.equal(balanceTipLabel("15_percent"), "15% tip");
-  assert.equal(balanceTipLabel("20_percent"), "20% tip");
-  assert.equal(balanceTipLabel("25_percent"), "25% tip");
+test("tip chips are No tip / 10% / 15% / 20% / Custom", () => {
   assert.equal(balanceTipLabel("none"), "No tip");
-  assert.equal(balanceTipLabel("custom"), "Custom tip amount");
+  assert.equal(balanceTipLabel("10_percent"), "10%");
+  assert.equal(balanceTipLabel("15_percent"), "15%");
+  assert.equal(balanceTipLabel("20_percent"), "20%");
+  assert.equal(balanceTipLabel("custom"), "Custom");
   assert.equal(balanceTipLabel("15_percent").includes(" · "), false);
 });
 

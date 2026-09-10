@@ -21,15 +21,17 @@ import {
   PAYMENT_KIND,
   PRIMARY_PAYMENT_KINDS,
   PROCESSING_FEE_LABEL,
+  amountMeetsLinkFloor,
   balanceSummary,
   balanceTipLabel,
   checkoutCtaLabel,
   depositSummary,
+  dollarsInputString,
   dollarsToCents,
   formatUsd,
   parseTipType,
   parseUsd,
-  tipAmountCents,
+  type PayMode,
   type PaymentKind,
   type QuoteFields,
   type TipType,
@@ -37,11 +39,21 @@ import {
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 import { STRIPE_PUBLISHABLE_KEY } from "@/lib/stripe-public";
 
-const TIP_OPTIONS: TipType[] = ["none", "15_percent", "20_percent", "25_percent", "custom"];
+const TIP_OPTIONS: TipType[] = ["none", "10_percent", "15_percent", "20_percent", "custom"];
 
 function dollarsInput(value: string, fallback = 0): number {
   const parsed = parseUsd(value);
   return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function initialAmountState(kind: PaymentKind, amountCents: number | null) {
+  const spec = PAYMENT_KIND[kind];
+  if (!amountCents) {
+    return { amount: spec.defaultUsd, custom: "" };
+  }
+  const preset = spec.presetsUsd.find((usd) => dollarsToCents(usd) === amountCents);
+  if (preset != null) return { amount: preset, custom: "" };
+  return { amount: amountCents / 100, custom: dollarsInputString(amountCents) };
 }
 
 function ChargeSummary({
@@ -70,6 +82,50 @@ function ChargeSummary({
   );
 }
 
+function TipChips({
+  value,
+  customTip,
+  onType,
+  onCustomTip,
+}: {
+  value: TipType;
+  customTip: string;
+  onType: (type: TipType) => void;
+  onCustomTip: (value: string) => void;
+}) {
+  return (
+    <fieldset className="space-y-2">
+      <legend className="text-sm font-bold">Optional tip</legend>
+      <div className="pay-tip-chips">
+        {TIP_OPTIONS.map((option) => (
+          <button
+            type="button"
+            key={option}
+            onClick={() => {
+              onType(parseTipType(option));
+              if (option !== "custom") onCustomTip("");
+            }}
+            className={`pay-preset${value === option ? " is-on" : ""}`}
+          >
+            {balanceTipLabel(option)}
+          </button>
+        ))}
+      </div>
+      {value === "custom" && (
+        <label className="pay-label">
+          Custom tip amount
+          <input
+            inputMode="decimal"
+            value={customTip}
+            onChange={(event) => onCustomTip(event.target.value.replace(/[^\d.]/g, ""))}
+            placeholder="Custom amount"
+          />
+        </label>
+      )}
+    </fieldset>
+  );
+}
+
 class PayEmbedBoundary extends Component<
   { children: ReactNode; fallback: ReactNode },
   { failed: boolean }
@@ -88,22 +144,33 @@ class PayEmbedBoundary extends Component<
 
 export default function PayFlow({
   initialKind = "deposit",
+  initialMode = "deposit",
+  amountCents = null,
+  amountLocked = false,
   publishableKey = "",
   quoteToken = "",
   quoteNumber = "",
   checkoutReady = true,
 }: {
   initialKind?: PaymentKind;
+  initialMode?: PayMode;
+  amountCents?: number | null;
+  amountLocked?: boolean;
   publishableKey?: string;
   quoteToken?: string;
   quoteNumber?: string;
   checkoutReady?: boolean;
 }) {
-  const [stripePromise, setStripePromise] = useState<ReturnType<typeof loadStripe> | null>(null);
+  const bakedPublishableKey = publishableKey || process.env.STRIPE_PK || STRIPE_PUBLISHABLE_KEY;
+  const [stripePromise, setStripePromise] = useState<ReturnType<typeof loadStripe> | null>(() =>
+    bakedPublishableKey ? loadStripe(bakedPublishableKey) : null,
+  );
   const [kind, setKind] = useState<PaymentKind>(initialKind);
+  const [mode, setMode] = useState<PayMode>(initialMode);
   const spec = PAYMENT_KIND[kind];
-  const [amount, setAmount] = useState<number>(spec.defaultUsd);
-  const [custom, setCustom] = useState("");
+  const seeded = initialAmountState(initialKind, amountCents);
+  const [amount, setAmount] = useState<number>(seeded.amount);
+  const [custom, setCustom] = useState(seeded.custom);
   const [note, setNote] = useState("");
   const [quote, setQuote] = useState<QuoteFields>({
     ...EMPTY_QUOTE_FIELDS,
@@ -113,9 +180,12 @@ export default function PayFlow({
   const [quoteTotalLocked, setQuoteTotalLocked] = useState(false);
   const [quoteSigned, setQuoteSigned] = useState(false);
   const [depositPaidCents, setDepositPaidCents] = useState(0);
-  const [lookupState, setLookupState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [lookupState, setLookupState] = useState<"idle" | "loading" | "done" | "error">(() =>
+    quoteToken.trim() || quoteNumber.trim() ? "loading" : "done",
+  );
   const [tipType, setTipType] = useState<TipType>("none");
   const [customTip, setCustomTip] = useState("");
+  const [receiptEmail, setReceiptEmail] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [chargedCents, setChargedCents] = useState(0);
   const [error, setError] = useState("");
@@ -128,27 +198,23 @@ export default function PayFlow({
   }, [clientSecret]);
 
   useEffect(() => {
-    const baked = publishableKey || process.env.STRIPE_PK || STRIPE_PUBLISHABLE_KEY;
-    if (baked) {
-      setStripePromise(loadStripe(baked));
-    }
     fetch("/api/pay/config")
       .then((res) => res.json())
       .then((data: { publishableKey?: string; configured?: boolean }) => {
-        if (data.publishableKey && !baked) setStripePromise(loadStripe(data.publishableKey));
+        if (data.publishableKey && !bakedPublishableKey) {
+          setStripePromise(loadStripe(data.publishableKey));
+        }
         if (typeof data.configured === "boolean") setReady(data.configured);
       })
       .catch(() => {});
-  }, [publishableKey]);
+  }, [bakedPublishableKey]);
 
   useEffect(() => {
     const token = quoteToken.trim();
     const number = (quote.quote_number || quoteNumber).trim();
     if (!token && !number) {
-      setLookupState("done");
       return;
     }
-    setLookupState("loading");
     const params = new URLSearchParams();
     if (token) params.set("q", token);
     if (number) params.set("quote", number);
@@ -173,6 +239,10 @@ export default function PayFlow({
               Object.entries(data.quote || {}).filter(([, value]) => Boolean(value)),
             ),
           }));
+          const quotedEmail = data.quote.customer_email?.trim() || "";
+          if (quotedEmail) {
+            setReceiptEmail((current) => current || quotedEmail);
+          }
         }
         if (typeof data.quoteTotalCents === "number" && data.quoteTotalCents > 0) {
           setQuoteTotal((data.quoteTotalCents / 100).toFixed(2));
@@ -197,41 +267,56 @@ export default function PayFlow({
   const selected = custom ? dollarsInput(custom, NaN) : amount;
   const quoteTotalUsd = dollarsInput(quoteTotal, NaN);
   const customTipUsd = dollarsInput(customTip, 0);
+  const linkLocked = amountLocked && kind !== "tip";
   const depositBreakdown = depositSummary(
     Number.isFinite(selected) ? dollarsToCents(selected) : 0,
+    kind === "tip" ? "none" : tipType,
+    kind === "tip" ? 0 : dollarsToCents(Math.max(0, customTipUsd)),
   );
   const balanceBreakdown = balanceSummary({
     quoteTotalCents: Number.isFinite(quoteTotalUsd) ? dollarsToCents(quoteTotalUsd) : 0,
     depositPaidCents,
     tipType,
     customTipCents: dollarsToCents(Math.max(0, customTipUsd)),
+    remainingOverrideCents: linkLocked ? amountCents : null,
   });
+  const meetsFloor =
+    kind === "balance"
+      ? amountMeetsLinkFloor(balanceBreakdown.remainingCents, amountCents, linkLocked)
+      : amountMeetsLinkFloor(
+          Number.isFinite(selected) ? dollarsToCents(selected) : 0,
+          amountCents,
+          linkLocked,
+        );
   const depositValid =
-    Number.isFinite(selected) && selected >= spec.minUsd && selected <= spec.maxUsd;
+    Number.isFinite(selected) &&
+    selected >= spec.minUsd &&
+    selected <= spec.maxUsd &&
+    (kind !== "deposit" || meetsFloor);
   const customTipValid =
+    kind === "tip" ||
     tipType !== "custom" ||
     (Number.isFinite(customTipUsd) && customTipUsd >= 0 && customTipUsd <= CUSTOM_TIP_MAX_USD);
+  const hasBalanceBase =
+    (Number.isFinite(quoteTotalUsd) && quoteTotalUsd > 0) ||
+    Boolean(linkLocked && amountCents);
   const balanceAmountOk =
     lookupState !== "loading" &&
     lookupState !== "error" &&
-    Number.isFinite(quoteTotalUsd) &&
-    quoteTotalUsd > 0 &&
+    hasBalanceBase &&
     balanceBreakdown.payable &&
     customTipValid &&
+    meetsFloor &&
     balanceBreakdown.remainingCents / 100 <= PAYMENT_KIND.balance.maxUsd;
-  const amountValid = kind === "balance" ? balanceAmountOk : kind === "tip" ? depositValid : depositValid;
+  const amountValid =
+    kind === "balance" ? balanceAmountOk : kind === "tip" ? depositValid : depositValid && customTipValid;
   const valid = Boolean(ready && amountValid);
   const todayCents =
     kind === "balance" ? balanceBreakdown.totalChargedCents : depositBreakdown.totalChargedCents;
   const amountKnown =
     kind === "balance"
-      ? lookupState === "done" &&
-        Number.isFinite(quoteTotalUsd) &&
-        quoteTotalUsd > 0 &&
-        balanceBreakdown.payable
-      : kind === "tip"
-        ? depositValid
-        : depositValid;
+      ? lookupState === "done" && balanceBreakdown.payable && hasBalanceBase
+      : depositValid && customTipValid;
 
   function checkoutDisabledReason(): string {
     if (!ready) return `Checkout is not connected yet. Call ${PHONE_DISPLAY}.`;
@@ -239,14 +324,17 @@ export default function PayFlow({
     if (kind === "balance" && lookupState === "error") {
       return `Could not verify the deposit. Call ${PHONE_DISPLAY} before paying the remaining balance.`;
     }
-    if (kind === "balance" && !Number.isFinite(quoteTotalUsd)) {
+    if (kind === "balance" && !hasBalanceBase) {
       return "Enter the approved quote total.";
     }
     if (kind === "balance" && !balanceBreakdown.payable) {
       return "This move has no remaining balance.";
     }
-    if (kind === "balance" && !customTipValid) {
+    if (!customTipValid) {
       return `Enter a custom tip of $0 to $${CUSTOM_TIP_MAX_USD.toLocaleString("en-US")}.`;
+    }
+    if (kind !== "balance" && !meetsFloor && amountCents) {
+      return `This payment link is for ${formatUsd(amountCents)} or more.`;
     }
     if (kind !== "balance" && !depositValid) {
       return `Enter an amount between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`;
@@ -256,20 +344,41 @@ export default function PayFlow({
 
   function chooseKind(next: PaymentKind) {
     setKind(next);
-    setAmount(PAYMENT_KIND[next].defaultUsd);
-    setCustom("");
+    const nextAmount = initialAmountState(next, amountCents);
+    if (next === "balance") {
+      setMode("balance");
+      setAmount(PAYMENT_KIND.balance.defaultUsd);
+      setCustom("");
+    } else if (next === "deposit") {
+      setMode(initialMode === "fixed" ? "fixed" : "deposit");
+      setAmount(nextAmount.amount);
+      setCustom(nextAmount.custom);
+    } else {
+      setAmount(PAYMENT_KIND[next].defaultUsd);
+      setCustom("");
+    }
     setClientSecret("");
     setChargedCents(0);
     setError("");
-    if (next !== "balance") {
+    if (next === "tip") {
       setTipType("none");
       setCustomTip("");
     }
     if (typeof window !== "undefined") {
       const url = new URL(window.location.href);
       url.searchParams.set("type", next);
+      if (next === "balance") url.searchParams.set("mode", "balance");
+      else if (next === "deposit") {
+        url.searchParams.set("mode", initialMode === "fixed" ? "fixed" : "deposit");
+      }
       window.history.replaceState(window.history.state, "", url);
     }
+  }
+
+  function selectPreset(preset: number) {
+    if (linkLocked && amountCents && dollarsToCents(preset) < amountCents) return;
+    setAmount(preset);
+    setCustom("");
   }
 
   function clearCheckout() {
@@ -317,24 +426,35 @@ export default function PayFlow({
     setStarting(true);
     setError("");
     try {
+      const email = receiptEmail.trim();
       const response = await fetch("/api/pay/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           kind,
-          amountUsd: kind === "balance" ? quoteTotalUsd : selected,
+          mode: kind === "tip" ? undefined : mode,
+          amountUsd:
+            kind === "balance"
+              ? Number.isFinite(quoteTotalUsd)
+                ? quoteTotalUsd
+                : amountCents
+                  ? amountCents / 100
+                  : selected
+              : selected,
           note,
           quoteToken,
           quoteNumber: quote.quote_number,
           moveReference: quote.move_reference,
           customerName: quote.customer_name,
-          customerEmail: quote.customer_email.trim(),
+          customerEmail: email,
           moveDate: quote.move_date,
           pickupAddress: quote.pickup_address,
           deliveryAddress: quote.delivery_address,
-          quoteTotalUsd: kind === "balance" ? quoteTotalUsd : undefined,
-          tipType: kind === "balance" ? tipType : undefined,
-          customTipUsd: kind === "balance" && tipType === "custom" ? customTipUsd : undefined,
+          quoteTotalUsd:
+            kind === "balance" && Number.isFinite(quoteTotalUsd) ? quoteTotalUsd : undefined,
+          tipType: kind === "tip" ? undefined : tipType,
+          customTipUsd: kind !== "tip" && tipType === "custom" ? customTipUsd : undefined,
+          lockedAmountCents: linkLocked && amountCents ? amountCents : undefined,
         }),
       });
       const data = (await response.json()) as {
@@ -387,18 +507,23 @@ export default function PayFlow({
       (kind === "deposit" && quote.quote_number),
   );
 
+  const amountLabel = kind === "tip" ? "Tip" : kind === "balance" ? "Remaining move balance" : "Deposit";
   const summaryRows =
     kind === "balance"
       ? [
-          {
-            label: "Approved move total",
-            value: formatUsd(balanceBreakdown.quoteTotalCents),
-          },
-          {
-            label: "Deposit received",
-            value: `−${formatUsd(balanceBreakdown.depositPaidCents)}`,
-            muted: true,
-          },
+          ...(Number.isFinite(quoteTotalUsd) && quoteTotalUsd > 0
+            ? [
+                {
+                  label: "Approved move total",
+                  value: formatUsd(balanceBreakdown.quoteTotalCents),
+                },
+                {
+                  label: "Deposit received",
+                  value: `−${formatUsd(balanceBreakdown.depositPaidCents)}`,
+                  muted: true,
+                },
+              ]
+            : []),
           {
             label: "Remaining move balance",
             value: formatUsd(balanceBreakdown.remainingCents),
@@ -415,9 +540,17 @@ export default function PayFlow({
         ]
       : [
           {
-            label: kind === "tip" ? "Tip" : "Deposit",
+            label: amountLabel,
             value: formatUsd(depositBreakdown.depositCents),
           },
+          ...(kind === "tip"
+            ? []
+            : [
+                {
+                  label: "Optional crew tip",
+                  value: formatUsd(depositBreakdown.tipCents),
+                },
+              ]),
           {
             label: PROCESSING_FEE_LABEL,
             value: formatUsd(depositBreakdown.processingFeeCents),
@@ -505,7 +638,7 @@ export default function PayFlow({
         ))}
       </div>
       {kind === "tip" && (
-        <p className="pay-banner pay-banner--info">
+        <p className="pay-help">
           Post-move tip for the crew. This is separate from the remaining move balance.
         </p>
       )}
@@ -513,19 +646,21 @@ export default function PayFlow({
       {(kind === "deposit" || kind === "tip") && (
         <>
           <div className="pay-presets">
-            {spec.presetsUsd.map((preset) => (
-              <button
-                type="button"
-                key={preset}
-                onClick={() => {
-                  setAmount(preset);
-                  setCustom("");
-                }}
-                className={`pay-preset${!custom && amount === preset ? " is-on" : ""}`}
-              >
-                ${preset}
-              </button>
-            ))}
+            {spec.presetsUsd.map((preset) => {
+              const blocked =
+                linkLocked && amountCents ? dollarsToCents(preset) < amountCents : false;
+              return (
+                <button
+                  type="button"
+                  key={preset}
+                  disabled={blocked}
+                  onClick={() => selectPreset(preset)}
+                  className={`pay-preset${!custom && amount === preset ? " is-on" : ""}`}
+                >
+                  ${preset}
+                </button>
+              );
+            })}
           </div>
           <label className="pay-label">
             Or enter another amount
@@ -575,52 +710,16 @@ export default function PayFlow({
           {Number.isFinite(quoteTotalUsd) && !balanceBreakdown.payable && lookupState === "done" && (
             <p className="pay-banner pay-banner--warn">This move has no remaining balance.</p>
           )}
-          <fieldset className="space-y-2">
-            <legend className="text-sm font-bold">Optional crew tip</legend>
-            <div className="grid gap-2">
-              {TIP_OPTIONS.map((option) => {
-                const remaining = balanceBreakdown.remainingCents;
-                const amountForOption =
-                  option === "custom"
-                    ? Number.isFinite(customTipUsd)
-                      ? dollarsToCents(Math.max(0, customTipUsd))
-                      : 0
-                    : tipAmountCents(remaining, option);
-                return (
-                  <label
-                    key={option}
-                    className={`pay-tip-option${tipType === option ? " is-on" : ""}`}
-                  >
-                    <span className="flex items-center gap-3 font-bold">
-                      <input
-                        type="radio"
-                        name="tip"
-                        checked={tipType === option}
-                        onChange={() => {
-                          setTipType(parseTipType(option));
-                          if (option !== "custom") setCustomTip("");
-                        }}
-                      />
-                      {balanceTipLabel(option)}
-                    </span>
-                    <span className="font-semibold">{formatUsd(amountForOption)}</span>
-                  </label>
-                );
-              })}
-            </div>
-            {tipType === "custom" && (
-              <label className="pay-label">
-                Custom tip amount
-                <input
-                  inputMode="decimal"
-                  value={customTip}
-                  onChange={(event) => setCustomTip(event.target.value.replace(/[^\d.]/g, ""))}
-                  placeholder="Custom amount"
-                />
-              </label>
-            )}
-          </fieldset>
         </div>
+      )}
+
+      {kind !== "tip" && (
+        <TipChips
+          value={tipType}
+          customTip={customTip}
+          onType={setTipType}
+          onCustomTip={setCustomTip}
+        />
       )}
 
       <details className="pay-details" open={detailsFilled || undefined}>
@@ -691,7 +790,7 @@ export default function PayFlow({
       {kind === "deposit" && depositValid && (
         <ChargeSummary rows={summaryRows} totalCents={depositBreakdown.totalChargedCents} />
       )}
-      {kind === "balance" && Number.isFinite(quoteTotalUsd) && quoteTotalUsd > 0 && (
+      {kind === "balance" && hasBalanceBase && (
         <>
           {balanceBreakdown.noDepositApplied && lookupState === "done" && (
             <p className="text-xs font-medium text-zinc-500">No deposit has been applied.</p>
@@ -702,6 +801,18 @@ export default function PayFlow({
       {kind === "tip" && depositValid && (
         <ChargeSummary rows={summaryRows} totalCents={depositBreakdown.totalChargedCents} />
       )}
+
+      <label className="pay-label">
+        Email for receipt <span className="pay-required">(optional)</span>
+        <input
+          type="email"
+          name="email"
+          autoComplete="email"
+          value={receiptEmail}
+          onChange={(event) => setReceiptEmail(event.target.value)}
+          placeholder="Optional"
+        />
+      </label>
 
       {error && (
         <p role="alert" className="pay-banner pay-banner--error">
@@ -720,14 +831,6 @@ export default function PayFlow({
       )}
       {kind === "deposit" && (
         <p className="pay-help">The move date is held after this deposit payment succeeds.</p>
-      )}
-      {kind !== "tip" && (
-        <p className="pay-help">
-          Want to tip after the move?{" "}
-          <button type="button" className="pay-ghost" onClick={() => chooseKind("tip")}>
-            Tip the crew
-          </button>
-        </p>
       )}
       <p className="pay-help">
         Card details stay on this page. Stripe processes the payment. Call {PHONE_DISPLAY} if

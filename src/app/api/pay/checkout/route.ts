@@ -29,6 +29,8 @@ export async function POST(req: Request) {
     quoteTotalUsd?: unknown;
     tipType?: unknown;
     customTipUsd?: unknown;
+    mode?: unknown;
+    lockedAmountCents?: unknown;
   } | null;
 
   if (!isPaymentKind(body?.kind)) {
@@ -64,6 +66,8 @@ export async function POST(req: Request) {
       quoteTotalUsd: body?.quoteTotalUsd,
       tipType: body?.tipType,
       customTipUsd: body?.customTipUsd,
+      mode: body?.mode,
+      lockedAmountCents: body?.lockedAmountCents,
     });
     return NextResponse.json(session);
   } catch (err) {
@@ -86,7 +90,8 @@ export async function POST(req: Request) {
       message.startsWith("Custom tip") ||
       message.startsWith("This move") ||
       message.startsWith("Choose") ||
-      message.startsWith("Could not verify");
+      message.startsWith("Could not verify") ||
+      message.startsWith("This payment link");
     if (!clientError) {
       const extra =
         err && typeof err === "object"

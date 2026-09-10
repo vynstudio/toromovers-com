@@ -5,14 +5,18 @@ import {
   CUSTOM_TIP_MAX_USD,
   PAYMENT_KIND,
   PROCESSING_FEE_LABEL,
+  amountMeetsLinkFloor,
   balanceSummary,
   centsToDollarString,
   clipField,
   depositSummary,
   dollarsToCents,
   isCheckoutEmail,
+  parseAmountCents,
+  parsePayMode,
   parseTipType,
   parseUsd,
+  type PayMode,
   type PaymentKind,
   type QuoteFields,
   type TipType,
@@ -143,6 +147,8 @@ export type CreatePaymentInput = {
   quoteTotalUsd?: unknown;
   tipType?: unknown;
   customTipUsd?: unknown;
+  mode?: unknown;
+  lockedAmountCents?: unknown;
 };
 
 type BuiltSession = {
@@ -163,11 +169,46 @@ function quoteContext(input: CreatePaymentInput): {
   });
   const fields = resolved.fields;
   if (note && !fields.customer_note) fields.customer_note = note;
+  if (fields.customer_email && !isCheckoutEmail(fields.customer_email)) {
+    fields.customer_email = "";
+  }
   return { fields, quoteTotalCents: resolved.quoteTotalCents };
+}
+
+function paymentMode(input: CreatePaymentInput, fallback: PayMode): PayMode {
+  return parsePayMode(input.mode) ?? fallback;
+}
+
+function lockedAmountFromInput(input: CreatePaymentInput): number | null {
+  return parseAmountCents(input.lockedAmountCents);
+}
+
+function assertLinkFloor(selectedCents: number, mode: PayMode, lockedAmountCents: number | null) {
+  const locked = Boolean(lockedAmountCents && mode !== "fixed");
+  if (!amountMeetsLinkFloor(selectedCents, lockedAmountCents, locked)) {
+    throw new Error("Amount is below the amount on this payment link.");
+  }
+}
+
+function resolveTip(input: CreatePaymentInput): { tipType: TipType; customTipCents: number } {
+  const tipType = parseTipType(input.tipType);
+  const customTipUsd = parseUsd(input.customTipUsd);
+  if (tipType === "custom") {
+    if (!Number.isFinite(customTipUsd) || customTipUsd < 0) {
+      throw new Error("Enter a custom tip of $0 or more.");
+    }
+    if (customTipUsd > CUSTOM_TIP_MAX_USD) {
+      throw new Error(`Custom tip must be at most $${CUSTOM_TIP_MAX_USD.toLocaleString("en-US")}.`);
+    }
+    return { tipType, customTipCents: dollarsToCents(customTipUsd) };
+  }
+  return { tipType, customTipCents: 0 };
 }
 
 async function buildDepositSession(input: CreatePaymentInput): Promise<BuiltSession> {
   const spec = PAYMENT_KIND.deposit;
+  const mode = paymentMode(input, "deposit");
+  const lockedAmountCents = lockedAmountFromInput(input);
   const amountUsd = parseUsd(input.amountUsd);
   if (!Number.isFinite(amountUsd)) throw new Error("Enter an amount.");
   if (amountUsd < spec.minUsd || amountUsd > spec.maxUsd) {
@@ -177,7 +218,18 @@ async function buildDepositSession(input: CreatePaymentInput): Promise<BuiltSess
   }
   const { fields } = quoteContext(input);
   const depositCents = dollarsToCents(amountUsd);
-  const summary = depositSummary(depositCents);
+  assertLinkFloor(depositCents, mode, lockedAmountCents);
+  const { tipType, customTipCents } = resolveTip(input);
+  const summary = depositSummary(depositCents, tipType, customTipCents);
+  const lineItems = [
+    lineItem(spec.productName, summary.depositCents, fields.customer_note || spec.label),
+  ];
+  if (summary.tipCents > 0) {
+    lineItems.push(lineItem("Optional crew tip", summary.tipCents));
+  }
+  if (summary.processingFeeCents > 0) {
+    lineItems.push(lineItem(PROCESSING_FEE_LABEL, summary.processingFeeCents));
+  }
   const params: Stripe.Checkout.SessionCreateParams = {
     ui_mode: "embedded_page",
     mode: "payment",
@@ -189,7 +241,11 @@ async function buildDepositSession(input: CreatePaymentInput): Promise<BuiltSess
     metadata: meta({
       kind: "deposit",
       payment_type: "deposit",
+      mode,
       deposit_amount: centsToDollarString(summary.depositCents),
+      tip_type: summary.tipType,
+      tip_percentage: summary.tipPercentage ? String(summary.tipPercentage) : "0",
+      tip_amount: centsToDollarString(summary.tipCents),
       processing_fee: centsToDollarString(summary.processingFeeCents),
       total_charged: centsToDollarString(summary.totalChargedCents),
       quote_number: fields.quote_number,
@@ -201,15 +257,11 @@ async function buildDepositSession(input: CreatePaymentInput): Promise<BuiltSess
       delivery_address: fields.delivery_address,
       customer_note: fields.customer_note,
       amount_cents: summary.depositCents,
+      tip_cents: summary.tipCents,
       fee_cents: summary.processingFeeCents,
       total_cents: summary.totalChargedCents,
     }),
-    line_items: [
-      lineItem(spec.productName, summary.depositCents, fields.customer_note || spec.label),
-      ...(summary.processingFeeCents > 0
-        ? [lineItem(PROCESSING_FEE_LABEL, summary.processingFeeCents)]
-        : []),
-    ],
+    line_items: lineItems,
   };
   if (isCheckoutEmail(fields.customer_email)) {
     params.customer_email = fields.customer_email.trim();
@@ -219,8 +271,10 @@ async function buildDepositSession(input: CreatePaymentInput): Promise<BuiltSess
 
 async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSession> {
   const spec = PAYMENT_KIND.balance;
+  const mode = paymentMode(input, "balance");
+  const lockedAmountCents = lockedAmountFromInput(input);
   const { fields, quoteTotalCents } = quoteContext(input);
-  if (!quoteTotalCents || quoteTotalCents <= 0) {
+  if ((!quoteTotalCents || quoteTotalCents <= 0) && !lockedAmountCents) {
     throw new Error("Enter the approved quote total.");
   }
   let depositCredit = 0;
@@ -230,27 +284,18 @@ async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSess
     console.error("[stripe] deposit lookup for balance", err);
     throw new Error(`Could not verify the deposit on this quote. Call ${PHONE_DISPLAY}.`);
   }
-  const tipType: TipType = parseTipType(input.tipType);
-  const customTipUsd = parseUsd(input.customTipUsd);
-  const customTipCents =
-    tipType === "custom" && Number.isFinite(customTipUsd) ? dollarsToCents(customTipUsd) : 0;
-  if (tipType === "custom") {
-    if (!Number.isFinite(customTipUsd) || customTipUsd < 0) {
-      throw new Error("Enter a custom tip of $0 or more.");
-    }
-    if (customTipUsd > CUSTOM_TIP_MAX_USD) {
-      throw new Error(`Custom tip must be at most $${CUSTOM_TIP_MAX_USD.toLocaleString("en-US")}.`);
-    }
-  }
+  const { tipType, customTipCents } = resolveTip(input);
   const summary = balanceSummary({
-    quoteTotalCents,
+    quoteTotalCents: quoteTotalCents || 0,
     depositPaidCents: depositCredit,
     tipType,
     customTipCents,
+    remainingOverrideCents: mode !== "fixed" ? lockedAmountCents : null,
   });
   if (!summary.payable) {
     throw new Error("This move has no remaining balance.");
   }
+  assertLinkFloor(summary.remainingCents, mode, lockedAmountCents);
   const remainingUsd = summary.remainingCents / 100;
   if (remainingUsd > spec.maxUsd) {
     throw new Error(
@@ -280,7 +325,8 @@ async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSess
     metadata: meta({
       kind: "balance",
       payment_type: "balance",
-      quote_total: centsToDollarString(summary.quoteTotalCents),
+      mode,
+      quote_total: summary.quoteTotalCents ? centsToDollarString(summary.quoteTotalCents) : undefined,
       deposit_credit: centsToDollarString(summary.depositPaidCents),
       remaining_balance_before_tip: centsToDollarString(summary.remainingCents),
       tip_type: summary.tipType,
@@ -297,6 +343,7 @@ async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSess
       delivery_address: fields.delivery_address,
       customer_note: fields.customer_note,
       amount_cents: summary.remainingCents,
+      tip_cents: summary.tipCents,
       fee_cents: summary.processingFeeCents,
       total_cents: summary.totalChargedCents,
     }),
@@ -331,6 +378,7 @@ async function buildTipSession(input: CreatePaymentInput): Promise<BuiltSession>
     metadata: meta({
       kind: "tip",
       payment_type: "tip",
+      mode: "fixed",
       tip_type: "custom",
       tip_percentage: "0",
       tip_amount: centsToDollarString(tipCents),
@@ -345,6 +393,7 @@ async function buildTipSession(input: CreatePaymentInput): Promise<BuiltSession>
       delivery_address: fields.delivery_address,
       customer_note: fields.customer_note,
       amount_cents: tipCents,
+      tip_cents: tipCents,
       fee_cents: summary.processingFeeCents,
       total_cents: summary.totalChargedCents,
     }),
@@ -364,6 +413,7 @@ async function buildTipSession(input: CreatePaymentInput): Promise<BuiltSession>
 function sessionPresentation(
   kind: PaymentKind,
   fields: QuoteFields,
+  intentMeta?: Stripe.MetadataParam,
 ): Pick<
   Stripe.Checkout.SessionCreateParams,
   "locale" | "branding_settings" | "custom_text" | "payment_intent_data" | "client_reference_id"
@@ -372,6 +422,7 @@ function sessionPresentation(
   const who = fields.quote_number
     ? `${spec.shortLabel} ${fields.quote_number}`
     : spec.productName;
+  const email = isCheckoutEmail(fields.customer_email) ? fields.customer_email.trim() : "";
   return {
     locale: "en",
     branding_settings: stripeCheckoutBranding(),
@@ -379,6 +430,8 @@ function sessionPresentation(
     payment_intent_data: {
       description: clipField(`Toro Movers — ${who}`, 1000),
       statement_descriptor_suffix: stripeStatementSuffix(),
+      ...(email ? { receipt_email: email } : {}),
+      ...(intentMeta && Object.keys(intentMeta).length ? { metadata: intentMeta } : {}),
     },
     client_reference_id:
       clipField(fields.quote_number || fields.move_reference, 200) || undefined,
@@ -389,7 +442,7 @@ async function createEmbeddedSession(built: BuiltSession): Promise<Stripe.Checko
   // Stripe API 2026-08-26.dahlia rejects ui_mode=embedded. Use embedded_page.
   const session = await getStripe().checkout.sessions.create({
     ...built.params,
-    ...sessionPresentation(built.kind, built.fields),
+    ...sessionPresentation(built.kind, built.fields, built.params.metadata),
     ui_mode: "embedded_page",
   });
   if (!session.client_secret) {

@@ -12,9 +12,9 @@ export const PROCESSING_FEE_LABEL = "Processing Fee (3.5%)";
 
 export const TIP_TYPES = [
   "none",
+  "10_percent",
   "15_percent",
   "20_percent",
-  "25_percent",
   "custom",
 ] as const;
 export type TipType = (typeof TIP_TYPES)[number];
@@ -23,10 +23,13 @@ export const TIP_PERCENT_BY_TYPE: Record<
   Exclude<TipType, "none" | "custom">,
   number
 > = {
+  "10_percent": 10,
   "15_percent": 15,
   "20_percent": 20,
-  "25_percent": 25,
 };
+
+export const PAY_MODES = ["deposit", "balance", "fixed"] as const;
+export type PayMode = (typeof PAY_MODES)[number];
 
 export type QuoteFields = {
   quote_number: string;
@@ -109,7 +112,7 @@ export function parseTipType(value: unknown): TipType {
 }
 
 export function tipPercentage(tipType: TipType): number {
-  if (tipType === "15_percent" || tipType === "20_percent" || tipType === "25_percent") {
+  if (tipType === "10_percent" || tipType === "15_percent" || tipType === "20_percent") {
     return TIP_PERCENT_BY_TYPE[tipType];
   }
   return 0;
@@ -135,17 +138,58 @@ export function remainingMoveBalanceCents(
   return quote - deposit;
 }
 
-export function depositSummary(depositCents: number): {
-  depositCents: number;
+/** Tip is % of the selected amount (not of the fee); 3.5% processing fee is then applied to amount + tip, matching remaining-balance checkout. */
+export function withTipAndProcessingFee(
+  baseCents: number,
+  tipType: TipType = "none",
+  customTipCents = 0,
+): {
+  baseCents: number;
+  tipType: TipType;
+  tipPercentage: number;
+  tipCents: number;
+  subtotalCents: number;
   processingFeeCents: number;
   totalChargedCents: number;
 } {
-  const amount = Math.max(0, Math.round(depositCents));
-  const fee = processingFeeCents(amount);
+  const amount = Math.max(0, Math.round(baseCents));
+  const type = parseTipType(tipType);
+  const tipCents = tipAmountCents(amount, type, customTipCents);
+  const subtotalCents = amount + tipCents;
+  const fee = processingFeeCents(subtotalCents);
   return {
-    depositCents: amount,
+    baseCents: amount,
+    tipType: type,
+    tipPercentage: tipPercentage(type),
+    tipCents,
+    subtotalCents,
     processingFeeCents: fee,
-    totalChargedCents: amount + fee,
+    totalChargedCents: subtotalCents + fee,
+  };
+}
+
+export function depositSummary(
+  depositCents: number,
+  tipType: TipType = "none",
+  customTipCents = 0,
+): {
+  depositCents: number;
+  tipType: TipType;
+  tipPercentage: number;
+  tipCents: number;
+  subtotalCents: number;
+  processingFeeCents: number;
+  totalChargedCents: number;
+} {
+  const charged = withTipAndProcessingFee(depositCents, tipType, customTipCents);
+  return {
+    depositCents: charged.baseCents,
+    tipType: charged.tipType,
+    tipPercentage: charged.tipPercentage,
+    tipCents: charged.tipCents,
+    subtotalCents: charged.subtotalCents,
+    processingFeeCents: charged.processingFeeCents,
+    totalChargedCents: charged.totalChargedCents,
   };
 }
 
@@ -154,6 +198,7 @@ export function balanceSummary(opts: {
   depositPaidCents: number;
   tipType: TipType;
   customTipCents?: number;
+  remainingOverrideCents?: number | null;
 }): {
   quoteTotalCents: number;
   depositPaidCents: number;
@@ -169,21 +214,28 @@ export function balanceSummary(opts: {
 } {
   const quoteTotalCents = Math.max(0, Math.round(opts.quoteTotalCents));
   const depositPaidCents = Math.max(0, Math.round(opts.depositPaidCents));
-  const remainingCents = remainingMoveBalanceCents(quoteTotalCents, depositPaidCents);
-  const tipType = opts.tipType;
-  const tipCents = tipAmountCents(remainingCents, tipType, opts.customTipCents ?? 0);
-  const subtotalCents = remainingCents + tipCents;
-  const fee = processingFeeCents(subtotalCents);
+  let remainingCents = remainingMoveBalanceCents(quoteTotalCents, depositPaidCents);
+  if (typeof opts.remainingOverrideCents === "number" && opts.remainingOverrideCents > 0) {
+    remainingCents =
+      remainingCents > 0
+        ? Math.max(remainingCents, Math.round(opts.remainingOverrideCents))
+        : Math.round(opts.remainingOverrideCents);
+  }
+  const charged = withTipAndProcessingFee(
+    remainingCents,
+    opts.tipType,
+    opts.customTipCents ?? 0,
+  );
   return {
     quoteTotalCents,
     depositPaidCents,
     remainingCents,
-    tipType,
-    tipPercentage: tipPercentage(tipType),
-    tipCents,
-    subtotalCents,
-    processingFeeCents: fee,
-    totalChargedCents: subtotalCents + fee,
+    tipType: charged.tipType,
+    tipPercentage: charged.tipPercentage,
+    tipCents: charged.tipCents,
+    subtotalCents: charged.subtotalCents,
+    processingFeeCents: charged.processingFeeCents,
+    totalChargedCents: charged.totalChargedCents,
     noDepositApplied: depositPaidCents <= 0,
     payable: remainingCents > 0,
   };
@@ -251,8 +303,69 @@ export function isPaymentKind(value: unknown): value is PaymentKind {
 export function parsePaymentKind(value: string | string[] | undefined): PaymentKind {
   const raw = Array.isArray(value) ? value[0] : value;
   if (raw === "full" || raw === "payment") return "balance";
+  if (raw === "fixed") return "deposit";
   if (isPaymentKind(raw)) return raw;
   return "deposit";
+}
+
+export function isPayMode(value: unknown): value is PayMode {
+  return typeof value === "string" && PAY_MODES.includes(value as PayMode);
+}
+
+export function parsePayMode(value: unknown): PayMode | null {
+  const raw = Array.isArray(value) ? value[0] : value;
+  return isPayMode(raw) ? raw : null;
+}
+
+/** Staff pay links pass integer cents (`/pay?amount=49500`). */
+export function parseAmountCents(value: unknown): number | null {
+  const raw = Array.isArray(value) ? value[0] : value;
+  if (typeof raw === "number") {
+    if (!Number.isInteger(raw) || raw <= 0) return null;
+    return raw;
+  }
+  if (typeof raw !== "string") return null;
+  const text = raw.trim();
+  if (!/^\d+$/.test(text)) return null;
+  const cents = Number.parseInt(text, 10);
+  if (!Number.isFinite(cents) || cents <= 0) return null;
+  return cents;
+}
+
+export function firstQueryValue(value: string | string[] | undefined): string {
+  if (Array.isArray(value)) return value[0] || "";
+  return value || "";
+}
+
+export function parsePayLink(
+  params: Record<string, string | string[] | undefined>,
+): {
+  kind: PaymentKind;
+  mode: PayMode;
+  amountCents: number | null;
+  amountLocked: boolean;
+} {
+  const modeParam = parsePayMode(params.mode);
+  const typeKind = parsePaymentKind(params.type || params.kind);
+  const kind: PaymentKind =
+    modeParam === "balance"
+      ? "balance"
+      : modeParam === "deposit" || modeParam === "fixed"
+        ? "deposit"
+        : typeKind;
+  const mode: PayMode = modeParam ?? (kind === "balance" ? "balance" : "deposit");
+  const amountCents = parseAmountCents(params.amount);
+  const amountLocked = Boolean(amountCents && mode !== "fixed" && kind !== "tip");
+  return { kind, mode, amountCents, amountLocked };
+}
+
+export function amountMeetsLinkFloor(
+  selectedCents: number,
+  lockedAmountCents: number | null | undefined,
+  amountLocked: boolean,
+): boolean {
+  if (!amountLocked || !lockedAmountCents) return true;
+  return Math.round(selectedCents) >= lockedAmountCents;
 }
 
 export function clipField(value: unknown, max = 200): string {
@@ -278,17 +391,22 @@ export function checkoutCtaLabel(cta: string, amountCents?: number | null): stri
 
 export function balanceTipLabel(type: TipType): string {
   switch (type) {
+    case "10_percent":
+      return "10%";
     case "15_percent":
-      return "15% tip";
+      return "15%";
     case "20_percent":
-      return "20% tip";
-    case "25_percent":
-      return "25% tip";
+      return "20%";
     case "custom":
-      return "Custom tip amount";
+      return "Custom";
     default:
       return "No tip";
   }
+}
+
+export function dollarsInputString(cents: number): string {
+  if (!Number.isFinite(cents) || cents <= 0) return "";
+  return cents % 100 === 0 ? String(cents / 100) : (cents / 100).toFixed(2);
 }
 
 export function mergeQuoteFields(
