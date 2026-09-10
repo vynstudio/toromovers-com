@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { SafeImage } from "@/components/SafeImage";
 import { footer } from "@/lib/content";
 import {
   BUSINESS_NAME,
@@ -55,14 +55,16 @@ export function Footer() {
             className="footer-lockup"
             aria-label={`${BUSINESS_NAME} home`}
           >
-            <Image
-              src="/logos/toro-bull-white.svg"
-              alt=""
-              width={40}
-              height={32}
-              className="footer-bull"
-              priority={false}
-            />
+            <span className="footer-mark" aria-hidden>
+              <SafeImage
+                src="/logos/toro-bull-white.svg"
+                alt=""
+                width={40}
+                height={32}
+                className="footer-bull"
+                priority={false}
+              />
+            </span>
             <span className="footer-wordmark">
               TORO<span className="footer-dot">·</span>MOVERS
             </span>
