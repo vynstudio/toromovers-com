@@ -434,10 +434,11 @@ svg {
   height: auto;
 }
 
-/* Do not force iframe height:auto — Stripe Embedded Checkout sizes its iframe.
-   height:auto collapses the deposit/balance embed to a sliver on /pay. */
+/* Stripe Embedded Checkout has no intrinsic ratio. Do not put iframe on the
+   media height:auto reset, and do not cap max-width here — either rule
+   collapses the /pay embed to a sliver / blank white frame. */
 iframe {
-  max-width: 100%;
+  max-width: none;
 }
 
 .img-card,
@@ -5442,4 +5443,13 @@ a.trust-chip {
     transform: none;
     transition: none;
   }
+}
+
+/* Failsafe for /pay Stripe embed. Keep unlayered and after other rules so a
+   later height:auto / max-width:100% iframe reset cannot collapse checkout. */
+.pay-page iframe,
+.pay-embed iframe,
+.pay-embed-frame iframe {
+  max-width: none !important;
+  min-height: 32rem;
 }

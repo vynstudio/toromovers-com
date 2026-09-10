@@ -6,8 +6,11 @@ import {
   PAYMENT_KIND,
   PROCESSING_FEE_LABEL,
   balanceSummary,
+  balanceTipLabel,
+  checkoutCtaLabel,
   depositSummary,
   dollarsToCents,
+  isCheckoutEmail,
   parsePaymentKind,
   remainingMoveBalanceCents,
   tipAmountCents,
@@ -188,5 +191,31 @@ test("invalid quote token is unsigned so /pay can warn", () => {
   });
   assert.equal(resolved.signed, false);
   assert.equal(resolved.quoteTotalCents, null);
+});
+
+test("checkout email is required and rejects placeholders", () => {
+  assert.equal(isCheckoutEmail("alex@example.com"), true);
+  assert.equal(isCheckoutEmail("  alex@example.com  "), true);
+  assert.equal(isCheckoutEmail(""), false);
+  assert.equal(isCheckoutEmail("alex"), false);
+  assert.equal(isCheckoutEmail("alex@"), false);
+  assert.equal(isCheckoutEmail("@toro.com"), false);
+});
+
+test("balance CTA never trails a middot without an amount", () => {
+  assert.equal(checkoutCtaLabel("Pay remaining balance"), "Pay remaining balance");
+  assert.equal(checkoutCtaLabel("Pay remaining balance", null), "Pay remaining balance");
+  assert.equal(checkoutCtaLabel("Pay remaining balance", 0), "Pay remaining balance");
+  assert.equal(checkoutCtaLabel("Pay remaining balance", 161460), "Pay remaining balance · $1,614.60");
+  assert.equal(checkoutCtaLabel("Pay deposit", 10350), "Pay deposit · $103.50");
+});
+
+test("balance tip labels do not duplicate the percentage", () => {
+  assert.equal(balanceTipLabel("15_percent"), "15% tip");
+  assert.equal(balanceTipLabel("20_percent"), "20% tip");
+  assert.equal(balanceTipLabel("25_percent"), "25% tip");
+  assert.equal(balanceTipLabel("none"), "No tip");
+  assert.equal(balanceTipLabel("custom"), "Custom tip amount");
+  assert.equal(balanceTipLabel("15_percent").includes(" · "), false);
 });
 
