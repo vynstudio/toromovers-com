@@ -25,6 +25,55 @@ export type BlogPost = {
 export const blogPosts: readonly BlogPost[] = [
 
   {
+    slug: "uhaul-pod-loading-help-orlando",
+    eyebrow: "U-Haul & POD help",
+    title: "U-Haul and POD loading help in Orlando",
+    teaser:
+      "How labor-only loading works for U-Hauls, PODs, and storage—what to share before the crew arrives, and how Toro quotes short jobs.",
+    description:
+      "Need U-Haul or POD loading help in Orlando? Learn what labor-only movers include, how access changes the job, and how Toro Movers quotes up-front. Call (689) 600-2720.",
+    date: "2026-09-10",
+    dateLabel: "Sep 10, 2026",
+    image: {
+      src: "/images/moves/svc-labor.webp",
+      alt: "Toro Movers loading furniture carefully on a Central Florida job",
+      position: "object-[center_28%]",
+    },
+    body: [
+      "U-Haul and POD loading help in Orlando is labor-only moving: you already have the truck or container, and a local crew loads, unloads, or both. Toro Movers helps with rental trucks, portable storage, and short loading jobs across Orlando and Central Florida—with up-front hourly rates explained before we start.",
+      "This guide is for DIY movers who rented a U-Haul, Penske, Budget truck, or a POD-style container and need careful loading help—not a full door-to-door truck from the movers. If you want the truck and crew end to end, see full-service moving instead. If you only need one heavy piece or a quick curb load, see loading and unloading help.",
+      "What labor-only usually includes: a crew sized for the job, padding when pieces need protection, loading into your truck or container, and unloading at the destination when you book both ends. You drive (or the container stays on site). We do not bring the rental vehicle on a labor-only booking.",
+      "U-Haul and rental trucks: share truck size, whether the load is one-way or local, and how packed you will be when we arrive. Tight parking, long driveway carries, and second-floor walk-ups change time on site. Photos of bulky items help us plan the crew.",
+      "PODs and portable storage: container doors, driveway placement, and HOA or apartment rules matter as much as the furniture list. Confirm where the unit will sit, whether stairs or elevators are involved from the home to the container, and any building time windows.",
+      "Access still drives the clock. Stairs, elevators, COI or loading-dock rules, street parking, and how ready the home is when the crew shows up all affect how long a U-Haul or POD load takes. Apartment and condo moves should share floor counts and elevator reservations up front.",
+      "Pricing for U-Haul and POD help is typically hourly. Totals depend on crew size, time on site, and access—not a one-size rate card. We explain the hourly model before move day. Call or text (689) 600-2720 with truck or container details, or request a quote online. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      "Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job. For the full labor-only service page, visit labor-only movers; for short single-item jobs, visit loading and unloading.",
+    ],
+    faqs: [
+      {
+        q: "Do you load U-Hauls in Orlando?",
+        a: "Yes. Toro Movers provides labor-only loading and unloading for U-Hauls and other rental trucks when you already have the vehicle. Share truck size, floors, and parking when you book.",
+      },
+      {
+        q: "Do you load PODs and portable storage?",
+        a: "Yes. We help load and unload POD-style containers and storage units when access and placement allow. Tell us driveway or lot placement and any building rules.",
+      },
+      {
+        q: "How many movers do I need for a U-Haul load?",
+        a: "Crew size depends on home size, heavy items, and stairs or elevators. Many local loads start with two movers; larger or tighter access jobs may need more. We confirm before arrival.",
+      },
+      {
+        q: "Is this the same as full-service moving?",
+        a: "No. Full-service includes the movers’ truck and transport. U-Haul and POD loading help is labor-only—you supply the truck or container. We will steer you to the clearer option when you describe the job.",
+      },
+      {
+        q: "How do I book loading help?",
+        a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, truck or POD details, and access notes. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "full-service-vs-labor-only-orlando",
     eyebrow: "Choosing your move type",
     title: "Full-service vs labor-only movers in Orlando",
