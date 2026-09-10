@@ -128,8 +128,8 @@ test("confirmation email uses a light header, black TORO, hosted bull PNG, table
   assert.match(copy.html, new RegExp(`bgcolor="${FUNNEL_ACCENT}"`, "i"));
   assert.match(copy.html, /font-family:Arial/i);
   assert.match(copy.html, /role="presentation"/);
-  assert.match(copy.html, /toro-bull-mark\.png/);
-  assert.equal(LEAD_EMAIL_BULL_PNG.includes("toro-bull-mark.png"), true);
+  assert.match(copy.html, /https:\/\/toromovers\.com\/logos\/toro-bull-black\.png/);
+  assert.equal(LEAD_EMAIL_BULL_PNG, "https://toromovers.com/logos/toro-bull-black.png");
   assert.match(
     copy.html,
     /color:#0A0A0A;[\s\S]{0,80}TORO <span style="color:#E20613;">MOVERS<\/span>/,

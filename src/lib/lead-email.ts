@@ -60,8 +60,9 @@ export function parseBareEmail(raw: string): string | null {
  * putting a display name in `reply_to`.
  */
 
-/** Hosted PNG for email clients (Outlook does not render SVG). White-bg mark. */
-export const LEAD_EMAIL_BULL_PNG = `${SITE_URL.replace(/\/$/, "")}/emails/toro-bull-mark.png`;
+/** Hosted PNG for email clients (Outlook does not render SVG). Light-header mark. */
+export const LEAD_EMAIL_BULL_PNG =
+  "https://toromovers.com/logos/toro-bull-black.png";
 
 export function resendSender(fromRaw?: string): {
   from: string;
