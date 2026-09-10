@@ -1,26 +1,28 @@
 /**
  * Outbound notifications for toromovers.com leads.
- * - Internal: Telegram + Quo SMS FROM workspace 689 TO personal 321
- * - Client: SMS (Quo FROM 689) + email (Resend from hello@toromovers.com)
- * Fail-soft: never throws to callers. Missing QUO_API_KEY skips SMS; lead still accepted.
+ * - Internal: Telegram only (no team Quo SMS)
+ * - Client: SMS (Quo to lead.phone) + branded email (Resend)
+ * Fail-soft: never throws to callers.
  */
 
 import { FUNNEL_BILINGUAL, FUNNEL_SLA } from "./funnel-offer.ts";
+import { PHONE_DISPLAY } from "./site.ts";
 import {
-  GOOGLE_MAPS_REVIEWS_URL,
-  PHONE_DISPLAY,
-} from "./site.ts";
+  buildLeadConfirmationEmail,
+  formatResendError,
+  parseBareEmail,
+  resendSender,
+} from "./lead-email.ts";
 
 /**
- * Send-SMS: POST https://api.quo.com/v1/messages
- * Headers: Authorization (raw key), Quo-Api-Version: 2026-03-30, User-Agent (Cloudflare).
- * Team alerts ALWAYS go to process.env.LEAD_SMS_TO || +13217580094 — not lead.phone.
+ * Client SMS: POST https://api.quo.com/v1/messages
+ * Team alerts are Telegram only — do not SMS LEAD_SMS_TO.
  */
 export const QUO_MESSAGES_URL = "https://api.quo.com/v1/messages";
 export const QUO_API_VERSION = "2026-03-30";
-/** Quo workspace / sending number (689-600-2720). Never use this as LEAD_SMS_TO. */
+/** Quo workspace / sending number (689-600-2720). Client SMS FROM only. */
 export const DEFAULT_QUO_FROM = "+16896002720";
-/** Personal alert destination (321-758-0094). Not a Quo number. Never swap with FROM. */
+/** Unused for team alerts (Telegram only). Kept so existing Netlify env is harmless. */
 export const DEFAULT_LEAD_SMS_TO = "+13217580094";
 /** Same 689 workspace sender as a Quo phoneNumberId. Used if E.164 `from` is rejected. */
 export const DEFAULT_QUO_FROM_PHONE_NUMBER_ID = "PN3sKfvpYp";
@@ -183,11 +185,24 @@ export async function sendEmail(opts: {
   text: string;
   replyTo?: string;
 }): Promise<NotifyResult> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const from =
-    process.env.RESEND_FROM_EMAIL || "hello@toromovers.com";
+  const apiKey = (process.env.RESEND_API_KEY || "").trim();
+  const sender = resendSender();
+  const to = parseBareEmail(opts.to);
   if (!apiKey) {
+    console.error("[notify/email] RESEND_API_KEY missing — lead accepted; email not sent");
     return { ok: false, channel: "email", detail: "RESEND_API_KEY missing" };
+  }
+  if (!sender) {
+    console.error(
+      "[notify/email] invalid RESEND_FROM_EMAIL — use hello@toromovers.com (domain must be verified in Resend)",
+    );
+    return { ok: false, channel: "email", detail: "invalid RESEND_FROM_EMAIL" };
+  }
+  if (!to) {
+    return { ok: false, channel: "email", detail: "invalid recipient email" };
+  }
+  if (!opts.subject.trim() || (!opts.html.trim() && !opts.text.trim())) {
+    return { ok: false, channel: "email", detail: "missing subject or body" };
   }
   try {
     const res = await fetch("https://api.resend.com/emails", {
@@ -197,9 +212,9 @@ export async function sendEmail(opts: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: `Toro Movers <${from}>`,
-        to: [opts.to],
-        reply_to: opts.replyTo || from,
+        from: sender.from,
+        to: [to],
+        reply_to: parseBareEmail(opts.replyTo || "") || sender.replyTo,
         subject: opts.subject,
         html: opts.html,
         text: opts.text,
@@ -207,8 +222,10 @@ export async function sendEmail(opts: {
     });
     if (!res.ok) {
       const t = await res.text().catch(() => "");
-      console.error("[notify/email]", res.status, t.slice(0, 200));
-      return { ok: false, channel: "email", detail: `HTTP ${res.status}` };
+      const detail = formatResendError(res.status, t);
+      const safe = t.replace(apiKey, "[redacted]").replace(/\s+/g, " ").slice(0, 200);
+      console.error("[notify/email]", detail, safe);
+      return { ok: false, channel: "email", detail };
     }
     return { ok: true, channel: "email" };
   } catch (err) {
@@ -265,108 +282,31 @@ function teamMessage(lead: LeadNotifyInput): string {
     .join("\n");
 }
 
-export function formatTeamLeadSms(lead: LeadNotifyInput): string {
-  const phone = e164(lead.phone) || lead.phone;
-  return [
-    "Toro Movers — quote request CONFIRMED",
-    "",
-    `Name: ${lead.name}`,
-    `Phone: ${phone}`,
-    `Email: ${lead.email || "—"}`,
-    lead.city ? `From: ${lead.city}` : "",
-    lead.serviceType ? `Service: ${lead.serviceType}` : "",
-    lead.moveDate ? `When: ${lead.moveDate}` : "",
-    lead.funnel ? `Funnel: ${lead.funnel}` : "",
-    `Source: ${lead.source || "toromovers.com"}`,
-    lead.landingPage ? `Page: ${lead.landingPage}` : "",
-    lead.note ? `Details: ${lead.note}` : "",
-    "",
-    "Confirmation: lead captured on toromovers.com. Call the customer to quote.",
-  ]
-    .filter((line) => line !== "")
-    .join("\n");
-}
-
 function clientSms(lead: LeadNotifyInput): string {
   const n = firstName(lead.name);
   return `Hi ${n} — Toro Movers! We got your quote request. ${FUNNEL_SLA}. Questions? ${PHONE_DISPLAY}. ${FUNNEL_BILINGUAL}. Reply STOP to opt out.`;
 }
 
-function clientEmail(lead: LeadNotifyInput): { subject: string; text: string; html: string } {
-  const n = firstName(lead.name);
-  const subject = "We got your quote request — Toro Movers";
-  const text = [
-    `Hi ${n} — Toro Movers here!`,
-    ``,
-    `${FUNNEL_SLA}. We’ll confirm availability and clear, up-front pricing — no hidden fees.`,
-    ``,
-    lead.serviceType ? `What you selected: ${lead.serviceType}` : "",
-    `While you wait, here's why Central Florida chooses Toro Movers:`,
-    `- 4.9★ on Google · 1,000+ local moves`,
-    `- Family-owned local crew — committed to every job`,
-    `- ${FUNNEL_BILINGUAL}`,
-    `- Careful handling, on-time crews, up-front hourly rates`,
-    ``,
-    `See our reviews: ${GOOGLE_MAPS_REVIEWS_URL}`,
-    ``,
-    `Questions right away? Call or text ${PHONE_DISPLAY}.`,
-    ``,
-    `— Toro Movers`,
-    `Central Florida · toromovers.com`,
-    `hello@toromovers.com`,
-  ]
-    .filter((line) => line !== undefined)
-    .join("\n");
-
-  const html = text
-    .split("\n")
-    .map((line) => (line ? `<p style="margin:0 0 10px;font:15px/1.5 system-ui,sans-serif;color:#111">${escapeHtml(line)}</p>` : "<br/>"))
-    .join("");
-
-  return { subject, text, html };
-}
-
-function escapeHtml(s: string) {
-  return s
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
-}
-
 /**
- * Soft + full leads: Telegram AND team Quo SMS to LEAD_SMS_TO (personal 321).
- * Full leads also: client SMS to lead.phone (if consent) + client email.
- * Missing QUO_API_KEY never blocks lead acceptance.
+ * Team: Telegram only.
+ * Full lead: client SMS (Quo → lead.phone) + branded confirmation email.
  */
 export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]> {
   const results: NotifyResult[] = [];
 
   results.push(await sendTelegram(teamMessage(lead)));
 
-  // Team alert: personal 321 (LEAD_SMS_TO). Separate from client SMS to lead.phone.
-  const teamTo = (process.env.LEAD_SMS_TO || DEFAULT_LEAD_SMS_TO).trim();
-  results.push(
-    await sendQuoMessage({
-      to: teamTo,
-      from: quoFromNumber(),
-      content: formatTeamLeadSms(lead),
-      channel: "sms-team",
-    }),
-  );
-
   if (lead.kind === "soft") {
     return results;
   }
 
-  // Client SMS — customer number only, never LEAD_SMS_TO
   if (lead.consentSms === false) {
     results.push({ ok: false, channel: "sms-client", detail: "no SMS consent" });
   } else {
     results.push(await sendSms(lead.phone, clientSms(lead)));
   }
 
-  // Client email (only when we have an address)
-  const email = lead.email?.trim().toLowerCase();
+  const email = parseBareEmail(lead.email || "");
   if (!email) {
     results.push({
       ok: false,
@@ -374,14 +314,13 @@ export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]>
       detail: "no client email on lead",
     });
   } else {
-    const copy = clientEmail(lead);
+    const copy = buildLeadConfirmationEmail(lead);
     results.push(
       await sendEmail({
         to: email,
         subject: copy.subject,
         text: copy.text,
         html: copy.html,
-        replyTo: process.env.RESEND_FROM_EMAIL || "hello@toromovers.com",
       }),
     );
   }

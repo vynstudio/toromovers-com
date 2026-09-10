@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test:payments": "node --experimental-strip-types --test src/lib/payments.test.ts",
     "test:cities": "node --experimental-strip-types --test src/lib/city-pages.test.ts",
-    "test:notify": "node --experimental-strip-types --test src/lib/notify.test.ts src/lib/funnel-offer.test.ts"
+    "test:notify": "node --experimental-strip-types --test src/lib/notify.test.ts src/lib/funnel-offer.test.ts src/lib/lead-email.test.ts"
   },
   "dependencies": {
     "@netlify/blobs": "^10.7.13",
