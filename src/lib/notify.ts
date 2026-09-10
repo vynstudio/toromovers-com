@@ -1,16 +1,21 @@
 /**
  * Outbound notifications for toromovers.com leads.
- * - Internal: Telegram only
- * - Client: SMS (OpenPhone) + email (Resend from hello@toromovers.com)
- * Fail-soft: never throws to callers.
+ * - Internal: Telegram + Quo SMS to the team inbox
+ * - Client: SMS (Quo) + email (Resend from hello@toromovers.com)
+ * Fail-soft: never throws to callers. Missing QUO_API_KEY skips SMS; lead still accepted.
  */
 
+import { FUNNEL_BILINGUAL, FUNNEL_SLA } from "./funnel-offer.ts";
 import {
   GOOGLE_MAPS_REVIEWS_URL,
-  GOOGLE_RATING,
   PHONE_DISPLAY,
-  REVIEW_COUNT,
-} from "@/lib/site";
+} from "./site.ts";
+
+export const QUO_MESSAGES_URL = "https://api.quo.com/v1/messages";
+export const QUO_API_VERSION = "2026-03-30";
+export const DEFAULT_QUO_FROM = "+16896002720";
+export const DEFAULT_LEAD_SMS_TO = "+13217580094";
+
 
 export type NotifyResult = {
   ok: boolean;
@@ -58,42 +63,71 @@ export async function sendTelegram(text: string): Promise<NotifyResult> {
   }
 }
 
-export async function sendSms(
-  toRaw: string,
-  content: string,
-): Promise<NotifyResult> {
-  const apiKey = process.env.OPENPHONE_API_KEY || process.env.QUO_API_KEY;
-  const from = process.env.OPENPHONE_FROM_NUMBER || process.env.QUO_FROM_NUMBER;
-  if (!apiKey || !from) {
+export function quoApiKey(): string {
+  return (process.env.QUO_API_KEY || process.env.OPENPHONE_API_KEY || "").trim();
+}
+
+export function quoFromNumber(): string {
+  return (
+    process.env.QUO_FROM_NUMBER ||
+    process.env.OPENPHONE_FROM_NUMBER ||
+    DEFAULT_QUO_FROM
+  ).trim();
+}
+
+export function leadSmsTo(): string {
+  return (process.env.LEAD_SMS_TO || DEFAULT_LEAD_SMS_TO).trim();
+}
+
+/** Send one SMS via Quo. Never throws. */
+export async function sendQuoMessage(opts: {
+  to: string;
+  content: string;
+  from?: string;
+}): Promise<NotifyResult> {
+  const apiKey = quoApiKey();
+  if (!apiKey) {
+    console.error(
+      "[quo] QUO_API_KEY missing — lead accepted; SMS not sent",
+    );
     return {
       ok: false,
       channel: "sms",
-      detail: "OPENPHONE_API_KEY / OPENPHONE_FROM_NUMBER missing",
+      detail: "QUO_API_KEY missing",
     };
   }
-  const to = e164(toRaw);
+  const to = e164(opts.to);
+  const from = e164(opts.from || quoFromNumber()) || quoFromNumber();
   if (!to) {
     return { ok: false, channel: "sms", detail: "invalid phone" };
   }
   try {
-    const res = await fetch("https://api.openphone.com/v1/messages", {
+    const res = await fetch(QUO_MESSAGES_URL, {
       method: "POST",
       headers: {
         Authorization: apiKey,
+        "Quo-Api-Version": QUO_API_VERSION,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ from, to: [to], content }),
+      body: JSON.stringify({ content: opts.content, from, to: [to] }),
     });
     if (!res.ok) {
       const t = await res.text().catch(() => "");
-      console.error("[notify/sms]", res.status, t.slice(0, 200));
+      console.error("[quo] SMS failed", res.status, t.slice(0, 200));
       return { ok: false, channel: "sms", detail: `HTTP ${res.status}` };
     }
     return { ok: true, channel: "sms" };
   } catch (err) {
-    console.error("[notify/sms] threw", err);
+    console.error("[quo] SMS threw", err);
     return { ok: false, channel: "sms", detail: "threw" };
   }
+}
+
+export async function sendSms(
+  toRaw: string,
+  content: string,
+): Promise<NotifyResult> {
+  return sendQuoMessage({ to: toRaw, content });
 }
 
 export async function sendEmail(opts: {
@@ -185,9 +219,31 @@ function teamMessage(lead: LeadNotifyInput): string {
     .join("\n");
 }
 
+export function formatTeamLeadSms(lead: LeadNotifyInput): string {
+  const phone = e164(lead.phone) || lead.phone;
+  return [
+    "Toro Movers — quote request CONFIRMED",
+    "",
+    `Name: ${lead.name}`,
+    `Phone: ${phone}`,
+    `Email: ${lead.email || "—"}`,
+    lead.city ? `From: ${lead.city}` : "",
+    lead.serviceType ? `Service: ${lead.serviceType}` : "",
+    lead.moveDate ? `When: ${lead.moveDate}` : "",
+    lead.funnel ? `Funnel: ${lead.funnel}` : "",
+    `Source: ${lead.source || "toromovers.com"}`,
+    lead.landingPage ? `Page: ${lead.landingPage}` : "",
+    lead.note ? `Details: ${lead.note}` : "",
+    "",
+    "Confirmation: lead captured on toromovers.com. Call the customer to quote.",
+  ]
+    .filter((line) => line !== "")
+    .join("\n");
+}
+
 function clientSms(lead: LeadNotifyInput): string {
   const n = firstName(lead.name);
-  return `Hi ${n} — Toro Movers! We got your quote request and will call soon with pricing & availability. See why Central Florida chooses us: ${GOOGLE_MAPS_REVIEWS_URL} Questions? ${PHONE_DISPLAY}. Reply STOP to opt out.`;
+  return `Hi ${n} — Toro Movers! We got your quote request. ${FUNNEL_SLA}. Questions? ${PHONE_DISPLAY}. ${FUNNEL_BILINGUAL}. Reply STOP to opt out.`;
 }
 
 function clientEmail(lead: LeadNotifyInput): { subject: string; text: string; html: string } {
@@ -196,13 +252,13 @@ function clientEmail(lead: LeadNotifyInput): { subject: string; text: string; ht
   const text = [
     `Hi ${n} — Toro Movers here!`,
     ``,
-    `We got your quote request. A team member will call or text you shortly with availability and clear, up-front pricing — no hidden fees.`,
+    `${FUNNEL_SLA}. We’ll confirm availability and clear, up-front pricing — no hidden fees.`,
     ``,
     lead.serviceType ? `What you selected: ${lead.serviceType}` : "",
     `While you wait, here's why Central Florida chooses Toro Movers:`,
-    `- ${GOOGLE_RATING}★ rated on Google, ${REVIEW_COUNT}+ reviews`,
+    `- 4.9★ on Google · 1,000+ local moves`,
     `- Family-owned local crew — committed to every job`,
-    `- Bilingual English & Spanish communication`,
+    `- ${FUNNEL_BILINGUAL}`,
     `- Careful handling, on-time crews, up-front hourly rates`,
     ``,
     `See our reviews: ${GOOGLE_MAPS_REVIEWS_URL}`,
@@ -232,14 +288,24 @@ function escapeHtml(s: string) {
 }
 
 /**
- * Soft lead: Telegram to team only.
- * Full lead: Telegram + client SMS (+ client email if address present).
+ * Soft lead: Telegram + team Quo SMS.
+ * Full lead: Telegram + team Quo SMS + client SMS (+ client email if address present).
+ * Missing QUO_API_KEY never blocks lead acceptance.
  */
 export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]> {
   const results: NotifyResult[] = [];
 
   // Internal — Telegram always
   results.push(await sendTelegram(teamMessage(lead)));
+
+  // Internal — Quo SMS to the team inbox with full client details
+  results.push(
+    await sendQuoMessage({
+      to: leadSmsTo(),
+      from: quoFromNumber(),
+      content: formatTeamLeadSms(lead),
+    }),
+  );
 
   if (lead.kind === "soft") {
     return results;
