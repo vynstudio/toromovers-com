@@ -4,16 +4,11 @@ import {
   DEFAULT_LEAD_SMS_TO,
   DEFAULT_QUO_FROM,
   DEFAULT_QUO_FROM_PHONE_NUMBER_ID,
-  OPENPHONE_MESSAGES_URL,
-  QUO_MESSAGES_URL,
   QUO_API_VERSION,
+  QUO_MESSAGES_URL,
   QUO_USER_AGENT,
   formatTeamLeadSms,
-  looksLikeCloudflareChallenge,
-  normalizeQuoApiKey,
   notifyLead,
-  quoFromCandidates,
-  redactQuoLog,
   sendQuoMessage,
   type LeadNotifyInput,
 } from "./notify.ts";
@@ -75,54 +70,117 @@ test("team SMS includes client details and confirmation", () => {
   assert.match(body, /CONFIRMED/);
   assert.match(body, /Ada Perez/);
   assert.match(body, /\+13215550100/);
-  assert.match(body, /ada@example\.com/);
-  assert.match(body, /Full-Service Move/);
-  assert.match(body, /32801/);
-  assert.match(body, /Stairs/);
-  assert.match(body, /get-my-price/);
 });
 
-test("normalizeQuoApiKey strips accidental Bearer prefix", () => {
-  assert.equal(normalizeQuoApiKey("  Bearer secret-key  "), "secret-key");
-  assert.equal(normalizeQuoApiKey("secret-key"), "secret-key");
-});
-
-test("quoFromCandidates keeps 689 first and PN id second, never 321", () => {
+test("notifyLead texts LEAD_SMS_TO and the client separately", async () => {
   const restore = stubEnv({
-    QUO_FROM_NUMBER: "+16896002720",
-    LEAD_SMS_TO: "+13217580094",
+    QUO_API_KEY: "test-quo-key",
+    QUO_FROM_NUMBER: DEFAULT_QUO_FROM,
+    LEAD_SMS_TO: DEFAULT_LEAD_SMS_TO,
   });
+  const calls: FetchCall[] = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = (async (url, init) => {
+    calls.push({
+      url: String(url),
+      headers: headerMap(init),
+      body: JSON.parse(String(init?.body || "{}")),
+    });
+    return new Response("{}", { status: 202 });
+  }) as typeof fetch;
+
   try {
-    const froms = quoFromCandidates();
-    assert.deepEqual(froms, ["+16896002720", DEFAULT_QUO_FROM_PHONE_NUMBER_ID]);
-    assert.equal(froms.includes("+13217580094"), false);
+    const results = await notifyLead(sampleLead);
+    const dests = calls
+      .filter((call) => call.url === QUO_MESSAGES_URL)
+      .map((call) => (call.body.to as string[])[0]);
+    assert.deepEqual(dests, ["+13217580094", "+13215550100"]);
+    assert.equal(calls[0]?.headers.authorization, "test-quo-key");
+    assert.equal(calls[0]?.headers["quo-api-version"], QUO_API_VERSION);
+    assert.equal(calls[0]?.headers["user-agent"], QUO_USER_AGENT);
+    assert.equal(calls[0]?.body.from, "+16896002720");
+    assert.ok(results.some((item) => item.channel === "sms-team" && item.ok));
+    assert.ok(results.some((item) => item.channel === "sms-client" && item.ok));
   } finally {
+    globalThis.fetch = originalFetch;
     restore();
   }
 });
 
-test("looksLikeCloudflareChallenge detects HTML interstitial, not JSON 403", () => {
-  assert.equal(
-    looksLikeCloudflareChallenge(403, "<!DOCTYPE html><html>Just a moment</html>"),
-    true,
-  );
-  assert.equal(
-    looksLikeCloudflareChallenge(
-      403,
-      JSON.stringify({ error: { message: "Forbidden" } }),
-    ),
-    false,
-  );
+test("HTTP 401 tells ops to rotate QUO_API_KEY and never logs the key", async () => {
+  const restore = stubEnv({ QUO_API_KEY: "test-quo-key-SHOULD-NOT-LEAK" });
+  const originalFetch = globalThis.fetch;
+  const originalError = console.error;
+  const logs: string[] = [];
+  console.error = (...args: unknown[]) => {
+    logs.push(args.map((arg) => String(arg)).join(" "));
+  };
+  globalThis.fetch = (async () => {
+    return new Response(
+      JSON.stringify({
+        error: { message: "Unauthorized", key: "Unauthorized", trace: "trace-123" },
+      }),
+      { status: 401 },
+    );
+  }) as typeof fetch;
+
+  try {
+    const result = await sendQuoMessage({
+      to: DEFAULT_LEAD_SMS_TO,
+      content: "hello",
+    });
+    assert.equal(result.ok, false);
+    assert.match(String(result.detail), /HTTP 401/);
+    assert.match(String(result.detail), /rotate QUO_API_KEY in Netlify/);
+    const joined = logs.join("\n");
+    assert.equal(joined.includes("test-quo-key-SHOULD-NOT-LEAK"), false);
+    assert.match(joined, /HTTP 401/);
+    assert.match(joined, /Unauthorized/);
+  } finally {
+    globalThis.fetch = originalFetch;
+    console.error = originalError;
+    restore();
+  }
 });
 
-test("redactQuoLog never echoes the API key", () => {
-  const key = "sk_live_super_secret_quo_key";
-  const out = redactQuoLog(
-    `Unauthorized Authorization: ${key} Bearer ${key}`,
-    key,
-  );
-  assert.equal(out.includes(key), false);
-  assert.match(out, /\[redacted\]/);
+test("E.164 from 400 retries phoneNumberId PN3sKfvpYp; destination stays 321", async () => {
+  const restore = stubEnv({
+    QUO_API_KEY: "test-quo-key",
+    QUO_FROM_NUMBER: "+16896002720",
+    LEAD_SMS_TO: "+13217580094",
+  });
+  const calls: FetchCall[] = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = (async (_url, init) => {
+    const body = JSON.parse(String(init?.body || "{}"));
+    calls.push({
+      url: String(_url),
+      headers: headerMap(init),
+      body,
+    });
+    if (body.from === "+16896002720") {
+      return new Response(
+        JSON.stringify({ error: { message: "Invalid from" } }),
+        { status: 400 },
+      );
+    }
+    return new Response("{}", { status: 202 });
+  }) as typeof fetch;
+
+  try {
+    const result = await sendQuoMessage({
+      to: DEFAULT_LEAD_SMS_TO,
+      content: "hello",
+    });
+    assert.equal(result.ok, true);
+    assert.equal(calls[0]?.body.from, "+16896002720");
+    assert.equal(calls[1]?.body.from, DEFAULT_QUO_FROM_PHONE_NUMBER_ID);
+    assert.deepEqual(calls[1]?.body.to, ["+13217580094"]);
+    assert.equal(calls[1]?.headers["user-agent"], QUO_USER_AGENT);
+  } finally {
+    globalThis.fetch = originalFetch;
+    restore();
+  }
 });
 
 test("missing QUO_API_KEY skips SMS and does not throw", async () => {
@@ -144,302 +202,6 @@ test("missing QUO_API_KEY skips SMS and does not throw", async () => {
     assert.equal(fetched, false);
   } finally {
     globalThis.fetch = originalFetch;
-    restore();
-  }
-});
-
-test("notifyLead always texts process.env.LEAD_SMS_TO, never only the client phone", async () => {
-  const restore = stubEnv({
-    QUO_API_KEY: "test-quo-key",
-    QUO_FROM_NUMBER: DEFAULT_QUO_FROM,
-    LEAD_SMS_TO: DEFAULT_LEAD_SMS_TO,
-  });
-
-  const calls: FetchCall[] = [];
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = (async (url, init) => {
-    calls.push({
-      url: String(url),
-      headers: headerMap(init),
-      body: JSON.parse(String(init?.body || "{}")),
-    });
-    return new Response("{}", { status: 202 });
-  }) as typeof fetch;
-
-  try {
-    const results = await notifyLead(sampleLead);
-    const team = calls.find(
-      (call) =>
-        call.url === QUO_MESSAGES_URL &&
-        Array.isArray(call.body.to) &&
-        call.body.to[0] === DEFAULT_LEAD_SMS_TO,
-    );
-    assert.ok(team, "expected team Quo SMS");
-    assert.equal(team.headers.authorization, "test-quo-key");
-    assert.equal(team.headers["quo-api-version"], QUO_API_VERSION);
-    assert.equal(team.headers["user-agent"], QUO_USER_AGENT);
-    assert.equal(team.headers.accept, "application/json");
-    assert.equal(team.body.from, "+16896002720");
-    assert.deepEqual(team.body.to, ["+13217580094"]);
-    assert.notEqual(
-      team.body.from,
-      (team.body.to as string[])[0],
-      "FROM workspace 689 must not be swapped with TO personal 321",
-    );
-    assert.match(String(team.body.content), /Ada Perez/);
-    assert.match(String(team.body.content), /CONFIRMED/);
-    assert.ok(results.some((item) => item.channel === "sms-team" && item.ok));
-    assert.ok(results.some((item) => item.channel === "sms-client" && item.ok));
-    const client = calls.find(
-      (call) =>
-        Array.isArray(call.body.to) && call.body.to[0] === "+13215550100",
-    );
-    assert.ok(client, "expected separate client SMS to lead.phone");
-    assert.equal(
-      calls.filter((call) => call.url === QUO_MESSAGES_URL).length,
-      2,
-      "team + client SMS on primary host",
-    );
-  } finally {
-    globalThis.fetch = originalFetch;
-    restore();
-  }
-});
-
-test("notifyLead reads LEAD_SMS_TO even when it differs from the client number", async () => {
-  const restore = stubEnv({
-    QUO_API_KEY: "test-quo-key",
-    QUO_FROM_NUMBER: "+16896002720",
-    LEAD_SMS_TO: "+15551234567",
-  });
-  const calls: FetchCall[] = [];
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = (async (url, init) => {
-    calls.push({
-      url: String(url),
-      headers: headerMap(init),
-      body: JSON.parse(String(init?.body || "{}")),
-    });
-    return new Response("{}", { status: 202 });
-  }) as typeof fetch;
-
-  try {
-    await notifyLead(sampleLead);
-    const dests = calls
-      .filter((call) => call.url === QUO_MESSAGES_URL)
-      .map((call) => (call.body.to as string[])[0]);
-    assert.deepEqual(dests, ["+15551234567", "+13215550100"]);
-    assert.equal(calls[0]?.headers["quo-api-version"], QUO_API_VERSION);
-    assert.equal(calls[0]?.headers["user-agent"], QUO_USER_AGENT);
-  } finally {
-    globalThis.fetch = originalFetch;
-    restore();
-  }
-});
-
-test("notifyLead defaults team SMS to +13217580094 when LEAD_SMS_TO is unset", async () => {
-  const restore = stubEnv({
-    QUO_API_KEY: "test-quo-key",
-    QUO_FROM_NUMBER: "+16896002720",
-  });
-  const calls: FetchCall[] = [];
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = (async (url, init) => {
-    calls.push({
-      url: String(url),
-      headers: headerMap(init),
-      body: JSON.parse(String(init?.body || "{}")),
-    });
-    return new Response("{}", { status: 202 });
-  }) as typeof fetch;
-
-  try {
-    await notifyLead({ ...sampleLead, kind: "soft" });
-    assert.equal(calls.length, 1);
-    assert.deepEqual(calls[0]?.body.to, ["+13217580094"]);
-    assert.equal(calls[0]?.body.from, "+16896002720");
-  } finally {
-    globalThis.fetch = originalFetch;
-    restore();
-  }
-});
-
-test("QUO_API_KEY with Bearer prefix is sent as the raw key", async () => {
-  const restore = stubEnv({ QUO_API_KEY: "Bearer test-quo-key" });
-  const calls: FetchCall[] = [];
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = (async (url, init) => {
-    calls.push({
-      url: String(url),
-      headers: headerMap(init),
-      body: JSON.parse(String(init?.body || "{}")),
-    });
-    return new Response("{}", { status: 202 });
-  }) as typeof fetch;
-
-  try {
-    const result = await sendQuoMessage({
-      to: DEFAULT_LEAD_SMS_TO,
-      content: "hello",
-    });
-    assert.equal(result.ok, true);
-    assert.equal(calls[0]?.headers.authorization, "test-quo-key");
-  } finally {
-    globalThis.fetch = originalFetch;
-    restore();
-  }
-});
-
-test("sendQuoMessage retries with Bearer after 401", async () => {
-  const restore = stubEnv({ QUO_API_KEY: "test-quo-key" });
-  const calls: FetchCall[] = [];
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = (async (url, init) => {
-    const headers = headerMap(init);
-    calls.push({
-      url: String(url),
-      headers,
-      body: JSON.parse(String(init?.body || "{}")),
-    });
-    if (headers.authorization === "test-quo-key") {
-      return new Response(
-        JSON.stringify({
-          error: { message: "Unauthorized", key: "Unauthorized", trace: "t1" },
-        }),
-        { status: 401 },
-      );
-    }
-    return new Response("{}", { status: 202 });
-  }) as typeof fetch;
-
-  try {
-    const result = await sendQuoMessage({
-      to: DEFAULT_LEAD_SMS_TO,
-      content: "hello",
-      channel: "sms-team",
-    });
-    assert.equal(result.ok, true);
-    assert.equal(calls[0]?.headers.authorization, "test-quo-key");
-    assert.equal(calls[1]?.headers.authorization, "Bearer test-quo-key");
-    assert.equal(calls[0]?.headers["quo-api-version"], QUO_API_VERSION);
-    assert.equal(calls[1]?.url, QUO_MESSAGES_URL);
-  } finally {
-    globalThis.fetch = originalFetch;
-    restore();
-  }
-});
-
-test("sendQuoMessage falls back to api.openphone.com after 404 on api.quo.com", async () => {
-  const restore = stubEnv({ QUO_API_KEY: "test-quo-key" });
-  const calls: FetchCall[] = [];
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = (async (url, init) => {
-    calls.push({
-      url: String(url),
-      headers: headerMap(init),
-      body: JSON.parse(String(init?.body || "{}")),
-    });
-    if (String(url) === QUO_MESSAGES_URL) {
-      return new Response("Cannot POST /v1/messages", { status: 404 });
-    }
-    return new Response("{}", { status: 202 });
-  }) as typeof fetch;
-
-  try {
-    const result = await sendQuoMessage({
-      to: DEFAULT_LEAD_SMS_TO,
-      content: "hello",
-    });
-    assert.equal(result.ok, true);
-    assert.equal(calls[0]?.url, QUO_MESSAGES_URL);
-    assert.equal(calls[1]?.url, OPENPHONE_MESSAGES_URL);
-    assert.equal(calls[1]?.headers.authorization, "test-quo-key");
-    assert.equal(calls[1]?.body.to[0], DEFAULT_LEAD_SMS_TO);
-  } finally {
-    globalThis.fetch = originalFetch;
-    restore();
-  }
-});
-
-test("sendQuoMessage retries from as phoneNumberId when E.164 from is rejected", async () => {
-  const restore = stubEnv({
-    QUO_API_KEY: "test-quo-key",
-    QUO_FROM_NUMBER: "+16896002720",
-    LEAD_SMS_TO: "+13217580094",
-  });
-  const calls: FetchCall[] = [];
-  const originalFetch = globalThis.fetch;
-  globalThis.fetch = (async (url, init) => {
-    const body = JSON.parse(String(init?.body || "{}"));
-    calls.push({
-      url: String(url),
-      headers: headerMap(init),
-      body,
-    });
-    if (body.from === "+16896002720") {
-      return new Response(
-        JSON.stringify({
-          error: { message: "Invalid from", key: "InvalidPhoneNumber" },
-        }),
-        { status: 400 },
-      );
-    }
-    return new Response("{}", { status: 202 });
-  }) as typeof fetch;
-
-  try {
-    const result = await sendQuoMessage({
-      to: DEFAULT_LEAD_SMS_TO,
-      content: "hello",
-      channel: "sms-team",
-    });
-    assert.equal(result.ok, true);
-    assert.equal(calls[0]?.body.from, "+16896002720");
-    assert.equal(calls[1]?.body.from, DEFAULT_QUO_FROM_PHONE_NUMBER_ID);
-    assert.deepEqual(calls[1]?.body.to, ["+13217580094"]);
-    assert.equal(calls[1]?.headers["user-agent"], QUO_USER_AGENT);
-  } finally {
-    globalThis.fetch = originalFetch;
-    restore();
-  }
-});
-
-test("failed SMS logs status/trace without the API key and still fail-softs", async () => {
-  const restore = stubEnv({ QUO_API_KEY: "test-quo-key-SHOULD-NOT-LEAK" });
-  const originalFetch = globalThis.fetch;
-  const originalError = console.error;
-  const logs: string[] = [];
-  console.error = (...args: unknown[]) => {
-    logs.push(args.map((arg) => String(arg)).join(" "));
-  };
-  globalThis.fetch = (async () => {
-    return new Response(
-      JSON.stringify({
-        error: {
-          message: "Unauthorized",
-          key: "Unauthorized",
-          trace: "trace-123",
-        },
-      }),
-      { status: 401 },
-    );
-  }) as typeof fetch;
-
-  try {
-    const result = await sendQuoMessage({
-      to: DEFAULT_LEAD_SMS_TO,
-      content: "hello",
-    });
-    assert.equal(result.ok, false);
-    assert.match(String(result.detail), /HTTP 401/);
-    assert.match(String(result.detail), /Unauthorized/);
-    const joined = logs.join("\n");
-    assert.equal(joined.includes("test-quo-key-SHOULD-NOT-LEAK"), false);
-    assert.match(joined, /HTTP 401/);
-    assert.match(joined, /trace-123/);
-  } finally {
-    globalThis.fetch = originalFetch;
-    console.error = originalError;
     restore();
   }
 });

@@ -17,24 +17,13 @@ import {
  * Team alerts ALWAYS go to process.env.LEAD_SMS_TO || +13217580094 — not lead.phone.
  */
 export const QUO_MESSAGES_URL = "https://api.quo.com/v1/messages";
-export const OPENPHONE_MESSAGES_URL = "https://api.openphone.com/v1/messages";
-export const QUO_V1_MESSAGE_URLS = [
-  QUO_MESSAGES_URL,
-  OPENPHONE_MESSAGES_URL,
-] as const;
-/** Dated Quo API version. Required by current send-message examples. */
 export const QUO_API_VERSION = "2026-03-30";
 /** Quo workspace / sending number (689-600-2720). Never use this as LEAD_SMS_TO. */
 export const DEFAULT_QUO_FROM = "+16896002720";
 /** Personal alert destination (321-758-0094). Not a Quo number. Never swap with FROM. */
 export const DEFAULT_LEAD_SMS_TO = "+13217580094";
-/** Quo phone number id for workspace 689. Same sender as DEFAULT_QUO_FROM; used if E.164 `from` is rejected. */
+/** Same 689 workspace sender as a Quo phoneNumberId. Used if E.164 `from` is rejected. */
 export const DEFAULT_QUO_FROM_PHONE_NUMBER_ID = "PN3sKfvpYp";
-export const QUO_SMS_MAX_CHARS = 1600;
-/**
- * Cloudflare in front of api.quo.com 403s some default/empty/urllib-style User-Agents.
- * Node/undici often sends `node` or omits UA in serverless runtimes. Send a browser-like UA.
- */
 export const QUO_USER_AGENT =
   "Mozilla/5.0 (compatible; ToroMoversLead/1.0; +https://toromovers.com) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
@@ -85,15 +74,11 @@ export async function sendTelegram(text: string): Promise<NotifyResult> {
   }
 }
 
-/** Strip accidental `Bearer ` so Netlify env can be either raw key or tutorial-prefixed. */
-export function normalizeQuoApiKey(raw: string): string {
-  return raw.trim().replace(/^Bearer\s+/i, "").trim();
-}
-
 export function quoApiKey(): string {
-  return normalizeQuoApiKey(
-    process.env.QUO_API_KEY || process.env.OPENPHONE_API_KEY || "",
-  );
+  return (process.env.QUO_API_KEY || process.env.OPENPHONE_API_KEY || "")
+    .trim()
+    .replace(/^Bearer\s+/i, "")
+    .trim();
 }
 
 export function quoFromNumber(): string {
@@ -104,200 +89,36 @@ export function quoFromNumber(): string {
   ).trim();
 }
 
-export function quoFromPhoneNumberId(): string {
-  return (
-    process.env.QUO_FROM_PHONE_NUMBER_ID ||
-    DEFAULT_QUO_FROM_PHONE_NUMBER_ID
-  ).trim();
-}
-
-export function isQuoPhoneNumberId(raw: string): boolean {
-  return /^PN[A-Za-z0-9]+$/.test(raw.trim());
-}
-
-/** FROM candidates: E.164 689 first, then workspace phoneNumberId. Never include LEAD_SMS_TO. */
-export function quoFromCandidates(explicitFrom?: string): string[] {
-  const values: string[] = [];
-  const add = (raw: string | null | undefined) => {
-    const value = (raw || "").trim();
-    if (!value || values.includes(value)) return;
-    values.push(value);
-  };
-  const explicit = (explicitFrom || "").trim();
-  if (explicit) {
-    if (isQuoPhoneNumberId(explicit)) add(explicit);
-    else add(e164(explicit) || explicit);
-  }
-  add(e164(quoFromNumber()) || quoFromNumber());
-  add(quoFromPhoneNumberId());
-  return values.filter((value) => e164(value) !== e164(leadSmsTo()));
-}
-
 export function leadSmsTo(): string {
   return (process.env.LEAD_SMS_TO || DEFAULT_LEAD_SMS_TO).trim();
 }
 
-export function quoRequestHeaders(
-  apiKey: string,
-  auth: "raw" | "bearer",
-): Record<string, string> {
-  return {
-    Authorization: quoAuthorization(apiKey, auth),
-    "Quo-Api-Version": QUO_API_VERSION,
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    "User-Agent": QUO_USER_AGENT,
-  };
-}
-
-export function looksLikeCloudflareChallenge(status: number, body: string): boolean {
-  if (![403, 429, 503].includes(status)) return false;
-  const lower = body.toLowerCase();
+export function quoFromPhoneNumberId(): string {
   return (
-    lower.includes("<!doctype html") ||
-    lower.includes("<html") ||
-    lower.includes("just a moment") ||
-    lower.includes("cf-challenge") ||
-    lower.includes("attention required")
-  );
+    process.env.QUO_FROM_PHONE_NUMBER_ID || DEFAULT_QUO_FROM_PHONE_NUMBER_ID
+  ).trim();
 }
 
-export function redactQuoLog(text: string, apiKey?: string): string {
-  let out = String(text || "").replace(/\s+/g, " ").slice(0, 400);
-  const key = apiKey || quoApiKey();
-  if (key) out = out.split(key).join("[redacted]");
-  out = out.replace(/Bearer\s+\S+/gi, "Bearer [redacted]");
-  out = out.replace(/Authorization["']?\s*[:=]\s*["']?[^"'\s,]+/gi, "Authorization [redacted]");
-  return out;
+function redactQuoLog(text: string, apiKey: string): string {
+  let out = String(text || "").replace(/\s+/g, " ").slice(0, 200);
+  if (apiKey) out = out.split(apiKey).join("[redacted]");
+  return out.replace(/Bearer\s+\S+/gi, "Bearer [redacted]");
 }
 
-export function quoAuthorization(apiKey: string, mode: "raw" | "bearer"): string {
-  return mode === "bearer" ? `Bearer ${apiKey}` : apiKey;
-}
-
-function hostOf(url: string): string {
-  try {
-    return new URL(url).host;
-  } catch {
-    return url;
+function quoDetail(status: number, body: string): string {
+  if (status === 401) {
+    return "HTTP 401 Unauthorized — rotate QUO_API_KEY in Netlify";
   }
-}
-
-function summarizeQuoError(status: number, body: string): string {
   try {
-    const json = JSON.parse(body) as Record<string, unknown>;
-    const nested = json.error && typeof json.error === "object"
-      ? (json.error as Record<string, unknown>)
-      : null;
-    const msg = nested?.message || json.message || json.title || nested?.key;
-    const trace = nested?.trace || json.trace;
-    const parts = [`HTTP ${status}`];
-    if (msg) parts.push(String(msg));
-    if (trace) parts.push(`trace ${trace}`);
-    return parts.join(" ");
+    const json = JSON.parse(body) as { error?: { message?: string }; message?: string };
+    const msg = json.error?.message || json.message;
+    return msg ? `HTTP ${status} ${msg}` : `HTTP ${status}`;
   } catch {
     return `HTTP ${status}`;
   }
 }
 
-type QuoAttempt = {
-  url: string;
-  auth: "raw" | "bearer";
-  from: string;
-  status?: number;
-  detail: string;
-  ok: boolean;
-  cloudflare?: boolean;
-};
-
-async function postQuoV1Message(opts: {
-  url: string;
-  apiKey: string;
-  auth: "raw" | "bearer";
-  content: string;
-  from: string;
-  to: string;
-}): Promise<QuoAttempt> {
-  const { url, apiKey, auth, content, from, to } = opts;
-  const fromLabel = isQuoPhoneNumberId(from) ? from : `…${from.slice(-4)}`;
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: quoRequestHeaders(apiKey, auth),
-      body: JSON.stringify({ content, from, to: [to] }),
-    });
-    const rawBody = await res.text().catch(() => "");
-    const safeBody = redactQuoLog(rawBody, apiKey);
-    const cloudflare = looksLikeCloudflareChallenge(res.status, rawBody);
-    if (!res.ok) {
-      const detail = redactQuoLog(
-        [
-          summarizeQuoError(res.status, rawBody),
-          cloudflare ? "cloudflare_challenge" : "",
-          `host=${hostOf(url)}`,
-          `auth=${auth}`,
-          `from=${fromLabel}`,
-        ]
-          .filter(Boolean)
-          .join(" "),
-        apiKey,
-      );
-      console.error("[quo] SMS failed", detail, safeBody);
-      return {
-        url,
-        auth,
-        from,
-        status: res.status,
-        detail,
-        ok: false,
-        cloudflare,
-      };
-    }
-    return {
-      url,
-      auth,
-      from,
-      status: res.status,
-      detail: `HTTP ${res.status}`,
-      ok: true,
-    };
-  } catch (err) {
-    const thrown = err instanceof Error ? err.message : "threw";
-    const detail = `threw host=${hostOf(url)} auth=${auth} from=${fromLabel} ${redactQuoLog(thrown, apiKey)}`;
-    console.error("[quo] SMS threw", detail);
-    return { url, auth, from, detail, ok: false };
-  }
-}
-
-const QUO_HOST_RETRY_STATUSES = new Set([404, 405, 408, 429, 500, 502, 503, 504]);
-const QUO_FROM_RETRY_STATUSES = new Set([400, 403, 409, 422]);
-
-function succeededQuoSend(
-  attempt: QuoAttempt,
-  url: string,
-  to: string,
-  channel: string,
-): NotifyResult | null {
-  if (!attempt.ok) return null;
-  const usedFallback =
-    url !== QUO_MESSAGES_URL ||
-    attempt.auth !== "raw" ||
-    isQuoPhoneNumberId(attempt.from);
-  if (usedFallback) {
-    console.info("[quo] SMS sent via fallback", {
-      host: hostOf(url),
-      auth: attempt.auth,
-      status: attempt.status,
-      from: isQuoPhoneNumberId(attempt.from)
-        ? attempt.from
-        : `…${attempt.from.slice(-4)}`,
-      to: to.slice(-4),
-    });
-  }
-  return { ok: true, channel };
-}
-
-/** Send one SMS via Quo v1. Never throws. Never logs the API key. */
+/** Send one SMS via Quo. Never throws. Never logs the API key. */
 export async function sendQuoMessage(opts: {
   to: string;
   content: string;
@@ -307,79 +128,45 @@ export async function sendQuoMessage(opts: {
   const channel = opts.channel || "sms";
   const apiKey = quoApiKey();
   if (!apiKey) {
-    console.error(
-      "[quo] QUO_API_KEY missing — lead accepted; SMS not sent",
-    );
-    return {
-      ok: false,
-      channel,
-      detail: "QUO_API_KEY missing",
-    };
+    console.error("[quo] QUO_API_KEY missing — lead accepted; SMS not sent");
+    return { ok: false, channel, detail: "QUO_API_KEY missing" };
   }
   const to = e164(opts.to);
-  const fromValues = quoFromCandidates(opts.from);
   if (!to) {
     return { ok: false, channel, detail: "invalid phone" };
   }
-  if (!fromValues.length) {
-    return { ok: false, channel, detail: "invalid from" };
-  }
-  const content = opts.content.trim().slice(0, QUO_SMS_MAX_CHARS);
-  if (!content) {
-    return { ok: false, channel, detail: "empty content" };
-  }
+  const e164From = e164(opts.from || quoFromNumber()) || quoFromNumber();
+  const fromValues = [e164From, quoFromPhoneNumberId()].filter(
+    (value, index, all) => value && all.indexOf(value) === index,
+  );
 
-  let last: QuoAttempt | undefined;
-  urlLoop: for (const url of QUO_V1_MESSAGE_URLS) {
-    for (const from of fromValues) {
-      const raw = await postQuoV1Message({
-        url,
-        apiKey,
-        auth: "raw",
-        content,
-        from,
-        to,
+  let lastDetail = "SMS failed";
+  for (const from of fromValues) {
+    try {
+      const res = await fetch(QUO_MESSAGES_URL, {
+        method: "POST",
+        headers: {
+          Authorization: apiKey,
+          "Quo-Api-Version": QUO_API_VERSION,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "User-Agent": QUO_USER_AGENT,
+        },
+        body: JSON.stringify({ content: opts.content, from, to: [to] }),
       });
-      last = raw;
-      const rawOk = succeededQuoSend(raw, url, to, channel);
-      if (rawOk) return rawOk;
-
-      if (raw.status === 401) {
-        const bearer = await postQuoV1Message({
-          url,
-          apiKey,
-          auth: "bearer",
-          content,
-          from,
-          to,
-        });
-        last = bearer;
-        const bearerOk = succeededQuoSend(bearer, url, to, channel);
-        if (bearerOk) return bearerOk;
-        continue urlLoop;
-      }
-
-      if (raw.cloudflare) {
-        continue urlLoop;
-      }
-
-      if (raw.status !== undefined && QUO_FROM_RETRY_STATUSES.has(raw.status)) {
-        continue;
-      }
-
-      if (raw.status === undefined || QUO_HOST_RETRY_STATUSES.has(raw.status)) {
-        continue urlLoop;
-      }
-
-      break urlLoop;
+      const body = await res.text().catch(() => "");
+      if (res.ok) return { ok: true, channel };
+      lastDetail = quoDetail(res.status, body);
+      console.error("[quo] SMS failed", lastDetail, redactQuoLog(body, apiKey));
+      // 401 is a bad/rotated key — retrying phoneNumberId will not help.
+      if (res.status === 401 || ![400, 403, 422].includes(res.status)) break;
+    } catch (err) {
+      lastDetail = "threw";
+      console.error("[quo] SMS threw", err instanceof Error ? err.message : "threw");
+      break;
     }
   }
-
-  return {
-    ok: false,
-    channel,
-    detail: last?.detail || "SMS failed",
-  };
+  return { ok: false, channel, detail: lastDetail };
 }
 
 export async function sendSms(
@@ -556,9 +343,7 @@ export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]>
 
   results.push(await sendTelegram(teamMessage(lead)));
 
-  // ALWAYS send team SMS to LEAD_SMS_TO. This is independent of the client
-  // phone. Production missed Diler because an older notifyLead only texted
-  // lead.phone (customer) and never read this env var.
+  // Team alert: personal 321 (LEAD_SMS_TO). Separate from client SMS to lead.phone.
   const teamTo = (process.env.LEAD_SMS_TO || DEFAULT_LEAD_SMS_TO).trim();
   results.push(
     await sendQuoMessage({
