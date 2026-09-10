@@ -3,41 +3,34 @@ import { BUSINESS_NAME } from "@/lib/site";
 
 type ToroLockupProps = {
   href?: string | null;
-  size?: "sm" | "md";
   className?: string;
 };
 
-export function ToroLockup({
-  href = "/",
-  size = "md",
-  className = "",
-}: ToroLockupProps) {
-  const bull = size === "sm" ? 36 : 52;
-  const type =
-    size === "sm"
-      ? "text-[1.35rem] sm:text-[1.55rem]"
-      : "text-[1.7rem] sm:text-[1.95rem]";
+/**
+ * One lockup unit: official bull + TORO (#0A0A0A) + MOVERS (#E20613).
+ * Font-size drives bull and wordmark together so letters never clip.
+ * Parent should be `@container w-full min-w-0` so `cqi` tracks available width.
+ */
+export function ToroLockup({ href = "/", className = "" }: ToroLockupProps) {
   const inner = (
     <>
       <SafeImage
         src="/logos/toro-bull-black.svg"
         alt=""
-        width={bull}
-        height={Math.round(bull * 0.87)}
-        className="h-[1.05em] w-auto shrink-0"
+        width={72}
+        height={56}
+        className="h-[1.12em] w-auto shrink-0"
         unoptimized
         priority
       />
-      <span
-        className={`flex shrink-0 items-baseline gap-[0.18em] font-black uppercase leading-none tracking-[-0.045em] whitespace-nowrap ${type}`}
-      >
+      <span className="whitespace-nowrap font-black uppercase leading-none tracking-[-0.045em]">
         <span className="text-[#0A0A0A]">TORO</span>
-        <span className="text-[#E20613]">MOVERS</span>
+        <span className="ml-[0.18em] text-[#E20613]">MOVERS</span>
       </span>
     </>
   );
 
-  const classes = `inline-flex shrink-0 items-center gap-2 no-underline ${className}`;
+  const classes = `inline-flex max-w-full items-center gap-[0.32em] no-underline text-[clamp(1.05rem,7.2cqi,1.7rem)] ${className}`;
 
   if (!href) {
     return (
