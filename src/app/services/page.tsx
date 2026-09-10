@@ -21,7 +21,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Moving services in Orlando & Central Florida",
-  description: `${BUSINESS_NAME} moving services: residential, labor-only, single-item delivery, apartment, full-service, and commercial moves across ${SERVICE_REGION}. Call ${PHONE_DISPLAY}.`,
+  description: `Residential, labor-only, apartment, full-service & commercial movers across ${SERVICE_REGION}. Call ${PHONE_DISPLAY}.`,
   alternates: { canonical: "/services" },
   openGraph: {
     title: `Moving services · ${BUSINESS_NAME}`,

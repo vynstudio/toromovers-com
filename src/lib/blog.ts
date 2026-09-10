@@ -31,7 +31,7 @@ export const blogPosts: readonly BlogPost[] = [
     teaser:
       "How labor-only loading works for U-Hauls, PODs, and storage—what to share before the crew arrives, and how Toro quotes short jobs.",
     description:
-      "Need U-Haul or POD loading help in Orlando? Learn what labor-only movers include, how access changes the job, and how Toro Movers quotes up-front. Call (689) 600-2720.",
+      "U-Haul or POD loading help in Orlando—what labor-only includes, how access affects the job, up-front quotes. Call (689) 600-2720.",
     date: "2026-09-10",
     dateLabel: "Sep 10, 2026",
     image: {
@@ -126,7 +126,7 @@ export const blogPosts: readonly BlogPost[] = [
     teaser:
       "What drives Orlando moving prices—crew size, access, truck vs labor-only—and how Toro explains up-front hourly rates before move day.",
     description:
-      "How much do movers cost in Orlando? Learn what changes the price for local and labor-only moves, and how Toro Movers quotes up-front hourly rates. Call (689) 600-2720.",
+      "What changes Orlando moving prices for local & labor-only jobs, and how we quote up-front hourly rates. Call (689) 600-2720.",
     date: "2026-09-10",
     dateLabel: "Sep 10, 2026",
     image: {
@@ -189,7 +189,7 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "careful-furniture-handling-orlando-movers",
     eyebrow: "Careful local movers",
-    title: "Careful furniture handling for apartments and homes",
+    title: "Careful furniture handling in Orlando",
     teaser:
       "Protect furniture through stairwells, doorways, floors, and truck space—on full-service or labor-only Orlando and Central Florida moves.",
     description:
@@ -210,7 +210,7 @@ export const blogPosts: readonly BlogPost[] = [
   {
     slug: "central-florida-movers-building-access",
     eyebrow: "Building access & logistics",
-    title: "Central Florida movers who plan around the building",
+    title: "Central Florida movers | Building access",
     teaser:
       "Plan HOA windows, elevators, loading zones, and U-Haul or POD access with a local crew—and clear up-front hourly rates in Central Florida.",
     description:

@@ -5,9 +5,9 @@ import { SITE_URL } from "@/lib/site";
 export const laborOnlyPage = {
   path: "/labor-only-moving",
   metadata: {
-    title: "Labor-only movers in Orlando | Load & unload by the hour",
+    title: "Labor-only Orlando movers | Load & unload",
     description:
-      "Hire Toro Movers for labor-only loading and unloading in Orlando & Central Florida—U-Haul, POD, storage, and rental trucks. Up-front hourly rates. Call (689) 600-2720.",
+      "Labor-only loading & unloading in Orlando—U-Haul, POD, storage & rental trucks. Up-front hourly rates. Call (689) 600-2720.",
     ogTitle: "Labor-only movers in Orlando",
     ogDescription:
       "Your truck or container. Our crew. Load, unload, or both—with clear hourly pricing before move day.",

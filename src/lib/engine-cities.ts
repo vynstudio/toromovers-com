@@ -492,9 +492,9 @@ export const ALTAMONTE_SPRINGS: CityData = {
   // Full long-form page lives at src/app/(site)/altamonte-springs-movers/page.tsx
   // (not the thin CityPage template). Keep metadata/h1 aligned for sitemap/grids.
   metadata: {
-    title: "Altamonte Springs Movers | Local Moving Company | Toro Movers",
+    title: "Altamonte Springs Movers | Local FL Moves | Toro Movers",
     description:
-      "Need movers in Altamonte Springs, FL? Toro Movers handles local moves, apartments, packing, and labor-only moving with upfront hourly pricing and no hidden fees.",
+      "Need movers in Altamonte Springs, FL? Local, apartment & labor-only moves with upfront hourly pricing—no hidden fees.",
   },
   h1: "Altamonte Springs Movers",
   subline:
