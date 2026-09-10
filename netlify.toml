@@ -203,13 +203,7 @@
 
 [[redirects]]
   from = "/apartment-movers"
-  to = "/services"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/apartment-movers-orlando-fl"
-  to = "/services"
+  to = "/apartment-movers-orlando-fl"
   status = 301
   force = true
 
@@ -221,7 +215,7 @@
 
 [[redirects]]
   from = "/apartment-moves"
-  to = "/services"
+  to = "/apartment-movers-orlando-fl"
   status = 301
   force = true
 
@@ -276,12 +270,6 @@
 
 [[redirects]]
   from = "/blog/hidden-moving-fees-orlando"
-  to = "/blog"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/blog/how-much-does-a-local-move-cost-orlando"
   to = "/blog"
   status = 301
   force = true

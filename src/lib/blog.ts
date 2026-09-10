@@ -18,9 +18,58 @@ export type BlogPost = {
   image: { src: string; alt: string; position?: string };
   /** Full AEO article body */
   body: readonly string[];
+  /** Optional FAQ block — visible text must match FAQPage schema when present */
+  faqs?: readonly { q: string; a: string }[];
 };
 
 export const blogPosts: readonly BlogPost[] = [
+
+  {
+    slug: "how-much-does-a-local-move-cost-orlando",
+    eyebrow: "Orlando moving costs",
+    title: "How much do movers cost in Orlando?",
+    teaser:
+      "What drives Orlando moving prices—crew size, access, truck vs labor-only—and how Toro explains up-front hourly rates before move day.",
+    description:
+      "How much do movers cost in Orlando? Learn what changes the price for local and labor-only moves, and how Toro Movers quotes up-front hourly rates. Call (689) 600-2720.",
+    date: "2026-09-10",
+    dateLabel: "Sep 10, 2026",
+    image: {
+      src: "/images/moves/svc-primary-residential.webp",
+      alt: "Toro Movers crew on a real Orlando residential move",
+      position: "object-[center_35%]",
+    },
+    body: [
+      "How much do movers cost in Orlando? Most local moves are priced by the hour. Your total depends on crew size, how long the job takes, building access (stairs, elevators, parking), how packed you are when the crew arrives, and whether you need a truck or labor-only help on a U-Haul or POD.",
+      "Toro Movers is a family-owned local moving company serving Orlando and Central Florida. We quote with up-front hourly rates and explain the model before move day—so you are not guessing on the curb. We do not publish a fake rate card on this page; your quote is based on your addresses, inventory, and access.",
+      "Full-service local moving includes the crew, truck, loading, transport, unloading, and placement. Labor-only moving is for customers who already have a rental truck, POD, or trailer and only need loading or unloading help. Labor-only is usually less than full-service because you are not paying for the truck and transport portion.",
+      "Access changes the clock. Walk-up apartments, reserved elevators, long carries from the door to the truck, and tight parking all add time. Share floors, elevator windows, and loading rules when you request a quote so the crew size and timing match the building.",
+      "Industry websites and aggregators publish Orlando averages that vary by source and year. Treat those figures as market context only—not a Toro price. For apartment-specific planning, see /apartment-movers-orlando-fl. For DIY truck help, see /labor-only-moving.",
+      "To get a clear explanation for your move, call or text (689) 600-2720 or request a quote online. Share pickup and drop-off, home or apartment type, stairs or elevator details, and whether you need a truck. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+    ],
+    faqs: [
+      {
+        q: "How much do movers cost in Orlando?",
+        a: "Most Orlando moves are quoted with hourly rates. The final total depends on crew size, time on site, access (stairs, elevators, parking), readiness, and whether you need full-service with a truck or labor-only help. Toro Movers explains the up-front hourly model before move day—call (689) 600-2720 with your details.",
+      },
+      {
+        q: "Is labor-only cheaper than full-service?",
+        a: "Often yes, because you supply the U-Haul, POD, or rental truck and pay for loading or unloading help by the hour. Full-service includes the truck and transport. The better fit depends on whether you already have a vehicle.",
+      },
+      {
+        q: "What makes an apartment move cost more?",
+        a: "Stairs, elevator reservations, long carries, tight parking, and last-minute packing increase time on site. Planning access early keeps the hourly total more predictable.",
+      },
+      {
+        q: "Do you publish a public rate card?",
+        a: "No. Toro Movers explains up-front hourly rates for your specific job. Published market averages from other sites are context only—not your quote.",
+      },
+      {
+        q: "How do I get a moving quote from Toro Movers?",
+        a: "Call or text (689) 600-2720, or request a quote online. Share what you are moving, pickup and drop-off, and access details. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
   {
     slug: "plan-orlando-move-before-first-box",
     eyebrow: "Orlando move planning",
