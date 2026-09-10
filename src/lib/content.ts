@@ -25,8 +25,8 @@ export const nav = {
 } as const;
 
 export const hero = {
-  h1: "#1 Trusted Movers in\nOrlando & Central Florida",
-  lede: "Toro Movers is your local Orlando & Central Florida moving company—full-service, labor-only loading, apartment moves, and up-front hourly rates.",
+  h1: "Book Toro Movers for Your Orlando Move",
+  lede: "Toro Movers helps you book full-service, labor-only, and apartment moves in Orlando. Up-front hourly rates. Call or text (689) 600-2720.",
   cta: "discover toro movers",
   ctaHref: "#discover",
 } as const;
@@ -37,8 +37,13 @@ export const hero = {
  */
 export const customerProof = {
   eyebrow: "Orlando movers customers trust",
-  title: "Why Central Florida chooses Toro for local moves",
-  lede: "Toro Movers is a family-owned local moving company in Orlando. Customers hire us for on-time crews, careful handling, bilingual English and Spanish communication, and up-front hourly rates across Central Florida.",
+  title: "Why Orlando customers book Toro",
+  lede: "Toro Movers is a family-owned local moving company in Orlando. Customers hire us for on-time crews, careful handling, bilingual English and Spanish communication, and up-front hourly rates.",
+  /** Secondary region links only — homepage is the Orlando hub. */
+  regionLinks: [
+    { label: "Central Florida movers", href: "/central-florida-movers" },
+    { label: "region coverage", href: "/central-florida-movers" },
+  ],
   ctaQuote: "Get a free quote",
   reverse: false,
   image: {
