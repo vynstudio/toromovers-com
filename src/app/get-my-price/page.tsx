@@ -44,23 +44,21 @@ export default async function GetMyPricePage({
   return (
     <main className="min-h-screen bg-white text-[#0A0A0A]">
       <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-4 px-5 py-3.5">
+        <div className="mx-auto flex max-w-3xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-5 sm:py-3.5">
           <ToroLockup size="sm" />
           <a
-            className="shrink-0 rounded-xl bg-[#E20613] px-4 py-2.5 text-sm font-extrabold text-white transition hover:bg-[#B80510]"
+            className="shrink-0 rounded-xl bg-[#E20613] px-3 py-2 text-xs font-extrabold text-white transition hover:bg-[#B80510] sm:px-4 sm:py-2.5 sm:text-sm"
             href={PHONE_TEL}
           >
-            Call {PHONE_DISPLAY}
+            <span className="sm:hidden">{PHONE_DISPLAY}</span>
+            <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
           </a>
         </div>
       </header>
 
       <section className="mx-auto max-w-3xl px-5 py-10 sm:py-14">
         <div className="mb-8 text-center">
-          <p className="text-sm font-extrabold uppercase tracking-widest text-[#E20613]">
-            Central Florida local moving
-          </p>
-          <h1 className="mt-3 text-3xl font-black tracking-tight sm:text-5xl">
+          <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
             Local moving {FUNNEL_FLOOR_RATE}.
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-lg font-semibold text-[#0A0A0A]">
