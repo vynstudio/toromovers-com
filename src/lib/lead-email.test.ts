@@ -25,14 +25,9 @@ test("parseBareEmail unwraps quotes and display names", () => {
   assert.equal(parseBareEmail("not-an-email"), null);
 });
 
-test("resendSender uses RESEND_FROM_EMAIL as-is for .net or .com and does not guess", () => {
+test("resendSender uses RESEND_FROM_EMAIL as-is and does not guess a from-address", () => {
   const prev = process.env.RESEND_FROM_EMAIL;
   try {
-    process.env.RESEND_FROM_EMAIL = "hello@toromovers.net";
-    const net = resendSender();
-    assert.equal(net?.from, "Toro Movers <hello@toromovers.net>");
-    assert.equal(net?.replyTo, "hello@toromovers.net");
-
     process.env.RESEND_FROM_EMAIL = "hello@toromovers.com";
     const com = resendSender();
     assert.equal(com?.from, "Toro Movers <hello@toromovers.com>");

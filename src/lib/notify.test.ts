@@ -122,10 +122,10 @@ test("notifyLead does not SMS LEAD_SMS_TO; team is Telegram only", async () => {
   }
 });
 
-test("sendEmail sends from hello@toromovers.net when that is RESEND_FROM_EMAIL", async () => {
+test("sendEmail sends from hello@toromovers.com when that is RESEND_FROM_EMAIL", async () => {
   const restore = stubEnv({
     RESEND_API_KEY: "re_test",
-    RESEND_FROM_EMAIL: "hello@toromovers.net",
+    RESEND_FROM_EMAIL: "hello@toromovers.com",
   });
   let body: Record<string, unknown> = {};
   const originalFetch = globalThis.fetch;
@@ -142,8 +142,8 @@ test("sendEmail sends from hello@toromovers.net when that is RESEND_FROM_EMAIL",
       text: "Hi",
     });
     assert.equal(result.ok, true);
-    assert.equal(body.from, "Toro Movers <hello@toromovers.net>");
-    assert.equal(body.reply_to, "hello@toromovers.net");
+    assert.equal(body.from, "Toro Movers <hello@toromovers.com>");
+    assert.equal(body.reply_to, "hello@toromovers.com");
   } finally {
     globalThis.fetch = originalFetch;
     restore();
