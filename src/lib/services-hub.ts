@@ -96,7 +96,7 @@ export const servicesHub = {
     {
       title: "Apartment movers in Orlando",
       body: "Stairs, elevators, loading zones, and move-in windows planned before the crew arrives.",
-      href: "/services",
+      href: "/apartment-movers-orlando-fl",
       image: "/images/moves/real-21.webp",
       imageAlt:
         "Toro Movers crew carrying furniture up stairs on a real Orlando-area apartment move",

@@ -53,19 +53,37 @@ export default async function BlogPostPage({ params }: Props) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.description,
-    datePublished: post.date,
-    dateModified: post.date,
-    image: `${SITE_URL}${post.image.src}`,
-    author: { "@type": "Organization", name: BUSINESS_NAME },
-    publisher: {
-      "@type": "Organization",
-      name: BUSINESS_NAME,
-      url: SITE_URL,
-    },
-    mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${SITE_URL}/blog/${post.slug}#article`,
+        headline: post.title,
+        description: post.description,
+        datePublished: post.date,
+        dateModified: post.date,
+        image: `${SITE_URL}${post.image.src}`,
+        author: { "@type": "Organization", name: BUSINESS_NAME },
+        publisher: {
+          "@type": "Organization",
+          name: BUSINESS_NAME,
+          url: SITE_URL,
+        },
+        mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,
+      },
+      ...(post.faqs?.length
+        ? [
+            {
+              "@type": "FAQPage",
+              "@id": `${SITE_URL}/blog/${post.slug}#faq`,
+              mainEntity: post.faqs.map((item) => ({
+                "@type": "Question",
+                name: item.q,
+                acceptedAnswer: { "@type": "Answer", text: item.a },
+              })),
+            },
+          ]
+        : []),
+    ],
   };
 
   return (
@@ -117,6 +135,38 @@ export default async function BlogPostPage({ params }: Props) {
               <p key={para.slice(0, 48)}>{para}</p>
             ))}
           </div>
+
+          <p className="mt-6 text-sm text-muted">
+            Related:{" "}
+            <a className="underline underline-offset-4" href="/apartment-movers-orlando-fl">
+              Apartment movers in Orlando
+            </a>
+            {" · "}
+            <a className="underline underline-offset-4" href="/labor-only-moving">
+              Labor-only movers
+            </a>
+            {" · "}
+            <a className="underline underline-offset-4" href="/services">
+              All services
+            </a>
+          </p>
+
+
+          {post.faqs?.length ? (
+            <section id="faq" className="mt-10">
+              <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+                Common questions
+              </h2>
+              <dl className="mt-5 space-y-5">
+                {post.faqs.map((item) => (
+                  <div key={item.q}>
+                    <dt className="font-extrabold text-foreground">{item.q}</dt>
+                    <dd className="mt-2 text-muted">{item.a}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          ) : null}
 
           <div className="mt-10 flex flex-col gap-3 border-t border-border pt-8 sm:flex-row sm:items-center">
             <a
