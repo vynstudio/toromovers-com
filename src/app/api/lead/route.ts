@@ -4,8 +4,7 @@ import { notifyLead } from "@/lib/notify";
 /**
  * Lead intake for toromovers.com
  *
- * Soft lead (name+phone): Telegram + Quo team SMS.
- * Full lead: Telegram + Quo team SMS + client SMS/email from hello@toromovers.com.
+ * Team: Telegram only. Full lead: client SMS + Resend confirmation email.
  *
  * Optional: also forwards to toromovers.net CRM when configured.
  */
@@ -132,6 +131,12 @@ export async function POST(req: Request) {
       consentSms: soft ? false : consentSms,
       landingPage,
     });
+    console.info(
+      "[lead] notify",
+      channels
+        .map((c) => `${c.channel}:${c.ok ? "ok" : c.detail || "fail"}`)
+        .join(" | "),
+    );
   } catch (err) {
     console.error("[lead] notifyLead threw", err);
   }
