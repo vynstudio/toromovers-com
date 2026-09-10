@@ -43,6 +43,7 @@ export const servicesHub = {
       imageAlt:
         "Toro Movers crew carrying a padded item on a real Orlando home move",
       badge: "Local",
+      linkLabel: "View service",
       illustration: "local",
       points: [
         "Truck and crew included",
@@ -58,6 +59,7 @@ export const servicesHub = {
       imageAlt:
         "Toro Movers stretch-wrapping furniture on a real labor-only job",
       badge: "Labor only",
+      linkLabel: "View service",
       illustration: "labor-only",
       points: [
         "Your truck, our crew",
@@ -73,6 +75,7 @@ export const servicesHub = {
       imageAlt:
         "Toro Movers crew carrying furniture up stairs on a real Orlando-area apartment move",
       badge: "Apartments",
+      linkLabel: "View service",
       illustration: "access",
       points: [
         "Stairs & elevators",
@@ -91,6 +94,7 @@ export const servicesHub = {
       image: "/images/moves/svc-loading.webp",
       imageAlt:
         "Toro Movers carefully handling furniture on a real Orlando loading job",
+      linkLabel: "View service",
     },
     {
       title: "Recent moves",
