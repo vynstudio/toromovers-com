@@ -70,7 +70,7 @@ test("notifyLead does not SMS LEAD_SMS_TO; team is Telegram only", async () => {
     QUO_FROM_NUMBER: DEFAULT_QUO_FROM,
     LEAD_SMS_TO: "+13217580094",
     RESEND_API_KEY: "re_test",
-    RESEND_FROM_EMAIL: "hello@toromovers.com",
+    RESEND_FROM_EMAIL: "hello@toromovers.net",
   });
   const calls: FetchCall[] = [];
   const originalFetch = globalThis.fetch;
@@ -101,11 +101,14 @@ test("notifyLead does not SMS LEAD_SMS_TO; team is Telegram only", async () => {
       String(call.url).includes("api.resend.com"),
     );
     assert.ok(email, "expected Resend confirmation email");
-    assert.equal(email.body.from, "Toro Movers <hello@toromovers.com>");
+    assert.equal(email.body.from, "Toro Movers <hello@toromovers.net>");
     assert.deepEqual(email.body.to, ["ada@example.com"]);
-    assert.equal(email.body.reply_to, "hello@toromovers.com");
+    assert.equal(email.body.reply_to, "hello@toromovers.net");
     assert.match(String(email.body.html), /#E20613/);
+    assert.doesNotMatch(String(email.body.html), /#E10600/i);
     assert.match(String(email.body.html), /15 minutes/);
+    assert.match(String(email.body.html), /bgcolor="#ffffff"/i);
+    assert.match(String(email.body.html), /TORO <span style="color:#E20613;">MOVERS<\/span>/);
     assert.doesNotMatch(String(email.body.html), /licensed/i);
     assert.ok(results.some((item) => item.channel === "sms-client" && item.ok));
     assert.ok(results.some((item) => item.channel === "email" && item.ok));
@@ -119,10 +122,10 @@ test("notifyLead does not SMS LEAD_SMS_TO; team is Telegram only", async () => {
   }
 });
 
-test("sendEmail sends from hello@toromovers.net when that is RESEND_FROM_EMAIL", async () => {
+test("sendEmail sends from hello@toromovers.com when that is RESEND_FROM_EMAIL", async () => {
   const restore = stubEnv({
     RESEND_API_KEY: "re_test",
-    RESEND_FROM_EMAIL: "hello@toromovers.net",
+    RESEND_FROM_EMAIL: "hello@toromovers.com",
   });
   let body: Record<string, unknown> = {};
   const originalFetch = globalThis.fetch;
@@ -139,8 +142,8 @@ test("sendEmail sends from hello@toromovers.net when that is RESEND_FROM_EMAIL",
       text: "Hi",
     });
     assert.equal(result.ok, true);
-    assert.equal(body.from, "Toro Movers <hello@toromovers.net>");
-    assert.equal(body.reply_to, "hello@toromovers.net");
+    assert.equal(body.from, "Toro Movers <hello@toromovers.com>");
+    assert.equal(body.reply_to, "hello@toromovers.com");
   } finally {
     globalThis.fetch = originalFetch;
     restore();

@@ -168,7 +168,7 @@ export async function POST(req: Request) {
       process.env.LEAD_NOTIFICATION_EMAIL ||
       process.env.BOOKING_NOTIFICATION_EMAIL ||
       process.env.RESEND_FROM_EMAIL ||
-      "hello@toromovers.com",
+      "",
     subject: `${previewTag}${needsReview ? "Review · " : ""}Move checklist · ${data.fullName}`,
     html: emailHtml,
     text,

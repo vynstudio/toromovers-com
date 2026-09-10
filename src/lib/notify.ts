@@ -22,8 +22,6 @@ export const QUO_MESSAGES_URL = "https://api.quo.com/v1/messages";
 export const QUO_API_VERSION = "2026-03-30";
 /** Quo workspace / sending number (689-600-2720). Client SMS FROM only. */
 export const DEFAULT_QUO_FROM = "+16896002720";
-/** Unused for team alerts (Telegram only). Kept so existing Netlify env is harmless. */
-export const DEFAULT_LEAD_SMS_TO = "+13217580094";
 /** Same 689 workspace sender as a Quo phoneNumberId. Used if E.164 `from` is rejected. */
 export const DEFAULT_QUO_FROM_PHONE_NUMBER_ID = "PN3sKfvpYp";
 export const QUO_USER_AGENT =
@@ -89,10 +87,6 @@ export function quoFromNumber(): string {
     process.env.OPENPHONE_FROM_NUMBER ||
     DEFAULT_QUO_FROM
   ).trim();
-}
-
-export function leadSmsTo(): string {
-  return (process.env.LEAD_SMS_TO || DEFAULT_LEAD_SMS_TO).trim();
 }
 
 export function quoFromPhoneNumberId(): string {
@@ -194,7 +188,7 @@ export async function sendEmail(opts: {
   }
   if (!sender) {
     console.error(
-      "[notify/email] RESEND_FROM_EMAIL missing or invalid — set it to a from-address on the domain verified in Resend (hello@toromovers.net or hello@toromovers.com). Do not guess.",
+      "[notify/email] RESEND_FROM_EMAIL missing or invalid — set production to hello@toromovers.net (verified). Do not force unverified hello@toromovers.com; switch only after Resend verifies toromovers.com.",
     );
     return {
       ok: false,
