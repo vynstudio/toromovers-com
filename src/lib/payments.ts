@@ -260,6 +260,37 @@ export function clipField(value: unknown, max = 200): string {
   return value.trim().slice(0, max);
 }
 
+/** Receipt email for Embedded Checkout. Required before the Pay CTA enables. */
+export function isCheckoutEmail(value: unknown): boolean {
+  if (typeof value !== "string") return false;
+  const email = value.trim();
+  if (email.length < 5 || email.length > 180) return false;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+/** CTA copy: never leave a trailing middot when the amount is unknown. */
+export function checkoutCtaLabel(cta: string, amountCents?: number | null): string {
+  if (typeof amountCents === "number" && Number.isFinite(amountCents) && amountCents > 0) {
+    return `${cta} · ${formatUsd(amountCents)}`;
+  }
+  return cta;
+}
+
+export function balanceTipLabel(type: TipType): string {
+  switch (type) {
+    case "15_percent":
+      return "15% tip";
+    case "20_percent":
+      return "20% tip";
+    case "25_percent":
+      return "25% tip";
+    case "custom":
+      return "Custom tip amount";
+    default:
+      return "No tip";
+  }
+}
+
 export function mergeQuoteFields(
   ...parts: Array<Partial<QuoteFields> | null | undefined>
 ): QuoteFields {

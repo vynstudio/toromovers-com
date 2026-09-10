@@ -1,6 +1,15 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import {
+  Component,
+  FormEvent,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   EmbeddedCheckout,
@@ -12,11 +21,13 @@ import {
   PAYMENT_KIND,
   PRIMARY_PAYMENT_KINDS,
   PROCESSING_FEE_LABEL,
-  TIP_PERCENT_BY_TYPE,
   balanceSummary,
+  balanceTipLabel,
+  checkoutCtaLabel,
   depositSummary,
   dollarsToCents,
   formatUsd,
+  isCheckoutEmail,
   parseTipType,
   parseUsd,
   tipAmountCents,
@@ -27,13 +38,7 @@ import {
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 import { STRIPE_PUBLISHABLE_KEY } from "@/lib/stripe-public";
 
-const TIP_OPTIONS: { type: TipType; label: string }[] = [
-  { type: "none", label: "No tip" },
-  { type: "15_percent", label: "15% tip" },
-  { type: "20_percent", label: "20% tip" },
-  { type: "25_percent", label: "25% tip" },
-  { type: "custom", label: "Custom tip amount" },
-];
+const TIP_OPTIONS: TipType[] = ["none", "15_percent", "20_percent", "25_percent", "custom"];
 
 function dollarsInput(value: string, fallback = 0): number {
   const parsed = parseUsd(value);
@@ -64,6 +69,22 @@ function ChargeSummary({
       </div>
     </div>
   );
+}
+
+class PayEmbedBoundary extends Component<
+  { children: ReactNode; fallback: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    if (this.state.failed) return this.props.fallback;
+    return this.props.children;
+  }
 }
 
 export default function PayFlow({
@@ -101,6 +122,11 @@ export default function PayFlow({
   const [error, setError] = useState("");
   const [starting, setStarting] = useState(false);
   const [ready, setReady] = useState(checkoutReady);
+  const clientSecretRef = useRef("");
+
+  useEffect(() => {
+    clientSecretRef.current = clientSecret;
+  }, [clientSecret]);
 
   useEffect(() => {
     const baked = publishableKey || process.env.STRIPE_PK || STRIPE_PUBLISHABLE_KEY;
@@ -181,13 +207,14 @@ export default function PayFlow({
     tipType,
     customTipCents: dollarsToCents(Math.max(0, customTipUsd)),
   });
+  const emailOk = isCheckoutEmail(quote.customer_email);
 
   const depositValid =
     Number.isFinite(selected) && selected >= spec.minUsd && selected <= spec.maxUsd;
   const customTipValid =
     tipType !== "custom" ||
     (Number.isFinite(customTipUsd) && customTipUsd >= 0 && customTipUsd <= CUSTOM_TIP_MAX_USD);
-  const balanceValid =
+  const balanceAmountOk =
     lookupState !== "loading" &&
     lookupState !== "error" &&
     Number.isFinite(quoteTotalUsd) &&
@@ -195,10 +222,41 @@ export default function PayFlow({
     balanceBreakdown.payable &&
     customTipValid &&
     balanceBreakdown.remainingCents / 100 <= PAYMENT_KIND.balance.maxUsd;
-  const tipValid = depositValid;
-  const valid = kind === "balance" ? balanceValid : kind === "tip" ? tipValid : depositValid;
+  const amountValid = kind === "balance" ? balanceAmountOk : kind === "tip" ? depositValid : depositValid;
+  const valid = Boolean(ready && emailOk && amountValid);
   const todayCents =
     kind === "balance" ? balanceBreakdown.totalChargedCents : depositBreakdown.totalChargedCents;
+  const amountKnown =
+    kind === "balance"
+      ? lookupState === "done" &&
+        Number.isFinite(quoteTotalUsd) &&
+        quoteTotalUsd > 0 &&
+        balanceBreakdown.payable
+      : kind === "tip"
+        ? depositValid
+        : depositValid;
+
+  function checkoutDisabledReason(): string {
+    if (!ready) return `Checkout is not connected yet. Call ${PHONE_DISPLAY}.`;
+    if (kind === "balance" && lookupState === "loading") return "Checking for a deposit…";
+    if (kind === "balance" && lookupState === "error") {
+      return `Could not verify the deposit. Call ${PHONE_DISPLAY} before paying the remaining balance.`;
+    }
+    if (kind === "balance" && !Number.isFinite(quoteTotalUsd)) {
+      return "Enter the approved quote total.";
+    }
+    if (kind === "balance" && !balanceBreakdown.payable) {
+      return "This move has no remaining balance.";
+    }
+    if (kind === "balance" && !customTipValid) {
+      return `Enter a custom tip of $0 to $${CUSTOM_TIP_MAX_USD.toLocaleString("en-US")}.`;
+    }
+    if (kind !== "balance" && !depositValid) {
+      return `Enter an amount between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`;
+    }
+    if (!emailOk) return "Enter your email for the receipt.";
+    return "";
+  }
 
   function chooseKind(next: PaymentKind) {
     setKind(next);
@@ -211,6 +269,17 @@ export default function PayFlow({
       setTipType("none");
       setCustomTip("");
     }
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("type", next);
+      window.history.replaceState(window.history.state, "", url);
+    }
+  }
+
+  function clearCheckout() {
+    clientSecretRef.current = "";
+    setClientSecret("");
+    setChargedCents(0);
   }
 
   async function refreshDeposit(number: string) {
@@ -244,28 +313,9 @@ export default function PayFlow({
 
   const startCheckout = async (event: FormEvent) => {
     event.preventDefault();
-    if (!ready) {
-      setError(`Checkout is not connected yet. Call ${PHONE_DISPLAY}.`);
-      return;
-    }
-    if (kind === "balance" && lookupState === "error") {
-      setError(`Could not verify the deposit on this quote. Call ${PHONE_DISPLAY}.`);
-      return;
-    }
-    if (kind === "balance" && !Number.isFinite(quoteTotalUsd)) {
-      setError("Enter the approved quote total.");
-      return;
-    }
-    if (kind === "balance" && !balanceBreakdown.payable) {
-      setError("This move has no remaining balance.");
-      return;
-    }
-    if (kind !== "balance" && !valid) {
-      setError(`Enter an amount between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`);
-      return;
-    }
-    if (kind === "balance" && !customTipValid) {
-      setError(`Enter a custom tip of $0 to $${CUSTOM_TIP_MAX_USD.toLocaleString("en-US")}.`);
+    const reason = checkoutDisabledReason();
+    if (reason) {
+      setError(reason);
       return;
     }
     setStarting(true);
@@ -282,7 +332,7 @@ export default function PayFlow({
           quoteNumber: quote.quote_number,
           moveReference: quote.move_reference,
           customerName: quote.customer_name,
-          customerEmail: quote.customer_email,
+          customerEmail: quote.customer_email.trim(),
           moveDate: quote.move_date,
           pickupAddress: quote.pickup_address,
           deliveryAddress: quote.delivery_address,
@@ -310,6 +360,7 @@ export default function PayFlow({
       }
       if (!stripePromise) setStripePromise(promise);
       setChargedCents(todayCents);
+      clientSecretRef.current = data.clientSecret;
       setClientSecret(data.clientSecret);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not start checkout.");
@@ -318,7 +369,13 @@ export default function PayFlow({
     }
   };
 
-  const fetchClientSecret = useCallback(async () => clientSecret, [clientSecret]);
+  const fetchClientSecret = useCallback(async () => {
+    const secret = clientSecretRef.current;
+    if (!secret) {
+      throw new Error("Checkout is not ready.");
+    }
+    return secret;
+  }, []);
   const options = useMemo(
     () => ({
       fetchClientSecret,
@@ -328,7 +385,6 @@ export default function PayFlow({
 
   const detailsFilled = Boolean(
     quote.customer_name ||
-      quote.customer_email ||
       quote.move_date ||
       quote.pickup_address ||
       quote.delivery_address ||
@@ -373,45 +429,60 @@ export default function PayFlow({
           },
         ];
 
-  if (clientSecret && stripePromise) {
-    return (
-      <div className="pay-checkout">
-        <div className="pay-checkout-bar">
-          <button
-            type="button"
-            className="pay-ghost"
-            onClick={() => {
-              setClientSecret("");
-              setChargedCents(0);
-            }}
-          >
-            Change amount
-          </button>
-          <p className="pay-help" style={{ textAlign: "right" }}>
-            {spec.shortLabel}
-            {quote.quote_number ? ` · ${quote.quote_number}` : ""} ·{" "}
-            {formatUsd(chargedCents || todayCents)}
-          </p>
-        </div>
-        <ChargeSummary rows={summaryRows} totalCents={chargedCents || todayCents} />
-        <div id="checkout" className="pay-embed">
-          <EmbeddedCheckoutProvider key={clientSecret} stripe={stripePromise} options={options}>
-            <EmbeddedCheckout className="pay-embed-frame" />
-          </EmbeddedCheckoutProvider>
-        </div>
-        <p className="pay-help">
-          Secure card checkout on this page. Need help?{" "}
-          <a href={PHONE_TEL} className="pay-ghost">
-            Call {PHONE_DISPLAY}
-          </a>
-          .
+  const disabledReason = checkoutDisabledReason();
+
+  const checkoutWell =
+    clientSecret && stripePromise ? (
+    <div className="pay-checkout">
+      <div className="pay-checkout-bar">
+        <button type="button" className="pay-ghost" onClick={clearCheckout}>
+          Change amount
+        </button>
+        <p className="pay-help" style={{ textAlign: "right" }}>
+          {spec.shortLabel}
+          {quote.quote_number ? ` · ${quote.quote_number}` : ""} ·{" "}
+          {formatUsd(chargedCents || todayCents)}
         </p>
       </div>
-    );
-  }
+      <ChargeSummary rows={summaryRows} totalCents={chargedCents || todayCents} />
+      <div id="checkout" className="pay-embed">
+        <p className="pay-embed-status">Loading secure checkout…</p>
+        <PayEmbedBoundary
+          fallback={
+            <p className="pay-banner pay-banner--error" role="alert">
+              Card checkout could not load.{" "}
+              <button type="button" className="pay-ghost" onClick={clearCheckout}>
+                Change amount
+              </button>{" "}
+              or call {PHONE_DISPLAY}.
+            </p>
+          }
+        >
+          <EmbeddedCheckoutProvider stripe={stripePromise} options={options}>
+            <EmbeddedCheckout className="pay-embed-frame" />
+          </EmbeddedCheckoutProvider>
+        </PayEmbedBoundary>
+      </div>
+      <p className="pay-help">
+        Secure card checkout on this page. Need help?{" "}
+        <a href={PHONE_TEL} className="pay-ghost">
+          Call {PHONE_DISPLAY}
+        </a>
+        .
+      </p>
+    </div>
+  ) : null;
+  const showCheckout = Boolean(checkoutWell);
 
   return (
-    <form onSubmit={startCheckout} className="space-y-5">
+    <>
+      {checkoutWell}
+      <form
+        onSubmit={startCheckout}
+        className="space-y-5"
+        hidden={showCheckout}
+        aria-hidden={showCheckout}
+      >
       {!ready && (
         <p className="pay-banner pay-banner--warn" role="status">
           Card checkout is not connected yet. Call {PHONE_DISPLAY} to pay by phone.
@@ -466,7 +537,7 @@ export default function PayFlow({
               inputMode="decimal"
               value={custom}
               onChange={(event) => setCustom(event.target.value.replace(/[^\d.]/g, ""))}
-              placeholder={String(spec.defaultUsd)}
+              placeholder="Other amount"
             />
           </label>
         </>
@@ -483,7 +554,7 @@ export default function PayFlow({
                 setQuote((current) => ({ ...current, quote_number: event.target.value }))
               }
               onBlur={(event) => refreshDeposit(event.target.value)}
-              placeholder="Q-1042"
+              placeholder="Quote number"
             />
           </label>
           <label className="pay-label">
@@ -493,7 +564,7 @@ export default function PayFlow({
               value={quoteTotal}
               readOnly={quoteTotalLocked}
               onChange={(event) => setQuoteTotal(event.target.value.replace(/[^\d.]/g, ""))}
-              placeholder="1560.00"
+              placeholder="Approved total"
             />
           </label>
           <p className="text-sm text-zinc-600">
@@ -514,34 +585,27 @@ export default function PayFlow({
               {TIP_OPTIONS.map((option) => {
                 const remaining = balanceBreakdown.remainingCents;
                 const amountForOption =
-                  option.type === "custom"
+                  option === "custom"
                     ? Number.isFinite(customTipUsd)
                       ? dollarsToCents(Math.max(0, customTipUsd))
                       : 0
-                    : tipAmountCents(remaining, option.type);
-                const percent =
-                  option.type === "15_percent" ||
-                  option.type === "20_percent" ||
-                  option.type === "25_percent"
-                    ? TIP_PERCENT_BY_TYPE[option.type]
-                    : null;
+                    : tipAmountCents(remaining, option);
                 return (
                   <label
-                    key={option.type}
-                    className={`pay-tip-option${tipType === option.type ? " is-on" : ""}`}
+                    key={option}
+                    className={`pay-tip-option${tipType === option ? " is-on" : ""}`}
                   >
                     <span className="flex items-center gap-3 font-bold">
                       <input
                         type="radio"
                         name="tip"
-                        checked={tipType === option.type}
+                        checked={tipType === option}
                         onChange={() => {
-                          setTipType(parseTipType(option.type));
-                          if (option.type !== "custom") setCustomTip("");
+                          setTipType(parseTipType(option));
+                          if (option !== "custom") setCustomTip("");
                         }}
                       />
-                      {option.label}
-                      {percent != null ? ` · ${percent}%` : ""}
+                      {balanceTipLabel(option)}
                     </span>
                     <span className="font-semibold">{formatUsd(amountForOption)}</span>
                   </label>
@@ -555,13 +619,29 @@ export default function PayFlow({
                   inputMode="decimal"
                   value={customTip}
                   onChange={(event) => setCustomTip(event.target.value.replace(/[^\d.]/g, ""))}
-                  placeholder="0.00"
+                  placeholder="Custom amount"
                 />
               </label>
             )}
           </fieldset>
         </div>
       )}
+
+      <label className="pay-label">
+        Email for receipt <span className="pay-required">(required)</span>
+        <input
+          type="email"
+          name="email"
+          autoComplete="email"
+          required
+          aria-required="true"
+          value={quote.customer_email}
+          onChange={(event) =>
+            setQuote((current) => ({ ...current, customer_email: event.target.value }))
+          }
+          placeholder=""
+        />
+      </label>
 
       <details className="pay-details" open={detailsFilled || undefined}>
         <summary>Move details (optional)</summary>
@@ -576,23 +656,13 @@ export default function PayFlow({
             />
           </label>
           <label className="pay-label">
-            Customer email
-            <input
-              type="email"
-              value={quote.customer_email}
-              onChange={(event) =>
-                setQuote((current) => ({ ...current, customer_email: event.target.value }))
-              }
-            />
-          </label>
-          <label className="pay-label">
             Move date
             <input
               value={quote.move_date}
               onChange={(event) =>
                 setQuote((current) => ({ ...current, move_date: event.target.value }))
               }
-              placeholder="August 22, 2026"
+              placeholder=""
             />
           </label>
           <label className="pay-label">
@@ -622,7 +692,7 @@ export default function PayFlow({
                 onChange={(event) =>
                   setQuote((current) => ({ ...current, quote_number: event.target.value }))
                 }
-                placeholder="Q-1042"
+                placeholder="Quote number"
               />
             </label>
           )}
@@ -649,7 +719,7 @@ export default function PayFlow({
           <ChargeSummary rows={summaryRows} totalCents={balanceBreakdown.totalChargedCents} />
         </>
       )}
-      {kind === "tip" && tipValid && (
+      {kind === "tip" && depositValid && (
         <ChargeSummary rows={summaryRows} totalCents={depositBreakdown.totalChargedCents} />
       )}
 
@@ -658,11 +728,16 @@ export default function PayFlow({
           {error}
         </p>
       )}
-      <button type="submit" disabled={starting || !valid || !ready} className="pay-submit">
+      <button type="submit" disabled={starting || !valid} className="pay-submit">
         {starting
           ? "Opening checkout…"
-          : `${spec.cta} · ${valid ? formatUsd(todayCents) : ""}`}
+          : checkoutCtaLabel(spec.cta, amountKnown ? todayCents : null)}
       </button>
+      {!valid && disabledReason && (
+        <p className="pay-help" role="status">
+          {disabledReason}
+        </p>
+      )}
       {kind === "deposit" && (
         <p className="pay-help">The move date is held after this deposit payment succeeds.</p>
       )}
@@ -678,6 +753,7 @@ export default function PayFlow({
         Card details stay on this page. Stripe processes the payment. Call {PHONE_DISPLAY} if
         anything looks off.
       </p>
-    </form>
+      </form>
+    </>
   );
 }
