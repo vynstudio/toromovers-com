@@ -12,10 +12,10 @@ export function ToroLockup({
   size = "md",
   className = "",
 }: ToroLockupProps) {
-  const bull = size === "sm" ? 32 : 52;
+  const bull = size === "sm" ? 36 : 52;
   const type =
     size === "sm"
-      ? "text-[1.05rem] sm:text-[1.55rem]"
+      ? "text-[1.35rem] sm:text-[1.55rem]"
       : "text-[1.7rem] sm:text-[1.95rem]";
   const inner = (
     <>
@@ -29,7 +29,7 @@ export function ToroLockup({
         priority
       />
       <span
-        className={`flex items-baseline gap-[0.18em] font-black uppercase leading-none tracking-[-0.045em] ${type}`}
+        className={`flex shrink-0 items-baseline gap-[0.18em] font-black uppercase leading-none tracking-[-0.045em] whitespace-nowrap ${type}`}
       >
         <span className="text-[#0A0A0A]">TORO</span>
         <span className="text-[#E20613]">MOVERS</span>
@@ -37,7 +37,7 @@ export function ToroLockup({
     </>
   );
 
-  const classes = `inline-flex min-w-0 items-center gap-1.5 no-underline sm:gap-2.5 ${className}`;
+  const classes = `inline-flex shrink-0 items-center gap-2 no-underline ${className}`;
 
   if (!href) {
     return (

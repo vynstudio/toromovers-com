@@ -44,14 +44,13 @@ export default async function GetMyPricePage({
   return (
     <main className="min-h-screen bg-white text-[#0A0A0A]">
       <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex max-w-3xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-5 sm:py-3.5">
-          <ToroLockup size="sm" />
+        <div className="mx-auto flex max-w-3xl flex-col gap-2.5 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5 sm:py-3.5">
+          <ToroLockup size="sm" className="shrink-0" />
           <a
-            className="shrink-0 rounded-xl bg-[#E20613] px-3 py-2 text-xs font-extrabold text-white transition hover:bg-[#B80510] sm:px-4 sm:py-2.5 sm:text-sm"
+            className="inline-flex min-h-12 w-full shrink-0 items-center justify-center rounded-xl bg-[#E20613] px-4 py-2.5 text-sm font-extrabold whitespace-nowrap text-white transition hover:bg-[#B80510] sm:min-h-0 sm:w-auto"
             href={PHONE_TEL}
           >
-            <span className="sm:hidden">{PHONE_DISPLAY}</span>
-            <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
+            Call {PHONE_DISPLAY}
           </a>
         </div>
       </header>
