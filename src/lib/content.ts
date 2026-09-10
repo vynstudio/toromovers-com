@@ -275,7 +275,8 @@ export const footer = {
 } as const;
 
 // AEO: answer-first FAQs for featured snippets / AI answers
-// Visible FAQ text must match FAQ schema exactly (see schema.ts).
+// Answer paragraphs must match FAQ schema exactly (see schema.ts).
+// Optional linkHref/linkLabel are UI-only crawlable links after the answer <p>.
 // Band 4: photo RIGHT (after reviews LEFT)
 export const faq = {
   eyebrow: "FAQ",
@@ -290,31 +291,45 @@ export const faq = {
   items: [
     {
       q: "How much do movers cost in Orlando?",
-      a: "Toro Movers quotes most Orlando moves with up-front hourly rates. The final cost depends on crew size, truck needs, stairs, elevators, distance, and how much you need moved. Call or text (689) 600-2720 with your move details and we will explain the hourly pricing model before move day.",
+      a: "Toro Movers quotes most Orlando moves with up-front hourly rates. The final cost depends on crew size, truck needs, stairs, elevators, distance, and how much you need moved. Call or text (689) 600-2720 with your move details—or request a quote online—and we will explain the hourly pricing model before move day.",
+      linkHref: "/blog/how-much-does-a-local-move-cost-orlando",
+      linkLabel: "How Orlando moving costs work",
     },
     {
       q: "Do you offer labor-only loading and unloading?",
-      a: "Yes, Toro Movers offers labor-only loading and unloading for U-Haul trucks, PODS, trailers, storage units, and rental trucks. You provide the vehicle or container, and our crew handles the heavy lifting, tight loading, unloading, and placement by the hour.",
+      a: "Yes. Toro Movers offers labor-only loading and unloading for U-Haul trucks, PODS, trailers, storage units, and rental trucks. You provide the vehicle or container, and our crew handles the heavy lifting, tight loading, unloading, and placement by the hour.",
+      linkHref: "/labor-only-moving",
+      linkLabel: "Labor-only movers in Orlando",
     },
     {
       q: "Do you handle apartment moves in Orlando?",
-      a: "Yes, Toro Movers handles apartment moves across Orlando and Central Florida. Apartment moves often involve stairs, elevators, loading zones, parking rules, tight hallways, and scheduled move-in windows, so we ask about access details before quoting the job.",
-    },
-    {
-      q: "Is Toro Movers a local moving company?",
-      a: "Yes, Toro Movers is a family-owned local moving company serving Orlando and Central Florida. You work directly with our local crew, which helps keep communication, scheduling, and move-day expectations clear.",
-    },
-    {
-      q: "Are your movers bilingual?",
-      a: "Yes, Toro Movers has an English and Spanish-speaking crew. Bilingual communication helps customers explain timing, access instructions, fragile items, furniture placement, and building rules clearly from the first quote to the final box.",
+      a: "Yes. Toro Movers handles apartment moves in Orlando, including stairs, elevators, loading zones, parking rules, tight hallways, and scheduled move-in windows. We ask about access details before quoting so the hourly clock stays honest.",
+      linkHref: "/apartment-movers-orlando-fl",
+      linkLabel: "Apartment movers in Orlando",
     },
     {
       q: "What is the difference between full-service moving and labor-only moving?",
-      a: "Full-service moving includes the crew, truck, loading, transportation, unloading, and placement. Labor-only moving is for customers who already have a U-Haul, POD, trailer, or rental truck and only need movers for loading, unloading, or rearranging heavy items.",
+      a: "Full-service moving includes the crew, truck, loading, transportation, unloading, and placement. Labor-only moving is for customers who already have a U-Haul, POD, trailer, or rental truck and only need movers for loading, unloading, or rearranging heavy items. Both use up-front hourly rates explained before move day.",
+      linkHref: "/blog/full-service-vs-labor-only-orlando",
+      linkLabel: "Full-service vs labor-only",
+    },
+    {
+      q: "Can you load a U-Haul or POD in Orlando?",
+      a: "Yes. If you already have a U-Haul, POD, or rental truck, Toro Movers provides labor-only loading and unloading by the hour. Share truck or container size, floors, and parking when you call or text (689) 600-2720 or request a quote.",
+      linkHref: "/blog/uhaul-pod-loading-help-orlando",
+      linkLabel: "U-Haul and POD loading help",
+    },
+    {
+      q: "Are your movers bilingual?",
+      a: "Yes. Toro Movers has an English and Spanish-speaking crew. Bilingual communication helps customers explain timing, access instructions, fragile items, furniture placement, and building rules from the first quote to the last box. Call or text (689) 600-2720 or request a quote online.",
+      linkHref: "/get-my-price",
+      linkLabel: "Get my price",
     },
     {
       q: "How do I get a moving quote from Toro Movers?",
-      a: "To get a moving estimate from Toro Movers, call or text (689) 600-2720—or request a callback online for immediate service. Share what you are moving, pickup and drop-off locations, and access details (stairs, elevator, parking). We match crew size, explain up-front hourly rates, and help plan your Orlando or Central Florida move. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      a: "Call or text (689) 600-2720, or request a quote online. Share what you are moving, pickup and drop-off locations, and access details such as stairs, elevator, and parking. We match crew size, explain up-front hourly rates, and help plan your Orlando move. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      linkHref: "/get-my-price",
+      linkLabel: "Get my price",
     },
   ],
 } as const;

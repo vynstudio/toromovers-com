@@ -3,7 +3,13 @@ import { SplitBand } from "@/components/SplitBand";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { VectorSlot } from "@/components/ServiceIllustrations";
 
-export type FaqItem = { q: string; a: string };
+export type FaqItem = {
+  q: string;
+  a: string;
+  /** Crawlable UI link after the answer paragraph — not included in FAQPage schema. */
+  linkHref?: string;
+  linkLabel?: string;
+};
 
 type FaqProps = {
   heading?: string;
@@ -14,7 +20,7 @@ type FaqProps = {
 };
 
 /**
- * FAQ split-band — all items fit the locked section (no scroll, no CTAs).
+ * FAQ split-band — answer text stays plain for schema; optional href is UI-only.
  */
 export function Faq({
   heading = faq.heading,
@@ -61,8 +67,16 @@ export function Faq({
                 </svg>
               </span>
             </summary>
-            <div className="aeo-answer faq-panel-body">
-              <p>{item.a}</p>
+            <div className="faq-panel-body">
+              <p className="aeo-answer">{item.a}</p>
+              {item.linkHref && item.linkLabel ? (
+                <a
+                  href={item.linkHref}
+                  className="mt-2 inline-block text-[0.8125rem] font-semibold text-foreground underline-offset-2 hover:underline md:text-sm"
+                >
+                  {item.linkLabel} <span aria-hidden>→</span>
+                </a>
+              ) : null}
             </div>
           </details>
         ))}
