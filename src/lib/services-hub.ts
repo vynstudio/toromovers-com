@@ -69,7 +69,7 @@ export const servicesHub = {
     {
       title: "Labor only",
       body: "You have the U-Haul, POD or rental truck — we bring the crew and load or unload it by the hour.",
-      href: "/services",
+      href: "/labor-only-moving",
       image: "/images/moves/svc-labor.webp",
       imageAlt:
         "Toro Movers stretch-wrapping furniture on a real labor-only job",

@@ -232,7 +232,7 @@ export const footer = {
       links: [
         { label: "All services", href: "/services" },
         { label: "Residential moving", href: "/services" },
-        { label: "Labor-only moving", href: "/services" },
+        { label: "Labor-only moving", href: "/labor-only-moving" },
         { label: "Single item & delivery", href: "/services" },
       ],
     },
