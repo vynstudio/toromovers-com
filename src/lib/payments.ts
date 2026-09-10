@@ -260,7 +260,7 @@ export function clipField(value: unknown, max = 200): string {
   return value.trim().slice(0, max);
 }
 
-/** Receipt email for Embedded Checkout. Required before the Pay CTA enables. */
+/** Optional receipt email for Embedded Checkout when provided. */
 export function isCheckoutEmail(value: unknown): boolean {
   if (typeof value !== "string") return false;
   const email = value.trim();

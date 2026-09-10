@@ -211,7 +211,9 @@ async function buildDepositSession(input: CreatePaymentInput): Promise<BuiltSess
         : []),
     ],
   };
-  params.customer_email = fields.customer_email.trim();
+  if (isCheckoutEmail(fields.customer_email)) {
+    params.customer_email = fields.customer_email.trim();
+  }
   return { params, kind: "deposit", fields };
 }
 
@@ -300,7 +302,9 @@ async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSess
     }),
     line_items: lineItems,
   };
-  params.customer_email = fields.customer_email.trim();
+  if (isCheckoutEmail(fields.customer_email)) {
+    params.customer_email = fields.customer_email.trim();
+  }
   return { params, kind: "balance", fields };
 }
 
@@ -351,7 +355,9 @@ async function buildTipSession(input: CreatePaymentInput): Promise<BuiltSession>
         : []),
     ],
   };
-  params.customer_email = fields.customer_email.trim();
+  if (isCheckoutEmail(fields.customer_email)) {
+    params.customer_email = fields.customer_email.trim();
+  }
   return { params, kind: "tip", fields };
 }
 
@@ -401,10 +407,11 @@ export async function createPaymentSession(
       : input.kind === "balance"
         ? await buildBalanceSession(input)
         : await buildTipSession(input);
-  if (!isCheckoutEmail(built.fields.customer_email)) {
-    throw new Error("Enter an email for your receipt.");
+  if (isCheckoutEmail(built.fields.customer_email)) {
+    built.params.customer_email = built.fields.customer_email.trim();
+  } else {
+    delete built.params.customer_email;
   }
-  built.params.customer_email = built.fields.customer_email.trim();
   const session = await createEmbeddedSession(built);
   if (!session.client_secret) {
     throw new Error("Could not start checkout.");

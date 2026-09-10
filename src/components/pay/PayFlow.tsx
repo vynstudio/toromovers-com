@@ -27,7 +27,6 @@ import {
   depositSummary,
   dollarsToCents,
   formatUsd,
-  isCheckoutEmail,
   parseTipType,
   parseUsd,
   tipAmountCents,
@@ -207,8 +206,6 @@ export default function PayFlow({
     tipType,
     customTipCents: dollarsToCents(Math.max(0, customTipUsd)),
   });
-  const emailOk = isCheckoutEmail(quote.customer_email);
-
   const depositValid =
     Number.isFinite(selected) && selected >= spec.minUsd && selected <= spec.maxUsd;
   const customTipValid =
@@ -223,7 +220,7 @@ export default function PayFlow({
     customTipValid &&
     balanceBreakdown.remainingCents / 100 <= PAYMENT_KIND.balance.maxUsd;
   const amountValid = kind === "balance" ? balanceAmountOk : kind === "tip" ? depositValid : depositValid;
-  const valid = Boolean(ready && emailOk && amountValid);
+  const valid = Boolean(ready && amountValid);
   const todayCents =
     kind === "balance" ? balanceBreakdown.totalChargedCents : depositBreakdown.totalChargedCents;
   const amountKnown =
@@ -254,7 +251,6 @@ export default function PayFlow({
     if (kind !== "balance" && !depositValid) {
       return `Enter an amount between $${spec.minUsd} and $${spec.maxUsd.toLocaleString("en-US")}.`;
     }
-    if (!emailOk) return "Enter your email for the receipt.";
     return "";
   }
 
@@ -626,22 +622,6 @@ export default function PayFlow({
           </fieldset>
         </div>
       )}
-
-      <label className="pay-label">
-        Email for receipt <span className="pay-required">(required)</span>
-        <input
-          type="email"
-          name="email"
-          autoComplete="email"
-          required
-          aria-required="true"
-          value={quote.customer_email}
-          onChange={(event) =>
-            setQuote((current) => ({ ...current, customer_email: event.target.value }))
-          }
-          placeholder=""
-        />
-      </label>
 
       <details className="pay-details" open={detailsFilled || undefined}>
         <summary>Move details (optional)</summary>
