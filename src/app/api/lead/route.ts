@@ -132,6 +132,12 @@ export async function POST(req: Request) {
       consentSms: soft ? false : consentSms,
       landingPage,
     });
+    console.info(
+      "[lead] notify",
+      channels
+        .map((c) => `${c.channel}:${c.ok ? "ok" : c.detail || "fail"}`)
+        .join(" | "),
+    );
   } catch (err) {
     console.error("[lead] notifyLead threw", err);
   }

@@ -11,10 +11,25 @@ import {
   PHONE_DISPLAY,
 } from "./site.ts";
 
+/**
+ * Send-SMS is v1-only: POST /v1/messages.
+ * The dated 2026-03-30 API requires `Quo-Api-Version` but cannot send yet
+ * (retry/mark-read only). Do not send that header on this call — it selects
+ * the 2026 contract and silently breaks outbound SMS.
+ * @see https://www.quo.com/docs/mdx/api-reference/messages/send-a-text-message
+ * @see https://www.quo.com/docs/2026-03-30/versioning
+ */
 export const QUO_MESSAGES_URL = "https://api.quo.com/v1/messages";
+export const OPENPHONE_MESSAGES_URL = "https://api.openphone.com/v1/messages";
+export const QUO_V1_MESSAGE_URLS = [
+  QUO_MESSAGES_URL,
+  OPENPHONE_MESSAGES_URL,
+] as const;
+/** Dated API only — never attach this to v1 send-message. */
 export const QUO_API_VERSION = "2026-03-30";
 export const DEFAULT_QUO_FROM = "+16896002720";
 export const DEFAULT_LEAD_SMS_TO = "+13217580094";
+export const QUO_SMS_MAX_CHARS = 1600;
 
 
 export type NotifyResult = {
@@ -63,8 +78,15 @@ export async function sendTelegram(text: string): Promise<NotifyResult> {
   }
 }
 
+/** Strip accidental `Bearer ` so Netlify env can be either raw key or tutorial-prefixed. */
+export function normalizeQuoApiKey(raw: string): string {
+  return raw.trim().replace(/^Bearer\s+/i, "").trim();
+}
+
 export function quoApiKey(): string {
-  return (process.env.QUO_API_KEY || process.env.OPENPHONE_API_KEY || "").trim();
+  return normalizeQuoApiKey(
+    process.env.QUO_API_KEY || process.env.OPENPHONE_API_KEY || "",
+  );
 }
 
 export function quoFromNumber(): string {
@@ -79,12 +101,117 @@ export function leadSmsTo(): string {
   return (process.env.LEAD_SMS_TO || DEFAULT_LEAD_SMS_TO).trim();
 }
 
-/** Send one SMS via Quo. Never throws. */
+export function redactQuoLog(text: string, apiKey?: string): string {
+  let out = String(text || "").replace(/\s+/g, " ").slice(0, 400);
+  const key = apiKey || quoApiKey();
+  if (key) out = out.split(key).join("[redacted]");
+  out = out.replace(/Bearer\s+\S+/gi, "Bearer [redacted]");
+  out = out.replace(/Authorization["']?\s*[:=]\s*["']?[^"'\s,]+/gi, "Authorization [redacted]");
+  return out;
+}
+
+export function quoAuthorization(apiKey: string, mode: "raw" | "bearer"): string {
+  return mode === "bearer" ? `Bearer ${apiKey}` : apiKey;
+}
+
+function hostOf(url: string): string {
+  try {
+    return new URL(url).host;
+  } catch {
+    return url;
+  }
+}
+
+function summarizeQuoError(status: number, body: string): string {
+  try {
+    const json = JSON.parse(body) as Record<string, unknown>;
+    const nested = json.error && typeof json.error === "object"
+      ? (json.error as Record<string, unknown>)
+      : null;
+    const msg = nested?.message || json.message || json.title || nested?.key;
+    const trace = nested?.trace || json.trace;
+    const parts = [`HTTP ${status}`];
+    if (msg) parts.push(String(msg));
+    if (trace) parts.push(`trace ${trace}`);
+    return parts.join(" ");
+  } catch {
+    return `HTTP ${status}`;
+  }
+}
+
+type QuoAttempt = {
+  url: string;
+  auth: "raw" | "bearer";
+  status?: number;
+  detail: string;
+  ok: boolean;
+};
+
+async function postQuoV1Message(opts: {
+  url: string;
+  apiKey: string;
+  auth: "raw" | "bearer";
+  content: string;
+  from: string;
+  to: string;
+}): Promise<QuoAttempt> {
+  const { url, apiKey, auth, content, from, to } = opts;
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: quoAuthorization(apiKey, auth),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ content, from, to: [to] }),
+    });
+    const rawBody = await res.text().catch(() => "");
+    const safeBody = redactQuoLog(rawBody, apiKey);
+    if (!res.ok) {
+      const detail = redactQuoLog(
+        `${summarizeQuoError(res.status, rawBody)} host=${hostOf(url)} auth=${auth}`,
+        apiKey,
+      );
+      console.error("[quo] SMS failed", detail, safeBody);
+      return { url, auth, status: res.status, detail, ok: false };
+    }
+    return { url, auth, status: res.status, detail: `HTTP ${res.status}`, ok: true };
+  } catch (err) {
+    const thrown = err instanceof Error ? err.message : "threw";
+    const detail = `threw host=${hostOf(url)} auth=${auth} ${redactQuoLog(thrown, apiKey)}`;
+    console.error("[quo] SMS threw", detail);
+    return { url, auth, detail, ok: false };
+  }
+}
+
+const QUO_HOST_RETRY_STATUSES = new Set([404, 405, 408, 429, 500, 502, 503, 504]);
+
+function succeededQuoSend(
+  attempt: QuoAttempt,
+  url: string,
+  to: string,
+  channel: string,
+): NotifyResult | null {
+  if (!attempt.ok) return null;
+  if (url !== QUO_MESSAGES_URL || attempt.auth !== "raw") {
+    console.info("[quo] SMS sent via fallback", {
+      host: hostOf(url),
+      auth: attempt.auth,
+      status: attempt.status,
+      to: to.slice(-4),
+    });
+  }
+  return { ok: true, channel };
+}
+
+/** Send one SMS via Quo v1. Never throws. Never logs the API key. */
 export async function sendQuoMessage(opts: {
   to: string;
   content: string;
   from?: string;
+  channel?: string;
 }): Promise<NotifyResult> {
+  const channel = opts.channel || "sms";
   const apiKey = quoApiKey();
   if (!apiKey) {
     console.error(
@@ -92,42 +219,67 @@ export async function sendQuoMessage(opts: {
     );
     return {
       ok: false,
-      channel: "sms",
+      channel,
       detail: "QUO_API_KEY missing",
     };
   }
   const to = e164(opts.to);
   const from = e164(opts.from || quoFromNumber()) || quoFromNumber();
   if (!to) {
-    return { ok: false, channel: "sms", detail: "invalid phone" };
+    return { ok: false, channel, detail: "invalid phone" };
   }
-  try {
-    const res = await fetch(QUO_MESSAGES_URL, {
-      method: "POST",
-      headers: {
-        Authorization: apiKey,
-        "Quo-Api-Version": QUO_API_VERSION,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ content: opts.content, from, to: [to] }),
+  const content = opts.content.trim().slice(0, QUO_SMS_MAX_CHARS);
+  if (!content) {
+    return { ok: false, channel, detail: "empty content" };
+  }
+
+  let last: QuoAttempt | undefined;
+  for (const url of QUO_V1_MESSAGE_URLS) {
+    const raw = await postQuoV1Message({
+      url,
+      apiKey,
+      auth: "raw",
+      content,
+      from,
+      to,
     });
-    if (!res.ok) {
-      const t = await res.text().catch(() => "");
-      console.error("[quo] SMS failed", res.status, t.slice(0, 200));
-      return { ok: false, channel: "sms", detail: `HTTP ${res.status}` };
+    last = raw;
+    const rawOk = succeededQuoSend(raw, url, to, channel);
+    if (rawOk) return rawOk;
+
+    if (raw.status === 401) {
+      const bearer = await postQuoV1Message({
+        url,
+        apiKey,
+        auth: "bearer",
+        content,
+        from,
+        to,
+      });
+      last = bearer;
+      const bearerOk = succeededQuoSend(bearer, url, to, channel);
+      if (bearerOk) return bearerOk;
+      continue;
     }
-    return { ok: true, channel: "sms" };
-  } catch (err) {
-    console.error("[quo] SMS threw", err);
-    return { ok: false, channel: "sms", detail: "threw" };
+
+    if (raw.status === undefined || QUO_HOST_RETRY_STATUSES.has(raw.status)) {
+      continue;
+    }
+    break;
   }
+
+  return {
+    ok: false,
+    channel,
+    detail: last?.detail || "SMS failed",
+  };
 }
 
 export async function sendSms(
   toRaw: string,
   content: string,
 ): Promise<NotifyResult> {
-  return sendQuoMessage({ to: toRaw, content });
+  return sendQuoMessage({ to: toRaw, content, channel: "sms-client" });
 }
 
 export async function sendEmail(opts: {
@@ -304,6 +456,7 @@ export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]>
       to: leadSmsTo(),
       from: quoFromNumber(),
       content: formatTeamLeadSms(lead),
+      channel: "sms-team",
     }),
   );
 
@@ -313,7 +466,7 @@ export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]>
 
   // Client SMS
   if (lead.consentSms === false) {
-    results.push({ ok: false, channel: "sms", detail: "no SMS consent" });
+    results.push({ ok: false, channel: "sms-client", detail: "no SMS consent" });
   } else {
     results.push(await sendSms(lead.phone, clientSms(lead)));
   }
