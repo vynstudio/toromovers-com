@@ -194,7 +194,7 @@ export async function sendEmail(opts: {
   }
   if (!sender) {
     console.error(
-      "[notify/email] RESEND_FROM_EMAIL missing or invalid — set it to a from-address on the domain verified in Resend (hello@toromovers.net or hello@toromovers.com). Do not guess.",
+      "[notify/email] RESEND_FROM_EMAIL missing or invalid — set it to hello@toromovers.net (current prod). Do not hardcode .com if .net is verified.",
     );
     return {
       ok: false,

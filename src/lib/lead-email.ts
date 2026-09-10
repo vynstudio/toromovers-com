@@ -54,11 +54,15 @@ export function parseBareEmail(raw: string): string | null {
 
 /**
  * Resend 422 is usually a domain mismatch: `from` must be on a domain
- * verified in Resend. Live may use hello@toromovers.net or
- * hello@toromovers.com — never guess. Read RESEND_FROM_EMAIL only.
+ * verified in Resend. Current prod is hello@toromovers.net — do not
+ * hardcode .com. Read RESEND_FROM_EMAIL only (bare address; wrap once).
  * Also avoid double-wrapping (`Toro Movers <Toro Movers <…>>`) and
  * putting a display name in `reply_to`.
  */
+
+/** Hosted PNG for email clients (Outlook does not render SVG). White-bg mark. */
+export const LEAD_EMAIL_BULL_PNG = `${SITE_URL.replace(/\/$/, "")}/emails/toro-bull-mark.png`;
+
 export function resendSender(fromRaw?: string): {
   from: string;
   replyTo: string;
@@ -91,7 +95,7 @@ export function formatResendError(status: number, body: string): string {
   const lower = message.toLowerCase();
   if (status === 422 || status === 403) {
     if (lower.includes("not verified") || lower.includes("verify a domain")) {
-      return `HTTP ${status} domain not verified — RESEND_FROM_EMAIL must match a verified Resend domain (hello@toromovers.net or hello@toromovers.com, whichever is verified)`;
+      return `HTTP ${status} domain not verified — RESEND_FROM_EMAIL must match a verified Resend domain (current prod: hello@toromovers.net)`;
     }
     if (lower.includes("invalid") && lower.includes("from")) {
       return `HTTP ${status} invalid from — set RESEND_FROM_EMAIL to a bare address on the verified domain`;
@@ -145,8 +149,8 @@ export function buildLeadConfirmationEmail(lead: LeadEmailInput): {
     .map(
       ([label, value]) =>
         `<tr>
-          <td style="padding:8px 0;font:13px/1.4 Arial,Helvetica,sans-serif;color:#52525b;width:120px;vertical-align:top">${escapeHtml(label)}</td>
-          <td style="padding:8px 0;font:15px/1.4 Arial,Helvetica,sans-serif;color:${INK};font-weight:700">${escapeHtml(value)}</td>
+          <td bgcolor="#ffffff" style="padding:8px 0;background-color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.4;color:#52525b;width:120px;vertical-align:top">${escapeHtml(label)}</td>
+          <td bgcolor="#ffffff" style="padding:8px 0;background-color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.4;color:${INK};font-weight:bold">${escapeHtml(value)}</td>
         </tr>`,
     )
     .join("");
@@ -156,54 +160,78 @@ export function buildLeadConfirmationEmail(lead: LeadEmailInput): {
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <title>${escapeHtml(subject)}</title>
+  <!--[if mso]>
+  <style type="text/css">
+    table, td, p, a, h1 { font-family: Arial, Helvetica, sans-serif !important; }
+  </style>
+  <![endif]-->
 </head>
-<body style="margin:0;padding:0;background:#f4f4f5;color:${INK}">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5">
+<body bgcolor="#f4f4f5" style="margin:0;padding:0;background-color:#f4f4f5;color:${INK};font-family:Arial,Helvetica,sans-serif;">
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">
+    We received your quote request. Usually call back within 15 minutes Mon–Sat, 7am–7pm.
+  </div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f5" style="background-color:#f4f4f5;font-family:Arial,Helvetica,sans-serif;">
     <tr>
-      <td align="center" style="padding:24px 12px">
-        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden">
+      <td align="center" bgcolor="#f4f4f5" style="padding:24px 12px;background-color:#f4f4f5;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="width:100%;max-width:600px;background-color:#ffffff;">
           <tr>
-            <td style="background:${INK};padding:22px 28px">
-              <p style="margin:0;font:800 22px/1 Arial,Helvetica,sans-serif;letter-spacing:0.04em;color:#ffffff">
-                TORO <span style="color:${ACCENT}">MOVERS</span>
-              </p>
-              <p style="margin:8px 0 0;font:13px/1.4 Arial,Helvetica,sans-serif;color:#d4d4d8">Central Florida</p>
+            <td bgcolor="#ffffff" style="background-color:#ffffff;padding:22px 28px 18px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td valign="middle" bgcolor="#ffffff" style="padding:0 14px 0 0;background-color:#ffffff;">
+                    <img src="${LEAD_EMAIL_BULL_PNG}" width="48" height="48" alt="Toro Movers" style="display:block;border:0;outline:none;text-decoration:none;width:48px;height:48px;"/>
+                  </td>
+                  <td valign="middle" bgcolor="#ffffff" style="background-color:#ffffff;">
+                    <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:20px;line-height:1;font-weight:bold;letter-spacing:0.06em;color:${INK};">
+                      TORO <span style="color:${ACCENT};">MOVERS</span>
+                    </p>
+                    <p style="margin:6px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.3;color:#52525b;">Central Florida</p>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
-          <tr><td style="height:4px;background:${ACCENT};font-size:0;line-height:0">&nbsp;</td></tr>
           <tr>
-            <td style="padding:32px 28px 8px;font:16px/1.6 Arial,Helvetica,sans-serif;color:${INK}">
-              <p style="margin:0 0 8px;font:13px/1.4 Arial,Helvetica,sans-serif;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:${ACCENT}">Quote request received</p>
-              <h1 style="margin:0 0 16px;font:800 26px/1.2 Arial,Helvetica,sans-serif;color:${INK}">Hi ${escapeHtml(n)}, we got it.</h1>
-              <p style="margin:0 0 16px">${escapeHtml(FUNNEL_SLA)}.</p>
-              <p style="margin:0 0 20px">We’ll confirm availability and clear, up-front pricing — no hidden fees.</p>
+            <td bgcolor="${ACCENT}" height="4" style="background-color:${ACCENT};height:4px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td bgcolor="#ffffff" style="padding:28px 28px 8px;background-color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:${INK};">
+              <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.4;font-weight:bold;letter-spacing:0.08em;text-transform:uppercase;color:${ACCENT};">Quote request received</p>
+              <h1 style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:24px;line-height:1.25;font-weight:bold;color:${INK};">Hi ${escapeHtml(n)}, we got it.</h1>
+              <p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:${INK};">${escapeHtml(FUNNEL_SLA)}.</p>
+              <p style="margin:0 0 20px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:${INK};">We’ll confirm availability and clear, up-front pricing — no hidden fees.</p>
               ${
                 detailRows
-                  ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 24px;border-top:1px solid #e4e4e7;border-bottom:1px solid #e4e4e7">${detailRows}</table>`
+                  ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;border-top:1px solid #e4e4e7;border-bottom:1px solid #e4e4e7">${detailRows}</table>`
                   : ""
               }
-              <p style="margin:0 0 24px">
-                <a href="${PHONE_TEL}" style="display:inline-block;background:${ACCENT};color:#ffffff;text-decoration:none;font:800 15px/1 Arial,Helvetica,sans-serif;padding:14px 22px;border-radius:10px">Call ${escapeHtml(phone)}</a>
-              </p>
-              <p style="margin:0 0 8px;font:15px/1.5 Arial,Helvetica,sans-serif">${escapeHtml(FUNNEL_ESPANOL)}. ${escapeHtml(FUNNEL_BILINGUAL)}.</p>
-              <p style="margin:0 0 24px;font:14px/1.5 Arial,Helvetica,sans-serif;color:#52525b">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;">
+                <tr>
+                  <td bgcolor="${ACCENT}" style="background-color:${ACCENT};padding:14px 22px;">
+                    <a href="${PHONE_TEL}" style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1;font-weight:bold;color:#ffffff;text-decoration:none;">Call ${escapeHtml(phone)}</a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:${INK};">${escapeHtml(FUNNEL_ESPANOL)}. ${escapeHtml(FUNNEL_BILINGUAL)}.</p>
+              <p style="margin:0 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.5;color:#52525b;">
                 ${escapeHtml(FUNNEL_GOOGLE_RATING)} · ${escapeHtml(FUNNEL_MOVES)} · ${escapeHtml(FUNNEL_FAMILY)} local crew · careful handling and on-time crews
               </p>
-              <p style="margin:0 0 8px;font:13px/1.5 Arial,Helvetica,sans-serif;color:#52525b">${escapeHtml(FUNNEL_LOCAL_NOTE)}</p>
-              <p style="margin:0 0 24px;font:13px/1.5 Arial,Helvetica,sans-serif">
-                <a href="${GOOGLE_MAPS_REVIEWS_URL}" style="color:${ACCENT};font-weight:700">See our Google reviews</a>
+              <p style="margin:0 0 8px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#52525b;">${escapeHtml(FUNNEL_LOCAL_NOTE)}</p>
+              <p style="margin:0 0 24px;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;">
+                <a href="${GOOGLE_MAPS_REVIEWS_URL}" style="color:${ACCENT};font-weight:bold;text-decoration:underline;">See our Google reviews</a>
                 &nbsp;·&nbsp;
-                <a href="${SITE_URL}" style="color:${ACCENT};font-weight:700">toromovers.com</a>
+                <a href="${SITE_URL}" style="color:${ACCENT};font-weight:bold;text-decoration:underline;">toromovers.com</a>
               </p>
-              <p style="margin:0;font:13px/1.5 Arial,Helvetica,sans-serif;color:#52525b">
+              <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.5;color:#52525b;">
                 — Toro Movers<br/>
                 ${escapeHtml(phone)} · ${escapeHtml(EMAIL)}
               </p>
             </td>
           </tr>
           <tr>
-            <td style="padding:16px 28px 28px;font:12px/1.5 Arial,Helvetica,sans-serif;color:#a1a1aa">
+            <td bgcolor="#ffffff" style="padding:16px 28px 28px;background-color:#ffffff;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.5;color:#a1a1aa;">
               You received this because you requested a moving quote on toromovers.com.
             </td>
           </tr>

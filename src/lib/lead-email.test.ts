@@ -3,9 +3,9 @@ import test from "node:test";
 import {
   FUNNEL_ACCENT,
   FUNNEL_ESPANOL,
-  FUNNEL_INK,
 } from "./funnel-offer.ts";
 import {
+  LEAD_EMAIL_BULL_PNG,
   buildLeadConfirmationEmail,
   formatResendError,
   parseBareEmail,
@@ -76,6 +76,16 @@ test("formatResendError explains domain verification and invalid from", () => {
     formatResendError(
       422,
       JSON.stringify({
+        message: "The toromovers.com domain is not verified. Please, add and verify your domain.",
+        name: "validation_error",
+      }),
+    ),
+    /hello@toromovers\.net/,
+  );
+  assert.match(
+    formatResendError(
+      422,
+      JSON.stringify({
         message:
           "Invalid `from` field. The email address needs to follow the email@example.com or Name <email@example.com> format.",
         name: "validation_error",
@@ -93,15 +103,41 @@ test("confirmation email is branded and does not claim licensed or insured", () 
     moveDate: "2026-09-18",
   });
   assert.match(copy.subject, /Toro Movers/);
-  assert.match(copy.html, new RegExp(FUNNEL_INK, "i"));
-  assert.match(copy.html, new RegExp(FUNNEL_ACCENT, "i"));
+  assert.match(copy.html, /#E20613/);
+  assert.doesNotMatch(copy.html, /#E10600/i);
+  assert.doesNotMatch(copy.html, /#e10600/);
+  assert.doesNotMatch(copy.html, /:hover/i);
   assert.match(copy.html, /15 minutes/);
+  assert.match(copy.html, /Mon–Sat/);
+  assert.match(copy.html, /7am–7pm/);
   assert.match(copy.html, /689/);
   assert.match(copy.html, new RegExp(FUNNEL_ESPANOL));
+  assert.match(copy.html, /Bilingual/);
   assert.match(copy.html, /Full-Service Move/);
   assert.match(copy.text, /15 minutes/);
   assert.doesNotMatch(copy.html, /licensed/i);
   assert.doesNotMatch(copy.html, /insured/i);
   assert.doesNotMatch(copy.text, /licensed/i);
   assert.doesNotMatch(copy.text, /insured/i);
+});
+
+test("confirmation email uses a light header, black TORO, hosted bull PNG, tables, bgcolor, Arial", () => {
+  const copy = buildLeadConfirmationEmail({ name: "Ada Perez" });
+  assert.match(copy.html, /bgcolor="#ffffff"/i);
+  assert.match(copy.html, /bgcolor="#f4f4f5"/i);
+  assert.match(copy.html, new RegExp(`bgcolor="${FUNNEL_ACCENT}"`, "i"));
+  assert.match(copy.html, /font-family:Arial/i);
+  assert.match(copy.html, /role="presentation"/);
+  assert.match(copy.html, /toro-bull-mark\.png/);
+  assert.equal(LEAD_EMAIL_BULL_PNG.includes("toro-bull-mark.png"), true);
+  assert.match(
+    copy.html,
+    /color:#0A0A0A;[\s\S]{0,80}TORO <span style="color:#E20613;">MOVERS<\/span>/,
+  );
+  // Dark header + white TORO is invisible in iCloud — must not ship.
+  assert.doesNotMatch(copy.html, /bgcolor="#0A0A0A"/i);
+  assert.doesNotMatch(
+    copy.html,
+    /color:#ffffff[^>]*>\s*TORO\s+<span/i,
+  );
 });
