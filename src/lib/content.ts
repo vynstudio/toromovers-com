@@ -25,8 +25,8 @@ export const nav = {
 } as const;
 
 export const hero = {
-  h1: "Orlando's Family-Owned Movers — Full-Service, Labor-Only & Apartment Moves",
-  lede: "Toro Movers is a family-owned, bilingual moving company serving Orlando and Central Florida with upfront hourly rates — no hidden fees. Call or text (689) 600-2720.",
+  h1: "Orlando's Family-Owned Movers",
+  lede: "Full-service, labor-only, and apartment moves in Orlando and Central Florida — family-owned, bilingual, with upfront hourly rates and no hidden fees. Call or text (689) 600-2720.",
   cta: "discover toro movers",
   ctaHref: "#discover",
 } as const;
