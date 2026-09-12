@@ -50,6 +50,7 @@ export async function POST(req: Request) {
           meta.move_reference ? `Move: ${meta.move_reference}` : "",
           `From: ${meta.customer_name || email}`,
           meta.customer_email ? `Email: ${meta.customer_email}` : "",
+          meta.customer_phone ? `Phone: ${meta.customer_phone}` : "",
           meta.move_date ? `Move date: ${meta.move_date}` : "",
           kind === "deposit" && meta.deposit_amount ? `Deposit: $${meta.deposit_amount}` : "",
           kind === "balance" && meta.quote_total ? `Quote total: $${meta.quote_total}` : "",

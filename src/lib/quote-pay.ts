@@ -13,6 +13,7 @@ export type SignedQuotePayload = {
   move_reference?: string;
   customer_name?: string;
   customer_email?: string;
+  customer_phone?: string;
   move_date?: string;
   pickup_address?: string;
   delivery_address?: string;
@@ -58,6 +59,7 @@ export function signQuotePayload(
   if (payload.move_reference) body.move_reference = clipField(payload.move_reference, 80);
   if (payload.customer_name) body.customer_name = clipField(payload.customer_name, 120);
   if (payload.customer_email) body.customer_email = clipField(payload.customer_email, 180);
+  if (payload.customer_phone) body.customer_phone = clipField(payload.customer_phone, 40);
   if (payload.move_date) body.move_date = clipField(payload.move_date, 80);
   if (payload.pickup_address) body.pickup_address = clipField(payload.pickup_address, 180);
   if (payload.delivery_address) body.delivery_address = clipField(payload.delivery_address, 180);
@@ -108,6 +110,7 @@ export function payloadToQuoteFields(payload: SignedQuotePayload | null): QuoteF
     move_reference: payload.move_reference,
     customer_name: payload.customer_name,
     customer_email: payload.customer_email,
+    customer_phone: payload.customer_phone,
     move_date: payload.move_date,
     pickup_address: payload.pickup_address,
     delivery_address: payload.delivery_address,

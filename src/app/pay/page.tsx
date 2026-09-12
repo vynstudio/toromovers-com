@@ -33,7 +33,9 @@ export default async function PayPage({
   const intro =
     link.kind === "tip"
       ? "Send a post-move tip to the crew. Card details stay on this page. Stripe processes the payment."
-      : "Pay a deposit to hold your move date after payment succeeds, or pay the remaining balance. You can add an optional tip here. Card details stay on this page. Stripe processes the payment.";
+      : link.kind === "balance"
+        ? "Pay the remaining balance on your move. You can add an optional tip here. Card details stay on this page. Stripe processes the payment."
+        : "Pay a deposit to hold your move date. We just need your name, phone, address, and email. Card details stay on this page. Stripe processes the payment.";
   const checkoutReady = Boolean(runtimeEnv("STRIPE_SECRET_KEY") && stripePublishableKey());
   return (
     <PayShell>

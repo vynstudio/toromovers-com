@@ -36,6 +36,7 @@ export type QuoteFields = {
   move_reference: string;
   customer_name: string;
   customer_email: string;
+  customer_phone: string;
   move_date: string;
   pickup_address: string;
   delivery_address: string;
@@ -47,6 +48,7 @@ export const EMPTY_QUOTE_FIELDS: QuoteFields = {
   move_reference: "",
   customer_name: "",
   customer_email: "",
+  customer_phone: "",
   move_date: "",
   pickup_address: "",
   delivery_address: "",
@@ -263,7 +265,7 @@ export const PAYMENT_KIND: Record<
     telegramTitle: "DEPOSIT received — Toro Movers",
     minUsd: 25,
     maxUsd: 5_000,
-    presetsUsd: [50, 100, 150, 250],
+    presetsUsd: [75, 100, 150],
     defaultUsd: 100,
     notePlaceholder: "Job date, name, address, or quote number",
     cta: "Pay deposit",
