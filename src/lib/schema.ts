@@ -5,6 +5,7 @@ import {
   GOOGLE_RATING,
   PHONE_E164,
   POSTAL_CODE,
+  QUOTE_PATH,
   REVIEW_COUNT,
   SERVICE_BASE_LOCALITY,
   SERVICE_REGION,
@@ -185,7 +186,7 @@ export function homePageGraph() {
           name: "Get a free moving quote",
           target: {
             "@type": "EntryPoint",
-            urlTemplate: `${SITE_URL}/contact`,
+            urlTemplate: `${SITE_URL}${QUOTE_PATH}`,
             actionPlatform: [
               "http://schema.org/DesktopWebPlatform",
               "http://schema.org/MobileWebPlatform",

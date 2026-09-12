@@ -25,8 +25,8 @@ export const nav = {
 } as const;
 
 export const hero = {
-  h1: "Book Toro Movers for Your Orlando Move",
-  lede: "Toro Movers helps you book full-service, labor-only, and apartment moves in Orlando. Up-front hourly rates. Call or text (689) 600-2720.",
+  h1: "Orlando's Family-Owned Movers",
+  lede: "Full-service, labor-only, and apartment moves in Orlando and Central Florida — family-owned, bilingual, with upfront hourly rates and no hidden fees. Call or text (689) 600-2720.",
   cta: "discover toro movers",
   ctaHref: "#discover",
 } as const;

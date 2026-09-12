@@ -9,7 +9,7 @@ export const SLOGAN = "Moving People Forward";
 
 /** Site-wide SEO description — 120–160 chars for SERP (audit target). */
 export const SITE_DESCRIPTION =
-  "Toro Movers helps you book full-service, labor-only, and apartment moves in Orlando. Up-front hourly rates. Call or text (689) 600-2720.";
+  "Toro Movers is a family-owned, bilingual Orlando moving company with upfront hourly rates and no hidden fees. Call or text (689) 600-2720.";
 
 /**
  * Default browser tab / OG title — homepage brand title (includes “Toro Movers”).
@@ -17,7 +17,7 @@ export const SITE_DESCRIPTION =
  * Homepage and other absolute titles must use `{ absolute }` so the brand is not doubled.
  */
 export const SITE_TITLE =
-  "Toro Movers | Book Orlando Movers — Full-Service & Labor-Only";
+  "Toro Movers | Orlando's Family-Owned Movers — Full & Labor-Only";
 
 export const PHONE_DISPLAY = "(689) 600-2720";
 export const PHONE_TEL = "tel:+16896002720";
