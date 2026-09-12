@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { sendCapiLead } from "@/lib/capi";
 import { notifyLead } from "@/lib/notify";
 
 /**
@@ -75,6 +76,12 @@ function flattenLead(body: Record<string, unknown>) {
 }
 
 export async function POST(req: Request) {
+  const headerSourceUrl = req.headers.get("referer") || "";
+  const clientIp =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip") ||
+    "";
+  const userAgent = req.headers.get("user-agent") || "";
   const body = (await req.json().catch(() => null)) as Record<
     string,
     unknown
@@ -139,6 +146,27 @@ export async function POST(req: Request) {
     );
   } catch (err) {
     console.error("[lead] notifyLead threw", err);
+  }
+
+  const attr = asRecord(body.attribution);
+  const eventId = str(attr?.event_id) || str(body.eventId);
+  if (eventId && !soft && flat.source === "ads_short_form") {
+    try {
+      const capi = await sendCapiLead({
+        eventId,
+        name,
+        phone,
+        sourceUrl: landingPage || headerSourceUrl,
+        contentName: "ads_short_callback",
+        fbp: str(attr?.fbp),
+        fbc: str(attr?.fbc),
+        clientIp,
+        userAgent,
+      });
+      console.info("[lead] capi", capi.ok ? "ok" : capi.detail || "skip");
+    } catch (err) {
+      console.error("[lead] capi threw", err);
+    }
   }
 
   // Do not forward to this same Netlify site — /api/crm/lead is not hosted here.

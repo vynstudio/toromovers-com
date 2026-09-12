@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import UniversalLeadForm from "@/components/funnel/UniversalLeadForm";
+import AdsShortForm from "@/components/funnel/AdsShortForm";
 import { ToroLockup } from "@/components/funnel/ToroLockup";
 import { resolveServiceParam } from "@/lib/funnel-service";
 import {
@@ -83,10 +83,7 @@ export default async function GetMyPricePage({
             {FUNNEL_LOCAL_NOTE}
           </p>
         </div>
-        <UniversalLeadForm
-          source="get_my_price"
-          initialService={initialService}
-        />
+        <AdsShortForm initialService={initialService} />
       </section>
     </main>
   );
