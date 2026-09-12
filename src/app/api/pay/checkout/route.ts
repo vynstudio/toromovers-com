@@ -23,6 +23,7 @@ export async function POST(req: Request) {
     moveReference?: unknown;
     customerName?: unknown;
     customerEmail?: unknown;
+    customerPhone?: unknown;
     moveDate?: unknown;
     pickupAddress?: unknown;
     deliveryAddress?: unknown;
@@ -50,6 +51,7 @@ export async function POST(req: Request) {
     move_reference: typeof body?.moveReference === "string" ? body.moveReference : "",
     customer_name: typeof body?.customerName === "string" ? body.customerName : "",
     customer_email: typeof body?.customerEmail === "string" ? body.customerEmail : "",
+    customer_phone: typeof body?.customerPhone === "string" ? body.customerPhone : "",
     move_date: typeof body?.moveDate === "string" ? body.moveDate : "",
     pickup_address: typeof body?.pickupAddress === "string" ? body.pickupAddress : "",
     delivery_address: typeof body?.deliveryAddress === "string" ? body.deliveryAddress : "",

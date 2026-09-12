@@ -29,6 +29,7 @@ import {
   dollarsInputString,
   dollarsToCents,
   formatUsd,
+  isCheckoutEmail,
   parseTipType,
   parseUsd,
   type PayMode,
@@ -297,6 +298,13 @@ export default function PayFlow({
     kind === "tip" ||
     tipType !== "custom" ||
     (Number.isFinite(customTipUsd) && customTipUsd >= 0 && customTipUsd <= CUSTOM_TIP_MAX_USD);
+  const depositContactValid =
+    kind !== "deposit" ||
+    (quote.customer_name.trim() !== "" &&
+      quote.customer_phone.trim() !== "" &&
+      quote.pickup_address.trim() !== "" &&
+      isCheckoutEmail(receiptEmail));
+  const balanceEmailValid = kind !== "balance" || isCheckoutEmail(receiptEmail);
   const hasBalanceBase =
     (Number.isFinite(quoteTotalUsd) && quoteTotalUsd > 0) ||
     Boolean(linkLocked && amountCents);
@@ -309,7 +317,11 @@ export default function PayFlow({
     meetsFloor &&
     balanceBreakdown.remainingCents / 100 <= PAYMENT_KIND.balance.maxUsd;
   const amountValid =
-    kind === "balance" ? balanceAmountOk : kind === "tip" ? depositValid : depositValid && customTipValid;
+    kind === "balance"
+      ? balanceAmountOk && balanceEmailValid
+      : kind === "tip"
+        ? depositValid
+        : depositValid && customTipValid && depositContactValid;
   const valid = Boolean(ready && amountValid);
   const todayCents =
     kind === "balance" ? balanceBreakdown.totalChargedCents : depositBreakdown.totalChargedCents;
@@ -329,6 +341,12 @@ export default function PayFlow({
     }
     if (kind === "balance" && !balanceBreakdown.payable) {
       return "This move has no remaining balance.";
+    }
+    if (kind === "balance" && !balanceEmailValid) {
+      return "Enter an email to receive your invoice.";
+    }
+    if (kind === "deposit" && !depositContactValid) {
+      return "Enter your name, phone, full address, and email to continue.";
     }
     if (!customTipValid) {
       return `Enter a custom tip of $0 to $${CUSTOM_TIP_MAX_USD.toLocaleString("en-US")}.`;
@@ -387,34 +405,6 @@ export default function PayFlow({
     setChargedCents(0);
   }
 
-  async function refreshDeposit(number: string) {
-    const trimmed = number.trim();
-    if (!trimmed) {
-      setDepositPaidCents(0);
-      setLookupState("done");
-      return;
-    }
-    setLookupState("loading");
-    try {
-      const params = new URLSearchParams({ quote: trimmed });
-      if (quoteToken) params.set("q", quoteToken);
-      const res = await fetch(`/api/pay/quote?${params.toString()}`);
-      const data = (await res.json()) as {
-        depositPaidCents?: number;
-        depositLookupFailed?: boolean;
-      };
-      if (data.depositLookupFailed) {
-        setDepositPaidCents(0);
-        setLookupState("error");
-        return;
-      }
-      setDepositPaidCents(typeof data.depositPaidCents === "number" ? data.depositPaidCents : 0);
-      setLookupState("done");
-    } catch {
-      setDepositPaidCents(0);
-      setLookupState("error");
-    }
-  }
 
   const startCheckout = async (event: FormEvent) => {
     event.preventDefault();
@@ -543,14 +533,6 @@ export default function PayFlow({
             label: amountLabel,
             value: formatUsd(depositBreakdown.depositCents),
           },
-          ...(kind === "tip"
-            ? []
-            : [
-                {
-                  label: "Optional crew tip",
-                  value: formatUsd(depositBreakdown.tipCents),
-                },
-              ]),
           {
             label: PROCESSING_FEE_LABEL,
             value: formatUsd(depositBreakdown.processingFeeCents),
@@ -677,18 +659,6 @@ export default function PayFlow({
       {kind === "balance" && (
         <div className="space-y-4">
           <label className="pay-label">
-            Quote number / move reference
-            <input
-              value={quote.quote_number}
-              readOnly={quoteSigned}
-              onChange={(event) =>
-                setQuote((current) => ({ ...current, quote_number: event.target.value }))
-              }
-              onBlur={(event) => refreshDeposit(event.target.value)}
-              placeholder="Quote number"
-            />
-          </label>
-          <label className="pay-label">
             Approved quote total
             <input
               inputMode="decimal"
@@ -696,6 +666,18 @@ export default function PayFlow({
               readOnly={quoteTotalLocked}
               onChange={(event) => setQuoteTotal(event.target.value.replace(/[^\d.]/g, ""))}
               placeholder="Approved total"
+            />
+          </label>
+          <label className="pay-label">
+            Email to receive invoice
+            <input
+              type="email"
+              name="email"
+              autoComplete="email"
+              required
+              value={receiptEmail}
+              onChange={(event) => setReceiptEmail(event.target.value)}
+              placeholder="you@example.com"
             />
           </label>
           <p className="text-sm text-zinc-600">
@@ -713,7 +695,7 @@ export default function PayFlow({
         </div>
       )}
 
-      {kind !== "tip" && (
+      {kind === "balance" && (
         <TipChips
           value={tipType}
           customTip={customTip}
@@ -722,61 +704,105 @@ export default function PayFlow({
         />
       )}
 
-      <details className="pay-details" open={detailsFilled || undefined}>
-        <summary>Move details (optional)</summary>
-        <div className="pay-fields">
-          <label className="pay-label">
-            Customer name
-            <input
-              value={quote.customer_name}
-              onChange={(event) =>
-                setQuote((current) => ({ ...current, customer_name: event.target.value }))
-              }
-            />
-          </label>
-          <label className="pay-label">
-            Move date
-            <input
-              value={quote.move_date}
-              onChange={(event) =>
-                setQuote((current) => ({ ...current, move_date: event.target.value }))
-              }
-              placeholder=""
-            />
-          </label>
-          <label className="pay-label">
-            Pickup address
-            <input
-              value={quote.pickup_address}
-              onChange={(event) =>
-                setQuote((current) => ({ ...current, pickup_address: event.target.value }))
-              }
-            />
-          </label>
-          <label className="pay-label pay-span-2">
-            Delivery address
-            <input
-              value={quote.delivery_address}
-              onChange={(event) =>
-                setQuote((current) => ({ ...current, delivery_address: event.target.value }))
-              }
-            />
-          </label>
-          {kind === "deposit" && (
-            <label className="pay-label pay-span-2">
-              Quote number / move reference
+      {kind === "deposit" && (
+        <div className="space-y-2">
+          <p className="text-sm font-bold">Your details</p>
+          <div className="pay-fields">
+            <label className="pay-label">
+              Name
               <input
-                value={quote.quote_number}
-                readOnly={quoteSigned}
+                required
+                autoComplete="name"
+                value={quote.customer_name}
                 onChange={(event) =>
-                  setQuote((current) => ({ ...current, quote_number: event.target.value }))
+                  setQuote((current) => ({ ...current, customer_name: event.target.value }))
                 }
-                placeholder="Quote number"
               />
             </label>
-          )}
+            <label className="pay-label">
+              Phone
+              <input
+                required
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                value={quote.customer_phone}
+                onChange={(event) =>
+                  setQuote((current) => ({ ...current, customer_phone: event.target.value }))
+                }
+              />
+            </label>
+            <label className="pay-label pay-span-2">
+              Full address
+              <input
+                required
+                autoComplete="street-address"
+                value={quote.pickup_address}
+                onChange={(event) =>
+                  setQuote((current) => ({ ...current, pickup_address: event.target.value }))
+                }
+              />
+            </label>
+            <label className="pay-label pay-span-2">
+              Email
+              <input
+                required
+                type="email"
+                name="email"
+                autoComplete="email"
+                value={receiptEmail}
+                onChange={(event) => setReceiptEmail(event.target.value)}
+                placeholder="you@example.com"
+              />
+            </label>
+          </div>
         </div>
-      </details>
+      )}
+
+      {kind !== "deposit" && (
+        <details className="pay-details" open={detailsFilled || undefined}>
+          <summary>Move details (optional)</summary>
+          <div className="pay-fields">
+            <label className="pay-label">
+              Customer name
+              <input
+                value={quote.customer_name}
+                onChange={(event) =>
+                  setQuote((current) => ({ ...current, customer_name: event.target.value }))
+                }
+              />
+            </label>
+            <label className="pay-label">
+              Move date
+              <input
+                value={quote.move_date}
+                onChange={(event) =>
+                  setQuote((current) => ({ ...current, move_date: event.target.value }))
+                }
+                placeholder=""
+              />
+            </label>
+            <label className="pay-label">
+              Pickup address
+              <input
+                value={quote.pickup_address}
+                onChange={(event) =>
+                  setQuote((current) => ({ ...current, pickup_address: event.target.value }))
+                }
+              />
+            </label>
+            <label className="pay-label pay-span-2">
+              Delivery address
+              <input
+                value={quote.delivery_address}
+                onChange={(event) =>
+                  setQuote((current) => ({ ...current, delivery_address: event.target.value }))
+                }
+              />
+            </label>
+          </div>
+        </details>
+      )}
       <label className="pay-label">
         Note (optional)
         <input
@@ -802,17 +828,19 @@ export default function PayFlow({
         <ChargeSummary rows={summaryRows} totalCents={depositBreakdown.totalChargedCents} />
       )}
 
-      <label className="pay-label">
-        Email for receipt <span className="pay-required">(optional)</span>
-        <input
-          type="email"
-          name="email"
-          autoComplete="email"
-          value={receiptEmail}
-          onChange={(event) => setReceiptEmail(event.target.value)}
-          placeholder="Optional"
-        />
-      </label>
+      {kind === "tip" && (
+        <label className="pay-label">
+          Email for receipt <span className="pay-required">(optional)</span>
+          <input
+            type="email"
+            name="email"
+            autoComplete="email"
+            value={receiptEmail}
+            onChange={(event) => setReceiptEmail(event.target.value)}
+            placeholder="Optional"
+          />
+        </label>
+      )}
 
       {error && (
         <p role="alert" className="pay-banner pay-banner--error">
