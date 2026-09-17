@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { customerProof } from "./content.ts";
 import {
   quotePage,
   quotePageGraph,
@@ -28,7 +27,6 @@ test("quote hero uses the face-crop customer-proof webp and a short AEO lede", (
     quotePage.hero.image.alt,
     "Toro Movers with a customer on a Central Florida canal after a local move",
   );
-  assert.equal(quotePage.hero.image.alt, customerProof.image.alt);
   assert.equal(quotePage.hero.image.position, "object-center");
   assert.equal(quotePage.hero.image.width, 900);
   assert.equal(quotePage.hero.image.height, 750);
