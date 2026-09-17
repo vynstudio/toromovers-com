@@ -194,7 +194,7 @@ export const featureGrid = {
     },
   ],
   cta: "Get a quote",
-  ctaHref: "/contact",
+  ctaHref: "/get-my-price",
 } as const;
 
 /**
@@ -265,7 +265,7 @@ export const footer = {
       title: "Contact",
       links: [
         { label: "Contact page", href: "/contact" },
-        { label: "Get a quote", href: "/contact" },
+        { label: "Get a quote", href: "/get-my-price" },
         { label: "Pay", href: "/pay" },
         { label: "Call us", href: "tel:+16896002720" },
         { label: "Email", href: "mailto:hello@toromovers.com" },
