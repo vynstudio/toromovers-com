@@ -868,6 +868,53 @@ html:has(.gmp-page) body,
   font-size: 0.8125rem;
   color: #52525b;
 }
+
+/* Ads funnel hero: copy + form first on mobile; two-col with photo on desktop. */
+.gmp-hero {
+  display: grid;
+  gap: 1.1rem;
+}
+.gmp-hero-copy {
+  order: 1;
+  text-align: left;
+}
+.gmp-hero-form {
+  order: 2;
+}
+.gmp-hero-media {
+  order: 3;
+  position: relative;
+  width: 100%;
+  max-width: 22.5rem;
+  aspect-ratio: 6 / 5;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #f4f4f5;
+}
+@media (min-width: 900px) {
+  .gmp-hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 26rem);
+    grid-template-areas:
+      "copy form"
+      "media form";
+    align-items: start;
+    column-gap: 2rem;
+    row-gap: 1.15rem;
+  }
+  .gmp-hero-copy {
+    grid-area: copy;
+  }
+  .gmp-hero-form {
+    grid-area: form;
+    position: sticky;
+    top: 1rem;
+  }
+  .gmp-hero-media {
+    grid-area: media;
+    max-width: 26.25rem;
+    aspect-ratio: 6 / 5;
+  }
+}
 .gmp-crumbs ol {
   display: flex;
   flex-wrap: wrap;

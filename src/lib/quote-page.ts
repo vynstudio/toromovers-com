@@ -1,6 +1,6 @@
 /**
  * SEO/AEO copy for /quotes.
- * FAQ and HowTo text must match the visible page (schema).
+ * Hero lede, FAQ answers, and JSON-LD must stay in sync (same QUOTE_AEO_ANSWER).
  * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
 
@@ -24,9 +24,18 @@ import {
 export const QUOTE_PAGE_PATH = QUOTE_PATH;
 export const QUOTE_PAGE_URL = `${SITE_URL}${QUOTE_PATH}`;
 
-/** Canonical AEO answer — visible copy, FAQ, and JSON-LD must stay in sync. */
+/** Canonical AEO answer — visible hero lede, FAQ, and JSON-LD must stay in sync. */
 export const QUOTE_AEO_ANSWER =
-  "A moving quote from Toro Movers is an up-front price for the job—crew, timing, and access—before move day. Local Central Florida jobs start from $75/mover/hour with a 2-hour minimum, no fuel surcharge, and no stair fees. We also quote long-distance and interstate moves. We are family-owned and bilingual (English and Spanish).";
+  "Local Orlando moves from $75/mover/hour — 2-hour minimum, no fuel or stair fees. Family-owned, bilingual. Up-front quote before move day.";
+
+export const QUOTE_AEO_FACTS = [
+  "From $75/mover/hour local",
+  "2-hour minimum",
+  "No fuel surcharge",
+  "No stair fees",
+  "Family-owned · bilingual English & Spanish",
+  "Local, long-distance & interstate",
+] as const;
 
 export const quotePage = {
   path: QUOTE_PATH,
@@ -47,6 +56,19 @@ export const quotePage = {
   hero: {
     h1: "Moving quote in Orlando from $75/hour.",
     lede: QUOTE_AEO_ANSWER,
+    facts: QUOTE_AEO_FACTS,
+    image: {
+      src: "/images/proof-customer-faces.webp",
+      alt: "Toro Movers with a customer on a Central Florida canal after a local move",
+      position: "object-center",
+      width: 900,
+      height: 750,
+    },
+  },
+  form: {
+    eyebrow: "Free up-front quote",
+    h2: "Get your price — we call you back.",
+    lede: "Name and mobile. We usually call back within 15 minutes during business hours with a quote before move day. Email is optional.",
   },
   howTo: {
     h2: "How to get a free moving quote",
@@ -127,7 +149,7 @@ export const quotePage = {
     },
     {
       q: "Do Toro Movers do long-distance or interstate moves?",
-      a: "Yes. Toro Movers quotes local Central Florida moves and long-distance or interstate moves. Local jobs are hourly from $75/mover/hour with a 2-hour minimum. Long-distance and interstate are quoted from your origin, destination, and inventory.",
+      a: "Yes. Toro Movers quotes local Central Florida moves and long-distance and interstate moves. Local jobs are hourly from $75/mover/hour with a 2-hour minimum. Long-distance and interstate are quoted from your origin, destination, and inventory.",
     },
     {
       q: "How fast do you call back after I request a quote?",
@@ -166,7 +188,7 @@ export function quotePageGraph() {
         about: { "@id": `${pageUrl}#service` },
         primaryImageOfPage: {
           "@type": "ImageObject",
-          url: `${SITE_URL}${metadata.ogImage}`,
+          url: `${SITE_URL}${quotePage.hero.image.src}`,
         },
         speakable: {
           "@type": "SpeakableSpecification",
