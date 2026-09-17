@@ -1,6 +1,8 @@
 /**
  * SEO/AEO copy for /quotes.
- * Hero lede, FAQ answers, and JSON-LD must stay in sync (same QUOTE_AEO_ANSWER).
+ * Visible page is a one-screen ads landing (H1 + one-line lede + form).
+ * FAQPage JSON-LD is schema-only — no FAQ / HowTo / service-list UI.
+ * Hero lede and JSON-LD description stay on QUOTE_AEO_ANSWER.
  * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
 
@@ -20,18 +22,9 @@ import {
 export const QUOTE_PAGE_PATH = QUOTE_PATH;
 export const QUOTE_PAGE_URL = `${SITE_URL}${QUOTE_PATH}`;
 
-/** Canonical AEO answer — visible hero lede, FAQ, and JSON-LD must stay in sync. */
+/** Canonical AEO answer — visible one-line lede and JSON-LD must stay in sync. */
 export const QUOTE_AEO_ANSWER =
-  "Local Orlando moves from $75/mover/hour — 2-hour minimum, no fuel or stair fees. Family-owned, bilingual. Up-front quote before move day.";
-
-export const QUOTE_AEO_FACTS = [
-  "From $75/mover/hour local",
-  "2-hour minimum",
-  "No fuel surcharge",
-  "No stair fees",
-  "Family-owned · bilingual English & Spanish",
-  "Local, long-distance & interstate",
-] as const;
+  "From $75/mover/hour — 2-hour min, no fuel or stair fees.";
 
 export const quotePage = {
   path: QUOTE_PATH,
@@ -52,41 +45,10 @@ export const quotePage = {
   hero: {
     h1: "Moving quote in Orlando from $75/hour.",
     lede: QUOTE_AEO_ANSWER,
-    facts: QUOTE_AEO_FACTS,
-    image: {
-      src: "/images/proof-customer-faces.webp",
-      alt: "Toro Movers with a customer on a Central Florida canal after a local move",
-      position: "object-center",
-      width: 900,
-      height: 750,
-    },
   },
   form: {
-    eyebrow: "Free up-front quote",
-    h2: "Get your price — we call you back.",
-    lede: "Name and mobile. We usually call back within 15 minutes during business hours with a quote before move day. Email is optional.",
-  },
-  howTo: {
-    h2: "How to get a quote",
-    intro: `Share your name and mobile — we usually call back within 15 minutes. Or call ${PHONE_DISPLAY}.`,
-    steps: [
-      {
-        name: "Share your name and mobile",
-        text: `Share your name and mobile — we usually call back within 15 minutes. Or call ${PHONE_DISPLAY}.`,
-      },
-    ] as const,
-  },
-  services: {
-    h2: "We quote",
-    links: [
-      { href: "/full-service-moving", label: "houses" },
-      { href: "/apartment-movers-orlando-fl", label: "apartments" },
-      {
-        href: `${QUOTE_PATH}?service=long-distance`,
-        label: "long-distance",
-      },
-      { href: "/labor-only-moving", label: "labor-only" },
-    ] as const,
+    h2: "We call you back.",
+    lede: "Name and mobile. We usually call back within 15 minutes.",
   },
   faqs: [
     {
@@ -107,14 +69,14 @@ export const quotePage = {
     },
   ] as const,
   footer: {
-    nap: `${BUSINESS_NAME} · Orlando, FL · ${PHONE_DISPLAY} · ${EMAIL}`,
+    nap: `${BUSINESS_NAME} · Orlando, FL · ${PHONE_DISPLAY}`,
     hours: HOURS_LABEL,
   },
 } as const;
 
 export function quotePageGraph() {
   const pageUrl = QUOTE_PAGE_URL;
-  const { metadata, faqs, howTo } = quotePage;
+  const { metadata, faqs } = quotePage;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -130,17 +92,11 @@ export function quotePageGraph() {
         about: { "@id": `${pageUrl}#service` },
         primaryImageOfPage: {
           "@type": "ImageObject",
-          url: `${SITE_URL}${quotePage.hero.image.src}`,
+          url: `${SITE_URL}${metadata.ogImage}`,
         },
         speakable: {
           "@type": "SpeakableSpecification",
-          cssSelector: [
-            "h1",
-            ".aeo-answer",
-            "#gmp-howto h2",
-            "#gmp-faq h2",
-            "#gmp-faq h3",
-          ],
+          cssSelector: ["h1", ".aeo-answer"],
         },
         potentialAction: {
           "@type": "CommunicateAction",
@@ -191,19 +147,6 @@ export function quotePageGraph() {
               "Local Central Florida floor rate from $75 per mover per hour. 2-hour minimum. No fuel surcharge. No stair fees. Long-distance and interstate quoted separately.",
           },
         },
-      },
-      {
-        "@type": "HowTo",
-        "@id": `${pageUrl}#howto`,
-        name: howTo.h2,
-        description: howTo.intro,
-        totalTime: "PT5M",
-        step: howTo.steps.map((step, i) => ({
-          "@type": "HowToStep",
-          position: i + 1,
-          name: step.name,
-          text: step.text,
-        })),
       },
       {
         "@type": "FAQPage",

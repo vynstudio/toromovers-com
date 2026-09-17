@@ -862,173 +862,195 @@ html:has(.gmp-page) body,
     "Helvetica Neue", Arial, sans-serif;
 }
 
-.gmp-crumbs {
-  margin: 0 0 1rem;
-  text-align: left;
-  font-size: 0.8125rem;
-  color: #52525b;
+/* /quotes — mobile-first one-screen ads landing. */
+.gmp-land {
+  min-height: 100dvh;
 }
-
-/* Ads funnel hero: H1 + short lede + form first on mobile; two-col on desktop. */
-.gmp-hero {
-  display: grid;
-  gap: 1.1rem;
-}
-.gmp-hero-copy {
-  order: 1;
-  text-align: left;
-}
-.gmp-hero-form {
-  order: 2;
-}
-.gmp-hero-proof {
-  order: 3;
-}
-.gmp-hero-media {
-  order: 4;
-  position: relative;
-  width: 100%;
-  max-width: 22.5rem;
-  aspect-ratio: 6 / 5;
-  overflow: hidden;
-  border-radius: 1rem;
-  background: #f4f4f5;
-}
-@media (min-width: 900px) {
-  .gmp-hero {
-    grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 26rem);
-    grid-template-areas:
-      "copy form"
-      "proof form"
-      "media form";
-    align-items: start;
-    column-gap: 2rem;
-    row-gap: 1.15rem;
-  }
-  .gmp-hero-copy {
-    grid-area: copy;
-  }
-  .gmp-hero-form {
-    grid-area: form;
-    position: sticky;
-    top: 1rem;
-  }
-  .gmp-hero-proof {
-    grid-area: proof;
-  }
-  .gmp-hero-media {
-    grid-area: media;
-    max-width: 26.25rem;
-    aspect-ratio: 6 / 5;
-  }
-}
-.gmp-crumbs ol {
+.gmp-head {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.35rem 0.75rem;
+  border-bottom: 1px solid #e4e4e7;
 }
-.gmp-crumbs li:not(:last-child)::after {
-  content: "/";
-  margin-left: 0.35rem;
-  color: #a1a1aa;
-}
-.gmp-crumbs a {
-  color: #52525b;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.gmp-compact-line {
-  margin-top: 1.1rem;
-  text-align: left;
-  font-size: 0.875rem;
-  line-height: 1.45;
-  color: #3f3f46;
-}
-.gmp-compact-line h2,
-.gmp-compact-line strong {
-  display: inline;
-  margin: 0;
-  color: #0a0a0a;
-  font-size: inherit;
-  font-weight: 800;
-  letter-spacing: 0;
-}
-.gmp-service-line a {
-  font-weight: 700;
-  color: #0a0a0a;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.gmp-seo {
-  margin-top: 1.35rem;
-  text-align: left;
-  color: #3f3f46;
-}
-.gmp-seo h2 {
-  margin: 0 0 0.45rem;
-  color: #0a0a0a;
+.gmp-head-lockup.funnel-lockup,
+.gmp-head .funnel-lockup {
   font-size: 1.05rem;
+}
+.gmp-call {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 0.8rem;
+  border-radius: 0.65rem;
+  background: #e20613;
+  color: #fff;
+  font-size: 0.8125rem;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  white-space: nowrap;
+  text-decoration: none;
 }
-.gmp-seo p,
-.gmp-seo li {
-  margin: 0 0 0.65rem;
-  font-size: 0.9375rem;
-  line-height: 1.6;
+.gmp-call:hover {
+  background: #b80510;
 }
-.gmp-seo ol {
-  margin: 0.75rem 0 0;
-  padding-left: 1.15rem;
+.gmp-land-body {
+  max-width: 26.5rem;
+  margin: 0 auto;
+  padding: 0.55rem 0.85rem 0.4rem;
 }
-.gmp-service-links {
-  margin: 0.75rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-.gmp-service-links a {
-  font-weight: 700;
-  color: #0a0a0a;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.gmp-faq-item {
-  margin-top: 0.7rem;
-  padding-top: 0.7rem;
-  border-top: 1px solid #e4e4e7;
-}
-.gmp-faq-item h3 {
-  margin: 0 0 0.2rem;
-  color: #0a0a0a;
-  font-size: 0.9375rem;
-  font-weight: 800;
-}
-.gmp-faq-item p {
+.gmp-land-body h1 {
   margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.45;
+  font-size: 1.28rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.gmp-land-body .aeo-answer {
+  margin: 0.28rem 0 0.55rem;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  color: #3f3f46;
+}
+.gmp-form {
+  margin: 0;
+  padding: 0;
+}
+.gmp-form h2 {
+  margin: 0 0 0.45rem;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.gmp-form form {
+  display: grid;
+  gap: 0.45rem;
+}
+.gmp-form label,
+.gmp-form legend {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #0a0a0a;
+}
+.gmp-form fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.gmp-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+}
+.gmp-field {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 0.2rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #d4d4d8;
+  border-radius: 0.65rem;
+  background: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+}
+.gmp-optional {
+  font-weight: 500;
+  color: #71717a;
+}
+.gmp-when {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+}
+.gmp-when button {
+  min-height: 44px;
+  border: 1px solid #d4d4d8;
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.gmp-when button.is-on {
+  border-color: #e20613;
+  background: #e20613;
+  color: #fff;
+}
+.gmp-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  min-height: 44px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #3f3f46;
+  line-height: 1.3;
+}
+.gmp-consent input {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+.gmp-submit {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 0.75rem;
+  background: #e20613;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+}
+.gmp-submit:hover {
+  background: #b80510;
+}
+.gmp-form-error {
+  margin: 0;
+  padding: 0.5rem 0.65rem;
+  border-radius: 0.65rem;
+  background: #fce6e8;
+  color: #b80510;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.gmp-form-sla {
+  margin: 0;
+  text-align: center;
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: #71717a;
 }
 .gmp-nap {
   border-top: 1px solid #e4e4e7;
-  padding: 1.25rem 1.25rem 2rem;
+  padding: 0.45rem 0.75rem 0.7rem;
   text-align: center;
-  font-size: 0.8125rem;
-  line-height: 1.55;
-  color: #52525b;
+  font-size: 0.6875rem;
+  line-height: 1.35;
+  color: #71717a;
 }
 .gmp-nap p {
-  margin: 0 0 0.35rem;
+  margin: 0;
 }
 .gmp-nap a {
   color: #0a0a0a;
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+  .gmp-land-body {
+    max-width: 28rem;
+    padding-top: 1rem;
+  }
+  .gmp-land-body h1 {
+    font-size: 1.65rem;
+  }
 }
 
 .brand-name {

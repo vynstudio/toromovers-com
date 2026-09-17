@@ -20,9 +20,8 @@ import { quotePage } from "@/lib/quote-page";
 import { PHONE_DISPLAY } from "@/lib/site";
 
 const primaryBtn =
-  "rounded-xl bg-[#E20613] px-5 py-3 font-bold text-white transition hover:bg-[#B80510] disabled:cursor-not-allowed disabled:opacity-40";
-const fieldClass =
-  "mt-2 min-h-12 w-full rounded-xl border border-zinc-300 bg-white p-3 font-normal";
+  "gmp-submit disabled:cursor-not-allowed disabled:opacity-40";
+const fieldClass = "gmp-field";
 
 const WHEN = [
   { id: "This week", label: "This week" },
@@ -144,21 +143,10 @@ export default function AdsShortForm() {
   }
 
   return (
-    <section
-      id="quote-form"
-      className="rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-black/5 sm:p-8"
-    >
-      <p className="text-sm font-bold uppercase tracking-widest text-[#E20613]">
-        {quotePage.form.eyebrow}
-      </p>
-      <h2 className="mt-1 text-2xl font-black tracking-tight">
-        {quotePage.form.h2}
-      </h2>
-      <p className="mt-2 text-sm leading-5 text-zinc-600">
-        {quotePage.form.lede}
-      </p>
+    <section id="quote-form" className="gmp-form">
+      <h2>{quotePage.form.h2}</h2>
 
-      <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
+      <form onSubmit={submit} noValidate>
         <input
           className="absolute left-[-9999px] h-0 w-0 opacity-0"
           type="text"
@@ -170,41 +158,42 @@ export default function AdsShortForm() {
           onChange={(e) => setHp(e.target.value)}
         />
 
-        <label className="block text-sm font-bold">
-          Name
-          <input
-            required
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-              if (error) setError("");
-            }}
-            className={fieldClass}
-            autoComplete="name"
-            enterKeyHint="next"
-          />
-        </label>
+        <div className="gmp-form-row">
+          <label>
+            Name
+            <input
+              required
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+                if (error) setError("");
+              }}
+              className={fieldClass}
+              autoComplete="name"
+              autoCapitalize="words"
+              enterKeyHint="next"
+            />
+          </label>
+          <label>
+            Phone
+            <input
+              required
+              inputMode="tel"
+              value={phone}
+              onChange={(e) => {
+                setPhone(formatUsPhone(e.target.value));
+                if (error) setError("");
+              }}
+              className={fieldClass}
+              placeholder={PHONE_DISPLAY}
+              autoComplete="tel"
+              enterKeyHint="next"
+            />
+          </label>
+        </div>
 
-        <label className="block text-sm font-bold">
-          Phone number
-          <input
-            required
-            inputMode="tel"
-            value={phone}
-            onChange={(e) => {
-              setPhone(formatUsPhone(e.target.value));
-              if (error) setError("");
-            }}
-            className={fieldClass}
-            placeholder={PHONE_DISPLAY}
-            autoComplete="tel"
-            enterKeyHint="next"
-          />
-        </label>
-
-        <label className="block text-sm font-bold">
-          Email{" "}
-          <span className="font-medium text-zinc-500">(optional)</span>
+        <label>
+          Email <span className="gmp-optional">(optional)</span>
           <input
             type="email"
             inputMode="email"
@@ -219,8 +208,8 @@ export default function AdsShortForm() {
           />
         </label>
 
-        <label className="block text-sm font-bold">
-          Service needed
+        <label>
+          Service
           <select
             required
             value={service}
@@ -235,9 +224,9 @@ export default function AdsShortForm() {
           </select>
         </label>
 
-        <fieldset className="min-w-0 border-0 p-0">
-          <legend className="text-sm font-bold">When do you need us?</legend>
-          <div className="mt-2 flex flex-wrap gap-2" role="radiogroup">
+        <fieldset>
+          <legend>When</legend>
+          <div className="gmp-when" role="radiogroup">
             {WHEN.map((item) => (
               <button
                 key={item.id}
@@ -245,11 +234,7 @@ export default function AdsShortForm() {
                 role="radio"
                 aria-checked={when === item.id}
                 onClick={() => setWhen(item.id)}
-                className={`min-h-12 min-w-[8.5rem] flex-1 rounded-full border px-4 py-2 text-sm font-semibold ${
-                  when === item.id
-                    ? "border-[#E20613] bg-[#E20613] text-white"
-                    : "border-zinc-300 bg-white"
-                }`}
+                className={when === item.id ? "is-on" : undefined}
               >
                 {item.label}
               </button>
@@ -257,25 +242,21 @@ export default function AdsShortForm() {
           </div>
         </fieldset>
 
-        <label className="flex items-start gap-3 text-sm text-zinc-700">
+        <label className="gmp-consent">
           <input
             required
             checked={consent}
             onChange={(e) => setConsent(e.target.checked)}
             type="checkbox"
-            className="mt-1 h-4 w-4"
           />
           <span>
-            I agree to receive calls and texts from Toro Movers about my quote.
-            Reply STOP to opt out. {FUNNEL_BILINGUAL}.
+            Calls and texts about my quote OK. STOP to opt out.{" "}
+            {FUNNEL_BILINGUAL}.
           </span>
         </label>
 
         {error ? (
-          <p
-            role="alert"
-            className="rounded-xl bg-[#FCE6E8] p-3 text-sm font-medium text-[#B80510]"
-          >
+          <p role="alert" className="gmp-form-error">
             {error}
           </p>
         ) : null}
@@ -283,11 +264,11 @@ export default function AdsShortForm() {
         <button
           disabled={submitting}
           type="submit"
-          className={`w-full ${primaryBtn} disabled:opacity-50`}
+          className={`${primaryBtn} disabled:opacity-50`}
         >
           {submitting ? "Sending request…" : FUNNEL_CTA}
         </button>
-        <p className="text-center text-xs text-zinc-500">{FUNNEL_SLA}.</p>
+        <p className="gmp-form-sla">{FUNNEL_SLA}.</p>
       </form>
     </section>
   );
