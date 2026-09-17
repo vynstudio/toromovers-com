@@ -869,7 +869,7 @@ html:has(.gmp-page) body,
   color: #52525b;
 }
 
-/* Ads funnel hero: copy + form first on mobile; two-col with photo on desktop. */
+/* Ads funnel hero: H1 + short lede + form first on mobile; two-col on desktop. */
 .gmp-hero {
   display: grid;
   gap: 1.1rem;
@@ -881,8 +881,11 @@ html:has(.gmp-page) body,
 .gmp-hero-form {
   order: 2;
 }
-.gmp-hero-media {
+.gmp-hero-proof {
   order: 3;
+}
+.gmp-hero-media {
+  order: 4;
   position: relative;
   width: 100%;
   max-width: 22.5rem;
@@ -896,6 +899,7 @@ html:has(.gmp-page) body,
     grid-template-columns: minmax(0, 1.05fr) minmax(22rem, 26rem);
     grid-template-areas:
       "copy form"
+      "proof form"
       "media form";
     align-items: start;
     column-gap: 2rem;
@@ -908,6 +912,9 @@ html:has(.gmp-page) body,
     grid-area: form;
     position: sticky;
     top: 1rem;
+  }
+  .gmp-hero-proof {
+    grid-area: proof;
   }
   .gmp-hero-media {
     grid-area: media;
