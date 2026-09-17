@@ -4,11 +4,7 @@
  * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
 
-import {
-  FUNNEL_FLOOR_RATE,
-  FUNNEL_RATE_NOTE,
-  FUNNEL_SLA,
-} from "./funnel-offer.ts";
+import { FUNNEL_SLA } from "./funnel-offer.ts";
 import {
   BUSINESS_NAME,
   EMAIL,
@@ -71,97 +67,43 @@ export const quotePage = {
     lede: "Name and mobile. We usually call back within 15 minutes during business hours with a quote before move day. Email is optional.",
   },
   howTo: {
-    h2: "How to get a free moving quote",
-    intro: `Request a callback online or call ${PHONE_DISPLAY}. We usually call back within 15 minutes during business hours (${HOURS_LABEL}).`,
+    h2: "How to get a quote",
+    intro: `Share your name and mobile — we usually call back within 15 minutes. Or call ${PHONE_DISPLAY}.`,
     steps: [
       {
         name: "Share your name and mobile",
-        text: "Tell us how to reach you. Email is optional. No account required.",
-      },
-      {
-        name: "Choose the service and timing",
-        text: "Pick house 2+ rooms, apartment 2+ rooms, long-distance, labor-only, POD, U-Haul, or a single item, then This week or Flexible.",
-      },
-      {
-        name: "We call back with a price",
-        text: "A Toro teammate explains the number before move day—hourly for local jobs, a job quote for long-distance or interstate.",
+        text: `Share your name and mobile — we usually call back within 15 minutes. Or call ${PHONE_DISPLAY}.`,
       },
     ] as const,
   },
   services: {
-    h2: "What we quote in Central Florida",
-    intro:
-      "This page is for a free moving quote — local, long-distance, or interstate.",
+    h2: "We quote",
     links: [
-      {
-        href: "/full-service-moving",
-        label: "House — 2+ rooms",
-        note: "Full-service house move, 2 rooms or more",
-      },
+      { href: "/full-service-moving", label: "houses" },
+      { href: "/apartment-movers-orlando-fl", label: "apartments" },
       {
         href: `${QUOTE_PATH}?service=long-distance`,
-        label: "Long-distance / interstate",
-        note: "Out of area and out of state",
+        label: "long-distance",
       },
-      {
-        href: "/apartment-movers-orlando-fl",
-        label: "Apartment — 2+ rooms",
-        note: "Apt or condo, 2 rooms or more",
-      },
-      {
-        href: "/full-service-moving",
-        label: "Full-service moving",
-        note: "Truck, crew, load, haul, unload, and place",
-      },
-      {
-        href: "/labor-only-moving",
-        label: "Labor-only movers",
-        note: "You have the U-Haul, POD, or rental truck",
-      },
-      {
-        href: "/loading-unloading",
-        label: "Loading and unloading",
-        note: "One-end or both-end labor",
-      },
-      {
-        href: "/orlando-movers",
-        label: "Orlando movers",
-        note: "Local Orlando service area",
-      },
+      { href: "/labor-only-moving", label: "labor-only" },
     ] as const,
   },
   faqs: [
     {
-      q: "What is a local moving quote from Toro Movers?",
+      q: "How much do local movers cost in Orlando?",
       a: QUOTE_AEO_ANSWER,
     },
     {
-      q: "How much do local movers cost in Orlando?",
-      a: `Toro Movers quotes local Central Florida moves ${FUNNEL_FLOOR_RATE}, with a 2-hour minimum, no fuel surcharge, and no stair fees. Final hours depend on crew size, volume, stairs or elevators, and how packed you are when we arrive.`,
+      q: "How do I get a free moving quote?",
+      a: `Submit your name and mobile, or call ${PHONE_DISPLAY}. Email is optional.`,
     },
     {
-      q: "How do I get a free moving quote from Toro Movers?",
-      a: `Submit your name and mobile on this page, or call ${PHONE_DISPLAY}. Email is optional. We usually call back within 15 minutes during business hours (${HOURS_LABEL}) with an up-front price.`,
+      q: "How fast do you call back?",
+      a: `${FUNNEL_SLA}. After hours, we call the next business morning.`,
     },
     {
-      q: "What is included in the hourly moving rate?",
-      a: `${FUNNEL_RATE_NOTE}. The hourly rate covers the crew you book. Tell us the service type—house 2+ rooms, apartment 2+ rooms, labor-only, POD, or a single item—so we size the crew correctly.`,
-    },
-    {
-      q: "Do Toro Movers do long-distance or interstate moves?",
-      a: "Yes. Toro Movers quotes local Central Florida moves and long-distance and interstate moves. Local jobs are hourly from $75/mover/hour with a 2-hour minimum. Long-distance and interstate are quoted from your origin, destination, and inventory.",
-    },
-    {
-      q: "How fast do you call back after I request a quote?",
-      a: `${FUNNEL_SLA}. Outside those hours, leave your number and we return the call on the next business morning.`,
-    },
-    {
-      q: "Do you offer labor-only and full-service moving?",
-      a: "Yes. House 2+ rooms and apartment 2+ rooms are full-service local moves with truck and crew. Labor-only is for when you already have a U-Haul, POD, rental truck, or storage unit. Special-item and single-item jobs are quoted the same way.",
-    },
-    {
-      q: "Are Toro Movers bilingual?",
-      a: "Yes. Crews work in English and Spanish so timing, access, and placement stay clear.",
+      q: "Do you quote long-distance and interstate moves?",
+      a: "Yes. Local jobs are hourly from $75/mover/hour. Long-distance and interstate are quoted from origin, destination, and inventory.",
     },
   ] as const,
   footer: {

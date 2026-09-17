@@ -70,13 +70,31 @@ test("quote page copy does not claim licensed, insured, or a partner carrier", (
   assert.match(blob, /long-distance and interstate/);
 });
 
-test("HowTo schema steps match visible steps", () => {
+test("HowTo schema matches the compact on-page line", () => {
   const graph = quotePageGraph();
   const howTo = graph["@graph"].find((node) => node["@type"] === "HowTo") as {
     name: string;
+    description: string;
     step: Array<{ name: string; text: string }>;
   };
   assert.equal(howTo.name, quotePage.howTo.h2);
+  assert.equal(howTo.description, quotePage.howTo.intro);
+  assert.equal(howTo.step.length, 1);
   assert.equal(howTo.step.length, quotePage.howTo.steps.length);
   assert.equal(howTo.step[0].name, quotePage.howTo.steps[0].name);
+  assert.equal(howTo.step[0].text, quotePage.howTo.intro);
+  assert.ok(quotePage.howTo.intro.length <= 140);
+});
+
+test("quotes landing stays a short ad page: 4 FAQs, 4 service links, 1 HowTo step", () => {
+  assert.equal(quotePage.faqs.length, 4);
+  assert.equal(quotePage.services.links.length, 4);
+  assert.equal(quotePage.howTo.steps.length, 1);
+  for (const item of quotePage.faqs) {
+    assert.ok(item.a.length <= 220, item.q);
+  }
+  assert.match(quotePage.faqs[0].q, /cost|price|\$75/i);
+  assert.match(quotePage.faqs[1].q, /quote/i);
+  assert.match(quotePage.faqs[2].q, /call back/i);
+  assert.match(quotePage.faqs[3].q, /long-distance|interstate|bilingual/i);
 });

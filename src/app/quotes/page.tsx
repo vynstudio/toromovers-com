@@ -137,36 +137,26 @@ export default function QuotesPage() {
           </div>
         </div>
 
-        <section id="gmp-howto" className="gmp-seo" aria-labelledby="gmp-howto-heading">
-          <h2 id="gmp-howto-heading">{page.howTo.h2}</h2>
-          <p>{page.howTo.intro}</p>
-          <ol>
-            {page.howTo.steps.map((step, i) => (
-              <li key={step.name}>
-                <strong>
-                  {i + 1}. {step.name}.
-                </strong>{" "}
-                {step.text}
-              </li>
-            ))}
-          </ol>
+        <section id="gmp-howto" className="gmp-compact-line">
+          <h2 id="gmp-howto-heading">{page.howTo.h2}</h2>. {page.howTo.intro}
         </section>
 
-        <section className="gmp-seo" aria-labelledby="gmp-services-heading">
-          <h2 id="gmp-services-heading">{page.services.h2}</h2>
-          <p>{page.services.intro}</p>
-          <ul className="gmp-service-links">
-            {page.services.links.map((link) => (
-              <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
-                <span> — {link.note}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <nav
+          className="gmp-compact-line gmp-service-line"
+          aria-labelledby="gmp-services-heading"
+        >
+          <strong id="gmp-services-heading">{page.services.h2}</strong>
+          {page.services.links.map((link, i) => (
+            <span key={link.href}>
+              {i === 0 ? " " : i === page.services.links.length - 1 ? ", and " : ", "}
+              <a href={link.href}>{link.label}</a>
+            </span>
+          ))}
+          {" in Central Florida."}
+        </nav>
 
         <section id="gmp-faq" className="gmp-seo" aria-labelledby="gmp-faq-heading">
-          <h2 id="gmp-faq-heading">Moving quote FAQs</h2>
+          <h2 id="gmp-faq-heading">Quote FAQs</h2>
           {page.faqs.map((item) => (
             <div key={item.q} className="gmp-faq-item">
               <h3>{item.q}</h3>
