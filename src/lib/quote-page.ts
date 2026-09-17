@@ -25,15 +25,28 @@ import {
 export const QUOTE_PAGE_PATH = QUOTE_PATH;
 export const QUOTE_PAGE_URL = `${SITE_URL}${QUOTE_PATH}`;
 
+/** Canonical AEO answer — visible copy, FAQ, and JSON-LD must stay in sync. */
+export const QUOTE_AEO_ANSWER =
+  "A local moving quote from Toro Movers is an up-front hourly price for a Central Florida move—crew, timing, and access—before move day. Jobs start from $75/mover/hour with a 2-hour minimum, no fuel surcharge, and no stair fees. We are family-owned and bilingual (English and Spanish). Local Central Florida moves only — we don’t offer long-distance or interstate.";
+
+export const QUOTE_AEO_FACTS = [
+  "From $75/mover/hour",
+  "2-hour minimum",
+  "No fuel surcharge",
+  "No stair fees",
+  "Family-owned · bilingual English & Spanish",
+  "Central Florida only — no long-distance",
+] as const;
+
 export const quotePage = {
   path: QUOTE_PATH,
   metadata: {
-    title: "Free moving quote in Orlando",
+    title: { absolute: "Local moving quote in Orlando from $75/hour | Toro Movers" },
     description:
-      "Free Orlando moving quote from Toro Movers. From $75/mover/hour, 2-hour minimum, no fuel or stair fees. Local Central Florida. Call (689) 600-2720.",
-    ogTitle: "Free moving quote in Orlando | Toro Movers",
+      "A Toro Movers local quote is an up-front hourly price. From $75/mover/hour, 2-hour min, no fuel or stair fees. Central Florida only. Call (689) 600-2720.",
+    ogTitle: "Local moving quote in Orlando from $75/hour | Toro Movers",
     ogDescription:
-      "Local Central Florida moving quote from $75/mover/hour. 2-hour minimum, no fuel surcharge, no stair fees. We call you back.",
+      "Up-front hourly moving quote. From $75/mover/hour, 2-hour minimum, no fuel surcharge, no stair fees. Family-owned, bilingual. Central Florida only.",
     ogImage: "/og/get-my-price.jpg",
     ogImageAlt: "Toro Movers — get a free local moving quote in Orlando",
   },
@@ -43,7 +56,8 @@ export const quotePage = {
   ] as const,
   hero: {
     h1: "Local moving quote in Orlando from $75/hour.",
-    lede: `A local moving quote from ${BUSINESS_NAME} is an up-front hourly price for a ${SERVICE_REGION} move—crew, timing, and access—before move day. Jobs start ${FUNNEL_FLOOR_RATE} with a 2-hour minimum, no fuel surcharge, and no stair fees. We are family-owned and bilingual (English and Spanish). ${FUNNEL_LOCAL_NOTE}`,
+    lede: QUOTE_AEO_ANSWER,
+    facts: QUOTE_AEO_FACTS,
   },
   howTo: {
     h2: "How to get a free moving quote",
@@ -102,6 +116,10 @@ export const quotePage = {
   },
   faqs: [
     {
+      q: "What is a local moving quote from Toro Movers?",
+      a: QUOTE_AEO_ANSWER,
+    },
+    {
       q: "How much do local movers cost in Orlando?",
       a: `Toro Movers quotes local Central Florida moves ${FUNNEL_FLOOR_RATE}, with a 2-hour minimum, no fuel surcharge, and no stair fees. Final hours depend on crew size, volume, stairs or elevators, and how packed you are when we arrive.`,
     },
@@ -138,7 +156,7 @@ export const quotePage = {
 
 export function quotePageGraph() {
   const pageUrl = QUOTE_PAGE_URL;
-  const { metadata, faqs, howTo, hero } = quotePage;
+  const { metadata, faqs, howTo } = quotePage;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -147,7 +165,8 @@ export function quotePageGraph() {
         "@id": `${pageUrl}#webpage`,
         url: pageUrl,
         name: metadata.ogTitle,
-        description: metadata.description,
+        headline: quotePage.hero.h1,
+        description: QUOTE_AEO_ANSWER,
         dateModified: "2026-09-17",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${pageUrl}#service` },
@@ -157,7 +176,14 @@ export function quotePageGraph() {
         },
         speakable: {
           "@type": "SpeakableSpecification",
-          cssSelector: ["h1", ".aeo-answer", "#gmp-howto h2", "#gmp-faq h2", "#gmp-faq h3"],
+          cssSelector: [
+            "h1",
+            ".aeo-answer",
+            ".aeo-facts",
+            "#gmp-howto h2",
+            "#gmp-faq h2",
+            "#gmp-faq h3",
+          ],
         },
         potentialAction: {
           "@type": "CommunicateAction",
@@ -172,6 +198,14 @@ export function quotePageGraph() {
           },
         },
         inLanguage: "en-US",
+        mentions: { "@id": `${pageUrl}#term-local-moving-quote` },
+      },
+      {
+        "@type": "DefinedTerm",
+        "@id": `${pageUrl}#term-local-moving-quote`,
+        name: "local moving quote",
+        description: QUOTE_AEO_ANSWER,
+        inDefinedTermSet: `${SITE_URL}/#movingcompany`,
       },
       {
         "@type": "Service",
@@ -184,7 +218,7 @@ export function quotePageGraph() {
           { "@type": "AdministrativeArea", name: SERVICE_REGION },
         ],
         url: pageUrl,
-        description: hero.lede,
+        description: QUOTE_AEO_ANSWER,
         offers: {
           "@type": "Offer",
           url: pageUrl,

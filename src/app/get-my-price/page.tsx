@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
 import AdsShortForm from "@/components/funnel/AdsShortForm";
 import { ToroLockup } from "@/components/funnel/ToroLockup";
-import {
-  FUNNEL_CTA,
-  FUNNEL_RATE_NOTE,
-  FUNNEL_SLA,
-  FUNNEL_TRUST_CHIPS,
-} from "@/lib/funnel-offer";
+import { FUNNEL_SLA, FUNNEL_TRUST_CHIPS } from "@/lib/funnel-offer";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
 import {
   EMAIL,
@@ -35,11 +30,12 @@ export const metadata: Metadata = {
     },
   },
   keywords: [
-    "free moving quote Orlando",
-    "local movers quote",
-    "hourly movers Orlando",
+    "local moving quote Orlando",
+    "up-front hourly movers",
+    "movers from $75 per hour",
+    "no fuel surcharge movers",
+    "bilingual movers Orlando",
     "Central Florida moving quote",
-    "Toro Movers quote",
   ],
   openGraph: {
     type: "website",
@@ -107,13 +103,17 @@ export default function GetMyPricePage() {
           <p className="aeo-answer mx-auto mt-3 max-w-2xl text-base leading-6 text-zinc-700 sm:text-lg">
             {page.hero.lede}
           </p>
-          <p className="mx-auto mt-3 max-w-xl text-lg font-semibold text-[#0A0A0A]">
-            {FUNNEL_CTA}.
-          </p>
-          <p className="mx-auto mt-2 max-w-xl text-sm font-medium text-zinc-600">
-            {FUNNEL_RATE_NOTE}
-          </p>
-          <ul className="mx-auto mt-4 flex max-w-2xl flex-wrap items-center justify-center gap-2">
+          <ul className="aeo-facts mx-auto mt-4 flex max-w-2xl flex-wrap items-center justify-center gap-2">
+            {page.hero.facts.map((fact) => (
+              <li
+                key={fact}
+                className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-bold text-[#0A0A0A] sm:text-sm"
+              >
+                {fact}
+              </li>
+            ))}
+          </ul>
+          <ul className="mx-auto mt-3 flex max-w-2xl flex-wrap items-center justify-center gap-2">
             {FUNNEL_TRUST_CHIPS.map((chip) => (
               <li
                 key={chip}

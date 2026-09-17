@@ -5,10 +5,12 @@ import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "./quote-page.ts";
 test("quote page canonical and heads target the live funnel URL", () => {
   assert.equal(quotePage.path, "/get-my-price");
   assert.equal(QUOTE_PAGE_URL, "https://toromovers.com/get-my-price");
-  assert.match(quotePage.metadata.title, /quote/i);
-  assert.match(quotePage.metadata.title, /Orlando/);
+  assert.match(quotePage.metadata.title.absolute, /quote/i);
+  assert.match(quotePage.metadata.title.absolute, /Orlando/);
+  assert.match(quotePage.metadata.title.absolute, /\$75/);
   assert.ok(quotePage.metadata.description.length >= 120);
   assert.ok(quotePage.metadata.description.length <= 165);
+  assert.equal(quotePage.hero.lede, quotePage.faqs[0].a);
   assert.equal(quotePage.metadata.ogImage, "/og/get-my-price.jpg");
 });
 
