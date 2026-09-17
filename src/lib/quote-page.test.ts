@@ -1,6 +1,11 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "./quote-page.ts";
+import {
+  quotePage,
+  quotePageGraph,
+  QUOTE_AEO_ANSWER,
+  QUOTE_PAGE_URL,
+} from "./quote-page.ts";
 
 test("quote page canonical and heads target the live funnel URL", () => {
   assert.equal(quotePage.path, "/quotes");
@@ -11,7 +16,20 @@ test("quote page canonical and heads target the live funnel URL", () => {
   assert.ok(quotePage.metadata.description.length >= 120);
   assert.ok(quotePage.metadata.description.length <= 165);
   assert.equal(quotePage.hero.lede, quotePage.faqs[0].a);
+  assert.equal(quotePage.hero.lede, QUOTE_AEO_ANSWER);
+  assert.ok(QUOTE_AEO_ANSWER.length <= 180);
   assert.equal(quotePage.metadata.ogImage, "/og/get-my-price.jpg");
+});
+
+test("quote hero uses a local move webp and a short AEO lede", () => {
+  assert.match(quotePage.hero.image.src, /^\/images\/moves\/.+\.webp$/);
+  assert.match(quotePage.hero.image.alt, /Toro Movers/i);
+  assert.ok(quotePage.hero.image.width > 0);
+  assert.ok(quotePage.hero.image.height > 0);
+  assert.match(quotePage.hero.lede, /\$75\/mover\/hour/);
+  assert.match(quotePage.hero.lede, /2-hour minimum/);
+  assert.match(quotePage.form.h2, /call you back/i);
+  assert.match(quotePage.form.lede, /15 minutes/);
 });
 
 test("FAQ schema text matches on-page FAQ copy", () => {
@@ -24,6 +42,18 @@ test("FAQ schema text matches on-page FAQ copy", () => {
     assert.equal(faq.mainEntity[i].name, item.q);
     assert.equal(faq.mainEntity[i].acceptedAnswer.text, item.a);
   }
+});
+
+test("JSON-LD description and primary image stay in sync with visible hero", () => {
+  const graph = quotePageGraph();
+  const webpage = graph["@graph"].find((node) => node["@type"] === "WebPage") as {
+    description: string;
+    headline: string;
+    primaryImageOfPage: { url: string };
+  };
+  assert.equal(webpage.description, quotePage.hero.lede);
+  assert.equal(webpage.headline, quotePage.hero.h1);
+  assert.ok(webpage.primaryImageOfPage.url.endsWith(quotePage.hero.image.src));
 });
 
 test("quote page copy does not claim licensed, insured, or a partner carrier", () => {

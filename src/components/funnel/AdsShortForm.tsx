@@ -16,6 +16,7 @@ import {
 } from "@/lib/funnel-offer";
 import { fireAdsLeadOnce, mintEventId } from "@/lib/meta-pixel";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
+import { quotePage } from "@/lib/quote-page";
 import { PHONE_DISPLAY } from "@/lib/site";
 
 const primaryBtn =
@@ -148,13 +149,13 @@ export default function AdsShortForm() {
       className="rounded-3xl bg-white p-5 shadow-2xl ring-1 ring-black/5 sm:p-8"
     >
       <p className="text-sm font-bold uppercase tracking-widest text-[#E20613]">
-        {FUNNEL_CTA}
+        {quotePage.form.eyebrow}
       </p>
       <h2 className="mt-1 text-2xl font-black tracking-tight">
-        We call you back.
+        {quotePage.form.h2}
       </h2>
-      <p className="mt-2 text-sm text-zinc-600">
-        Name and mobile required. Email is optional.
+      <p className="mt-2 text-sm leading-5 text-zinc-600">
+        {quotePage.form.lede}
       </p>
 
       <form onSubmit={submit} className="mt-6 space-y-4" noValidate>

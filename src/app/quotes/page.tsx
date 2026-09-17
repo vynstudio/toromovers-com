@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import AdsShortForm from "@/components/funnel/AdsShortForm";
 import { ToroLockup } from "@/components/funnel/ToroLockup";
+import { FUNNEL_GOOGLE_RATING, FUNNEL_MOVES } from "@/lib/funnel-offer";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
 import {
   EMAIL,
@@ -72,8 +74,8 @@ export default function QuotesPage() {
         }}
       />
       <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5">
-          <ToroLockup className="w-full justify-center" />
+        <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5 lg:flex-row lg:justify-between">
+          <ToroLockup className="w-full justify-center lg:w-auto" />
           <a
             className="inline-flex min-h-12 w-full shrink-0 items-center justify-center rounded-xl bg-[#E20613] px-4 py-2.5 text-sm font-extrabold whitespace-nowrap text-white transition hover:bg-[#B80510] sm:min-h-0 sm:w-auto"
             href={PHONE_TEL}
@@ -83,7 +85,7 @@ export default function QuotesPage() {
         </div>
       </header>
 
-      <section className="mx-auto max-w-3xl px-5 py-6 sm:py-10">
+      <section className="mx-auto max-w-6xl px-5 py-5 sm:py-8">
         <nav aria-label="Breadcrumb" className="gmp-crumbs">
           <ol>
             {page.breadcrumb.map((item, i) => (
@@ -97,15 +99,41 @@ export default function QuotesPage() {
             ))}
           </ol>
         </nav>
-        <div className="mb-6 text-center">
-          <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
-            {page.hero.h1}
-          </h1>
-          <p className="aeo-answer mx-auto mt-4 max-w-2xl text-base leading-6 text-[#0A0A0A] sm:text-lg">
-            {page.hero.lede}
-          </p>
+        <div className="gmp-hero">
+          <div className="gmp-hero-copy">
+            <h1 className="text-[1.65rem] font-black tracking-tight leading-tight sm:text-4xl lg:text-[2.5rem]">
+              {page.hero.h1}
+            </h1>
+            <p className="aeo-answer mt-2.5 max-w-xl text-[0.95rem] leading-6 text-zinc-700 sm:mt-3 sm:text-lg">
+              {page.hero.lede}
+            </p>
+            <ul className="aeo-facts mt-3 flex max-w-xl flex-wrap items-center gap-1.5 sm:mt-4 sm:gap-2">
+              {page.hero.facts.map((fact) => (
+                <li
+                  key={fact}
+                  className="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1 text-[0.7rem] font-bold text-[#0A0A0A] sm:px-3 sm:py-1.5 sm:text-sm"
+                >
+                  {fact}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-2.5 text-xs font-semibold text-zinc-600 sm:text-sm">
+              {FUNNEL_GOOGLE_RATING} · {FUNNEL_MOVES}
+            </p>
+          </div>
+          <div className="gmp-hero-form">
+            <AdsShortForm />
+          </div>
+          <div className="gmp-hero-media">
+            <Image
+              src={page.hero.image.src}
+              alt={page.hero.image.alt}
+              fill
+              sizes="(max-width: 899px) 92vw, 42vw"
+              className="object-cover object-[center_32%]"
+            />
+          </div>
         </div>
-        <AdsShortForm />
 
         <section id="gmp-howto" className="gmp-seo" aria-labelledby="gmp-howto-heading">
           <h2 id="gmp-howto-heading">{page.howTo.h2}</h2>
