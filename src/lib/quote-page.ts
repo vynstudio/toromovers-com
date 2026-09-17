@@ -28,15 +28,6 @@ export const QUOTE_PAGE_URL = `${SITE_URL}${QUOTE_PATH}`;
 export const QUOTE_AEO_ANSWER =
   "A moving quote from Toro Movers is an up-front price for the job—crew, timing, and access—before move day. Local Central Florida jobs start from $75/mover/hour with a 2-hour minimum, no fuel surcharge, and no stair fees. We also quote long-distance and interstate moves. We are family-owned and bilingual (English and Spanish).";
 
-export const QUOTE_AEO_FACTS = [
-  "From $75/mover/hour local",
-  "2-hour minimum",
-  "No fuel surcharge",
-  "No stair fees",
-  "Family-owned · bilingual English & Spanish",
-  "Local, long-distance & interstate",
-] as const;
-
 export const quotePage = {
   path: QUOTE_PATH,
   metadata: {
@@ -56,7 +47,6 @@ export const quotePage = {
   hero: {
     h1: "Moving quote in Orlando from $75/hour.",
     lede: QUOTE_AEO_ANSWER,
-    facts: QUOTE_AEO_FACTS,
   },
   howTo: {
     h2: "How to get a free moving quote",
@@ -183,7 +173,6 @@ export function quotePageGraph() {
           cssSelector: [
             "h1",
             ".aeo-answer",
-            ".aeo-facts",
             "#gmp-howto h2",
             "#gmp-faq h2",
             "#gmp-faq h3",

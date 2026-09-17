@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import AdsShortForm from "@/components/funnel/AdsShortForm";
 import { ToroLockup } from "@/components/funnel/ToroLockup";
-import { FUNNEL_SLA, FUNNEL_TRUST_CHIPS } from "@/lib/funnel-offer";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
 import {
   EMAIL,
@@ -102,31 +101,8 @@ export default function GetMyPricePage() {
           <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
             {page.hero.h1}
           </h1>
-          <p className="aeo-answer mx-auto mt-3 max-w-2xl text-base leading-6 text-zinc-700 sm:text-lg">
+          <p className="aeo-answer mx-auto mt-4 max-w-2xl text-base leading-6 text-[#0A0A0A] sm:text-lg">
             {page.hero.lede}
-          </p>
-          <ul className="aeo-facts mx-auto mt-4 flex max-w-2xl flex-wrap items-center justify-center gap-2">
-            {page.hero.facts.map((fact) => (
-              <li
-                key={fact}
-                className="rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs font-bold text-[#0A0A0A] sm:text-sm"
-              >
-                {fact}
-              </li>
-            ))}
-          </ul>
-          <ul className="mx-auto mt-3 flex max-w-2xl flex-wrap items-center justify-center gap-2">
-            {FUNNEL_TRUST_CHIPS.map((chip) => (
-              <li
-                key={chip}
-                className="rounded-full bg-[#FCE6E8] px-3 py-1.5 text-xs font-bold text-[#0A0A0A] sm:text-sm"
-              >
-                {chip}
-              </li>
-            ))}
-          </ul>
-          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-600">
-            {FUNNEL_SLA}.
           </p>
         </div>
         <AdsShortForm />
