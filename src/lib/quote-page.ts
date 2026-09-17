@@ -55,7 +55,7 @@ export const quotePage = {
       },
       {
         name: "Choose the service and timing",
-        text: "Pick full-service, labor-only, apartment, POD, U-Haul, or a single item, then This week or Flexible.",
+        text: "Pick house 2+ rooms, apartment 2+ rooms, labor-only, POD, U-Haul, or a single item, then This week or Flexible.",
       },
       {
         name: "We call back with an hourly price",
@@ -70,6 +70,16 @@ export const quotePage = {
     links: [
       {
         href: "/full-service-moving",
+        label: "House — 2+ rooms",
+        note: "Full-service house move, 2 rooms or more",
+      },
+      {
+        href: "/apartment-movers-orlando-fl",
+        label: "Apartment — 2+ rooms",
+        note: "Apt or condo, 2 rooms or more",
+      },
+      {
+        href: "/full-service-moving",
         label: "Full-service moving",
         note: "Truck, crew, load, haul, unload, and place",
       },
@@ -77,11 +87,6 @@ export const quotePage = {
         href: "/labor-only-moving",
         label: "Labor-only movers",
         note: "You have the U-Haul, POD, or rental truck",
-      },
-      {
-        href: "/apartment-movers-orlando-fl",
-        label: "Apartment movers",
-        note: "Stairs, elevators, and condo rules",
       },
       {
         href: "/loading-unloading",
@@ -106,7 +111,7 @@ export const quotePage = {
     },
     {
       q: "What is included in the hourly moving rate?",
-      a: `${FUNNEL_RATE_NOTE}. The hourly rate covers the crew you book. Tell us the service type—full-service with a truck, labor-only, apartment, POD, or a single item—so we size the crew correctly.`,
+      a: `${FUNNEL_RATE_NOTE}. The hourly rate covers the crew you book. Tell us the service type—house 2+ rooms, apartment 2+ rooms, labor-only, POD, or a single item—so we size the crew correctly.`,
     },
     {
       q: "Do Toro Movers do long-distance or interstate moves?",
@@ -118,7 +123,7 @@ export const quotePage = {
     },
     {
       q: "Do you offer labor-only and full-service moving?",
-      a: "Yes. Full-service includes truck and crew. Labor-only is for when you already have a U-Haul, POD, rental truck, or storage unit. Apartment, same-building, special-item, and single-item jobs are quoted the same way.",
+      a: "Yes. House 2+ rooms and apartment 2+ rooms are full-service local moves with truck and crew. Labor-only is for when you already have a U-Haul, POD, rental truck, or storage unit. Special-item and single-item jobs are quoted the same way.",
     },
     {
       q: "Are Toro Movers bilingual?",

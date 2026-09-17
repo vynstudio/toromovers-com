@@ -1,4 +1,6 @@
 export type ServiceType =
+  | "house_2plus_move"
+  | "apartment_2plus_move"
   | "full_service_move"
   | "labor_only"
   | "same_building_move"
@@ -8,6 +10,21 @@ export type ServiceType =
   | "single_item_move";
 
 export const SERVICE_ALIASES: Record<string, ServiceType> = {
+  house: "house_2plus_move",
+  "house-2": "house_2plus_move",
+  "house-2plus": "house_2plus_move",
+  house_2plus: "house_2plus_move",
+  house_2plus_move: "house_2plus_move",
+  residential: "house_2plus_move",
+  apt: "apartment_2plus_move",
+  "apt-2": "apartment_2plus_move",
+  apartment: "apartment_2plus_move",
+  "apartment-2": "apartment_2plus_move",
+  "apartment-2plus": "apartment_2plus_move",
+  apartment_2plus: "apartment_2plus_move",
+  apartment_2plus_move: "apartment_2plus_move",
+  apartment_move: "apartment_2plus_move",
+  "apartment-move": "apartment_2plus_move",
   "full-service": "full_service_move",
   full_service: "full_service_move",
   full_service_move: "full_service_move",
@@ -16,8 +33,6 @@ export const SERVICE_ALIASES: Record<string, ServiceType> = {
   labor_only_move: "labor_only",
   loading: "labor_only",
   unloading: "labor_only",
-  apartment_move: "full_service_move",
-  "apartment-move": "full_service_move",
   "same-building": "same_building_move",
   same_building: "same_building_move",
   same_building_move: "same_building_move",
@@ -41,6 +56,8 @@ export const SERVICE_ALIASES: Record<string, ServiceType> = {
 };
 
 export const SERVICE_LABELS: Record<ServiceType, string> = {
+  house_2plus_move: "House — 2+ rooms",
+  apartment_2plus_move: "Apartment — 2+ rooms",
   full_service_move: "Full-service move",
   labor_only: "Labor only",
   same_building_move: "Same-building move",
@@ -50,9 +67,17 @@ export const SERVICE_LABELS: Record<ServiceType, string> = {
   single_item_move: "Single item",
 };
 
-export const SERVICE_OPTIONS = (
-  Object.keys(SERVICE_LABELS) as ServiceType[]
-).map((value) => ({ value, label: SERVICE_LABELS[value] }));
+export const SERVICE_OPTIONS: Array<{ value: ServiceType; label: string }> = [
+  { value: "house_2plus_move", label: SERVICE_LABELS.house_2plus_move },
+  { value: "apartment_2plus_move", label: SERVICE_LABELS.apartment_2plus_move },
+  { value: "full_service_move", label: SERVICE_LABELS.full_service_move },
+  { value: "labor_only", label: SERVICE_LABELS.labor_only },
+  { value: "same_building_move", label: SERVICE_LABELS.same_building_move },
+  { value: "special_item_move", label: SERVICE_LABELS.special_item_move },
+  { value: "pod_storage_container", label: SERVICE_LABELS.pod_storage_container },
+  { value: "rental_truck_labor", label: SERVICE_LABELS.rental_truck_labor },
+  { value: "single_item_move", label: SERVICE_LABELS.single_item_move },
+];
 
 export function resolveServiceParam(
   value: string | string[] | undefined,
@@ -67,6 +92,6 @@ export function serviceFromSearch(search: string): ServiceType {
   return (
     resolveServiceParam(params.get("service") || undefined) ||
     resolveServiceParam(params.get("servicetype") || undefined) ||
-    "full_service_move"
+    "house_2plus_move"
   );
 }

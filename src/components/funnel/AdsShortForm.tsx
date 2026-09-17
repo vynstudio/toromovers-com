@@ -38,7 +38,7 @@ export default function AdsShortForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [service, setService] = useState<ServiceType>("full_service_move");
+  const [service, setService] = useState<ServiceType>("house_2plus_move");
   const [when, setWhen] = useState<(typeof WHEN)[number]["id"]>("This week");
   const [consent, setConsent] = useState(true);
   const [hp, setHp] = useState("");

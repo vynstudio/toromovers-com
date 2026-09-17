@@ -33,6 +33,20 @@ const services: Array<{
   alt: string;
 }> = [
   {
+    value: "house_2plus_move",
+    title: "House — 2+ rooms",
+    description: "Full-service house move, 2 rooms or more",
+    image: "/images/services/full-service-move.webp",
+    alt: "Two movers loading a sofa into a moving truck",
+  },
+  {
+    value: "apartment_2plus_move",
+    title: "Apartment — 2+ rooms",
+    description: "Apt or condo move, 2 rooms or more",
+    image: "/images/services/same-building-move.webp",
+    alt: "Two movers carrying a dresser toward an elevator",
+  },
+  {
     value: "full_service_move",
     title: "Full-Service Move",
     description: "Truck + professional movers included",
@@ -84,6 +98,8 @@ const services: Array<{
 ];
 
 const choices: Record<ServiceType, string[]> = {
+  house_2plus_move: ["2 bedrooms", "3 bedrooms", "4+ bedrooms"],
+  apartment_2plus_move: ["2 bedrooms", "3 bedrooms", "3+ bedrooms"],
   full_service_move: [
     "Studio",
     "1 bedroom",
