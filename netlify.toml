@@ -102,6 +102,18 @@
   status = 301
   force = true
 
+[[redirects]]
+  from = "/quotes"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quotes/*"
+  to = "/get-my-price"
+  status = 301
+  force = true
+
 # Checklist aliases → design-owned page
 [[redirects]]
   from = "/job-size"

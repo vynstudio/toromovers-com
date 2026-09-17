@@ -33,6 +33,7 @@ const nextConfig: NextConfig = {
       "/get-a-quote",
       "/get-quote",
       "/quote",
+      "/quotes",
     ];
     const toChecklist = ["/job-size", "/your-move", "/movingday-checklist"];
     return [
