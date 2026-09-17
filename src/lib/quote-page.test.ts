@@ -22,12 +22,16 @@ test("quote page canonical and heads target the live funnel URL", () => {
   assert.equal(quotePage.metadata.ogImage, "/og/get-my-price.jpg");
 });
 
-test("quote hero uses the customer-proof webp and a short AEO lede", () => {
-  assert.equal(quotePage.hero.image.src, "/images/proof-customer.webp");
+test("quote hero uses the face-crop customer-proof webp and a short AEO lede", () => {
+  assert.equal(quotePage.hero.image.src, "/images/proof-customer-faces.webp");
+  assert.equal(
+    quotePage.hero.image.alt,
+    "Toro Movers with a customer on a Central Florida canal after a local move",
+  );
   assert.equal(quotePage.hero.image.alt, customerProof.image.alt);
-  assert.match(quotePage.hero.image.alt, /customer/i);
-  assert.ok(quotePage.hero.image.width > 0);
-  assert.ok(quotePage.hero.image.height > 0);
+  assert.equal(quotePage.hero.image.position, "object-center");
+  assert.equal(quotePage.hero.image.width, 900);
+  assert.equal(quotePage.hero.image.height, 750);
   assert.match(quotePage.hero.lede, /\$75\/mover\/hour/);
   assert.match(quotePage.hero.lede, /2-hour minimum/);
   assert.match(quotePage.form.h2, /call you back/i);

@@ -885,8 +885,8 @@ html:has(.gmp-page) body,
   order: 3;
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
-  max-height: 12.5rem;
+  max-width: 22.5rem;
+  aspect-ratio: 6 / 5;
   overflow: hidden;
   border-radius: 1rem;
   background: #f4f4f5;
@@ -911,8 +911,8 @@ html:has(.gmp-page) body,
   }
   .gmp-hero-media {
     grid-area: media;
-    max-height: none;
-    aspect-ratio: 4 / 3;
+    max-width: 26.25rem;
+    aspect-ratio: 6 / 5;
   }
 }
 .gmp-crumbs ol {
