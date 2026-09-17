@@ -47,6 +47,13 @@ const services: Array<{
     alt: "Two movers carrying a dresser toward an elevator",
   },
   {
+    value: "long_distance_move",
+    title: "Long-distance / interstate",
+    description: "Out of area and out of state",
+    image: "/images/services/full-service-move.webp",
+    alt: "Two movers loading a sofa into a moving truck",
+  },
+  {
     value: "full_service_move",
     title: "Full-Service Move",
     description: "Truck + professional movers included",
@@ -100,6 +107,7 @@ const services: Array<{
 const choices: Record<ServiceType, string[]> = {
   house_2plus_move: ["2 bedrooms", "3 bedrooms", "4+ bedrooms"],
   apartment_2plus_move: ["2 bedrooms", "3 bedrooms", "3+ bedrooms"],
+  long_distance_move: ["Within Florida", "Out of state", "Not sure yet"],
   full_service_move: [
     "Studio",
     "1 bedroom",

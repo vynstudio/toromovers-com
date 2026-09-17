@@ -7,7 +7,8 @@ export type ServiceType =
   | "special_item_move"
   | "pod_storage_container"
   | "rental_truck_labor"
-  | "single_item_move";
+  | "single_item_move"
+  | "long_distance_move";
 
 export const SERVICE_ALIASES: Record<string, ServiceType> = {
   house: "house_2plus_move",
@@ -53,6 +54,12 @@ export const SERVICE_ALIASES: Record<string, ServiceType> = {
   "single-item": "single_item_move",
   single_item: "single_item_move",
   single_item_move: "single_item_move",
+  "long-distance": "long_distance_move",
+  long_distance: "long_distance_move",
+  long_distance_move: "long_distance_move",
+  interstate: "long_distance_move",
+  "out-of-state": "long_distance_move",
+  out_of_state: "long_distance_move",
 };
 
 export const SERVICE_LABELS: Record<ServiceType, string> = {
@@ -65,11 +72,13 @@ export const SERVICE_LABELS: Record<ServiceType, string> = {
   pod_storage_container: "POD / container",
   rental_truck_labor: "U-Haul / rental truck",
   single_item_move: "Single item",
+  long_distance_move: "Long-distance / interstate",
 };
 
 export const SERVICE_OPTIONS: Array<{ value: ServiceType; label: string }> = [
   { value: "house_2plus_move", label: SERVICE_LABELS.house_2plus_move },
   { value: "apartment_2plus_move", label: SERVICE_LABELS.apartment_2plus_move },
+  { value: "long_distance_move", label: SERVICE_LABELS.long_distance_move },
   { value: "full_service_move", label: SERVICE_LABELS.full_service_move },
   { value: "labor_only", label: SERVICE_LABELS.labor_only },
   { value: "same_building_move", label: SERVICE_LABELS.same_building_move },

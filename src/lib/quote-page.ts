@@ -1,12 +1,11 @@
 /**
  * SEO/AEO copy for /get-my-price.
  * FAQ and HowTo text must match the visible page (schema).
- * Do not claim licensed, insured, bonded, or long-distance.
+ * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
 
 import {
   FUNNEL_FLOOR_RATE,
-  FUNNEL_LOCAL_NOTE,
   FUNNEL_RATE_NOTE,
   FUNNEL_SLA,
 } from "./funnel-offer.ts";
@@ -27,26 +26,26 @@ export const QUOTE_PAGE_URL = `${SITE_URL}${QUOTE_PATH}`;
 
 /** Canonical AEO answer — visible copy, FAQ, and JSON-LD must stay in sync. */
 export const QUOTE_AEO_ANSWER =
-  "A local moving quote from Toro Movers is an up-front hourly price for a Central Florida move—crew, timing, and access—before move day. Jobs start from $75/mover/hour with a 2-hour minimum, no fuel surcharge, and no stair fees. We are family-owned and bilingual (English and Spanish). Local Central Florida moves only — we don’t offer long-distance or interstate.";
+  "A moving quote from Toro Movers is an up-front price for the job—crew, timing, and access—before move day. Local Central Florida jobs start from $75/mover/hour with a 2-hour minimum, no fuel surcharge, and no stair fees. We also quote long-distance and interstate moves. We are family-owned and bilingual (English and Spanish).";
 
 export const QUOTE_AEO_FACTS = [
-  "From $75/mover/hour",
+  "From $75/mover/hour local",
   "2-hour minimum",
   "No fuel surcharge",
   "No stair fees",
   "Family-owned · bilingual English & Spanish",
-  "Central Florida only — no long-distance",
+  "Local, long-distance & interstate",
 ] as const;
 
 export const quotePage = {
   path: QUOTE_PATH,
   metadata: {
-    title: { absolute: "Local moving quote in Orlando from $75/hour | Toro Movers" },
+    title: { absolute: "Moving quote in Orlando from $75/hour | Toro Movers" },
     description:
-      "A Toro Movers local quote is an up-front hourly price. From $75/mover/hour, 2-hour min, no fuel or stair fees. Central Florida only. Call (689) 600-2720.",
-    ogTitle: "Local moving quote in Orlando from $75/hour | Toro Movers",
+      "Toro Movers quotes local, long-distance, and interstate moves. Local jobs from $75/mover/hour, 2-hour min, no fuel or stair fees. Call (689) 600-2720.",
+    ogTitle: "Moving quote in Orlando from $75/hour | Toro Movers",
     ogDescription:
-      "Up-front hourly moving quote. From $75/mover/hour, 2-hour minimum, no fuel surcharge, no stair fees. Family-owned, bilingual. Central Florida only.",
+      "Up-front moving quote for local, long-distance, and interstate. Local jobs from $75/mover/hour, 2-hour minimum, no fuel surcharge, no stair fees.",
     ogImage: "/og/get-my-price.jpg",
     ogImageAlt: "Toro Movers — get a free local moving quote in Orlando",
   },
@@ -55,7 +54,7 @@ export const quotePage = {
     { name: "Free moving quote", href: QUOTE_PATH },
   ] as const,
   hero: {
-    h1: "Local moving quote in Orlando from $75/hour.",
+    h1: "Moving quote in Orlando from $75/hour.",
     lede: QUOTE_AEO_ANSWER,
     facts: QUOTE_AEO_FACTS,
   },
@@ -69,23 +68,28 @@ export const quotePage = {
       },
       {
         name: "Choose the service and timing",
-        text: "Pick house 2+ rooms, apartment 2+ rooms, labor-only, POD, U-Haul, or a single item, then This week or Flexible.",
+        text: "Pick house 2+ rooms, apartment 2+ rooms, long-distance, labor-only, POD, U-Haul, or a single item, then This week or Flexible.",
       },
       {
-        name: "We call back with an hourly price",
-        text: "A Toro teammate explains crew size, the hourly rate, and the 2-hour minimum so you know the number before move day.",
+        name: "We call back with a price",
+        text: "A Toro teammate explains the number before move day—hourly for local jobs, a job quote for long-distance or interstate.",
       },
     ] as const,
   },
   services: {
     h2: "What we quote in Central Florida",
     intro:
-      "This page is for a free local quote. Service pages explain the work in more detail.",
+      "This page is for a free moving quote — local, long-distance, or interstate.",
     links: [
       {
         href: "/full-service-moving",
         label: "House — 2+ rooms",
         note: "Full-service house move, 2 rooms or more",
+      },
+      {
+        href: "/get-my-price?service=long-distance",
+        label: "Long-distance / interstate",
+        note: "Out of area and out of state",
       },
       {
         href: "/apartment-movers-orlando-fl",
@@ -125,7 +129,7 @@ export const quotePage = {
     },
     {
       q: "How do I get a free moving quote from Toro Movers?",
-      a: `Submit your name and mobile on this page, or call ${PHONE_DISPLAY}. Email is optional. We usually call back within 15 minutes during business hours (${HOURS_LABEL}) with an up-front hourly price.`,
+      a: `Submit your name and mobile on this page, or call ${PHONE_DISPLAY}. Email is optional. We usually call back within 15 minutes during business hours (${HOURS_LABEL}) with an up-front price.`,
     },
     {
       q: "What is included in the hourly moving rate?",
@@ -133,7 +137,7 @@ export const quotePage = {
     },
     {
       q: "Do Toro Movers do long-distance or interstate moves?",
-      a: FUNNEL_LOCAL_NOTE,
+      a: "Yes. Toro Movers quotes local Central Florida moves and long-distance or interstate moves. Local jobs are hourly from $75/mover/hour with a 2-hour minimum. Long-distance and interstate are quoted from your origin, destination, and inventory.",
     },
     {
       q: "How fast do you call back after I request a quote?",
@@ -216,6 +220,7 @@ export function quotePageGraph() {
         areaServed: [
           { "@type": "City", name: SERVICE_BASE_LOCALITY },
           { "@type": "AdministrativeArea", name: SERVICE_REGION },
+          { "@type": "Country", name: "United States" },
         ],
         url: pageUrl,
         description: QUOTE_AEO_ANSWER,
@@ -230,7 +235,7 @@ export function quotePageGraph() {
             priceCurrency: "USD",
             unitText: "mover / hour",
             description:
-              "Floor rate from $75 per mover per hour. 2-hour minimum. No fuel surcharge. No stair fees. Local Central Florida only.",
+              "Local Central Florida floor rate from $75 per mover per hour. 2-hour minimum. No fuel surcharge. No stair fees. Long-distance and interstate quoted separately.",
           },
         },
       },

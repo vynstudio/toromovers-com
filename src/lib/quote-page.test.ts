@@ -26,12 +26,14 @@ test("FAQ schema text matches on-page FAQ copy", () => {
   }
 });
 
-test("quote page copy does not claim licensed, insured, or long-distance", () => {
+test("quote page copy does not claim licensed, insured, or a partner carrier", () => {
   const blob = JSON.stringify(quotePage);
   assert.doesNotMatch(blob, /licensed/i);
   assert.doesNotMatch(blob, /insured/i);
   assert.doesNotMatch(blob, /bonded/i);
-  assert.match(blob, /long-distance/);
+  assert.doesNotMatch(blob, /eeze/i);
+  assert.doesNotMatch(blob, /don.?t offer long-distance/i);
+  assert.match(blob, /long-distance and interstate/);
 });
 
 test("HowTo schema steps match visible steps", () => {

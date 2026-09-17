@@ -35,6 +35,8 @@ export const metadata: Metadata = {
     "movers from $75 per hour",
     "no fuel surcharge movers",
     "bilingual movers Orlando",
+    "long-distance movers Orlando",
+    "interstate movers Florida",
     "Central Florida moving quote",
   ],
   openGraph: {

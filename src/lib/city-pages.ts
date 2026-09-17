@@ -680,8 +680,8 @@ const CENTRAL_FLORIDA: CityPageContent = {
     "Orlando",
   ],
   why: {
-    h2: "Local-only region moves",
-    body: "Toro Movers stays on local Central Florida jobs — homes, apartments, storage, and rental-truck labor. We do not run long-distance or interstate moves. You work with a local crew, bilingual English and Spanish, with up-front hourly pricing.",
+    h2: "Central Florida and beyond",
+    body: "Toro Movers handles local Central Florida jobs — homes, apartments, storage, and rental-truck labor — and also quotes long-distance and interstate moves. You work with a bilingual English and Spanish team, with up-front pricing.",
   },
   faqs: [
     {
@@ -690,7 +690,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
     },
     {
       q: "Do you do long-distance or out-of-state moves?",
-      a: "No. Toro Movers focuses on local-only region moves across Central Florida.",
+      a: "Yes. Toro Movers quotes local Central Florida moves and long-distance or interstate moves.",
     },
     {
       q: "How do you price a Central Florida move?",

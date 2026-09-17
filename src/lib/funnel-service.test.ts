@@ -13,11 +13,13 @@ test("serviceFromSearch reads Meta service aliases and defaults", () => {
   assert.equal(serviceFromSearch("?servicetype=full-service"), "full_service_move");
   assert.equal(serviceFromSearch("?service=house"), "house_2plus_move");
   assert.equal(serviceFromSearch("?service=apt"), "apartment_2plus_move");
+  assert.equal(serviceFromSearch("?service=long-distance"), "long_distance_move");
+  assert.equal(resolveServiceParam("interstate"), "long_distance_move");
   assert.equal(resolveServiceParam("uhaul"), "rental_truck_labor");
 });
 
 test("every service option has a label", () => {
-  assert.equal(SERVICE_OPTIONS.length, 9);
+  assert.equal(SERVICE_OPTIONS.length, 10);
   assert.equal(SERVICE_OPTIONS[0].value, "house_2plus_move");
   assert.equal(SERVICE_OPTIONS[1].value, "apartment_2plus_move");
   for (const option of SERVICE_OPTIONS) {

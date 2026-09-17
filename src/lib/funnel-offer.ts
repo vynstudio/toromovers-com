@@ -22,7 +22,7 @@ export const FUNNEL_SLA =
   "Usually call back within 15 minutes during business hours (Mon–Sat, 7am–7pm)";
 export const FUNNEL_PHONE = PHONE_DISPLAY;
 export const FUNNEL_LOCAL_NOTE =
-  "Local Central Florida moves only — we don’t offer long-distance or interstate.";
+  "Local Central Florida, long-distance, and interstate — request a quote for the job you have.";
 
 export const FUNNEL_TRUST_CHIPS = [
   FUNNEL_GOOGLE_RATING,
