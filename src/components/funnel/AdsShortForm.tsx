@@ -4,7 +4,9 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
 import {
-  resolveServiceParam,
+  SERVICE_LABELS,
+  SERVICE_OPTIONS,
+  serviceFromSearch,
   type ServiceType,
 } from "@/lib/funnel-service";
 import {
@@ -18,56 +20,50 @@ import { PHONE_DISPLAY } from "@/lib/site";
 
 const primaryBtn =
   "rounded-xl bg-[#E20613] px-5 py-3 font-bold text-white transition hover:bg-[#B80510] disabled:cursor-not-allowed disabled:opacity-40";
-
-const SERVICE_LABELS: Record<ServiceType, string> = {
-  full_service_move: "Full-Service Move",
-  labor_only: "Labor Only",
-  same_building_move: "Same-Building Move",
-  special_item_move: "Special Item Move",
-  pod_storage_container: "POD / Storage Container",
-  rental_truck_labor: "U-Haul / Rental Truck",
-  single_item_move: "Single-Item Move",
-};
+const fieldClass =
+  "mt-2 min-h-12 w-full rounded-xl border border-zinc-300 bg-white p-3 font-normal";
 
 const WHEN = [
-  { id: "ASAP", label: "ASAP" },
-  { id: "Today", label: "Today" },
   { id: "This week", label: "This week" },
+  { id: "Flexible", label: "Flexible" },
 ] as const;
 
-export default function AdsShortForm({
-  initialService,
-}: {
-  initialService?: string;
-}) {
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export default function AdsShortForm() {
   const startRef = useRef(
     typeof performance !== "undefined" ? performance.now() : Date.now(),
   );
   const eventIdRef = useRef("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [origin, setOrigin] = useState("");
-  const [when, setWhen] = useState<(typeof WHEN)[number]["id"]>("ASAP");
+  const [email, setEmail] = useState("");
+  const [service, setService] = useState<ServiceType>("full_service_move");
+  const [when, setWhen] = useState<(typeof WHEN)[number]["id"]>("This week");
   const [consent, setConsent] = useState(true);
   const [hp, setHp] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const service: ServiceType =
-    resolveServiceParam(initialService) || "full_service_move";
-
   useEffect(() => {
     captureAttribution();
     eventIdRef.current = mintEventId();
+    const next = serviceFromSearch(window.location.search);
+    setService(next);
     trackFunnelEvent("form_start", {
       form_location: "ads_short_form",
-      service_type: service,
+      service_type: next,
     });
-  }, [service]);
+  }, []);
 
   async function submit(event: FormEvent) {
     event.preventDefault();
     const phoneE164 = normalizeUsPhone(phone);
+    const emailTrim = email.trim().toLowerCase();
+    if (emailTrim && !EMAIL_RE.test(emailTrim)) {
+      setError("Enter a valid email, or leave it blank.");
+      return;
+    }
     if (!name.trim() || name.trim().length < 2 || !phoneE164 || !consent) {
       setError(
         "Please enter your name, a valid mobile number, and consent before continuing.",
@@ -89,15 +85,15 @@ export default function AdsShortForm({
       service_details: {
         primary_detail: "",
         move_date: when,
-        origin: origin.trim(),
+        origin: "",
         destination: "",
         access_conditions: "",
-        notes:
-          "Short Meta ads callback form (name + phone). No email required.",
+        notes: "Short Meta ads callback form (name + phone + optional email).",
       },
       contact: {
         full_name: name.trim(),
         phone_e164: phoneE164,
+        email: emailTrim || undefined,
         sms_call_consent: consent,
       },
       attribution: {
@@ -155,10 +151,10 @@ export default function AdsShortForm({
         {FUNNEL_CTA}
       </p>
       <h2 className="mt-1 text-2xl font-black tracking-tight">
-        Name and mobile — we call you back.
+        We call you back.
       </h2>
       <p className="mt-2 text-sm text-zinc-600">
-        No email required. Local Central Florida {SERVICE_LABELS[service].toLowerCase()}.
+        Name and mobile required. Email is optional.
       </p>
 
       <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
@@ -174,25 +170,31 @@ export default function AdsShortForm({
         />
 
         <label className="block text-sm font-bold">
-          Full name
+          Name
           <input
             required
             value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
+            onChange={(e) => {
+              setName(e.target.value);
+              if (error) setError("");
+            }}
+            className={fieldClass}
             autoComplete="name"
             enterKeyHint="next"
           />
         </label>
 
         <label className="block text-sm font-bold">
-          Mobile phone
+          Phone number
           <input
             required
             inputMode="tel"
             value={phone}
-            onChange={(e) => setPhone(formatUsPhone(e.target.value))}
-            className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
+            onChange={(e) => {
+              setPhone(formatUsPhone(e.target.value));
+              if (error) setError("");
+            }}
+            className={fieldClass}
             placeholder={PHONE_DISPLAY}
             autoComplete="tel"
             enterKeyHint="next"
@@ -200,17 +202,36 @@ export default function AdsShortForm({
         </label>
 
         <label className="block text-sm font-bold">
-          ZIP <span className="font-medium text-zinc-500">(optional)</span>
+          Email{" "}
+          <span className="font-medium text-zinc-500">(optional)</span>
           <input
-            inputMode="numeric"
-            value={origin}
-            onChange={(e) =>
-              setOrigin(e.target.value.replace(/\D/g, "").slice(0, 5))
-            }
-            className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-            placeholder="32801"
-            autoComplete="postal-code"
+            type="email"
+            inputMode="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (error) setError("");
+            }}
+            className={fieldClass}
+            autoComplete="email"
+            enterKeyHint="next"
           />
+        </label>
+
+        <label className="block text-sm font-bold">
+          Service needed
+          <select
+            required
+            value={service}
+            onChange={(e) => setService(e.target.value as ServiceType)}
+            className={fieldClass}
+          >
+            {SERVICE_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </label>
 
         <fieldset className="min-w-0 border-0 p-0">
@@ -223,7 +244,7 @@ export default function AdsShortForm({
                 role="radio"
                 aria-checked={when === item.id}
                 onClick={() => setWhen(item.id)}
-                className={`rounded-full border px-4 py-2 text-sm font-semibold ${
+                className={`min-h-12 min-w-[8.5rem] flex-1 rounded-full border px-4 py-2 text-sm font-semibold ${
                   when === item.id
                     ? "border-[#E20613] bg-[#E20613] text-white"
                     : "border-zinc-300 bg-white"

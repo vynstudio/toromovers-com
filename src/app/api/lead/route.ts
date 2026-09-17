@@ -156,6 +156,7 @@ export async function POST(req: Request) {
         eventId,
         name,
         phone,
+        email: email || undefined,
         sourceUrl: landingPage || headerSourceUrl,
         contentName: "ads_short_callback",
         fbp: str(attr?.fbp),

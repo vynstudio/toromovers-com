@@ -848,6 +848,107 @@ iframe {
   text-transform: uppercase;
 }
 
+/* Ads funnel: native system UI (SF Pro on iPhone) — no webfont wait. */
+html:has(.gmp-page) {
+  scroll-behavior: auto;
+}
+html:has(.gmp-page),
+html:has(.gmp-page) body,
+.gmp-page,
+.gmp-page button,
+.gmp-page input,
+.gmp-page select {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+.gmp-crumbs {
+  margin: 0 0 1rem;
+  text-align: left;
+  font-size: 0.8125rem;
+  color: #52525b;
+}
+.gmp-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.gmp-crumbs li:not(:last-child)::after {
+  content: "/";
+  margin-left: 0.35rem;
+  color: #a1a1aa;
+}
+.gmp-crumbs a {
+  color: #52525b;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.gmp-seo {
+  margin-top: 2.25rem;
+  text-align: left;
+  color: #3f3f46;
+}
+.gmp-seo h2 {
+  margin: 0 0 0.6rem;
+  color: #0a0a0a;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.gmp-seo p,
+.gmp-seo li {
+  margin: 0 0 0.65rem;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.gmp-seo ol {
+  margin: 0.75rem 0 0;
+  padding-left: 1.15rem;
+}
+.gmp-service-links {
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.gmp-service-links a {
+  font-weight: 700;
+  color: #0a0a0a;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.gmp-faq-item {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e4e4e7;
+}
+.gmp-faq-item h3 {
+  margin: 0 0 0.35rem;
+  color: #0a0a0a;
+  font-size: 1rem;
+  font-weight: 800;
+}
+.gmp-nap {
+  border-top: 1px solid #e4e4e7;
+  padding: 1.25rem 1.25rem 2rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: #52525b;
+}
+.gmp-nap p {
+  margin: 0 0 0.35rem;
+}
+.gmp-nap a {
+  color: #0a0a0a;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .brand-name {
   font-size: 0.75rem;
   font-weight: 700;

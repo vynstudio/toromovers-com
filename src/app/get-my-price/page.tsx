@@ -1,51 +1,82 @@
 import type { Metadata } from "next";
 import AdsShortForm from "@/components/funnel/AdsShortForm";
 import { ToroLockup } from "@/components/funnel/ToroLockup";
-import { resolveServiceParam } from "@/lib/funnel-service";
 import {
   FUNNEL_CTA,
-  FUNNEL_FLOOR_RATE,
-  FUNNEL_LOCAL_NOTE,
   FUNNEL_RATE_NOTE,
   FUNNEL_SLA,
   FUNNEL_TRUST_CHIPS,
 } from "@/lib/funnel-offer";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
+import {
+  EMAIL,
+  EMAIL_HREF,
+  PHONE_DISPLAY,
+  PHONE_TEL,
+} from "@/lib/site";
 
-export const dynamic = "force-dynamic";
+export const dynamic = "force-static";
+
+const page = quotePage;
 
 export const metadata: Metadata = {
-  title: "Get my free moving quote",
-  description:
-    "Get a free local moving quote from Toro Movers. From $75/mover/hour. Central Florida only. Call (689) 600-2720.",
+  title: page.metadata.title,
+  description: page.metadata.description,
+  alternates: { canonical: QUOTE_PAGE_URL },
   robots: {
-    index: false,
-    follow: false,
-    nocache: true,
+    index: true,
+    follow: true,
     googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
-  alternates: { canonical: "/get-my-price" },
+  keywords: [
+    "free moving quote Orlando",
+    "local movers quote",
+    "hourly movers Orlando",
+    "Central Florida moving quote",
+    "Toro Movers quote",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: QUOTE_PAGE_URL,
+    siteName: "Toro Movers",
+    title: page.metadata.ogTitle,
+    description: page.metadata.ogDescription,
+    images: [
+      {
+        url: page.metadata.ogImage,
+        width: 1200,
+        height: 630,
+        alt: page.metadata.ogImageAlt,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: page.metadata.ogTitle,
+    description: page.metadata.ogDescription,
+    images: [page.metadata.ogImage],
+  },
 };
 
-export default async function GetMyPricePage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const params = await searchParams;
-  const initialService =
-    resolveServiceParam(params.service) ||
-    resolveServiceParam(params.servicetype);
-
+export default function GetMyPricePage() {
   return (
-    <main className="min-h-screen bg-white text-[#0A0A0A]">
+    <main id="main" className="gmp-page min-h-screen bg-white text-[#0A0A0A]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(quotePageGraph()),
+        }}
+      />
       <header className="border-b border-zinc-200 bg-white">
-        <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col items-stretch gap-2.5 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5 sm:py-3.5">
-          <ToroLockup />
+        <div className="mx-auto flex w-full min-w-0 max-w-3xl flex-col items-center gap-2.5 px-4 py-3 sm:px-5 sm:py-3.5">
+          <ToroLockup className="w-full justify-center" />
           <a
             className="inline-flex min-h-12 w-full shrink-0 items-center justify-center rounded-xl bg-[#E20613] px-4 py-2.5 text-sm font-extrabold whitespace-nowrap text-white transition hover:bg-[#B80510] sm:min-h-0 sm:w-auto"
             href={PHONE_TEL}
@@ -55,18 +86,34 @@ export default async function GetMyPricePage({
         </div>
       </header>
 
-      <section className="mx-auto max-w-3xl px-5 py-10 sm:py-14">
-        <div className="mb-8 text-center">
+      <section className="mx-auto max-w-3xl px-5 py-6 sm:py-10">
+        <nav aria-label="Breadcrumb" className="gmp-crumbs">
+          <ol>
+            {page.breadcrumb.map((item, i) => (
+              <li key={item.href}>
+                {i < page.breadcrumb.length - 1 ? (
+                  <a href={item.href}>{item.name}</a>
+                ) : (
+                  <span aria-current="page">{item.name}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+        <div className="mb-6 text-center">
           <h1 className="text-3xl font-black tracking-tight sm:text-5xl">
-            Local moving {FUNNEL_FLOOR_RATE}.
+            {page.hero.h1}
           </h1>
+          <p className="aeo-answer mx-auto mt-3 max-w-2xl text-base leading-6 text-zinc-700 sm:text-lg">
+            {page.hero.lede}
+          </p>
           <p className="mx-auto mt-3 max-w-xl text-lg font-semibold text-[#0A0A0A]">
             {FUNNEL_CTA}.
           </p>
           <p className="mx-auto mt-2 max-w-xl text-sm font-medium text-zinc-600">
             {FUNNEL_RATE_NOTE}
           </p>
-          <ul className="mx-auto mt-5 flex max-w-2xl flex-wrap items-center justify-center gap-2">
+          <ul className="mx-auto mt-4 flex max-w-2xl flex-wrap items-center justify-center gap-2">
             {FUNNEL_TRUST_CHIPS.map((chip) => (
               <li
                 key={chip}
@@ -76,15 +123,62 @@ export default async function GetMyPricePage({
               </li>
             ))}
           </ul>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-zinc-600">
+          <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-zinc-600">
             {FUNNEL_SLA}.
           </p>
-          <p className="mx-auto mt-2 max-w-xl text-sm text-zinc-500">
-            {FUNNEL_LOCAL_NOTE}
-          </p>
         </div>
-        <AdsShortForm initialService={initialService} />
+        <AdsShortForm />
+
+        <section id="gmp-howto" className="gmp-seo" aria-labelledby="gmp-howto-heading">
+          <h2 id="gmp-howto-heading">{page.howTo.h2}</h2>
+          <p>{page.howTo.intro}</p>
+          <ol>
+            {page.howTo.steps.map((step, i) => (
+              <li key={step.name}>
+                <strong>
+                  {i + 1}. {step.name}.
+                </strong>{" "}
+                {step.text}
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section className="gmp-seo" aria-labelledby="gmp-services-heading">
+          <h2 id="gmp-services-heading">{page.services.h2}</h2>
+          <p>{page.services.intro}</p>
+          <ul className="gmp-service-links">
+            {page.services.links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+                <span> — {link.note}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section id="gmp-faq" className="gmp-seo" aria-labelledby="gmp-faq-heading">
+          <h2 id="gmp-faq-heading">Moving quote FAQs</h2>
+          {page.faqs.map((item) => (
+            <div key={item.q} className="gmp-faq-item">
+              <h3>{item.q}</h3>
+              <p>{item.a}</p>
+            </div>
+          ))}
+        </section>
       </section>
+
+      <footer className="gmp-nap">
+        <p>{page.footer.nap}</p>
+        <p>{page.footer.hours}</p>
+        <p>
+          <a href={PHONE_TEL}>Call {PHONE_DISPLAY}</a>
+          {" · "}
+          <a href={EMAIL_HREF}>{EMAIL}</a>
+          {" · "}
+          <a href="/privacy">Privacy</a>
+        </p>
+      </footer>
     </main>
   );
 }

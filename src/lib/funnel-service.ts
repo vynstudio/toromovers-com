@@ -40,10 +40,33 @@ export const SERVICE_ALIASES: Record<string, ServiceType> = {
   single_item_move: "single_item_move",
 };
 
+export const SERVICE_LABELS: Record<ServiceType, string> = {
+  full_service_move: "Full-service move",
+  labor_only: "Labor only",
+  same_building_move: "Same-building move",
+  special_item_move: "Special item",
+  pod_storage_container: "POD / container",
+  rental_truck_labor: "U-Haul / rental truck",
+  single_item_move: "Single item",
+};
+
+export const SERVICE_OPTIONS = (
+  Object.keys(SERVICE_LABELS) as ServiceType[]
+).map((value) => ({ value, label: SERVICE_LABELS[value] }));
+
 export function resolveServiceParam(
   value: string | string[] | undefined,
 ): ServiceType | undefined {
   const raw = Array.isArray(value) ? value[0] : value;
   if (!raw) return undefined;
   return SERVICE_ALIASES[raw.trim().toLowerCase()];
+}
+
+export function serviceFromSearch(search: string): ServiceType {
+  const params = new URLSearchParams(search);
+  return (
+    resolveServiceParam(params.get("service") || undefined) ||
+    resolveServiceParam(params.get("servicetype") || undefined) ||
+    "full_service_move"
+  );
 }

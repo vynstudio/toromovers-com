@@ -22,10 +22,17 @@ function hashName(raw: string): string | null {
   return sha256(first);
 }
 
+function hashEmail(raw: string): string | null {
+  const email = raw.trim().toLowerCase();
+  if (!email.includes("@") || email.length < 5) return null;
+  return sha256(email);
+}
+
 export type CapiLeadInput = {
   eventId: string;
   name?: string;
   phone?: string;
+  email?: string;
   sourceUrl?: string;
   contentName?: string;
   fbp?: string;
@@ -56,8 +63,10 @@ export async function sendCapiLead(input: CapiLeadInput): Promise<{
   const userData: Record<string, unknown> = {};
   const ph = input.phone ? hashPhone(input.phone) : null;
   const fn = input.name ? hashName(input.name) : null;
+  const em = input.email ? hashEmail(input.email) : null;
   if (ph) userData.ph = [ph];
   if (fn) userData.fn = [fn];
+  if (em) userData.em = [em];
   if (input.fbp) userData.fbp = input.fbp;
   if (input.fbc) userData.fbc = input.fbc;
   if (input.clientIp) userData.client_ip_address = input.clientIp;

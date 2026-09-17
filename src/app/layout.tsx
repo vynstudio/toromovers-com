@@ -22,8 +22,8 @@ const META_PIXEL_ID =
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  display: "swap",
-  preload: true,
+  display: "optional",
+  preload: false,
   adjustFontFallback: true,
 });
 
@@ -144,7 +144,7 @@ export default function RootLayout({
         {/* Refresh → homepage hero (before paint; avoids mid-page restore) */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{if("scrollRestoration"in history)history.scrollRestoration="manual";var n=performance.getEntriesByType("navigation")[0];if(n&&n.type==="reload"){var p=location.pathname.replace(/\\/$/,"")||"/";if(p!=="/"||location.hash){location.replace("/");return}scrollTo(0,0)}else if((location.pathname==="/"||location.pathname==="")&&location.hash){history.replaceState(null,"","/");scrollTo(0,0)}}catch(e){}})();`,
+            __html: `(function(){try{var p=location.pathname.replace(/\\/$/,"")||"/";if(p!=="/")return;if("scrollRestoration"in history)history.scrollRestoration="manual";var n=performance.getEntriesByType("navigation")[0];if(n&&n.type==="reload"){scrollTo(0,0)}else if(location.hash){history.replaceState(null,"","/");scrollTo(0,0)}}catch(e){}})();`,
           }}
         />
         <script
@@ -166,7 +166,7 @@ export default function RootLayout({
         />
         {META_PIXEL_ID ? (
           <>
-            <Script id="meta-pixel" strategy="afterInteractive">
+            <Script id="meta-pixel" strategy="lazyOnload">
               {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
 n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;

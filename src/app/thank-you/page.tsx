@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 
 export default function ThankYouPage() {
   return (
-    <main className="grid min-h-screen place-items-center bg-white px-4 text-[#0A0A0A] sm:px-5">
+    <main className="gmp-page grid min-h-screen place-items-center bg-white px-4 text-[#0A0A0A] sm:px-5">
       <section className="@container w-full min-w-0 max-w-xl rounded-3xl bg-white p-5 text-center shadow-2xl ring-1 ring-black/5 sm:p-12">
         <div className="flex w-full min-w-0 justify-center">
           <ToroLockup href={null} />

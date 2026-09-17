@@ -9,7 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
         disallow: [
           "/move-day-checklist",
-          "/get-my-price",
           "/thank-you",
           "/lp/",
           "/api/",

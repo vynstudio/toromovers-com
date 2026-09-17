@@ -1,4 +1,3 @@
-import { SafeImage } from "@/components/SafeImage";
 import { BUSINESS_NAME } from "@/lib/site";
 
 type ToroLockupProps = {
@@ -15,20 +14,13 @@ export function ToroLockup({ href = "/", className = "" }: ToroLockupProps) {
   const inner = (
     <>
       <span className="funnel-lockup-mark" aria-hidden>
-        <SafeImage
+        <img
           src="/logos/toro-bull-black.svg"
           alt=""
-          width={72}
-          height={56}
+          width={28}
+          height={22}
           className="funnel-lockup-bull"
-          unoptimized
-          priority
-          style={{
-            width: "100%",
-            height: "100%",
-            maxWidth: "100%",
-            objectFit: "contain",
-          }}
+          decoding="async"
         />
       </span>
       <span className="funnel-lockup-wordmark">
