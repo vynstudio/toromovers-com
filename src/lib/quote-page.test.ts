@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { customerProof } from "./content.ts";
 import {
   quotePage,
   quotePageGraph,
@@ -21,9 +22,10 @@ test("quote page canonical and heads target the live funnel URL", () => {
   assert.equal(quotePage.metadata.ogImage, "/og/get-my-price.jpg");
 });
 
-test("quote hero uses a local move webp and a short AEO lede", () => {
-  assert.match(quotePage.hero.image.src, /^\/images\/moves\/.+\.webp$/);
-  assert.match(quotePage.hero.image.alt, /Toro Movers/i);
+test("quote hero uses the customer-proof webp and a short AEO lede", () => {
+  assert.equal(quotePage.hero.image.src, "/images/proof-customer.webp");
+  assert.equal(quotePage.hero.image.alt, customerProof.image.alt);
+  assert.match(quotePage.hero.image.alt, /customer/i);
   assert.ok(quotePage.hero.image.width > 0);
   assert.ok(quotePage.hero.image.height > 0);
   assert.match(quotePage.hero.lede, /\$75\/mover\/hour/);

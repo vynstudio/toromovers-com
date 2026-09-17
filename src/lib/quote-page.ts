@@ -4,6 +4,7 @@
  * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
 
+import { customerProof } from "./content.ts";
 import {
   FUNNEL_FLOOR_RATE,
   FUNNEL_RATE_NOTE,
@@ -58,10 +59,11 @@ export const quotePage = {
     lede: QUOTE_AEO_ANSWER,
     facts: QUOTE_AEO_FACTS,
     image: {
-      src: "/images/moves/real-24.webp",
-      alt: "Toro Movers crew carrying stretch-wrapped furniture onto a moving truck in Central Florida",
-      width: 900,
-      height: 1200,
+      src: customerProof.image.src,
+      alt: customerProof.image.alt,
+      position: customerProof.image.position,
+      width: 1440,
+      height: 1800,
     },
   },
   form: {

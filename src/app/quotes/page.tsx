@@ -130,7 +130,7 @@ export default function QuotesPage() {
               alt={page.hero.image.alt}
               fill
               sizes="(max-width: 899px) 92vw, 42vw"
-              className="object-cover object-[center_32%]"
+              className={`object-cover ${page.hero.image.position ?? "object-center"}`}
             />
           </div>
         </div>
