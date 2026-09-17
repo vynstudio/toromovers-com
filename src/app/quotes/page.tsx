@@ -107,7 +107,12 @@ export default function QuotesPage() {
             <p className="aeo-answer mt-2.5 max-w-xl text-[0.95rem] leading-6 text-zinc-700 sm:mt-3 sm:text-lg">
               {page.hero.lede}
             </p>
-            <ul className="aeo-facts mt-3 flex max-w-xl flex-wrap items-center gap-1.5 sm:mt-4 sm:gap-2">
+          </div>
+          <div className="gmp-hero-form">
+            <AdsShortForm />
+          </div>
+          <div className="gmp-hero-proof">
+            <ul className="aeo-facts flex max-w-xl flex-wrap items-center gap-1.5 sm:gap-2">
               {page.hero.facts.map((fact) => (
                 <li
                   key={fact}
@@ -120,9 +125,6 @@ export default function QuotesPage() {
             <p className="mt-2.5 text-xs font-semibold text-zinc-600 sm:text-sm">
               {FUNNEL_GOOGLE_RATING} · {FUNNEL_MOVES}
             </p>
-          </div>
-          <div className="gmp-hero-form">
-            <AdsShortForm />
           </div>
           <div className="gmp-hero-media">
             <Image
