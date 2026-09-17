@@ -3,8 +3,8 @@ import test from "node:test";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "./quote-page.ts";
 
 test("quote page canonical and heads target the live funnel URL", () => {
-  assert.equal(quotePage.path, "/get-my-price");
-  assert.equal(QUOTE_PAGE_URL, "https://toromovers.com/get-my-price");
+  assert.equal(quotePage.path, "/quotes");
+  assert.equal(QUOTE_PAGE_URL, "https://toromovers.com/quotes");
   assert.match(quotePage.metadata.title.absolute, /quote/i);
   assert.match(quotePage.metadata.title.absolute, /Orlando/);
   assert.match(quotePage.metadata.title.absolute, /\$75/);

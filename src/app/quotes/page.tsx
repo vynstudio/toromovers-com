@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function GetMyPricePage() {
+export default function QuotesPage() {
   return (
     <main id="main" className="gmp-page min-h-screen bg-white text-[#0A0A0A]">
       <script

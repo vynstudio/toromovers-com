@@ -1,7 +1,7 @@
 import { MOVES_DONE, PHONE_DISPLAY } from "./site.ts";
 
 /**
- * Senior Marketing Advisor–approved offer copy for /get-my-price.
+ * Senior Marketing Advisor–approved offer copy for /quotes.
  * Do not invent new rates or review counts — keep these literals.
  */
 export const FUNNEL_ACCENT = "#E20613";

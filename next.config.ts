@@ -33,13 +33,13 @@ const nextConfig: NextConfig = {
       "/get-a-quote",
       "/get-quote",
       "/quote",
-      "/quotes",
+      "/get-my-price",
     ];
     const toChecklist = ["/job-size", "/your-move", "/movingday-checklist"];
     return [
       ...toFunnel.flatMap((source) => [
-        { source, destination: "/get-my-price", permanent: true },
-        { source: `${source}/:path*`, destination: "/get-my-price", permanent: true },
+        { source, destination: "/quotes", permanent: true },
+        { source: `${source}/:path*`, destination: "/quotes", permanent: true },
       ]),
       ...toChecklist.flatMap((source) => [
         { source, destination: "/move-day-checklist", permanent: true },

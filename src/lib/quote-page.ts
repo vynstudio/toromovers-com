@@ -1,5 +1,5 @@
 /**
- * SEO/AEO copy for /get-my-price.
+ * SEO/AEO copy for /quotes.
  * FAQ and HowTo text must match the visible page (schema).
  * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
@@ -77,7 +77,7 @@ export const quotePage = {
         note: "Full-service house move, 2 rooms or more",
       },
       {
-        href: "/get-my-price?service=long-distance",
+        href: `${QUOTE_PATH}?service=long-distance`,
         label: "Long-distance / interstate",
         note: "Out of area and out of state",
       },

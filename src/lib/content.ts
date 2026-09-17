@@ -1,6 +1,8 @@
 // Homepage copy — mobile-first layout adapted for Toro Movers.
 // SEO/AEO answer-first copy. Real business facts only (phone, rating, services, area).
 
+import { QUOTE_PATH } from "./site";
+
 /**
  * Primary nav — professional local-service IA.
  * Logo = Home. No “Resources→FAQ” primary item.
@@ -17,7 +19,7 @@ export const nav = {
   ],
   /** Principal conversion CTA — live quote funnel */
   cta: "Get a quote",
-  ctaHref: "/get-my-price",
+  ctaHref: QUOTE_PATH,
   ctaPhoneLabel: "Call",
   /** Secondary path — contact page */
   ctaSecondary: "Contact",
@@ -194,7 +196,7 @@ export const featureGrid = {
     },
   ],
   cta: "Get a quote",
-  ctaHref: "/get-my-price",
+  ctaHref: QUOTE_PATH,
 } as const;
 
 /**
@@ -265,7 +267,7 @@ export const footer = {
       title: "Contact",
       links: [
         { label: "Contact page", href: "/contact" },
-        { label: "Get a quote", href: "/get-my-price" },
+        { label: "Get a quote", href: QUOTE_PATH },
         { label: "Pay", href: "/pay" },
         { label: "Call us", href: "tel:+16896002720" },
         { label: "Email", href: "mailto:hello@toromovers.com" },
@@ -322,13 +324,13 @@ export const faq = {
     {
       q: "Are your movers bilingual?",
       a: "Yes. Toro Movers has an English and Spanish-speaking crew. Bilingual communication helps customers explain timing, access instructions, fragile items, furniture placement, and building rules from the first quote to the last box. Call or text (689) 600-2720 or request a quote online.",
-      linkHref: "/get-my-price",
+      linkHref: QUOTE_PATH,
       linkLabel: "Get my price",
     },
     {
       q: "How do I get a moving quote from Toro Movers?",
       a: "Call or text (689) 600-2720, or request a quote online. Share what you are moving, pickup and drop-off locations, and access details such as stairs, elevator, and parking. We match crew size, explain up-front hourly rates, and help plan your Orlando move. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
-      linkHref: "/get-my-price",
+      linkHref: QUOTE_PATH,
       linkLabel: "Get my price",
     },
   ],

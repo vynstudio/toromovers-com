@@ -53,64 +53,64 @@
 # were verified 404 on live-toro-site.netlify.app (GET+POST) — removed.
 # Re-add only if a separate engine host is restored.
 
-# This app owns /get-my-price. Legacy quote URLs 301 here and keep ?query.
+# Canonical quote page is /quotes. Legacy URLs 301 here and keep ?query.
 [[redirects]]
   from = "/free-quote"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/free-quote/*"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/get-a-quote"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/get-a-quote/*"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/get-quote"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/get-quote/*"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/quote"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/quote/*"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/quotes"
-  to = "/get-my-price"
+  from = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/quotes/*"
-  to = "/get-my-price"
+  from = "/get-my-price/*"
+  to = "/quotes"
   status = 301
   force = true
 
@@ -343,7 +343,7 @@
 
 [[redirects]]
   from = "/funnel"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
@@ -361,13 +361,13 @@
 
 [[redirects]]
   from = "/intake"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 
 [[redirects]]
   from = "/intake/*"
-  to = "/get-my-price"
+  to = "/quotes"
   status = 301
   force = true
 

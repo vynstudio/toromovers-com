@@ -120,7 +120,7 @@ export async function POST(req: Request) {
   const landingPage =
     typeof body.landingPage === "string" && body.landingPage
       ? body.landingPage
-      : "https://toromovers.com/get-my-price";
+      : "https://toromovers.com/quotes";
 
   let channels: Awaited<ReturnType<typeof notifyLead>> = [];
   try {

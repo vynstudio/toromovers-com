@@ -23,7 +23,7 @@ const sampleLead: LeadNotifyInput = {
   funnel: "full-service",
   source: "get_my_price",
   consentSms: true,
-  landingPage: "https://toromovers.com/get-my-price",
+  landingPage: "https://toromovers.com/quotes",
 };
 
 type FetchCall = {

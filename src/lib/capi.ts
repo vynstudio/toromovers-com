@@ -77,7 +77,7 @@ export async function sendCapiLead(input: CapiLeadInput): Promise<{
     event_time: Math.floor(Date.now() / 1000),
     event_id: input.eventId,
     event_source_url:
-      input.sourceUrl || "https://toromovers.com/get-my-price",
+      input.sourceUrl || "https://toromovers.com/quotes",
     action_source: "website",
     custom_data: {
       content_name: input.contentName || "ads_short_callback",

@@ -29,8 +29,8 @@ Quoted by the hour with clear minimums. Local jobs start from $75 per mover per 
 
 ## Free quote
 
-- URL: https://toromovers.com/get-my-price
-- Canonical: https://toromovers.com/get-my-price
+- URL: https://toromovers.com/quotes
+- Canonical: https://toromovers.com/quotes
 - Submit name + mobile (email optional) or call (689) 600-2720
 - Callback usually within 15 minutes Mon–Sat 7:00 AM – 7:00 PM
 
@@ -56,7 +56,7 @@ Quoted by the hour with clear minimums. Local jobs start from $75 per mover per 
 ## Pages
 
 - Homepage: https://toromovers.com/
-- Free moving quote: https://toromovers.com/get-my-price
+- Free moving quote: https://toromovers.com/quotes
 - Services: https://toromovers.com/services
 - Full-service moving: https://toromovers.com/full-service-moving
 - Labor-only moving: https://toromovers.com/labor-only-moving
