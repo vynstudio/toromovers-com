@@ -1,14 +1,12 @@
 /**
  * SEO/AEO copy for /quotes.
- * Hero lede, FAQ answers, and JSON-LD must stay in sync (same QUOTE_AEO_ANSWER).
+ * Visible page is a one-screen ads landing (H1 + one-line lede + form).
+ * FAQPage JSON-LD is schema-only — no FAQ / HowTo / service-list UI.
+ * Hero lede and JSON-LD description stay on QUOTE_AEO_ANSWER.
  * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
 
-import {
-  FUNNEL_FLOOR_RATE,
-  FUNNEL_RATE_NOTE,
-  FUNNEL_SLA,
-} from "./funnel-offer.ts";
+import { FUNNEL_SLA } from "./funnel-offer.ts";
 import {
   BUSINESS_NAME,
   EMAIL,
@@ -24,18 +22,9 @@ import {
 export const QUOTE_PAGE_PATH = QUOTE_PATH;
 export const QUOTE_PAGE_URL = `${SITE_URL}${QUOTE_PATH}`;
 
-/** Canonical AEO answer — visible hero lede, FAQ, and JSON-LD must stay in sync. */
+/** Canonical AEO answer — visible one-line lede and JSON-LD must stay in sync. */
 export const QUOTE_AEO_ANSWER =
-  "Local Orlando moves from $75/mover/hour — 2-hour minimum, no fuel or stair fees. Family-owned, bilingual. Up-front quote before move day.";
-
-export const QUOTE_AEO_FACTS = [
-  "From $75/mover/hour local",
-  "2-hour minimum",
-  "No fuel surcharge",
-  "No stair fees",
-  "Family-owned · bilingual English & Spanish",
-  "Local, long-distance & interstate",
-] as const;
+  "From $75/mover/hour — 2-hour min, no fuel or stair fees.";
 
 export const quotePage = {
   path: QUOTE_PATH,
@@ -56,123 +45,38 @@ export const quotePage = {
   hero: {
     h1: "Moving quote in Orlando from $75/hour.",
     lede: QUOTE_AEO_ANSWER,
-    facts: QUOTE_AEO_FACTS,
-    image: {
-      src: "/images/proof-customer-faces.webp",
-      alt: "Toro Movers with a customer on a Central Florida canal after a local move",
-      position: "object-center",
-      width: 900,
-      height: 750,
-    },
   },
   form: {
-    eyebrow: "Free up-front quote",
-    h2: "Get your price — we call you back.",
-    lede: "Name and mobile. We usually call back within 15 minutes during business hours with a quote before move day. Email is optional.",
-  },
-  howTo: {
-    h2: "How to get a free moving quote",
-    intro: `Request a callback online or call ${PHONE_DISPLAY}. We usually call back within 15 minutes during business hours (${HOURS_LABEL}).`,
-    steps: [
-      {
-        name: "Share your name and mobile",
-        text: "Tell us how to reach you. Email is optional. No account required.",
-      },
-      {
-        name: "Choose the service and timing",
-        text: "Pick house 2+ rooms, apartment 2+ rooms, long-distance, labor-only, POD, U-Haul, or a single item, then This week or Flexible.",
-      },
-      {
-        name: "We call back with a price",
-        text: "A Toro teammate explains the number before move day—hourly for local jobs, a job quote for long-distance or interstate.",
-      },
-    ] as const,
-  },
-  services: {
-    h2: "What we quote in Central Florida",
-    intro:
-      "This page is for a free moving quote — local, long-distance, or interstate.",
-    links: [
-      {
-        href: "/full-service-moving",
-        label: "House — 2+ rooms",
-        note: "Full-service house move, 2 rooms or more",
-      },
-      {
-        href: `${QUOTE_PATH}?service=long-distance`,
-        label: "Long-distance / interstate",
-        note: "Out of area and out of state",
-      },
-      {
-        href: "/apartment-movers-orlando-fl",
-        label: "Apartment — 2+ rooms",
-        note: "Apt or condo, 2 rooms or more",
-      },
-      {
-        href: "/full-service-moving",
-        label: "Full-service moving",
-        note: "Truck, crew, load, haul, unload, and place",
-      },
-      {
-        href: "/labor-only-moving",
-        label: "Labor-only movers",
-        note: "You have the U-Haul, POD, or rental truck",
-      },
-      {
-        href: "/loading-unloading",
-        label: "Loading and unloading",
-        note: "One-end or both-end labor",
-      },
-      {
-        href: "/orlando-movers",
-        label: "Orlando movers",
-        note: "Local Orlando service area",
-      },
-    ] as const,
+    h2: "We call you back.",
+    lede: "Name and mobile. We usually call back within 15 minutes.",
   },
   faqs: [
     {
-      q: "What is a local moving quote from Toro Movers?",
+      q: "How much do local movers cost in Orlando?",
       a: QUOTE_AEO_ANSWER,
     },
     {
-      q: "How much do local movers cost in Orlando?",
-      a: `Toro Movers quotes local Central Florida moves ${FUNNEL_FLOOR_RATE}, with a 2-hour minimum, no fuel surcharge, and no stair fees. Final hours depend on crew size, volume, stairs or elevators, and how packed you are when we arrive.`,
+      q: "How do I get a free moving quote?",
+      a: `Submit your name and mobile, or call ${PHONE_DISPLAY}. Email is optional.`,
     },
     {
-      q: "How do I get a free moving quote from Toro Movers?",
-      a: `Submit your name and mobile on this page, or call ${PHONE_DISPLAY}. Email is optional. We usually call back within 15 minutes during business hours (${HOURS_LABEL}) with an up-front price.`,
+      q: "How fast do you call back?",
+      a: `${FUNNEL_SLA}. After hours, we call the next business morning.`,
     },
     {
-      q: "What is included in the hourly moving rate?",
-      a: `${FUNNEL_RATE_NOTE}. The hourly rate covers the crew you book. Tell us the service type—house 2+ rooms, apartment 2+ rooms, labor-only, POD, or a single item—so we size the crew correctly.`,
-    },
-    {
-      q: "Do Toro Movers do long-distance or interstate moves?",
-      a: "Yes. Toro Movers quotes local Central Florida moves and long-distance and interstate moves. Local jobs are hourly from $75/mover/hour with a 2-hour minimum. Long-distance and interstate are quoted from your origin, destination, and inventory.",
-    },
-    {
-      q: "How fast do you call back after I request a quote?",
-      a: `${FUNNEL_SLA}. Outside those hours, leave your number and we return the call on the next business morning.`,
-    },
-    {
-      q: "Do you offer labor-only and full-service moving?",
-      a: "Yes. House 2+ rooms and apartment 2+ rooms are full-service local moves with truck and crew. Labor-only is for when you already have a U-Haul, POD, rental truck, or storage unit. Special-item and single-item jobs are quoted the same way.",
-    },
-    {
-      q: "Are Toro Movers bilingual?",
-      a: "Yes. Crews work in English and Spanish so timing, access, and placement stay clear.",
+      q: "Do you quote long-distance and interstate moves?",
+      a: "Yes. Local jobs are hourly from $75/mover/hour. Long-distance and interstate are quoted from origin, destination, and inventory.",
     },
   ] as const,
   footer: {
-    nap: `${BUSINESS_NAME} · Orlando, FL · ${PHONE_DISPLAY} · ${EMAIL}`,
+    nap: `${BUSINESS_NAME} · Orlando, FL · ${PHONE_DISPLAY}`,
     hours: HOURS_LABEL,
   },
 } as const;
 
 export function quotePageGraph() {
   const pageUrl = QUOTE_PAGE_URL;
-  const { metadata, faqs, howTo } = quotePage;
+  const { metadata, faqs } = quotePage;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -188,17 +92,11 @@ export function quotePageGraph() {
         about: { "@id": `${pageUrl}#service` },
         primaryImageOfPage: {
           "@type": "ImageObject",
-          url: `${SITE_URL}${quotePage.hero.image.src}`,
+          url: `${SITE_URL}${metadata.ogImage}`,
         },
         speakable: {
           "@type": "SpeakableSpecification",
-          cssSelector: [
-            "h1",
-            ".aeo-answer",
-            "#gmp-howto h2",
-            "#gmp-faq h2",
-            "#gmp-faq h3",
-          ],
+          cssSelector: ["h1", ".aeo-answer"],
         },
         potentialAction: {
           "@type": "CommunicateAction",
@@ -249,19 +147,6 @@ export function quotePageGraph() {
               "Local Central Florida floor rate from $75 per mover per hour. 2-hour minimum. No fuel surcharge. No stair fees. Long-distance and interstate quoted separately.",
           },
         },
-      },
-      {
-        "@type": "HowTo",
-        "@id": `${pageUrl}#howto`,
-        name: howTo.h2,
-        description: howTo.intro,
-        totalTime: "PT5M",
-        step: howTo.steps.map((step, i) => ({
-          "@type": "HowToStep",
-          position: i + 1,
-          name: step.name,
-          text: step.text,
-        })),
       },
       {
         "@type": "FAQPage",

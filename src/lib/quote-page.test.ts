@@ -17,47 +17,59 @@ test("quote page canonical and heads target the live funnel URL", () => {
   assert.ok(quotePage.metadata.description.length <= 165);
   assert.equal(quotePage.hero.lede, quotePage.faqs[0].a);
   assert.equal(quotePage.hero.lede, QUOTE_AEO_ANSWER);
-  assert.ok(QUOTE_AEO_ANSWER.length <= 180);
+  assert.ok(QUOTE_AEO_ANSWER.length <= 80);
   assert.equal(quotePage.metadata.ogImage, "/og/get-my-price.jpg");
 });
 
-test("quote hero uses the face-crop customer-proof webp and a short AEO lede", () => {
-  assert.equal(quotePage.hero.image.src, "/images/proof-customer-faces.webp");
-  assert.equal(
-    quotePage.hero.image.alt,
-    "Toro Movers with a customer on a Central Florida canal after a local move",
-  );
-  assert.equal(quotePage.hero.image.position, "object-center");
-  assert.equal(quotePage.hero.image.width, 900);
-  assert.equal(quotePage.hero.image.height, 750);
+test("quote hero is a one-line $75 lede for a one-screen ads landing", () => {
   assert.match(quotePage.hero.lede, /\$75\/mover\/hour/);
-  assert.match(quotePage.hero.lede, /2-hour minimum/);
+  assert.match(quotePage.hero.lede, /2-hour min/);
   assert.match(quotePage.form.h2, /call you back/i);
-  assert.match(quotePage.form.lede, /15 minutes/);
+  assert.equal("howTo" in quotePage, false);
+  assert.equal("services" in quotePage, false);
+  assert.equal("facts" in quotePage.hero, false);
+  assert.equal("image" in quotePage.hero, false);
 });
 
-test("FAQ schema text matches on-page FAQ copy", () => {
+test("FAQ schema is present and matches quote-page FAQ copy (schema-only UI)", () => {
   const graph = quotePageGraph();
   const faq = graph["@graph"].find((node) => node["@type"] === "FAQPage") as {
     mainEntity: Array<{ name: string; acceptedAnswer: { text: string } }>;
   };
   assert.equal(faq.mainEntity.length, quotePage.faqs.length);
+  assert.equal(quotePage.faqs.length, 4);
   for (const [i, item] of quotePage.faqs.entries()) {
     assert.equal(faq.mainEntity[i].name, item.q);
     assert.equal(faq.mainEntity[i].acceptedAnswer.text, item.a);
+    assert.ok(item.a.length <= 220, item.q);
   }
 });
 
-test("JSON-LD description and primary image stay in sync with visible hero", () => {
+test("JSON-LD keeps WebPage, Service/Offer, and FAQPage without HowTo", () => {
   const graph = quotePageGraph();
+  const types = graph["@graph"].map((node) => node["@type"]);
+  assert.ok(types.includes("WebPage"));
+  assert.ok(types.includes("Service"));
+  assert.ok(types.includes("FAQPage"));
+  assert.equal(
+    graph["@graph"].some((node) => node["@type"] === "HowTo"),
+    false,
+  );
   const webpage = graph["@graph"].find((node) => node["@type"] === "WebPage") as {
     description: string;
     headline: string;
     primaryImageOfPage: { url: string };
+    speakable: { cssSelector: string[] };
+  };
+  const service = graph["@graph"].find((node) => node["@type"] === "Service") as {
+    offers: { "@type": string; price: string };
   };
   assert.equal(webpage.description, quotePage.hero.lede);
   assert.equal(webpage.headline, quotePage.hero.h1);
-  assert.ok(webpage.primaryImageOfPage.url.endsWith(quotePage.hero.image.src));
+  assert.ok(webpage.primaryImageOfPage.url.endsWith(quotePage.metadata.ogImage));
+  assert.deepEqual(webpage.speakable.cssSelector, ["h1", ".aeo-answer"]);
+  assert.equal(service.offers["@type"], "Offer");
+  assert.equal(service.offers.price, "75");
 });
 
 test("quote page copy does not claim licensed, insured, or a partner carrier", () => {
@@ -68,15 +80,4 @@ test("quote page copy does not claim licensed, insured, or a partner carrier", (
   assert.doesNotMatch(blob, /eeze/i);
   assert.doesNotMatch(blob, /don.?t offer long-distance/i);
   assert.match(blob, /long-distance and interstate/);
-});
-
-test("HowTo schema steps match visible steps", () => {
-  const graph = quotePageGraph();
-  const howTo = graph["@graph"].find((node) => node["@type"] === "HowTo") as {
-    name: string;
-    step: Array<{ name: string; text: string }>;
-  };
-  assert.equal(howTo.name, quotePage.howTo.h2);
-  assert.equal(howTo.step.length, quotePage.howTo.steps.length);
-  assert.equal(howTo.step[0].name, quotePage.howTo.steps[0].name);
 });
