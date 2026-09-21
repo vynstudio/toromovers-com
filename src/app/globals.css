@@ -2592,6 +2592,17 @@ a.trust-chip {
   border-color: color-mix(in srgb, var(--foreground) 28%, transparent);
 }
 
+.city-service-art {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0.85rem;
+  margin-bottom: 1rem;
+  background: #eef2f9;
+}
+
 /* Neighborhood tags on city pages (not links) */
 .nbhd-tags {
   list-style: none;

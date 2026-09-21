@@ -33,7 +33,7 @@ export function FeatureGrid() {
                     }`}
                   >
                     {useVector ? (
-                      <VectorSlot kind={item.illustration ?? "local"} />
+                      <VectorSlot kind={item.illustration} />
                     ) : (
                       <>
                         <Image

@@ -8,10 +8,7 @@ import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
 import { blogPosts, blogShowsOwnPhoto, getBlogPost } from "@/lib/blog";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
-import {
-  VectorSlot,
-  illustrationKeyAt,
-} from "@/components/ServiceIllustrations";
+import { VectorSlot } from "@/components/ServiceIllustrations";
 import {
   BUSINESS_NAME,
   PHONE_DISPLAY,
@@ -152,11 +149,7 @@ export default async function BlogPostPage({ params }: Props) {
                 className={`object-cover ${post.image.position ?? "object-center"}`}
               />
             ) : (
-              <VectorSlot
-                kind={illustrationKeyAt(
-                  blogPosts.findIndex((p) => p.slug === post.slug),
-                )}
-              />
+              <VectorSlot kind={post.illustration} />
             )}
           </div>
 
