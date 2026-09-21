@@ -68,6 +68,51 @@ export const blogPosts: readonly BlogPost[] = [
   },
 
   {
+    slug: "orlando-pod-uhaul-storage-loading",
+    eyebrow: "Storage · POD · U-Haul",
+    title: "Storage, POD & U-Haul load and unload in Orlando",
+    teaser:
+      "Labor-only movers for POD, U-Haul, and storage units in Orlando—what to have ready, and how Toro quotes short jobs.",
+    description:
+      "Labor-only movers for POD, U-Haul, and storage in Orlando. Load or unload by the hour, 2-hour minimum. Call (689) 600-2720.",
+    date: "2026-09-21",
+    dateLabel: "Sep 21, 2026",
+    image: {
+      src: "/images/moves/svc-labor.webp",
+      alt: "Toro Movers crew padding furniture on a labor-only load in Central Florida",
+      position: "object-[center_28%]",
+    },
+    body: [
+      "Labor-only crews load or unload your rental truck, POD, or storage unit — you keep the truck; they bring the muscle and packing care. Toro Movers does U-Haul, POD, and storage load/unload across Orlando and Central Florida with up-front hourly rates.",
+      "Hire a labor-only crew when the vehicle or container is already handled and you need people for the heavy work. That fits a U-Haul at the curb, a POD in the driveway, a storage unit at a facility, or a mix of those on the same day. A closer walkthrough of rental-truck and container loading is at /blog/uhaul-pod-loading-help-orlando. This page is the broader who-to-hire answer, including storage.",
+      "U-Haul load and unload. You keep the rental — U-Haul, Penske, Budget, or another box truck — and the crew loads it, unloads it, or both. Share the truck length, where the ramp will sit, and the carry from the door to the bumper. A short local unload is a different clock than a full truck on a walk-up. You drive between stops. Toro does not bring a moving truck on a labor-only booking. If you want the truck and the crew together, see /full-service-moving.",
+      "POD and container jobs. The pack has to stay stable after the crew leaves, so placement matters as much as the furniture list. Tell us where the container will sit, how the doors open, and the path from the home to that door — stairs, elevator, or a long sidewalk. HOA rules and apartment time windows belong in the booking. If the container company moves the unit, book the crew for the day it is on site.",
+      "Storage unit moves. Gate codes, unit size, aisle width, and the hours the facility actually stays open decide whether the job stays short. A same-day transfer from a unit into a rental truck, a reload into a new unit, or an unload from a truck into a unit all fit labor-only when you already have the vehicle or the unit. Share the facility name and any time limit so the crew is not waiting on a closed gate.",
+      "What to have ready. Have the truck, POD, or storage access on site when the crew arrives — keys, gate code, and unit number. Clear a path from the rooms to the door. Pack small goods in boxes if you want the crew on furniture and heavy pieces; packing that is still undone adds time. Photos of bulky items, the floor count, and parking or dock notes help size the crew. If the building asks for a certificate of insurance, send the manager’s contact and deadline with the booking. Apartment dock and elevator details are in /blog/orlando-apartment-high-rise-movers.",
+      "How Toro quotes short labor jobs. Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, long carries, and a late gate still add time on the hourly clock; they are not a separate fee. Crew size and whether you book one stop or two change the total. The model is explained before move day. Request the quote at /quotes and describe the job as labor-only, a POD, or a U-Haul.",
+      "Call or text (689) 600-2720, or request a labor-only, POD, or U-Haul quote at /quotes. Share truck or unit size, one end or both, and access notes. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job. Service pages: /labor-only-moving and /loading-unloading.",
+    ],
+    faqs: [
+      {
+        q: "What is the minimum for a short labor job?",
+        a: "Short labor jobs have a 2-hour minimum. Local help is quoted from $75 per mover per hour, with no fuel surcharge and no stair fees. Toro explains that hourly model before the crew starts. Call or text (689) 600-2720 or request a quote at /quotes.",
+      },
+      {
+        q: "Can I book one end or both ends?",
+        a: "Yes. One-end labor is load-only or unload-only at a single stop — a U-Haul at the house, a POD in the driveway, or a storage unit. Both-end labor is a crew at the pickup and a crew at the drop-off. You still drive the rental, or the container company moves the POD. Tell us which stops need movers when you book.",
+      },
+      {
+        q: "What if weather or access delays the job?",
+        a: "Rain, a late elevator, a locked storage gate, or a truck that is not on site yet can add time. The hourly clock follows the crew’s time on the job, so share facility hours, elevator windows, and a backup parking plan when you book. If the delay is already known, call or text (689) 600-2720 before the start time.",
+      },
+      {
+        q: "How do I book storage, POD, or U-Haul labor in Orlando?",
+        a: "Request a labor-only, POD, or U-Haul quote at /quotes, or call or text (689) 600-2720. Share truck or unit size, one end or both, and access notes. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "uhaul-pod-loading-help-orlando",
     eyebrow: "U-Haul & POD help",
     title: "U-Haul and POD loading help in Orlando",
