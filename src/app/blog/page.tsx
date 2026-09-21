@@ -5,7 +5,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
-import { blogHref, blogPosts } from "@/lib/blog";
+import { blogHref, blogPosts, blogShowsOwnPhoto } from "@/lib/blog";
 import { BUSINESS_NAME, SITE_URL } from "@/lib/site";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { VectorSlot } from "@/components/ServiceIllustrations";
@@ -47,9 +47,7 @@ export default function BlogIndexPage() {
                   data-cta={`blog-index-${post.slug}`}
                 >
                   <span className="svc-card-frame">
-                    {VECTORS_ONLY ? (
-                      <VectorSlot kind={post.illustration} />
-                    ) : (
+                    {blogShowsOwnPhoto(post, VECTORS_ONLY) ? (
                       <Image
                         src={post.image.src}
                         alt={post.image.alt}
@@ -58,6 +56,8 @@ export default function BlogIndexPage() {
                         quality={75}
                         className={`object-cover ${post.image.position ?? "object-center"}`}
                       />
+                    ) : (
+                      <VectorSlot kind={post.illustration} />
                     )}
                   </span>
                   <span className="svc-card-body">

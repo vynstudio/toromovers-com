@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { blogPosts, blogHref } from "@/lib/blog";
+import { blogPosts, blogHref, blogShowsOwnPhoto } from "@/lib/blog";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { VectorSlot } from "@/components/ServiceIllustrations";
 
@@ -24,9 +24,7 @@ export function BlogCards() {
                 data-cta={`blog-${post.slug}`}
               >
                 <span className="svc-card-frame">
-                  {VECTORS_ONLY ? (
-                    <VectorSlot kind={post.illustration} />
-                  ) : (
+                  {blogShowsOwnPhoto(post, VECTORS_ONLY) ? (
                     <Image
                       src={post.image.src}
                       alt={post.image.alt}
@@ -36,6 +34,8 @@ export function BlogCards() {
                       loading="lazy"
                       className={`object-cover ${post.image.position ?? "object-center"}`}
                     />
+                  ) : (
+                    <VectorSlot kind={post.illustration} />
                   )}
                 </span>
                 <span className="svc-card-body">

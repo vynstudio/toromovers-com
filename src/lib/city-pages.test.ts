@@ -101,6 +101,7 @@ test("service and blog art is explicit, not index-cycled", () => {
   const bySlug = Object.fromEntries(
     blogPosts.map((post) => [post.slug, post.illustration]),
   );
+  assert.equal(bySlug["choose-family-owned-bilingual-movers-orlando"], "local");
   assert.equal(bySlug["orlando-office-small-commercial-movers"], "office");
   assert.equal(bySlug["orlando-apartment-high-rise-movers"], "apartment");
   assert.equal(bySlug["uhaul-pod-loading-help-orlando"], "loading");
