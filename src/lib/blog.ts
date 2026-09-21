@@ -16,13 +16,68 @@ export type BlogPost = {
   date: string;
   dateLabel: string;
   image: { src: string; alt: string; position?: string };
-  /** Full AEO article body */
+  /**
+   * Full AEO article body. A paragraph that starts with "## " renders as an H2
+   * (the marker is not shown). Internal paths such as /quotes render as links.
+   */
   body: readonly string[];
   /** Optional FAQ block — visible text must match FAQPage schema when present */
   faqs?: readonly { q: string; a: string }[];
 };
 
 export const blogPosts: readonly BlogPost[] = [
+  {
+    slug: "choose-family-owned-bilingual-movers-orlando",
+    eyebrow: "Family-owned · Bilingual",
+    title: "How to choose a family-owned bilingual mover in Orlando",
+    teaser:
+      "Family-owned bilingual movers in Orlando: what to ask, how language works on move day, and how Toro quotes up front.",
+    description:
+      "Choose a local family-owned bilingual mover in Orlando by checking clear hourly rates, move-day English or Spanish, and who answers before the quote.",
+    date: "2026-09-21",
+    dateLabel: "Sep 21, 2026",
+    image: {
+      src: "/images/moves/real-23.webp",
+      alt: "Toro Movers crew in navy shirts carrying a wrapped piece on a Central Florida job",
+      position: "object-center",
+    },
+    body: [
+      "Look for clear hourly rates, bilingual crews who communicate on move day, and a local team that answers questions before the quote. Toro Movers is a family-run Orlando crew that works in English and Spanish across Central Florida — up-front pricing, no surprise add-ons in the pitch.",
+      "## What to ask before you book",
+      "Before you book, ask whether the price is hourly or a trip quote, what crew size is planned, and what is included. On a local Central Florida job, Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, elevator waits, and a long carry add time on the hourly clock; they are not a separate fee. Ask who answers questions before the quote, and how parking, stairs, or a reserved elevator will be handled. Share both addresses, the date, the floors, and how packed you will be when the crew arrives. If the drop-off leaves Central Florida, the job is a trip quote rather than the local hourly clock — see /blog/orlando-local-vs-long-distance-movers.",
+      "## Language on move day",
+      "A bilingual crew can talk through the plan in English or Spanish on site, not only on the booking call. Confirm that when you book. Say which language you want for placement, timing, and building rules, especially if one person schedules the job and someone else meets the truck. Put gate codes, elevator windows, and room labels in that language, and point out fragile pieces in person. Toro Movers works in English and Spanish on the phone and on the job across Orlando and Central Florida. The language you choose does not add a fee.",
+      "## Family-owned vs a big brand",
+      "A family-owned mover is a local team you can question before the quote. You talk with the people running the job, and the rate is explained before move day. The tradeoff is capacity. A national brand may have more trucks on a peak Saturday. A local crew may ask for another date if that day is already full. Ask who you will speak with after you book, and what changes the total. Toro does not add fuel or stair fees in the pitch. There is no one-size rate card. Crew size, time on site, access, and whether you need a truck or labor-only help still change the total.",
+      "## Apartments, townhomes, offices, and containers",
+      "Use the same questions for the building you are leaving. An apartment or high-rise adds an elevator window, a dock or loading zone, and the carry from the truck. Details are in /blog/orlando-apartment-high-rise-movers and on /apartment-movers-orlando-fl. A townhome or condo often adds stairs and an HOA window. Details are in /blog/central-florida-townhome-condo-movers. An office move adds after-hours timing and a person on site who can say where each piece goes. If you already have a U-Haul or POD, book labor-only loading instead of a second truck. That job is covered in /blog/orlando-pod-uhaul-storage-loading.",
+      "## How to request the quote",
+      "Request the quote at /quotes. Share pickup and drop-off, whether it is an apartment, townhome, house, or office, stairs or elevator, parking, and whether you already have a truck or container. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida.",
+    ],
+    faqs: [
+      {
+        q: "What should I ask before I book movers in Orlando?",
+        a: "Ask whether the price is hourly or a trip quote, what crew size is planned, and what is included. Ask who answers questions before the quote, and which language the crew will use on site. Share stairs, elevators, parking, and how packed you will be. Local Toro jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Request the quote at /quotes.",
+      },
+      {
+        q: "How do I know the crew can speak English and Spanish on move day?",
+        a: "Ask when you book, before the truck arrives. Confirm that the people doing the carry can talk through placement, timing, and building rules in the language you need — not only the person who answered the phone. Toro Movers works in English and Spanish on the phone and on the job. Name the language you want on site when you request a quote at /quotes.",
+      },
+      {
+        q: "What is different about a family-owned mover and a big brand?",
+        a: "A family-owned crew is a local team you can question before the quote, with the rate explained up front. A larger brand may have more trucks on a busy Saturday, and a local crew may need a different date if that day is full. Ask who you will talk to after you book, and what changes the total. Toro quotes local work with up-front hourly rates and does not add fuel or stair fees in the pitch.",
+      },
+      {
+        q: "Does a bilingual crew cost more for an apartment or townhome?",
+        a: "The language does not add a fee. Stairs, a reserved elevator, or a long carry from parking can add time on the hourly clock. Apartment access is covered in /blog/orlando-apartment-high-rise-movers. Townhome and condo rules are covered in /blog/central-florida-townhome-condo-movers. Local jobs are quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees.",
+      },
+      {
+        q: "How do I request a moving quote?",
+        a: "Request a quote at /quotes. Share both addresses, the date, whether the job is an apartment, townhome, house, or office, stairs or elevator, parking, and whether you need a truck or help with a U-Haul or POD. Hours are Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
   {
     slug: "central-florida-townhome-condo-movers",
     eyebrow: "Townhomes · Condos",

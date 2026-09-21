@@ -23,6 +23,36 @@ import { IconArrow } from "@/components/icons";
 
 type Props = { params: Promise<{ slug: string }> };
 
+/** Paths that should be real internal links. Visible text stays the path itself. */
+const INTERNAL_PATH =
+  /\/(?:quotes|apartment-movers-orlando-fl|full-service-moving|labor-only-moving|loading-unloading|blog\/[a-z0-9-]+)/g;
+
+function BlogInline({ text }: { text: string }) {
+  const nodes: Array<string | { href: string; key: string }> = [];
+  const re = new RegExp(INTERNAL_PATH.source, "g");
+  let last = 0;
+  let match: RegExpExecArray | null;
+  while ((match = re.exec(text))) {
+    if (match.index > last) nodes.push(text.slice(last, match.index));
+    nodes.push({ href: match[0], key: `${match.index}-${match[0]}` });
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) nodes.push(text.slice(last));
+  return nodes.map((part) =>
+    typeof part === "string" ? (
+      part
+    ) : (
+      <Link
+        key={part.key}
+        href={part.href}
+        className="underline underline-offset-4"
+      >
+        {part.href}
+      </Link>
+    ),
+  );
+}
+
 export function generateStaticParams() {
   return blogPosts.map((p) => ({ slug: p.slug }));
 }
@@ -131,28 +161,39 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           <div className="aeo-answer mt-8 space-y-5 text-base leading-relaxed text-muted sm:text-[1.05rem]">
-            {post.body.map((para) => (
-              <p key={para.slice(0, 48)}>{para}</p>
-            ))}
+            {post.body.map((para, i) =>
+              para.startsWith("## ") ? (
+                <h2
+                  key={i}
+                  className="pt-2 text-xl font-bold tracking-tight text-foreground sm:text-2xl"
+                >
+                  {para.slice(3)}
+                </h2>
+              ) : (
+                <p key={i}>
+                  <BlogInline text={para} />
+                </p>
+              ),
+            )}
           </div>
 
           <p className="mt-6 text-sm text-muted">
             Related:{" "}
-            <a className="underline underline-offset-4" href="/labor-only-moving">
+            <Link className="underline underline-offset-4" href="/labor-only-moving">
               Labor-only movers
-            </a>
+            </Link>
             {" · "}
-            <a className="underline underline-offset-4" href="/loading-unloading">
+            <Link className="underline underline-offset-4" href="/loading-unloading">
               Loading & unloading
-            </a>
+            </Link>
             {" · "}
-            <a className="underline underline-offset-4" href="/full-service-moving">
+            <Link className="underline underline-offset-4" href="/full-service-moving">
               Full-service moving
-            </a>
+            </Link>
             {" · "}
-            <a className="underline underline-offset-4" href="/services">
+            <Link className="underline underline-offset-4" href="/services">
               All services
-            </a>
+            </Link>
           </p>
 
 
@@ -165,7 +206,9 @@ export default async function BlogPostPage({ params }: Props) {
                 {post.faqs.map((item) => (
                   <div key={item.q}>
                     <dt className="font-extrabold text-foreground">{item.q}</dt>
-                    <dd className="mt-2 text-muted">{item.a}</dd>
+                    <dd className="mt-2 text-muted">
+                      <BlogInline text={item.a} />
+                    </dd>
                   </div>
                 ))}
               </dl>
