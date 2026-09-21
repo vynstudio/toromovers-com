@@ -24,6 +24,50 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "central-florida-townhome-condo-movers",
+    eyebrow: "Townhomes · Condos",
+    title: "Best movers for townhomes & condos in Central Florida",
+    teaser:
+      "Townhome and condo moves in Central Florida: stairs, elevators, HOA rules, tight parking, and how Toro quotes them.",
+    description:
+      "Who to hire for a townhome or condo in Central Florida: stairs, elevators, HOA rules, and up-front hourly rates. Call (689) 600-2720.",
+    date: "2026-09-21",
+    dateLabel: "Sep 21, 2026",
+    image: {
+      src: "/images/moves/svc-primary-townhome.webp",
+      alt: "Toro Movers crew carrying a wrapped sofa down exterior stairs at a Central Florida townhome",
+      position: "object-[center_40%]",
+    },
+    body: [
+      "Townhome and condo moves need crews who handle stairs, elevators, HOA rules, and tight parking — not just big trucks. Toro Movers moves townhomes and condos across Orlando and Central Florida with clear hourly rates and crews used to community rules.",
+      "Stairs, elevators, and building access. A townhome often means a stair carry between floors, a garage or exterior stair, and a turn at a landing. A condo may add a freight or passenger elevator, a service entrance, and a reserved window. Share the floor count, whether an elevator must be reserved, and how far the truck sits from the door. A walk-up and a reserved elevator are different clocks. High-rise docks, elevator pads, and apartment COI timing are in /blog/orlando-apartment-high-rise-movers.",
+      "HOA and condo association rules. Many Central Florida communities set a move window, a loading dock or guest loading zone, and a certificate of insurance (COI) before the truck can enter. Ask the association for the written rules when the date is set: allowed hours, whether weekends are the only option, dock or elevator reservations, and any COI wording or deadline. Send Toro the manager’s name, email, required wording, and the deadline with the booking so the paperwork the community asks for can go out in time. Many offices want that several business days ahead, not the morning of the move.",
+      "Parking and truck size in planned communities. Guest spots, short loading zones, shared docks, and streets that do not allow a large truck are common. A long carry from the only legal parking spot adds time on the hourly clock. Share street width, gate codes, and any limit on truck size so the crew plans the walk and the truck. Tight townhome courts show up across Orlando, Kissimmee, Winter Garden, Celebration, and nearby cities.",
+      "Packing tips for multi-level homes. Pack room by room and label the floor and the room, not only the contents. Close and tape boxes before the crew arrives; packing still left undone adds time. Clear stairs and landings so each trip is a carry. Empty drawers on heavy dressers. On a split-level or three-story townhome, stage boxes near the stairs you want used, and point out fragile pieces and tight turns at landings. If the association wants floors protected, say so when you book.",
+      "How Toro quotes townhome and condo jobs. Local moves are hourly. Toro quotes local jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, elevator waits, and a long carry from tight parking add time on the hourly clock; they are not a separate fee. Crew size, how packed you are, and whether you need a truck or labor-only help on a U-Haul or POD still change the total. If the drop-off leaves Central Florida, that job is a trip quote — see /blog/orlando-local-vs-long-distance-movers. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando. There is no one-size rate card.",
+      "Request a townhome or condo quote at /quotes, or call or text (689) 600-2720. Share both addresses, floors, stairs or elevator, HOA or condo rules, parking, and your date. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "How do I reserve an elevator for a condo move?",
+        a: "Ask the condo association or management office for the freight or service elevator as soon as the date is set, and book the crew inside that same window. Share the floor, whether the cab needs pads, the service entrance, and how long the reservation lasts. A short window often needs a larger crew so the job finishes before the elevator goes back to the building. If the townhome has stairs only, say so — there may be no elevator to reserve. Call or text (689) 600-2720 with the written rules.",
+      },
+      {
+        q: "What if the community only allows a weekend move window?",
+        a: "Book inside the hours the HOA or condo actually allows, including Saturday limits. Reserve the elevator, dock, or loading zone for that same window. A short weekend slot often needs a larger crew so the carry finishes before the window closes. Sunday crew time is on request, so confirm both the community rules and the date when you book. Share the written window with your quote at /quotes.",
+      },
+      {
+        q: "What if the HOA requires a certificate of insurance (COI)?",
+        a: "Ask the association what it needs and the deadline. Many Central Florida communities want the certificate several business days before move day, not the morning of. Send Toro the manager’s name, email, any required wording, and the deadline when you book so the paperwork the community asks for can go out in time. Call or text (689) 600-2720 if the window is already tight.",
+      },
+      {
+        q: "How do I get a townhome or condo moving quote?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share floors, stairs or elevator, HOA or condo rules, parking, and whether you need a truck or labor-only help. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-local-vs-long-distance-movers",
     eyebrow: "Local · Long-distance",
     title: "Local vs long-distance movers in Orlando: which do you need?",
