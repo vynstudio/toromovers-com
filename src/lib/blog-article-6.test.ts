@@ -6,10 +6,10 @@ const SLUG = "choose-family-owned-bilingual-movers-orlando";
 const OPENING =
   "Look for clear hourly rates, bilingual crews who communicate on move day, and a local team that answers questions before the quote. Toro Movers is a family-run Orlando crew that works in English and Spanish across Central Florida — up-front pricing, no surprise add-ons in the pitch.";
 
-test("article 6 is the newest guide and meets the AEO bar", () => {
+test("article 6 meets the AEO bar", () => {
   const post = getBlogPost(SLUG);
   assert.ok(post);
-  assert.equal(blogPosts[0]?.slug, SLUG);
+  assert.notEqual(blogPosts[0]?.slug, SLUG);
   assert.equal(post.title, "How to choose a family-owned bilingual mover in Orlando");
   assert.equal(post.eyebrow, "Family-owned · Bilingual");
   assert.equal(post.date, "2026-09-21");
@@ -45,5 +45,8 @@ test("article 6 is the newest guide and meets the AEO bar", () => {
   assert.equal(post.image.src, "/images/moves/real-12.webp");
   assert.equal(post.image.dedicated, true);
   assert.equal(blogShowsOwnPhoto(post, true), true);
-  assert.equal(blogShowsOwnPhoto(blogPosts[1]!, true), false);
+  assert.equal(
+    blogShowsOwnPhoto(getBlogPost("orlando-office-small-commercial-movers")!, true),
+    false,
+  );
 });
