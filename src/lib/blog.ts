@@ -40,6 +40,71 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "how-much-to-tip-movers-orlando",
+    illustration: "crew",
+    eyebrow: "Tipping · Orlando",
+    title: "How much to tip movers in Orlando?",
+    teaser:
+      "Practical per-mover tip ranges for Orlando hourly and day jobs, labor-only vs full-service, and when a tip is optional.",
+    description:
+      "How much to tip movers in Orlando for hourly and day jobs, labor-only vs full-service, stairs and weather. A tip is optional. Call (689) 600-2720.",
+    date: "2026-09-21",
+    dateLabel: "Sep 21, 2026",
+    image: {
+      src: "/images/moves/real-18.webp",
+      alt: "Toro Movers crew in navy shirts carrying a wooden dresser down a driveway on a Central Florida job",
+      position: "object-[center_45%]",
+      dedicated: true,
+    },
+    body: [
+      "How much to tip movers in Orlando? A common range is about $20 to $40 per mover for a shorter hourly job, and about $40 to $80 per mover for a full day of heavier work. Many households also use about $5 to $10 per mover per hour and round to cash. A tip is thanks. It is not required, and it is not part of the moving quote. Toro Movers prices the job itself with up-front hourly rates explained before move day.",
+      "## How much to tip",
+      "Most Orlando and Central Florida moves are hourly, not a flat day price. The tip follows hours and difficulty. It is not a percentage added to the bill. A shorter job of about two to four hours: $20 to $40 per mover is a common thank-you. Longer local day, about five to eight hours: $40 to $80 per mover is a common thank-you. A three-hour apartment move with two movers at $25 each is $50 total. A six-hour house move with three movers at $60 each is $180 total. Those are customary ranges, not a Toro charge and not a rate card.",
+      "Use the low end when the home was packed, the path was clear, and the truck sat close to the door. Use the high end for a long day, a lot of stairs, or heavy pieces. If the work was poor, tip less or skip the tip.",
+      "## Per mover or one tip for the crew",
+      "Tip each person who did the carry. A lead and a helper on the same Orlando job both moved the furniture. Hand each mover their own amount, or give one person a total and say it is for the crew to split evenly. A single tip left “for the company” does not automatically reach the people who carried the sofa unless you are using the optional card tip described below.",
+      "Crew size changes the total, not the per-person custom. Two movers at $30 each is $60. Four movers at $30 each is $120. The hourly quote already grows with crew size, because the rate is per mover per hour. The tip sits on top of that quote.",
+      "## Labor-only tips and full-service tips",
+      "Labor-only means you already have the U-Haul, POD, trailer, or rental truck, and the crew loads or unloads it. Full-service means the crew and the truck, door to door. The difference is the truck, not the thank-you. You are tipping the people who carried the furniture. Compare the two bookings in /blog/full-service-vs-labor-only-orlando. Service pages: /labor-only-moving and /full-service-moving.",
+      "Use the same per-mover ranges for labor-only. A short curb load can sit near $20 per mover. A full house into a rental truck, with stairs, can sit with a day-job tip. Do not base the tip on what you paid the rental or container company. Those charges are not the crew’s pay. If you booked only one end — load or unload — tip the crew who worked that stop. Storage, POD, and rental-truck details are in /blog/orlando-pod-uhaul-storage-loading.",
+      "## Stairs, weather, and harder days",
+      "On an hourly job, the clock is the labor. A two-hour minimum is still a real carry: pads, the walk, and placement. A short, clear hop in Orlando, Winter Park, or Kissimmee fits the lower range. A longer day — a three-bedroom house, two stops, or a morning load and an afternoon unload — fits the higher range, or about $5 to $10 per mover for each hour on site.",
+      "Tip toward the top of the range when the job was harder than a normal Central Florida hop. Stairs and walk-ups take more out of a crew. Apartment access is in /blog/orlando-apartment-high-rise-movers. Townhome stairs are in /blog/central-florida-townhome-condo-movers. Heat, rain, a piano, a large sectional, a safe, or a long carry from parking are also reasons people tip more.",
+      "Those conditions are not a second bill. Toro does not add a stair fee or a weather fee. Stairs, elevator waits, heat, and a long carry add time on the hourly clock. A larger tip is optional thanks for a hard day. It is not required, and it does not replace the hourly charge. If the crew was late, careless, or rude, skip the tip and tell Toro.",
+      "## Cash, Venmo, and card",
+      "Cash is the simplest tip on move day. Hand each mover their share when the last piece is placed, so the people who did the work receive it that day. Bring the cash with you. A promise to send it later is easy to forget once the truck leaves.",
+      "Venmo, Cash App, and Zelle work only if the person you are tipping accepts that app. Ask before you send. Do not guess a company handle. Toro does not require an app, and a tip is not part of the hourly quote.",
+      "If you would rather use a card, you can add an optional tip when you pay a Toro balance, or send an optional tip after the job. The payment screen includes a choice for no tip. Choosing no tip completes the payment. Percent buttons on that screen are shortcuts you may ignore. They are not a rate applied for you, and they are not a required 10, 15, or 20 percent tip.",
+      "## How the hourly quote relates",
+      "The number you approve before move day is the moving charge. Local jobs are quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. That rate pays for the crew’s time. It does not include a gratuity, and tipping does not change the quote you were given. There is no public rate card for the move, and there is no required tip schedule.",
+      "What else changes a local total — crew size, access, how packed you are, and truck versus labor-only — is in /blog/how-much-does-a-local-move-cost-orlando. If the drop-off leaves Central Florida, that job is a trip quote rather than the local hourly clock. See /blog/orlando-local-vs-long-distance-movers.",
+      "Set the move budget from the quote. Set aside a tip only if you want to give one, as cash for move day or as an optional card amount after the work. Request the quote at /quotes. Share both addresses, stairs or an elevator, parking, and whether you need a truck or help with a rental. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "How much should I tip movers in Orlando?",
+        a: "A common range is about $20 to $40 per mover for a shorter hourly job and about $40 to $80 per mover for a full day, or about $5 to $10 per mover per hour. Those are customs, not a Toro charge. The move is quoted with up-front hourly rates at /quotes.",
+      },
+      {
+        q: "Should I tip each mover or the whole crew?",
+        a: "Tip per mover. Two people at $30 each is $60 total. Hand each person a share, or give one total and say it is to split evenly. Crew size changes the total tip. It does not change the per-person custom. The hourly quote is already priced per mover per hour.",
+      },
+      {
+        q: "How much should I tip labor-only movers?",
+        a: "Use the same per-mover range. You are tipping the people who loaded or unloaded your U-Haul, POD, or rental truck, not the truck rental. A short curb load can be the low end. Stairs or a full house can be the high end. See /blog/full-service-vs-labor-only-orlando.",
+      },
+      {
+        q: "Should I tip more for bad weather or stairs?",
+        a: "You can. Heat, rain, many flights of stairs, a long carry, or a heavy piece are reasons people choose the top of the range. Toro does not add a stair fee or a weather fee. Those conditions add time on the hourly clock. A larger tip is optional thanks, not a required charge.",
+      },
+      {
+        q: "Is tipping movers required?",
+        a: "No. Tipping is optional. You can tip less, or not at all, if the work was poor. Cash at the end of the job is the usual way to tip. An optional card tip can be added when you pay Toro, and no tip is a complete choice. Call or text (689) 600-2720 or email hello@toromovers.com. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "choose-family-owned-bilingual-movers-orlando",
     illustration: "local",
     eyebrow: "Family-owned · Bilingual",
