@@ -23,6 +23,49 @@ export type BlogPost = {
 };
 
 export const blogPosts: readonly BlogPost[] = [
+  {
+    slug: "orlando-apartment-high-rise-movers",
+    eyebrow: "Apartment & high-rise",
+    title: "Best movers in Orlando for apartments & high-rises",
+    teaser:
+      "Local crews for Orlando apartments and high-rises: elevators, COIs, docks, stair carries, and up-front hourly rates.",
+    description:
+      "Who to hire for an Orlando apartment or high-rise: elevators, COIs, docks, stair carries, and up-front hourly rates. Call (689) 600-2720.",
+    date: "2026-09-21",
+    dateLabel: "Sep 21, 2026",
+    image: {
+      src: "/images/moves/svc-primary-townhome.webp",
+      alt: "Toro Movers crew carrying a sofa down exterior stairs on a Central Florida townhome move",
+      position: "object-[center_40%]",
+    },
+    body: [
+      "Local crews who handle elevators, COIs, reserved loading docks, and stair carries — with up-front hourly rates so building delays don’t surprise you. Toro Movers does apartment and high-rise moves across Orlando and Central Florida.",
+      "Elevator & COI checklist. Reserve the freight or service elevator before move day and ask whether the building wants pads on the cab walls. Share the reservation window, the floor, and whether you must use a service entrance. If the property requires a certificate of insurance (COI), send the manager’s name, email, any required wording, and the deadline with your booking. Many Orlando leasing offices and HOAs want that paperwork several business days ahead, not the morning of the move. Toro discusses the documents the building asks for so they can go out in time. For the apartment service page, see /apartment-movers-orlando-fl.",
+      "Loading dock / parking rules. High-rises often use a reserved dock or a timed loading zone instead of curbside parking. Tell us whether the truck must use the dock, a service alley, or a guest spot, and how far the carry is from that spot to the elevator. A dock shared with deliveries, or a zone that expires mid-move, adds time on the clock. Street-only buildings need a plan for where the truck sits and how long it can stay.",
+      "Full-service vs labor-only in apartments. Full-service is the crew, truck, load, transport, unload, and placement—one local team door to door. Labor-only is when you already have a U-Haul, POD, or rental truck and only need loading or unloading help by the hour. Stairs, elevator windows, and dock rules apply either way. If you are unsure which fits, compare /blog/full-service-vs-labor-only-orlando, then see /full-service-moving and /labor-only-moving.",
+      "How Toro quotes apartment jobs. Apartment and high-rise moves are quoted with up-front hourly rates explained before move day. The total depends on crew size, time on site, floors, elevator or stair access, dock or parking distance, how packed you are when the crew arrives, and whether the truck is included. We do not publish a one-size rate card. Share unit size, floors, and the building rules when you request a quote. More on what changes a local total: /blog/how-much-does-a-local-move-cost-orlando.",
+      "When you need a bigger crew. Two movers fit many studio and one-bedroom loads when the elevator is reserved and the carry from the truck is short. Add people for a walk-up, a long dock-to-unit carry, a short elevator window, or a two-bedroom or larger home with heavy furniture. A larger crew is often how you finish inside a tight HOA window instead of running past it on the hourly clock.",
+      "Request an apartment or high-rise quote at /quotes, or call or text (689) 600-2720. Share pickup and drop-off, floors, elevator or stairs, dock or parking rules, and your date. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "How early should I request a COI for an Orlando apartment move?",
+        a: "Ask the leasing office or HOA as soon as the date is set. Many Orlando buildings want the certificate several business days before move day, not the morning of. Send Toro the manager’s contact, any required wording, and the deadline when you book so the paperwork can go out in time. Call or text (689) 600-2720 if the window is already tight.",
+      },
+      {
+        q: "What if the HOA only allows a weekend move window?",
+        a: "Book inside the hours the building actually allows, including Saturday limits. Reserve the elevator and the dock or loading zone for that same window. A short weekend slot often needs a larger crew so the job finishes before the window closes. Sunday crew time is on request, so confirm both the building rules and the date when you book. Share the written rules with your quote.",
+      },
+      {
+        q: "Is a walk-up harder than an elevator building?",
+        a: "A walk-up means a stair carry on every trip, so time on site usually goes up with each floor. An elevator is faster per trip only when the car is reserved, padded if the building requires it, and available for your whole window. Tell us which one you have, the floor, and any long carry from the truck to the door.",
+      },
+      {
+        q: "How do I book an Orlando apartment or high-rise move?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share floors, elevator or stairs, dock or parking rules, and whether you need a truck or labor-only help. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
 
   {
     slug: "uhaul-pod-loading-help-orlando",
