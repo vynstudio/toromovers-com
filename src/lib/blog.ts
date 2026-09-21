@@ -24,6 +24,50 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-office-small-commercial-movers",
+    eyebrow: "Office · Commercial",
+    title: "Office & small commercial movers in Orlando",
+    teaser:
+      "Office and commercial moves in Orlando: after-hours crews, desks and IT, freight elevators, and how Toro quotes them.",
+    description:
+      "Who to hire for a small office or commercial move in Orlando: after-hours crews, desk and IT care, and hourly rates. Call (689) 600-2720.",
+    date: "2026-09-21",
+    dateLabel: "Sep 21, 2026",
+    image: {
+      src: "/images/moves/svc-loading.webp",
+      alt: "Toro Movers crew wrapping furniture before a Central Florida load",
+      position: "object-[center_40%]",
+    },
+    body: [
+      "Small office and commercial moves need crews who work around business hours, protect desks and IT gear, and keep downtime short. Toro Movers handles office and light commercial moves across Orlando and Central Florida with clear hourly rates and bilingual crews.",
+      "After-hours and weekend moves. A small office loses the day if the crew works while people are still at their desks. Schedule the load after close, early in the morning, or on Saturday so the suite is empty and downtime stays short. Published hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. If the building only allows a window outside those hours, say so when you book and confirm the start time before the quote is final. A short evening or weekend slot often needs a larger crew so the job finishes before the office reopens. Reserve the freight elevator and the dock for that same window.",
+      "Desks, filing, and IT equipment. Label desks, chairs, and file cabinets by room and by who uses them so the new office is placed, not sorted again. Empty drawers on heavy filing cabinets before the carry. Power down computers and monitors, label cables, and pack small electronics in closed boxes if you want the crew on the furniture. Say which pieces are fragile or must stay upright. Pads and wrap protect desks and cabinets through doorways, elevators, and the truck. The crew moves the equipment. They do not set up networks or migrate data. Packing still left undone adds time on the hourly clock.",
+      "Building access, freight elevators, and a certificate of insurance. Office parks and commercial buildings often require a freight elevator, a loading dock, a service entrance, and a certificate of insurance (COI) before the truck can enter. Ask the property manager or landlord for the written rules when the date is set: allowed hours, whether after-hours or weekends are required, dock or elevator reservations, and any COI wording or deadline. Send Toro the manager’s name, email, required wording, and the deadline with the booking so the paperwork the property asks for can go out in time. Many offices want that several business days ahead, not the morning of the move. A dock shared with deliveries, or a freight elevator on a short reservation, adds time. Share the floor, the carry from the dock to the suite, and any loading-zone limit. Apartment docks and elevator timing are in /blog/orlando-apartment-high-rise-movers. Townhome stairs and HOA windows are in /blog/central-florida-townhome-condo-movers.",
+      "How Toro quotes office jobs. Local office and light commercial moves are hourly. Toro quotes local jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. After-hours windows, freight-elevator waits, and a long carry from the dock add time on the hourly clock; they are not a separate fee. Crew size, how packed the suite is, and whether you need a truck or labor-only help on a rental still change the total. If the new office leaves Central Florida, that job is a trip quote — see /blog/orlando-local-vs-long-distance-movers. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando. There is no one-size rate card.",
+      "What to prep before the crew arrives. Clear paths from each office to the freight elevator or the door. Disconnect computers and label cables if the IT gear is moving with the desks. Close and tape boxes, and mark the destination room, not only the contents. Share gate codes, the suite number, dock rules, and a contact who can open the building if the crew arrives before staff. Photos of bulky pieces — large desks, copiers, conference tables — help size the crew. If you already have a truck or container, say so. That booking is labor-only. If you want the truck and the crew together, that is full-service. See /full-service-moving and /labor-only-moving.",
+      "Request an office or small commercial quote at /quotes, or call or text (689) 600-2720. Share both addresses, floors, freight elevator or dock rules, after-hours or weekend limits, and your date. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "Do you move small offices on weekends?",
+        a: "Yes. Saturday is inside published hours, Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request, so confirm the date when you book. A weekend window is often how a small office avoids weekday downtime. Reserve the freight elevator, dock, or loading zone for that same window, and share any landlord hour limits. A short slot often needs a larger crew so the job finishes before the office reopens. Request the window at /quotes or call or text (689) 600-2720.",
+      },
+      {
+        q: "What if the commercial landlord requires a certificate of insurance (COI)?",
+        a: "Ask the landlord or property manager what the building needs and the deadline. Many Orlando commercial properties want the certificate several business days before move day, not the morning of. Send Toro the manager’s name, email, any required wording, and the deadline when you book so the paperwork the property asks for can go out in time. Call or text (689) 600-2720 if the window is already tight.",
+      },
+      {
+        q: "Should an office book packing help or labor-only movers?",
+        a: "Labor-only fits when you already have a rental truck, POD, or container and the desks and boxes are ready to load. Packing help fits when the crew should box files, desks, and small office goods before the carry — that time is on the hourly clock. Full-service is the crew and truck door to door when you do not want to rent a vehicle. Tell Toro which one you need, and how packed the suite will be, when you book at /quotes.",
+      },
+      {
+        q: "How do I get an office or small commercial moving quote?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share suite size, floors, freight elevator or dock rules, after-hours or weekend limits, and whether you need a truck or labor-only help. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "central-florida-townhome-condo-movers",
     eyebrow: "Townhomes · Condos",
     title: "Best movers for townhomes & condos in Central Florida",
