@@ -27,8 +27,8 @@ export const nav = {
 } as const;
 
 export const hero = {
-  h1: "Orlando's Family-Owned Movers",
-  lede: "Full-service, labor-only, and apartment moves in Orlando and Central Florida — family-owned, bilingual, with upfront hourly rates and no hidden fees. Call or text (689) 600-2720.",
+  h1: "Trusted Orlando & Central Florida movers",
+  lede: "Home, apartment, townhome, condo, and office moves — plus storage, POD, and U-Haul load & unload. Local and long-distance across Orlando and Central Florida. Family-owned, bilingual, with upfront hourly rates and no hidden fees.",
   cta: "discover toro movers",
   ctaHref: "#discover",
 } as const;

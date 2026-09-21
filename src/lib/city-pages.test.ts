@@ -30,12 +30,20 @@ test("homepage vs central-florida-movers copy does not cannibalize", () => {
   const cf = getCityPage("central-florida-movers");
   assert.ok(cf);
 
-  assert.equal(SITE_TITLE, "Toro Movers | Book Orlando Movers — Full-Service & Labor-Only");
+  assert.equal(
+    SITE_TITLE,
+    "Toro Movers | Trusted Orlando & Central Florida movers — Full & Labor-Only",
+  );
   assert.equal(
     SITE_DESCRIPTION,
-    "Toro Movers helps you book full-service, labor-only, and apartment moves in Orlando. Up-front hourly rates. Call or text (689) 600-2720.",
+    "Toro Movers is a family-owned, bilingual Orlando moving company with upfront hourly rates and no hidden fees. Call or text (689) 600-2720.",
   );
-  assert.equal(hero.h1, "Book Toro Movers for Your Orlando Move");
+  assert.equal(hero.h1, "Trusted Orlando & Central Florida movers");
+  assert.equal(
+    hero.lede,
+    "Home, apartment, townhome, condo, and office moves — plus storage, POD, and U-Haul load & unload. Local and long-distance across Orlando and Central Florida. Family-owned, bilingual, with upfront hourly rates and no hidden fees.",
+  );
+  assert.doesNotMatch(hero.lede, /600-2720/);
   assert.equal(customerProof.title, "Why Orlando customers book Toro");
   assert.deepEqual(
     customerProof.regionLinks.map((l) => l.label),

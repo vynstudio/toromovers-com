@@ -17,7 +17,7 @@ export const SITE_DESCRIPTION =
  * Homepage and other absolute titles must use `{ absolute }` so the brand is not doubled.
  */
 export const SITE_TITLE =
-  "Toro Movers | Orlando's Family-Owned Movers — Full & Labor-Only";
+  "Toro Movers | Trusted Orlando & Central Florida movers — Full & Labor-Only";
 
 export const PHONE_DISPLAY = "(689) 600-2720";
 export const PHONE_TEL = "tel:+16896002720";
