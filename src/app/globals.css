@@ -5670,3 +5670,255 @@ a.trust-chip {
   max-width: none !important;
   min-height: 32rem;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Careers — Remote Operations Coordinator                                    */
+/* Same type, buttons, cards, and accent as the marketing pages.             */
+/* -------------------------------------------------------------------------- */
+.careers-header {
+  padding: 0.85rem 0 0.15rem;
+  background: #fff;
+}
+
+.careers-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.careers-header-label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.careers-page {
+  padding: 1.15rem 0 2.5rem;
+  background:
+    radial-gradient(80% 50% at 90% 0%, rgba(200, 16, 46, 0.045) 0%, transparent 55%),
+    #fff;
+}
+
+.careers-eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.careers-title {
+  margin: 0.45rem 0 0;
+  font-size: clamp(1.7rem, 6.2vw, 2.35rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  color: var(--foreground);
+}
+
+.careers-required {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 1rem 0 0;
+  padding: 0.8rem 0.95rem 0.85rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--accent) 28%, var(--border));
+  border-left: 4px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+.careers-required-kicker {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-hover);
+}
+
+.careers-required strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.careers-lede {
+  margin: 0.9rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+}
+
+.careers-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 1.1rem;
+}
+
+.careers-apply-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .careers-apply-btn {
+    width: auto;
+    min-width: 14rem;
+  }
+}
+
+.careers-subject,
+.careers-email-line {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--foreground);
+}
+
+.careers-email {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  user-select: all;
+}
+
+.careers-h2 {
+  margin: 1.75rem 0 0.75rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--border);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--foreground);
+}
+
+.careers-h2--plain {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.careers-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 720px) {
+  .careers-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.careers-facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: #fafafa;
+}
+
+.careers-facts strong {
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.careers-facts span {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.careers-pay {
+  padding: 1.05rem 1.1rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: #fafafa;
+}
+
+.careers-pay-amount,
+.careers-pay-total {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--foreground);
+}
+
+.careers-pay-amount {
+  font-size: clamp(1.75rem, 6vw, 2.15rem);
+}
+
+.careers-pay-total {
+  margin-top: 0.85rem;
+  font-size: clamp(1.25rem, 4.5vw, 1.5rem);
+}
+
+.careers-pay-label {
+  margin: 0.2rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.careers-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.careers-list li {
+  position: relative;
+  padding-left: 1.05rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--foreground) 88%, transparent);
+}
+
+.careers-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.careers-apply {
+  margin-top: 1.75rem;
+  padding: 1.15rem 1.1rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: #fafafa;
+}
+
+.careers-apply-copy {
+  margin: 0.35rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.careers-footnote {
+  margin: 1.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--muted);
+}

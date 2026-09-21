@@ -24,6 +24,8 @@ export const PHONE_E164 = "+16896002720";
 
 /** Live quote funnel (engine). The multi-step LeadFunnel project was scrapped. */
 export const QUOTE_PATH = "/quotes";
+/** Remote Operations Coordinator hiring page (Honduras). */
+export const CAREERS_OPS_COORDINATOR_PATH = "/careers/ops-coordinator";
 export const PAY_PATH = "/pay";
 export const MOVE_DAY_CHECKLIST_PATH = "/move-day-checklist";
 export const PAY_DEPOSIT_PATH = "/pay?type=deposit";
