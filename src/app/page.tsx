@@ -16,7 +16,7 @@ import { ClientChrome } from "@/components/ClientChrome";
 import { homePageGraph } from "@/lib/schema";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_URL } from "@/lib/site";
 
-/** Absolute title: root layout template is `%s · Toro Movers` and SITE_TITLE already includes the brand. */
+/** Absolute title so the root `%s · Toro Movers` template is not appended. */
 export const metadata: Metadata = {
   title: { absolute: SITE_TITLE },
   description: SITE_DESCRIPTION,

@@ -32,7 +32,7 @@ test("homepage vs central-florida-movers copy does not cannibalize", () => {
 
   assert.equal(
     SITE_TITLE,
-    "Toro Movers | Trusted Orlando & Central Florida movers — Full & Labor-Only",
+    "Trusted Orlando & Central Florida movers",
   );
   assert.equal(
     SITE_DESCRIPTION,

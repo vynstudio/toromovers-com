@@ -12,12 +12,11 @@ export const SITE_DESCRIPTION =
   "Toro Movers is a family-owned, bilingual Orlando moving company with upfront hourly rates and no hidden fees. Call or text (689) 600-2720.";
 
 /**
- * Default browser tab / OG title — homepage brand title (includes “Toro Movers”).
- * Child routes that set a string `title` get `%s · Toro Movers` from root layout.
- * Homepage and other absolute titles must use `{ absolute }` so the brand is not doubled.
+ * Homepage document / Open Graph / Twitter title.
+ * The homepage sets this as an absolute title so the root `%s · Toro Movers`
+ * template is not appended.
  */
-export const SITE_TITLE =
-  "Toro Movers | Trusted Orlando & Central Florida movers — Full & Labor-Only";
+export const SITE_TITLE = "Trusted Orlando & Central Florida movers";
 
 export const PHONE_DISPLAY = "(689) 600-2720";
 export const PHONE_TEL = "tel:+16896002720";
