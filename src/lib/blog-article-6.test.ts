@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { blogPosts, getBlogPost } from "./blog.ts";
+import { blogPosts, blogShowsOwnPhoto, getBlogPost } from "./blog.ts";
 
 const SLUG = "choose-family-owned-bilingual-movers-orlando";
 const OPENING =
@@ -42,6 +42,8 @@ test("article 6 is the newest guide and meets the AEO bar", () => {
   assert.match(copy, /\/blog\/orlando-local-vs-long-distance-movers/);
   assert.match(copy, /\/blog\/orlando-pod-uhaul-storage-loading/);
   assert.match(copy, /\/blog\/orlando-office-small-commercial-movers/);
-  assert.equal(post.image.src.startsWith("/images/moves/"), true);
-  assert.equal(post.image.src.endsWith(".webp"), true);
+  assert.equal(post.image.src, "/images/moves/real-12.webp");
+  assert.equal(post.image.dedicated, true);
+  assert.equal(blogShowsOwnPhoto(post, true), true);
+  assert.equal(blogShowsOwnPhoto(blogPosts[1]!, true), false);
 });

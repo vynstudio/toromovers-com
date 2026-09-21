@@ -6,7 +6,7 @@ import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
-import { blogPosts, getBlogPost } from "@/lib/blog";
+import { blogPosts, blogShowsOwnPhoto, getBlogPost } from "@/lib/blog";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import {
   VectorSlot,
@@ -141,13 +141,7 @@ export default async function BlogPostPage({ params }: Props) {
           </p>
 
           <div className="relative mt-8 aspect-[16/10] w-full overflow-hidden rounded-[1.25rem] bg-[#e8ebf0]">
-            {VECTORS_ONLY ? (
-              <VectorSlot
-                kind={illustrationKeyAt(
-                  blogPosts.findIndex((p) => p.slug === post.slug),
-                )}
-              />
-            ) : (
+            {blogShowsOwnPhoto(post, VECTORS_ONLY) ? (
               <Image
                 src={post.image.src}
                 alt={post.image.alt}
@@ -156,6 +150,12 @@ export default async function BlogPostPage({ params }: Props) {
                 sizes="(max-width: 768px) 100vw, 720px"
                 quality={82}
                 className={`object-cover ${post.image.position ?? "object-center"}`}
+              />
+            ) : (
+              <VectorSlot
+                kind={illustrationKeyAt(
+                  blogPosts.findIndex((p) => p.slug === post.slug),
+                )}
               />
             )}
           </div>

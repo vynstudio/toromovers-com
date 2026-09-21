@@ -15,7 +15,16 @@ export type BlogPost = {
   eyebrow: string;
   date: string;
   dateLabel: string;
-  image: { src: string; alt: string; position?: string };
+  image: {
+    src: string;
+    alt: string;
+    position?: string;
+    /**
+     * Show this photo on the guide and its cards while the temporary
+     * brand-illustration overlay is on. Use for a topic that has its own shot.
+     */
+    dedicated?: boolean;
+  };
   /**
    * Full AEO article body. A paragraph that starts with "## " renders as an H2
    * (the marker is not shown). Internal paths such as /quotes render as links.
@@ -37,9 +46,10 @@ export const blogPosts: readonly BlogPost[] = [
     date: "2026-09-21",
     dateLabel: "Sep 21, 2026",
     image: {
-      src: "/images/moves/real-23.webp",
-      alt: "Toro Movers crew in navy shirts carrying a wrapped piece on a Central Florida job",
-      position: "object-center",
+      src: "/images/moves/real-12.webp",
+      alt: "Two Toro Movers crew members in navy shirts on a Central Florida job, one giving a thumbs up",
+      position: "object-[center_35%]",
+      dedicated: true,
     },
     body: [
       "Look for clear hourly rates, bilingual crews who communicate on move day, and a local team that answers questions before the quote. Toro Movers is a family-run Orlando crew that works in English and Spanish across Central Florida — up-front pricing, no surprise add-ons in the pitch.",
@@ -506,6 +516,14 @@ export const blogPosts: readonly BlogPost[] = [
 
 export function getBlogPost(slug: string): BlogPost | undefined {
   return blogPosts.find((p) => p.slug === slug);
+}
+
+/** Real job photo instead of the shared temporary brand illustration. */
+export function blogShowsOwnPhoto(
+  post: Pick<BlogPost, "image">,
+  vectorsOnly: boolean,
+): boolean {
+  return !vectorsOnly || post.image.dedicated === true;
 }
 
 export function blogHref(slug: string): string {
