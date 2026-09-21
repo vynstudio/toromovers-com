@@ -1,7 +1,7 @@
 // Homepage copy — mobile-first layout adapted for Toro Movers.
 // SEO/AEO answer-first copy. Real business facts only (phone, rating, services, area).
 
-import { QUOTE_PATH } from "./site";
+import { CAREERS_OPS_COORDINATOR_PATH, QUOTE_PATH } from "./site";
 
 /**
  * Primary nav — professional local-service IA.
@@ -257,6 +257,7 @@ export const footer = {
       title: "Company",
       links: [
         { label: "About", href: "/about" },
+        { label: "Careers", href: CAREERS_OPS_COORDINATOR_PATH },
         { label: "Reviews", href: "/#reviews" },
         { label: "Blog", href: "/blog" },
         { label: "Gallery", href: "/orlando-movers-gallery" },

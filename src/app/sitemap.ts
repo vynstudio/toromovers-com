@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
+import { CAREERS_OPS_COORDINATOR_PATH, SITE_URL } from "@/lib/site";
 import { allCityPages } from "@/lib/city-pages";
 import { blogPosts } from "@/lib/blog";
 
@@ -78,6 +78,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly",
       priority: 0.75,
+    },
+    {
+      url: `${SITE_URL}${CAREERS_OPS_COORDINATOR_PATH}`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.6,
     },
     {
       url: `${SITE_URL}/privacy`,
