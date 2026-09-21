@@ -24,6 +24,49 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-local-vs-long-distance-movers",
+    eyebrow: "Local · Long-distance",
+    title: "Local vs long-distance movers in Orlando: which do you need?",
+    teaser:
+      "When an Orlando move stays local in Central Florida, and when it becomes long-distance—plus how Toro quotes each.",
+    description:
+      "When do Orlando movers count as local vs long-distance? Hourly vs trip quotes, timing, and what to ask. Call (689) 600-2720.",
+    date: "2026-09-21",
+    dateLabel: "Sep 21, 2026",
+    image: {
+      src: "/images/moves/svc-full-service.webp",
+      alt: "Toro Movers crew loading wrapped furniture into a truck on a Central Florida move",
+      position: "object-[center_42%]",
+    },
+    body: [
+      "Local moves stay inside Central Florida (same metro / short drive). Long-distance means crossing farther — another Florida region or out of state. Pricing, timing, and truck needs change. Toro Movers handles both local and long-distance from Orlando with clear hourly or trip quotes.",
+      "What local usually means around Orlando. A local job stays inside Central Florida: the same metro or a short drive between Orlando and nearby cities such as Winter Park, Kissimmee, Clermont, Sanford, or Winter Garden. The crew can often plan it as one day. Stairs, elevators, docks, and parking still change the clock on a short hop. Apartment and high-rise access is covered in /blog/orlando-apartment-high-rise-movers. A planning pass before the first box is in /blog/plan-orlando-move-before-first-box.",
+      "When a job becomes long-distance. The drop-off leaves that short Central Florida drive. That is another Florida region, or a move out of state. The truck is committed to a longer route, timing is not the same as a same-day metro hop, and the quote is built from where you start, where you finish, and what is going. If you already have a U-Haul or POD and only need loading help, that is labor-only — see /blog/orlando-pod-uhaul-storage-loading.",
+      "How pricing differs. Local moves are hourly. Toro quotes local jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs and long carries add time on the hourly clock; they are not a separate fee. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando. Long-distance and interstate moves are a trip quote from origin, destination, and inventory — not the same hourly clock as a Central Florida hop. Both models are explained before you book. There is no one-size rate card for either type.",
+      "What to ask before you book. Confirm both addresses and whether the job stays in Central Florida. Ask if the price is hourly or a trip quote, what crew size is planned, and whether load, transport, unload, and placement are included. Share stairs, elevators, parking, and how packed you will be when the crew arrives. For a longer job, add the destination city, a target date, and photos or a list of bulky pieces so the trip quote matches the load.",
+      "How Toro quotes each type. A local Central Florida move gets an up-front hourly quote: crew size, the hourly rate, and the 2-hour minimum, explained before move day. A long-distance or out-of-state move gets a trip quote from the pickup, the destination, and the inventory. Request either at /quotes, or call or text (689) 600-2720. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned crew in Orlando. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "Can I book a same-day local move in Orlando?",
+        a: "Often, when both stops stay inside Central Florida and a crew is open. Same-day local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Share addresses, stairs or elevators, and how packed you are. Request a quote at /quotes or call or text (689) 600-2720. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+      {
+        q: "Do long-distance moves take more than one day?",
+        a: "They can. A long-distance job leaves the short Central Florida drive — another Florida region or out of state — so timing follows the route, the inventory, and the date, not a same-day local clock. Toro quotes that work as a trip from origin, destination, and inventory, and explains the timing before you book. Call or text (689) 600-2720 with both addresses.",
+      },
+      {
+        q: "How should I pack for a local move vs a long-distance move?",
+        a: "For a local move, closed and labeled boxes and a clear path keep the hourly clock shorter. The crew can pad furniture on site; packing still left undone adds time. For a long-distance trip, pack tighter: closed boxes, nothing loose in drawers, and photos of bulky or fragile pieces so the trip quote and the load match. Tell Toro which type you are booking.",
+      },
+      {
+        q: "How do I get a local or long-distance quote?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Say whether both stops are in Central Florida or the job is long-distance, and share dates, access, and inventory. Local jobs are hourly. Long-distance jobs are a trip quote. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-apartment-high-rise-movers",
     eyebrow: "Apartment & high-rise",
     title: "Best movers in Orlando for apartments & high-rises",
