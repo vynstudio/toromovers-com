@@ -1,10 +1,7 @@
 import Image from "next/image";
 import { blogPosts, blogHref } from "@/lib/blog";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
-import {
-  VectorSlot,
-  illustrationKeyAt,
-} from "@/components/ServiceIllustrations";
+import { VectorSlot } from "@/components/ServiceIllustrations";
 
 /**
  * Homepage — 3 blog cards (compacted former feature + integration sections).
@@ -19,7 +16,7 @@ export function BlogCards() {
     >
       <div className="site-container-wide svc-band-inner">
         <ul className="svc-cards" aria-label="Blog guides">
-          {blogPosts.map((post, i) => (
+          {blogPosts.map((post) => (
             <li key={post.slug} className="svc-cards-item">
               <a
                 href={blogHref(post.slug)}
@@ -28,7 +25,7 @@ export function BlogCards() {
               >
                 <span className="svc-card-frame">
                   {VECTORS_ONLY ? (
-                    <VectorSlot kind={illustrationKeyAt(i)} />
+                    <VectorSlot kind={post.illustration} />
                   ) : (
                     <Image
                       src={post.image.src}

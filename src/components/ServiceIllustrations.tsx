@@ -195,6 +195,9 @@ export type ServiceIllustrationKey =
   | "labor-only"
   | "packing"
   | "access"
+  | "apartment"
+  | "loading"
+  | "office"
   | "crew";
 
 export const VECTOR_ART: Record<ServiceIllustrationKey, string> = {
@@ -203,21 +206,12 @@ export const VECTOR_ART: Record<ServiceIllustrationKey, string> = {
   "labor-only": "/images/vectors/labor-only.webp",
   packing: "/images/vectors/packing.webp",
   access: "/images/vectors/access.webp",
+  apartment: "/images/vectors/apartment.webp",
+  loading: "/images/vectors/loading.webp",
+  office: "/images/vectors/office.webp",
+  /** Same file as local until a crew-only drawing exists. */
   crew: "/images/vectors/local.webp",
 };
-
-const CYCLE: ServiceIllustrationKey[] = [
-  "local",
-  "long-distance",
-  "labor-only",
-  "packing",
-  "access",
-];
-
-export function illustrationKeyAt(i: number): ServiceIllustrationKey {
-  const n = CYCLE.length;
-  return CYCLE[((i % n) + n) % n];
-}
 
 /** High-end vector illustration in the photo frame. */
 export function VectorSlot({

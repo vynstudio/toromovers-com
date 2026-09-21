@@ -8,10 +8,7 @@ import { ClientChrome } from "@/components/ClientChrome";
 import { blogHref, blogPosts } from "@/lib/blog";
 import { BUSINESS_NAME, SITE_URL } from "@/lib/site";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
-import {
-  VectorSlot,
-  illustrationKeyAt,
-} from "@/components/ServiceIllustrations";
+import { VectorSlot } from "@/components/ServiceIllustrations";
 
 export const metadata: Metadata = {
   title: "Moving tips & guides for Orlando",
@@ -42,7 +39,7 @@ export default function BlogIndexPage() {
           </p>
 
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-            {blogPosts.map((post, i) => (
+            {blogPosts.map((post) => (
               <li key={post.slug}>
                 <Link
                   href={blogHref(post.slug)}
@@ -51,7 +48,7 @@ export default function BlogIndexPage() {
                 >
                   <span className="svc-card-frame">
                     {VECTORS_ONLY ? (
-                      <VectorSlot kind={illustrationKeyAt(i)} />
+                      <VectorSlot kind={post.illustration} />
                     ) : (
                       <Image
                         src={post.image.src}

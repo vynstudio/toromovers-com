@@ -3,6 +3,8 @@
  * Full-service local · Labor-only · Apartment movers
  */
 
+import type { ServiceIllustrationKey } from "@/components/ServiceIllustrations";
+
 export type ServiceHubItem = {
   title: string;
   body: string;
@@ -14,8 +16,8 @@ export type ServiceHubItem = {
   points?: readonly string[];
   /** Overrides the default "View service" CTA when the link isn't a service page. */
   linkLabel?: string;
-  /** Flat illustration shown instead of a photo on the homepage cards. */
-  illustration?: "local" | "long-distance" | "labor-only" | "access";
+  /** Dedicated brand illustration. Never inferred from card index. */
+  illustration: ServiceIllustrationKey;
 };
 
 export const servicesHub = {
@@ -76,7 +78,7 @@ export const servicesHub = {
         "Toro Movers crew carrying furniture up stairs on a real Orlando-area apartment move",
       badge: "Apartments",
       linkLabel: "View service",
-      illustration: "access",
+      illustration: "apartment",
       points: [
         "Stairs & elevators",
         "Loading zones planned",
@@ -95,6 +97,7 @@ export const servicesHub = {
       imageAlt:
         "Toro Movers carefully handling furniture on a real Orlando loading job",
       linkLabel: "View service",
+      illustration: "loading",
     },
     {
       title: "Recent moves",
@@ -103,6 +106,7 @@ export const servicesHub = {
       image: "/images/moves/real-23.webp",
       imageAlt: "Toro Movers crew on a real local Orlando moving job",
       linkLabel: "See recent moves",
+      illustration: "packing",
     },
     {
       title: "Central Florida coverage",
@@ -111,6 +115,7 @@ export const servicesHub = {
       image: "/images/hero-orlando-skyline.webp",
       imageAlt: "Orlando skyline — Toro Movers Central Florida service area",
       linkLabel: "View coverage",
+      illustration: "long-distance",
     },
   ] satisfies ServiceHubItem[],
 } as const;

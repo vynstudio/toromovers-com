@@ -2,7 +2,10 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { customerProof, hero } from "./content.ts";
 import { allCityPages, getCityPage } from "./city-pages.ts";
+import { blogPosts } from "./blog.ts";
+import { servicesHub } from "./services-hub.ts";
 import { SITE_DESCRIPTION, SITE_TITLE } from "./site.ts";
+import { loadingUnloadingPage } from "./loading-unloading-page.ts";
 
 test("restored city catalog has unique slugs and local copy", () => {
   const pages = allCityPages();
@@ -17,7 +20,14 @@ test("restored city catalog has unique slugs and local copy", () => {
     assert.ok(city.faqs.length >= 3, city.slug);
     assert.ok(city.neighborhoods.length >= 4, city.slug);
     assert.ok(city.about.body.length > 80, city.slug);
-    assert.equal(city.services.every((s) => s.href === "/services"), true);
+    assert.deepEqual(
+      city.services.map((s) => [s.illustration, s.href]),
+      [
+        ["local", "/full-service-moving"],
+        ["labor-only", "/labor-only-moving"],
+        ["apartment", "/apartment-movers-orlando-fl"],
+      ],
+    );
   }
   assert.ok(getCityPage("winter-park-movers"));
   assert.ok(getCityPage("kissimmee-movers"));
@@ -63,4 +73,43 @@ test("homepage vs central-florida-movers copy does not cannibalize", () => {
   assert.equal(cf.about.h2, "Cities we serve in Central Florida");
   assert.equal(cf.why.h2, "Local-only region moves");
   assert.equal(cf.closing.title, "Request a Central Florida moving estimate");
+});
+
+test("service and blog art is explicit, not index-cycled", () => {
+  assert.deepEqual(
+    servicesHub.primary.map((item) => [item.title, item.illustration]),
+    [
+      ["Full-service local", "local"],
+      ["Labor-only", "labor-only"],
+      ["Apartment movers", "apartment"],
+    ],
+  );
+  assert.deepEqual(
+    servicesHub.secondary.map((item) => [item.title, item.illustration]),
+    [
+      ["Loading & unloading", "loading"],
+      ["Recent moves", "packing"],
+      ["Central Florida coverage", "long-distance"],
+    ],
+  );
+  const hubKeys = [...servicesHub.primary, ...servicesHub.secondary].map(
+    (item) => item.illustration,
+  );
+  assert.equal(new Set(hubKeys).size, hubKeys.length);
+  assert.equal((hubKeys as readonly string[]).includes("access"), false);
+
+  const bySlug = Object.fromEntries(
+    blogPosts.map((post) => [post.slug, post.illustration]),
+  );
+  assert.equal(bySlug["orlando-office-small-commercial-movers"], "office");
+  assert.equal(bySlug["orlando-apartment-high-rise-movers"], "apartment");
+  assert.equal(bySlug["uhaul-pod-loading-help-orlando"], "loading");
+  assert.equal(bySlug["orlando-local-vs-long-distance-movers"], "long-distance");
+  assert.equal(bySlug["orlando-pod-uhaul-storage-loading"], "labor-only");
+  assert.ok(blogPosts.every((post) => post.illustration.length > 0));
+
+  assert.equal(
+    loadingUnloadingPage.hero.image.src,
+    "/images/moves/svc-loading.webp",
+  );
 });

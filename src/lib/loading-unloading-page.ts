@@ -18,7 +18,7 @@ export const loadingUnloadingPage = {
     lede:
       "Toro Movers helps with short loading and unloading jobs in Orlando and Central Florida—single furniture pieces, truck load/unload help, and storage transfers. You get a local bilingual crew and up-front hourly rates explained before we start.",
     image: {
-      src: "/images/moves/svc-labor.webp",
+      src: "/images/moves/svc-loading.webp",
       alt: "Toro Movers carefully handling furniture on a real Central Florida loading job",
     },
     chips: [

@@ -3,14 +3,24 @@ import {
   recentMovesHeading,
   recentMovesHome,
   recentMovesByService,
+  type MoveService,
   type MoveShot,
 } from "@/lib/recent-moves";
 import { IconArrow } from "@/components/icons";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import {
   VectorSlot,
-  illustrationKeyAt,
+  type ServiceIllustrationKey,
 } from "@/components/ServiceIllustrations";
+
+const MOVE_ILLUSTRATION: Record<MoveService, ServiceIllustrationKey> = {
+  "full-service": "local",
+  residential: "local",
+  apartment: "apartment",
+  "labor-only": "labor-only",
+  packing: "packing",
+  crew: "local",
+};
 
 type RecentMovesProps = {
   items?: readonly MoveShot[];
@@ -100,13 +110,13 @@ function MoveGrid({
       className={`recent-moves-grid${isPage ? " recent-moves-grid--page" : ""}`}
       aria-label="Recent move photos"
     >
-      {items.map((shot, i) => (
+      {items.map((shot) => (
         <li key={shot.id} className="recent-moves-item">
           <a href={shot.href} className="recent-moves-card-link">
             <figure className="recent-moves-card">
               <div className="recent-moves-frame">
                 {VECTORS_ONLY ? (
-                  <VectorSlot kind={illustrationKeyAt(i)} />
+                  <VectorSlot kind={MOVE_ILLUSTRATION[shot.service]} />
                 ) : (
                   <Image
                     src={shot.src}

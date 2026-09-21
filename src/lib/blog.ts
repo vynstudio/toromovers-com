@@ -3,6 +3,8 @@
  * Homepage shows these as 3 cards → each links to full /blog/[slug] guide.
  */
 
+import type { ServiceIllustrationKey } from "@/components/ServiceIllustrations";
+
 export type BlogPost = {
   slug: string;
   title: string;
@@ -15,6 +17,8 @@ export type BlogPost = {
   eyebrow: string;
   date: string;
   dateLabel: string;
+  /** Brand illustration for cards and heroes. Never inferred from list order. */
+  illustration: ServiceIllustrationKey;
   image: { src: string; alt: string; position?: string };
   /** Full AEO article body */
   body: readonly string[];
@@ -25,6 +29,7 @@ export type BlogPost = {
 export const blogPosts: readonly BlogPost[] = [
   {
     slug: "orlando-office-small-commercial-movers",
+    illustration: "office",
     eyebrow: "Office · Commercial",
     title: "Office & small commercial movers in Orlando",
     teaser:
@@ -69,6 +74,7 @@ export const blogPosts: readonly BlogPost[] = [
 
   {
     slug: "central-florida-townhome-condo-movers",
+    illustration: "access",
     eyebrow: "Townhomes · Condos",
     title: "Best movers for townhomes & condos in Central Florida",
     teaser:
@@ -113,6 +119,7 @@ export const blogPosts: readonly BlogPost[] = [
 
   {
     slug: "orlando-local-vs-long-distance-movers",
+    illustration: "long-distance",
     eyebrow: "Local · Long-distance",
     title: "Local vs long-distance movers in Orlando: which do you need?",
     teaser:
@@ -156,6 +163,7 @@ export const blogPosts: readonly BlogPost[] = [
 
   {
     slug: "orlando-apartment-high-rise-movers",
+    illustration: "apartment",
     eyebrow: "Apartment & high-rise",
     title: "Best movers in Orlando for apartments & high-rises",
     teaser:
@@ -200,6 +208,7 @@ export const blogPosts: readonly BlogPost[] = [
 
   {
     slug: "orlando-pod-uhaul-storage-loading",
+    illustration: "labor-only",
     eyebrow: "Storage · POD · U-Haul",
     title: "Storage, POD & U-Haul load and unload in Orlando",
     teaser:
@@ -245,6 +254,7 @@ export const blogPosts: readonly BlogPost[] = [
 
   {
     slug: "uhaul-pod-loading-help-orlando",
+    illustration: "loading",
     eyebrow: "U-Haul & POD help",
     title: "U-Haul and POD loading help in Orlando",
     teaser:
@@ -294,6 +304,7 @@ export const blogPosts: readonly BlogPost[] = [
 
   {
     slug: "full-service-vs-labor-only-orlando",
+    illustration: "local",
     eyebrow: "Choosing your move type",
     title: "Full-service vs labor-only movers in Orlando",
     teaser:
@@ -340,6 +351,7 @@ export const blogPosts: readonly BlogPost[] = [
 
   {
     slug: "how-much-does-a-local-move-cost-orlando",
+    illustration: "local",
     eyebrow: "Orlando moving costs",
     title: "How much do movers cost in Orlando?",
     teaser:
@@ -386,6 +398,7 @@ export const blogPosts: readonly BlogPost[] = [
   },
   {
     slug: "plan-orlando-move-before-first-box",
+    illustration: "packing",
     eyebrow: "Orlando move planning",
     title: "Plan your Orlando move before the first box",
     teaser:
@@ -407,6 +420,7 @@ export const blogPosts: readonly BlogPost[] = [
   },
   {
     slug: "careful-furniture-handling-orlando-movers",
+    illustration: "packing",
     eyebrow: "Careful local movers",
     title: "Careful furniture handling in Orlando",
     teaser:
@@ -428,6 +442,7 @@ export const blogPosts: readonly BlogPost[] = [
   },
   {
     slug: "central-florida-movers-building-access",
+    illustration: "access",
     eyebrow: "Building access & logistics",
     title: "Orlando movers | Building access",
     teaser:

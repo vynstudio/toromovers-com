@@ -6,6 +6,7 @@ import { Faq } from "@/components/Faq";
 import { ClosingCta } from "@/components/ClosingCta";
 import { Areas } from "@/components/Areas";
 import { IconArrow } from "@/components/icons";
+import { VectorSlot } from "@/components/ServiceIllustrations";
 import type { CityPageContent } from "@/lib/city-pages";
 import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH } from "@/lib/site";
 
@@ -82,6 +83,9 @@ export function CityLanding({ city }: { city: CityPageContent }) {
                 href={s.href}
                 className="city-seo-card city-service-link flex w-full flex-col items-center text-center md:items-start md:text-left"
               >
+                <span className="city-service-art">
+                  <VectorSlot kind={s.illustration} />
+                </span>
                 <h3 className="fluid-h3 text-foreground">{s.title}</h3>
                 <p className="aeo-answer mx-auto mt-2 w-full max-w-sm text-[var(--text-body)] leading-relaxed text-muted md:mx-0">
                   {s.body}

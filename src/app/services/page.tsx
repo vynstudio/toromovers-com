@@ -6,10 +6,7 @@ import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
 import { servicesHub } from "@/lib/services-hub";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
-import {
-  VectorSlot,
-  illustrationKeyAt,
-} from "@/components/ServiceIllustrations";
+import { VectorSlot } from "@/components/ServiceIllustrations";
 import {
   BUSINESS_NAME,
   PHONE_DISPLAY,
@@ -81,7 +78,7 @@ export default function ServicesPage() {
                   >
                     <span className="services-hub-card-frame">
                       {VECTORS_ONLY ? (
-                        <VectorSlot kind={item.illustration ?? "local"} />
+                        <VectorSlot kind={item.illustration} />
                       ) : (
                         <Image
                           src={item.image}
@@ -117,7 +114,7 @@ export default function ServicesPage() {
               className="services-hub-grid services-hub-grid--secondary"
               aria-label="Additional moving services"
             >
-              {servicesHub.secondary.map((item, i) => (
+              {servicesHub.secondary.map((item) => (
                 <li key={item.href}>
                   <a
                     href={item.href}
@@ -126,7 +123,7 @@ export default function ServicesPage() {
                   >
                     <span className="services-hub-card-frame services-hub-card-frame--sm">
                       {VECTORS_ONLY ? (
-                        <VectorSlot kind={illustrationKeyAt(i)} />
+                        <VectorSlot kind={item.illustration} />
                       ) : (
                         <Image
                           src={item.image}

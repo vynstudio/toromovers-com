@@ -3,6 +3,7 @@
  * Same shell as homepage; unique copy per city.
  */
 
+import type { ServiceIllustrationKey } from "@/components/ServiceIllustrations";
 import { CITIES as ENGINE_CITIES, type CityData } from "./engine-cities.ts";
 import { PHONE_DISPLAY, QUOTE_PATH } from "./site.ts";
 
@@ -30,6 +31,7 @@ export type CityPageContent = {
     title: string;
     body: string;
     href: string;
+    illustration: ServiceIllustrationKey;
   }[];
   closing: {
     title: string;
@@ -118,17 +120,20 @@ export const ORLANDO: CityPageContent = {
     {
       title: "Full-service movers",
       body: "Truck, crew, loading, transport, unloading, and careful placement across Orlando and Central Florida.",
-      href: "/services",
+      href: "/full-service-moving",
+      illustration: "local",
     },
     {
       title: "Labor-only movers",
       body: "U-Haul, POD, trailer, and rental truck loading and unloading by the hour.",
-      href: "/services",
+      href: "/labor-only-moving",
+      illustration: "labor-only",
     },
     {
       title: "Apartment movers",
       body: "Stairs, elevators, loading zones, and tight move-in windows handled carefully.",
-      href: "/services",
+      href: "/apartment-movers-orlando-fl",
+      illustration: "apartment",
     },
   ],
   closing: {
@@ -143,17 +148,20 @@ function cityServices(name: string): CityPageContent["services"] {
     {
       title: "Full-service movers",
       body: `Truck, crew, loading, transport, unloading, and careful placement in ${name} and nearby Central Florida.`,
-      href: "/services",
+      href: "/full-service-moving",
+      illustration: "local",
     },
     {
       title: "Labor-only movers",
       body: `U-Haul, POD, trailer, and rental truck loading and unloading by the hour in ${name}.`,
-      href: "/services",
+      href: "/labor-only-moving",
+      illustration: "labor-only",
     },
     {
       title: "Apartment movers",
       body: `Stairs, elevators, loading zones, and tight move-in windows in ${name} handled carefully.`,
-      href: "/services",
+      href: "/apartment-movers-orlando-fl",
+      illustration: "apartment",
     },
   ];
 }
