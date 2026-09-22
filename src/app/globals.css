@@ -957,6 +957,45 @@ html:has(.gmp-page) body,
   font-size: 1rem;
   font-weight: 400;
 }
+.address-input-wrap {
+  position: relative;
+}
+.address-suggestions {
+  position: absolute;
+  z-index: 40;
+  left: 0;
+  right: 0;
+  max-height: 14rem;
+  margin: 0.2rem 0 0;
+  padding: 0.25rem 0;
+  overflow-y: auto;
+  list-style: none;
+  background: #fff;
+  border: 1px solid #d4d4d8;
+  border-radius: 0.65rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+.address-suggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.55rem 0.7rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+.address-suggestion.active,
+.address-suggestion:hover {
+  background: #fce6e8;
+}
+.addr-primary {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.addr-secondary {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #52525b;
+}
 .gmp-optional {
   font-weight: 500;
   color: #71717a;
