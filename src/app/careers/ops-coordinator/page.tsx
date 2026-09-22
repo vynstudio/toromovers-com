@@ -13,6 +13,8 @@ import {
 const ROLE = "Remote Operations Coordinator";
 const EMPLOYER = "Diler Dynamics Group";
 const APPLY_SUBJECT = "OPS Coordinator — Honduras";
+/** Availability for this role. Toro Movers customer hours are separate. */
+const ROLE_HOURS = "Monday–Saturday, 9:00 AM–5:00 PM ET";
 const APPLY_HREF = `mailto:${EMAIL}?subject=${encodeURIComponent(APPLY_SUBJECT)}`;
 
 const DESCRIPTION =
@@ -62,7 +64,7 @@ const QUALIFICATIONS = [
   "Sales experience preferred, or a strong desire to learn",
   "No prior industry experience required; training provided",
   "Comfortable learning WhatsApp Business, Gmail, CRM, calendar, and basic bookkeeping",
-  "Available Monday–Saturday, 7:00 a.m.–7:00 p.m. Eastern Time",
+  `Available ${ROLE_HOURS}`,
   "Able to start this week",
 ] as const;
 
@@ -72,7 +74,7 @@ function jobPostingJsonLd() {
     "@type": "JobPosting",
     title: ROLE,
     description:
-      "<p>Fully remote Remote Operations Coordinator. Candidates must be based in Honduras. The role supports day-to-day operations for Toro Movers, a U.S. moving-services business, at Diler Dynamics Group.</p><ul><li>Respond to inbound leads via WhatsApp, email, and phone</li><li>Prepare and send customer quotes, and manage follow-ups through booking</li><li>Maintain the CRM, calendar, and pipeline</li><li>Light bookkeeping and operational admin</li></ul><p>Compensation: $500 USD per month base, plus sales commissions. Typical total earnings are $1,100–$2,000 USD per month.</p><p>English proficiency is required. Sales experience is preferred. No prior moving-industry experience is required; training is provided. Hours of availability: Monday–Saturday, 7:00 a.m.–7:00 p.m. Eastern Time. Able to start this week.</p>",
+      `<p>Fully remote Remote Operations Coordinator. Candidates must be based in Honduras. The role supports day-to-day operations for Toro Movers, a U.S. moving-services business, at Diler Dynamics Group.</p><ul><li>Respond to inbound leads via WhatsApp, email, and phone</li><li>Prepare and send customer quotes, and manage follow-ups through booking</li><li>Maintain the CRM, calendar, and pipeline</li><li>Light bookkeeping and operational admin</li></ul><p>Compensation: $500 USD per month base, plus sales commissions. Typical total earnings are $1,100–$2,000 USD per month.</p><p>English proficiency is required. Sales experience is preferred. No prior moving-industry experience is required; training is provided. Hours of availability: ${ROLE_HOURS}. Able to start this week.</p>`,
     datePosted: "2026-09-21",
     validThrough: "2026-12-31",
     employmentType: "FULL_TIME",
@@ -108,7 +110,7 @@ function jobPostingJsonLd() {
     },
     incentiveCompensation:
       "Sales commissions. Typical total earnings $1,100–$2,000 USD per month.",
-    workHours: "Monday–Saturday, 7:00 a.m.–7:00 p.m. Eastern Time",
+    workHours: ROLE_HOURS,
   };
 }
 
