@@ -19,6 +19,16 @@ export function isFullStreetAddress(value: string): boolean {
   );
 }
 
+/** Street line plus unit, then city, state, and ZIP. */
+export function addressWithUnit(address: string, unit: string): string {
+  const line = address.trim();
+  const apt = unit.trim();
+  if (!apt) return line;
+  const comma = line.indexOf(",");
+  if (comma === -1) return `${line}, ${apt}`;
+  return `${line.slice(0, comma).trim()}, ${apt}${line.slice(comma)}`;
+}
+
 /** Drop a trailing country so the saved line is street, city, state, ZIP. */
 export function stripCountry(address: string): string {
   return address.replace(/,\s*(United States|USA)\s*$/i, "").trim();
@@ -41,6 +51,8 @@ export function formatMapboxAddress(feature: MapboxFeature): string {
     .filter(Boolean)
     .join(", ");
   const built = [line1, tail].filter(Boolean).join(", ");
-  if (number && city && zip) return built;
-  return stripCountry(feature.place_name || built);
+  const named = stripCountry(feature.place_name || "");
+  if (number && city && state && zip) return built;
+  if (isFullStreetAddress(named)) return named;
+  return built || named;
 }

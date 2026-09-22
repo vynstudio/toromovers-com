@@ -8,6 +8,7 @@ import {
   validateStep,
   type MoveChecklistPayload,
 } from "@/lib/move-checklist/model";
+import { addressWithUnit } from "@/lib/address-format";
 import { clientIp, rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
@@ -127,8 +128,8 @@ export async function POST(req: Request) {
     line("Phone", data.phone),
     line("Email", data.email),
     line("Move date", data.moveDate),
-    line("Pickup", `${data.pickupAddress}${data.pickupUnit ? ` · ${data.pickupUnit}` : ""}`),
-    line("Delivery", `${data.deliveryAddress}${data.deliveryUnit ? ` · ${data.deliveryUnit}` : ""}`),
+    line("Pickup", addressWithUnit(data.pickupAddress, data.pickupUnit)),
+    line("Delivery", addressWithUnit(data.deliveryAddress, data.deliveryUnit)),
     line("Present pickup", data.presentPickup),
     data.presentPickup === "No"
       ? line("Pickup contact", `${data.pickupContactName} ${data.pickupContactPhone}`)

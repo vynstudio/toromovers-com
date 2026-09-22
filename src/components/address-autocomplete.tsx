@@ -361,7 +361,7 @@ export function AddressAutocomplete({
   };
 
   return (
-    <div ref={wrapRef} className="address-input-wrap">
+    <div ref={wrapRef} className={`address-input-wrap${open ? " is-open" : ""}`}>
       <input
         ref={inputRef}
         id={id}
@@ -378,6 +378,7 @@ export function AddressAutocomplete({
         onChange={(e) => handleChange(e.target.value)}
         onFocus={() => {
           if (suggestions.length > 0) setOpen(true);
+          inputRef.current?.scrollIntoView({ block: "center" });
         }}
         onKeyDown={onKey}
         aria-label={ariaLabel}
@@ -400,10 +401,7 @@ export function AddressAutocomplete({
               }}
               onMouseEnter={() => setActive(i)}
             >
-              <span className="addr-primary">{s.primary || s.full}</span>
-              {s.secondary ? (
-                <span className="addr-secondary">{s.secondary}</span>
-              ) : null}
+              <span className="addr-primary">{s.full || s.primary}</span>
             </li>
           ))}
         </ul>
