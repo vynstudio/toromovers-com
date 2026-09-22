@@ -4,10 +4,11 @@ import { blogPosts, blogShowsOwnPhoto, getBlogPost } from "./blog.ts";
 
 const SLUG = "how-much-to-tip-movers-orlando";
 
-test("tipping guide is the newest post and stays inside the content rules", () => {
+test("tipping guide stays inside the content rules", () => {
   const post = getBlogPost(SLUG);
   assert.ok(post);
-  assert.equal(blogPosts[0]?.slug, SLUG);
+  assert.notEqual(blogPosts[0]?.slug, SLUG);
+  assert.ok(blogPosts.some((p) => p.slug === SLUG));
   assert.equal(post.title, "How much to tip movers in Orlando?");
   assert.equal(post.date, "2026-09-21");
   assert.equal(post.dateLabel, "Sep 21, 2026");
