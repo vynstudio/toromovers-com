@@ -52,7 +52,11 @@ async function mapboxSuggest(
     if (!res.ok) return [];
     const data = (await res.json()) as { features?: MapboxFeature[] };
     return (data.features ?? [])
-      .filter((f) => !streetOnly || Boolean(f.address))
+      .filter((f) => {
+        if (!streetOnly) return true;
+        if (f.address) return true;
+        return /\d/.test(f.place_name || "");
+      })
       .map((f, i) => {
         const full = formatMapboxAddress(f);
         const primary =
@@ -213,6 +217,14 @@ async function fetchSuggestions(
   return [];
 }
 
+function viewportListen(place: () => void, remove = false) {
+  const viewport = window.visualViewport;
+  const method = remove ? "removeEventListener" : "addEventListener";
+  viewport?.[method]("resize", place);
+  viewport?.[method]("scroll", place);
+  window[method]("scroll", place, true);
+}
+
 function newToken(): string {
   return typeof crypto !== "undefined" && crypto.randomUUID
     ? crypto.randomUUID()
@@ -256,8 +268,11 @@ export function AddressAutocomplete({
   const debounceRef = useRef<number | null>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
   const tokenRef = useRef(newToken());
   const fetchSeq = useRef(0);
+  const focusedRef = useRef(false);
+  const blurTimer = useRef<number | null>(null);
   const onChangeRef = useRef(onChange);
   useEffect(() => {
     onChangeRef.current = onChange;
@@ -295,10 +310,60 @@ export function AddressAutocomplete({
       );
       if (seq !== fetchSeq.current) return;
       setSuggestions(items);
-      setOpen(items.length > 0 && document.activeElement === inputRef.current);
+      if (blurTimer.current) {
+        window.clearTimeout(blurTimer.current);
+        blurTimer.current = null;
+      }
+      setOpen(items.length > 0 && focusedRef.current);
       setActive(-1);
+      if (items.length > 0 && focusedRef.current) {
+        requestAnimationFrame(() => revealInput());
+      }
     } catch {
       /* plain typing still works */
+    }
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const place = () => {
+      const input = inputRef.current;
+      const list = listRef.current;
+      const viewport = window.visualViewport;
+      if (!input || !list || !viewport || window.innerWidth > 699) {
+        if (list) list.removeAttribute("style");
+        return;
+      }
+      const rect = input.getBoundingClientRect();
+      const below = viewport.height - rect.bottom;
+      list.style.position = "fixed";
+      list.style.left = "12px";
+      list.style.right = "12px";
+      list.style.zIndex = "80";
+      list.style.margin = "0";
+      if (below >= 140) {
+        list.style.top = `${rect.bottom + 4}px`;
+        list.style.bottom = "auto";
+        list.style.maxHeight = `${Math.min(240, below - 8)}px`;
+      } else {
+        list.style.top = "auto";
+        list.style.bottom = `${viewport.height - rect.top + 4}px`;
+        list.style.maxHeight = `${Math.min(240, Math.max(120, rect.top - 8))}px`;
+      }
+    };
+    place();
+    viewportListen(place);
+    return () => viewportListen(place, true);
+  }, [open, suggestions]);
+
+  const revealInput = () => {
+    const input = inputRef.current;
+    const viewport = window.visualViewport;
+    if (!input || !viewport) return;
+    const rect = input.getBoundingClientRect();
+    const topGap = 96;
+    if (rect.top < topGap || rect.bottom > viewport.height - 180) {
+      window.scrollBy({ top: rect.top - topGap, behavior: "auto" });
     }
   };
 
@@ -377,8 +442,15 @@ export function AddressAutocomplete({
         value={value}
         onChange={(e) => handleChange(e.target.value)}
         onFocus={() => {
+          focusedRef.current = true;
           if (suggestions.length > 0) setOpen(true);
-          inputRef.current?.scrollIntoView({ block: "center" });
+        }}
+        onBlur={() => {
+          if (blurTimer.current) window.clearTimeout(blurTimer.current);
+          blurTimer.current = window.setTimeout(() => {
+            focusedRef.current = false;
+            setOpen(false);
+          }, 400);
         }}
         onKeyDown={onKey}
         aria-label={ariaLabel}
@@ -388,7 +460,7 @@ export function AddressAutocomplete({
         role="combobox"
       />
       {open && suggestions.length > 0 && (
-        <ul id={listId} className="address-suggestions" role="listbox">
+        <ul ref={listRef} id={listId} className="address-suggestions" role="listbox">
           {suggestions.map((s, i) => (
             <li
               key={s.id}

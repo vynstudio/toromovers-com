@@ -408,8 +408,9 @@
   overflow-y: auto;
 }
 .address-input-wrap.is-open {
-  z-index: 60;
+  z-index: 80;
 }
+
 .mdc-wrap .address-suggestion {
   min-height: 56px;
   padding: 14px 12px;
