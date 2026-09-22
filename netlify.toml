@@ -310,6 +310,70 @@
   status = 301
   force = true
 
+# Search Console "Not found (404)" URLs as of 2026-09-22.
+# www and http index.html already 301 to apex /index.html.
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/clermont-moversClermont"
+  to = "/clermont-movers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kissimmee-moversKissimmee"
+  to = "/kissimmee-movers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/orlando-movers-galleryGallery"
+  to = "/orlando-movers-gallery"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/blogBlog"
+  to = "/blog"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/aboutAbout"
+  to = "/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/opengraph-image"
+  to = "/og/default.jpg"
+  status = 301
+  force = true
+
+# Was a redirect, now 404. Keep it in the redirect bucket.
+[[redirects]]
+  from = "/pages/cities/st-cloud-movers.html"
+  to = "/st-cloud-movers"
+  status = 301
+  force = true
+
+# Legacy gallery path. The page component is a temporary redirect; force 301.
+[[redirects]]
+  from = "/recent-moves"
+  to = "/orlando-movers-gallery"
+  status = 301
+  force = true
+
 # Ads / Spanish / engine LP shells → live funnel or home
 [[redirects]]
   from = "/ads/*"

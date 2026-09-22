@@ -20,9 +20,27 @@ import { IconArrow } from "@/components/icons";
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** Paths that should be real internal links. Visible text stays the path itself. */
+/** Paths written in guide copy. The href stays the path; the label is words. */
 const INTERNAL_PATH =
   /\/(?:quotes|apartment-movers-orlando-fl|full-service-moving|labor-only-moving|loading-unloading|blog\/[a-z0-9-]+)/g;
+
+const PATH_LABELS: Record<string, string> = {
+  "/quotes": "the quote page",
+  "/apartment-movers-orlando-fl": "apartment movers",
+  "/full-service-moving": "full-service moving",
+  "/labor-only-moving": "labor-only moving",
+  "/loading-unloading": "loading and unloading",
+};
+
+function linkLabel(href: string): string {
+  const known = PATH_LABELS[href];
+  if (known) return known;
+  if (href.startsWith("/blog/")) {
+    const post = getBlogPost(href.slice("/blog/".length));
+    if (post) return post.title.split(":")[0].trim();
+  }
+  return href;
+}
 
 function BlogInline({ text }: { text: string }) {
   const nodes: Array<string | { href: string; key: string }> = [];
@@ -44,7 +62,7 @@ function BlogInline({ text }: { text: string }) {
         href={part.href}
         className="underline underline-offset-4"
       >
-        {part.href}
+        {linkLabel(part.href)}
       </Link>
     ),
   );
