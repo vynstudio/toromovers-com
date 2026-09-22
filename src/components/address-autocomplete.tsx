@@ -1,6 +1,14 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
+import {
+  formatMapboxAddress,
+  isFullStreetAddress,
+  stripCountry,
+  type MapboxFeature,
+} from "@/lib/address-format";
+
+export { isFullStreetAddress };
 
 /**
  * Address autocomplete — Mapbox first (NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN),
@@ -11,35 +19,46 @@ const MAPBOX = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN;
 const GOOGLE = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 const CFL = { lng: -81.3792, lat: 28.5383 };
 
-type Suggestion = { id: string; primary: string; secondary: string; full: string };
+type Suggestion = {
+  id: string;
+  primary: string;
+  secondary: string;
+  /** Complete line saved when the person picks this suggestion. */
+  full: string;
+  source: "mapbox" | "google";
+  placeId?: string;
+};
 
-async function mapboxSuggest(input: string): Promise<Suggestion[]> {
+async function mapboxSuggest(
+  input: string,
+  streetOnly: boolean,
+): Promise<Suggestion[]> {
   if (!MAPBOX || input.trim().length < 3) return [];
   const q = encodeURIComponent(input.trim());
+  const types = streetOnly
+    ? "address"
+    : "address,place,locality,neighborhood,postcode";
   const url =
     `https://api.mapbox.com/geocoding/v5/mapbox.places/${q}.json` +
     `?access_token=${MAPBOX}` +
     `&country=us` +
     `&proximity=${CFL.lng},${CFL.lat}` +
-    `&types=address,place,locality,neighborhood,postcode` +
+    `&types=${types}` +
     `&autocomplete=true` +
     `&limit=6`;
 
   try {
     const res = await fetch(url);
     if (!res.ok) return [];
-    const data = (await res.json()) as {
-      features?: {
-        id?: string;
-        place_name?: string;
-        text?: string;
-        context?: { id?: string; text?: string }[];
-      }[];
-    };
+    const data = (await res.json()) as { features?: MapboxFeature[] };
     return (data.features ?? [])
+      .filter((f) => !streetOnly || Boolean(f.address))
       .map((f, i) => {
-        const full = f.place_name || "";
-        const primary = f.text || full.split(",")[0] || full;
+        const full = formatMapboxAddress(f);
+        const primary =
+          [f.address, f.text].filter(Boolean).join(" ") ||
+          full.split(",")[0] ||
+          full;
         const secondary = full.includes(",")
           ? full.slice(full.indexOf(",") + 1).trim()
           : (f.context || []).map((c) => c.text).filter(Boolean).join(", ");
@@ -48,6 +67,7 @@ async function mapboxSuggest(input: string): Promise<Suggestion[]> {
           primary,
           secondary,
           full,
+          source: "mapbox" as const,
         };
       })
       .filter((s) => s.full);
@@ -56,9 +76,57 @@ async function mapboxSuggest(input: string): Promise<Suggestion[]> {
   }
 }
 
+async function googleFormatted(
+  placeId: string,
+  sessionToken: string,
+): Promise<string | null> {
+  if (!GOOGLE || !placeId) return null;
+  const id = placeId.replace(/^places\//, "");
+  try {
+    const res = await fetch(
+      `https://places.googleapis.com/v1/places/${encodeURIComponent(id)}?sessionToken=${encodeURIComponent(sessionToken)}`,
+      {
+        headers: {
+          "X-Goog-Api-Key": GOOGLE,
+          "X-Goog-FieldMask": "formattedAddress,addressComponents",
+        },
+      },
+    );
+    if (!res.ok) return null;
+    const data = (await res.json()) as {
+      formattedAddress?: string;
+      addressComponents?: {
+        longText?: string;
+        shortText?: string;
+        types?: string[];
+      }[];
+    };
+    const parts = data.addressComponents || [];
+    const text = (type: string, short = false) => {
+      const hit = parts.find((part) => part.types?.includes(type));
+      return (short ? hit?.shortText : hit?.longText) || "";
+    };
+    const line1 = [text("street_number"), text("route")].filter(Boolean).join(" ");
+    const city = text("locality") || text("postal_town") || text("sublocality");
+    const state = text("administrative_area_level_1", true);
+    const zip = text("postal_code");
+    const built = [
+      line1,
+      [city, [state, zip].filter(Boolean).join(" ")].filter(Boolean).join(", "),
+    ]
+      .filter(Boolean)
+      .join(", ");
+    if (line1 && city && zip) return built;
+    return stripCountry(data.formattedAddress || built);
+  } catch {
+    return null;
+  }
+}
+
 async function googleSuggest(
   input: string,
   sessionToken: string,
+  streetOnly: boolean,
 ): Promise<Suggestion[]> {
   if (!GOOGLE || input.trim().length < 2) return [];
 
@@ -86,7 +154,9 @@ async function googleSuggest(
       headers,
       body: JSON.stringify({
         ...bodyBase,
-        includedPrimaryTypes: ["street_address", "premise", "subpremise", "route"],
+        includedPrimaryTypes: streetOnly
+          ? ["street_address", "premise", "subpremise"]
+          : ["street_address", "premise", "subpremise", "route"],
       }),
     });
     if (!res.ok) {
@@ -117,7 +187,9 @@ async function googleSuggest(
         primary:
           p.structuredFormat?.mainText?.text ?? p.text?.text ?? "",
         secondary: p.structuredFormat?.secondaryText?.text ?? "",
-        full: p.text?.text ?? "",
+        full: stripCountry(p.text?.text ?? ""),
+        source: "google" as const,
+        placeId: p.placeId,
       }))
       .filter((s) => s.full || s.primary);
   } catch {
@@ -128,14 +200,15 @@ async function googleSuggest(
 async function fetchSuggestions(
   input: string,
   sessionToken: string,
+  streetOnly: boolean,
 ): Promise<Suggestion[]> {
   // Prefer Mapbox when configured
   if (MAPBOX) {
-    const mb = await mapboxSuggest(input);
+    const mb = await mapboxSuggest(input, streetOnly);
     if (mb.length) return mb;
   }
   if (GOOGLE) {
-    return googleSuggest(input, sessionToken);
+    return googleSuggest(input, sessionToken, streetOnly);
   }
   return [];
 }
@@ -154,6 +227,9 @@ type Props = {
   autoComplete?: string;
   name?: string;
   id?: string;
+  className?: string;
+  /** Only offer numbered street addresses, and save street, city, state, ZIP. */
+  streetOnly?: boolean;
 };
 
 export function AddressAutocomplete({
@@ -164,6 +240,8 @@ export function AddressAutocomplete({
   autoComplete = "off",
   name,
   id,
+  className,
+  streetOnly = false,
 }: Props) {
   const reactId = useId();
   const listId = `${reactId}-list`;
@@ -203,7 +281,11 @@ export function AddressAutocomplete({
     }
     const seq = ++fetchSeq.current;
     try {
-      const items = await fetchSuggestions(query, tokenRef.current);
+      const items = await fetchSuggestions(
+        query,
+        tokenRef.current,
+        streetOnly,
+      );
       if (seq !== fetchSeq.current) return;
       setSuggestions(items);
       setOpen(items.length > 0 && document.activeElement === inputRef.current);
@@ -221,13 +303,25 @@ export function AddressAutocomplete({
     }, 220);
   };
 
+  const selectSeq = useRef(0);
+
   const select = (s: Suggestion) => {
-    const full = s.full || s.primary;
-    onChangeRef.current(full);
-    setSuggestions([]);
-    setOpen(false);
-    setActive(-1);
+    const seq = ++selectSeq.current;
+    const apply = (full: string) => {
+      if (seq !== selectSeq.current) return;
+      onChangeRef.current(full);
+      setSuggestions([]);
+      setOpen(false);
+      setActive(-1);
+    };
+    apply(s.full || s.primary);
+    const token = tokenRef.current;
     tokenRef.current = newToken();
+    if (s.source === "google" && s.placeId) {
+      void googleFormatted(s.placeId, token).then((resolved) => {
+        if (resolved) apply(resolved);
+      });
+    }
     requestAnimationFrame(() => inputRef.current?.blur());
   };
 
@@ -270,6 +364,7 @@ export function AddressAutocomplete({
         autoCorrect="off"
         autoCapitalize="words"
         spellCheck={false}
+        className={className}
         placeholder={placeholder}
         value={value}
         onChange={(e) => handleChange(e.target.value)}

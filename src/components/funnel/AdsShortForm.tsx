@@ -1,6 +1,10 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import {
+  AddressAutocomplete,
+  isFullStreetAddress,
+} from "@/components/address-autocomplete";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
 import {
@@ -38,6 +42,8 @@ export default function AdsShortForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
   const [service, setService] = useState<ServiceType>("house_2plus_move");
   const [when, setWhen] = useState<(typeof WHEN)[number]["id"]>("This week");
   const [consent, setConsent] = useState(true);
@@ -64,6 +70,12 @@ export default function AdsShortForm() {
       setError("Enter a valid email, or leave it blank.");
       return;
     }
+    if (!isFullStreetAddress(origin) || !isFullStreetAddress(destination)) {
+      setError(
+        "Choose the full pickup and drop-off addresses from the suggestions (street, city, and ZIP).",
+      );
+      return;
+    }
     if (!name.trim() || name.trim().length < 2 || !phoneE164 || !consent) {
       setError(
         "Please enter your name, a valid mobile number, and consent before continuing.",
@@ -85,10 +97,10 @@ export default function AdsShortForm() {
       service_details: {
         primary_detail: "",
         move_date: when,
-        origin: "",
-        destination: "",
+        origin: origin.trim(),
+        destination: destination.trim(),
         access_conditions: "",
-        notes: "Short Meta ads callback form (name + phone + optional email).",
+        notes: "Meta ads quote form (name, phone, full pickup and drop-off).",
       },
       contact: {
         full_name: name.trim(),
@@ -205,6 +217,37 @@ export default function AdsShortForm() {
             className={fieldClass}
             autoComplete="email"
             enterKeyHint="next"
+          />
+        </label>
+
+        <label>
+          Pickup address
+          <AddressAutocomplete
+            streetOnly
+            value={origin}
+            onChange={(next) => {
+              setOrigin(next);
+              if (error) setError("");
+            }}
+            className={fieldClass}
+            placeholder="Street, city, ZIP"
+            ariaLabel="Pickup address"
+            autoComplete="street-address"
+          />
+        </label>
+
+        <label>
+          Drop-off address
+          <AddressAutocomplete
+            streetOnly
+            value={destination}
+            onChange={(next) => {
+              setDestination(next);
+              if (error) setError("");
+            }}
+            className={fieldClass}
+            placeholder="Street, city, ZIP"
+            ariaLabel="Drop-off address"
           />
         </label>
 

@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  AddressAutocomplete,
+  isFullStreetAddress,
+} from "@/components/address-autocomplete";
 import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
@@ -244,6 +248,15 @@ export default function UniversalLeadForm({
   }
 
   function completeStep(next: number, stepName: string) {
+    if (
+      stepName === "move_logistics" &&
+      (!isFullStreetAddress(origin) || !isFullStreetAddress(destination))
+    ) {
+      setError(
+        "Choose the full pickup and drop-off addresses from the suggestions (street, city, and ZIP).",
+      );
+      return;
+    }
     setError("");
     trackFunnelEvent("form_step_complete", {
       step_name: stepName,
@@ -435,21 +448,26 @@ export default function UniversalLeadForm({
             />
           </label>
           <label className="block text-sm font-bold">
-            Moving from (address or ZIP)
-            <input
+            Moving from
+            <AddressAutocomplete
+              streetOnly
               value={origin}
-              onChange={(event) => setOrigin(event.target.value)}
+              onChange={setOrigin}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Pickup address or ZIP"
+              placeholder="Street, city, ZIP"
+              ariaLabel="Pickup address"
+              autoComplete="street-address"
             />
           </label>
           <label className="block text-sm font-bold">
-            Moving to (address or ZIP)
-            <input
+            Moving to
+            <AddressAutocomplete
+              streetOnly
               value={destination}
-              onChange={(event) => setDestination(event.target.value)}
+              onChange={setDestination}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Local Central Florida destination"
+              placeholder="Street, city, ZIP"
+              ariaLabel="Drop-off address"
             />
           </label>
           <label className="block text-sm font-bold">
@@ -477,13 +495,22 @@ export default function UniversalLeadForm({
             </button>
             <button
               type="button"
-              disabled={!moveDate || !origin}
+              disabled={
+                !moveDate ||
+                !isFullStreetAddress(origin) ||
+                !isFullStreetAddress(destination)
+              }
               onClick={() => completeStep(4, "move_logistics")}
               className={`flex-1 ${primaryBtn}`}
             >
               Continue
             </button>
           </div>
+          {error ? (
+            <p role="alert" className="text-sm font-medium text-[#B80510]">
+              {error}
+            </p>
+          ) : null}
         </div>
       )}
       {step === 4 && (
