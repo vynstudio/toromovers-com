@@ -156,39 +156,39 @@ export function MoveChecklistWizard() {
 
   if (screen === "intro") {
     return (
-      <div className="mdc-wrap">
-        <p className="mdc-kicker">After your deposit</p>
-        <h1 className="mdc-title">Help Us Finalize Your Move</h1>
+      <div className="mdc-wrap mdc-doc">
+        <h1 className="mdc-title">Confirm your move</h1>
         <p className="mdc-lede">
-          Your deposit has been received. Please complete this quick checklist so Toro
-          Movers can confirm your move details, prepare the right crew and equipment, and
-          send your final booking confirmation.
+          The deposit is in. This checklist is the last step. After we review it, we
+          send your booking confirmation.
         </p>
-        <ul className="mdc-benefits">
-          <li>Takes about 3 minutes</li>
-          <li>Helps us prepare for parking, access, inventory, and special handling</li>
-          <li>You may upload photos of stairs, parking, elevators, or specialty items</li>
-        </ul>
+        <ol className="mdc-benefits">
+          <li>Stops and who will be there</li>
+          <li>How we get in</li>
+          <li>What we are moving, then you send it</li>
+        </ol>
         <button type="button" className="mdc-btn mdc-btn-primary" onClick={start}>
-          Start Move Checklist
+          Start checklist
         </button>
+        <p className="mdc-hint">About 3 minutes.</p>
       </div>
     );
   }
 
   if (screen === "done") {
     return (
-      <div className="mdc-wrap">
-        <p className="mdc-kicker">Submitted</p>
-        <h1 className="mdc-title">Checklist Received — You’re Almost Confirmed</h1>
+      <div className="mdc-wrap mdc-doc">
+        <h1 className="mdc-title">Checklist sent</h1>
         <p className="mdc-lede">
-          Toro Movers has received your move details. Our team will review the information
-          and send your final booking confirmation shortly.
+          Your move is not confirmed until we send the booking confirmation.
+        </p>
+        <p className="mdc-phone">
+          <a href="tel:+16896002720">(689) 600-2720</a>
         </p>
         <p className="mdc-lede">
-          If you need to update anything before we confirm, call or text{" "}
-          <a href="tel:+16896002720">(689) 600-2720</a> or email{" "}
-          <a href="mailto:hello@toromovers.com">hello@toromovers.com</a>.
+          Call or text that number, or email{" "}
+          <a href="mailto:hello@toromovers.com">hello@toromovers.com</a>, if something
+          changes before we confirm.
         </p>
         {reviewId ? <p className="mdc-hint">Reference: {reviewId.slice(0, 8)}</p> : null}
         <Link href="/" className="mdc-btn mdc-btn-primary">
@@ -198,21 +198,83 @@ export function MoveChecklistWizard() {
     );
   }
 
-  const titles = [
-    "Move details",
-    "Pickup access",
-    "Delivery Location Access",
-    "Inventory, services & review",
-  ];
+  const steps = [
+    { short: "Details", title: "Confirm the stops", blurb: "Who, when, and both addresses" },
+    { short: "Pickup", title: "Pickup access", blurb: "How we get in" },
+    { short: "Delivery", title: "Delivery access", blurb: "How we get in" },
+    { short: "Review", title: "Send for confirmation", blurb: "Check it, then send" },
+  ] as const;
+
+  function goTo(nextStep: 1 | 2 | 3 | 4) {
+    if (nextStep >= step) return;
+    setErr("");
+    setStep(nextStep);
+  }
+
+  function shortAddress(value: string) {
+    const line = value.split(",")[0]?.trim();
+    if (!line) return "";
+    return line.length > 42 ? `${line.slice(0, 40)}…` : line;
+  }
 
   return (
     <div className="mdc-wrap">
-      <div className="mdc-progress" aria-hidden>
-        <span style={{ width: `${(step / 4) * 100}%` }} />
-      </div>
-      <p className="mdc-step">
-        Step {step} of 4 · {titles[step - 1]}
-      </p>
+      <div className="mdc-shell">
+        <aside className="mdc-rail" aria-label="Checklist steps">
+          <ol>
+            {steps.map((item, index) => {
+              const n = (index + 1) as 1 | 2 | 3 | 4;
+              const on = step === n;
+              return (
+                <li key={item.short} className={on ? "is-on" : undefined}>
+                  {n < step ? (
+                    <button type="button" onClick={() => goTo(n)}>
+                      <span>{item.short}</span>
+                      <small>{item.blurb}</small>
+                    </button>
+                  ) : (
+                    <span>
+                      <span>{item.short}</span>
+                      <small>{item.blurb}</small>
+                    </span>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+          <div className="mdc-rail-notes">
+            {data.fullName ? <p>{data.fullName}</p> : null}
+            {data.pickupAddress ? (
+              <p>Pickup · {shortAddress(data.pickupAddress)}</p>
+            ) : null}
+            {data.deliveryAddress ? (
+              <p>Delivery · {shortAddress(data.deliveryAddress)}</p>
+            ) : null}
+          </div>
+        </aside>
+        <div className="mdc-main">
+      <nav className="mdc-steps" aria-label="Checklist steps">
+        {steps.map((item, index) => {
+          const n = (index + 1) as 1 | 2 | 3 | 4;
+          const on = step === n;
+          return n < step ? (
+            <button key={item.short} type="button" onClick={() => goTo(n)}>
+              {item.short}
+            </button>
+          ) : (
+            <span key={item.short} className={on ? "is-on" : undefined}>
+              {item.short}
+            </span>
+          );
+        })}
+      </nav>
+      <h1 className="mdc-title">{steps[step - 1].title}</h1>
+      {step === 2 && data.pickupAddress ? (
+        <p className="mdc-recall">{data.pickupAddress}</p>
+      ) : null}
+      {step === 3 && data.deliveryAddress ? (
+        <p className="mdc-recall">{data.deliveryAddress}</p>
+      ) : null}
 
       {err ? (
         <div ref={errRef} className="mdc-banner" role="alert">
@@ -241,7 +303,16 @@ export function MoveChecklistWizard() {
         <StepFour data={data} patch={patch} onEdit={setStep} />
       ) : null}
 
+      {step === 4 ? (
+        <p className="mdc-send-note">
+          We review this, then send your booking confirmation.
+        </p>
+      ) : null}
+        </div>
+      </div>
       <div className="mdc-nav">
+        <div className="mdc-nav-inner">
+          <div className="mdc-nav-actions">
         <button type="button" className="mdc-btn mdc-btn-ghost" onClick={back}>
           Back
         </button>
@@ -256,9 +327,11 @@ export function MoveChecklistWizard() {
             disabled={sending}
             onClick={() => void submit()}
           >
-            {sending ? "Sending…" : "Submit Move Checklist"}
+            {sending ? "Sending…" : "Send checklist"}
           </button>
         )}
+          </div>
+        </div>
       </div>
       <input
         className="mdc-hp"
@@ -281,22 +354,13 @@ function StepDetails({
 }) {
   return (
     <>
+      <div className="mdc-pair">
       <Field label="Full name">
         <TextInput
           value={data.fullName}
           onChange={(v) => patch({ fullName: v })}
           autoComplete="name"
           name="name"
-        />
-      </Field>
-      <Field label="Email address">
-        <TextInput
-          type="email"
-          value={data.email}
-          onChange={(v) => patch({ email: v })}
-          autoComplete="email"
-          inputMode="email"
-          name="email"
         />
       </Field>
       <Field label="Best mobile phone number">
@@ -309,6 +373,17 @@ function StepDetails({
           name="phone"
         />
       </Field>
+      </div>
+      <Field label="Email address">
+        <TextInput
+          type="email"
+          value={data.email}
+          onChange={(v) => patch({ email: v })}
+          autoComplete="email"
+          inputMode="email"
+          name="email"
+        />
+      </Field>
       <Field label="Scheduled move date">
         <TextInput
           type="date"
@@ -317,6 +392,7 @@ function StepDetails({
           name="moveDate"
         />
       </Field>
+      <div className="mdc-pair mdc-pair-address">
       <Field label="Pickup address">
         <AddressAutocomplete
           value={data.pickupAddress}
@@ -325,13 +401,15 @@ function StepDetails({
           ariaLabel="Pickup address"
         />
       </Field>
-      <Field label="Pickup apartment/unit (optional)">
+      <Field label="Unit (optional)">
         <TextInput
           value={data.pickupUnit}
           onChange={(v) => patch({ pickupUnit: v })}
           autoComplete="address-line2"
         />
       </Field>
+      </div>
+      <div className="mdc-pair mdc-pair-address">
       <Field label="Delivery address">
         <AddressAutocomplete
           value={data.deliveryAddress}
@@ -340,13 +418,14 @@ function StepDetails({
           ariaLabel="Delivery address"
         />
       </Field>
-      <Field label="Delivery apartment/unit (optional)">
+      <Field label="Unit (optional)">
         <TextInput
           value={data.deliveryUnit}
           onChange={(v) => patch({ deliveryUnit: v })}
           autoComplete="address-line2"
         />
       </Field>
+      </div>
       <Field label="Will you be present at pickup?">
         <ChoiceGrid
           options={YES_NO}
@@ -545,7 +624,7 @@ function StepFour({
       </Field>
 
       <div className="mdc-review">
-        <h2>Review before you submit</h2>
+        <h2>What you entered</h2>
         <ReviewBlock title="Move details" onEdit={() => onEdit(1)}>
           <p>{data.fullName}</p>
           <p>{data.email} · {data.phone}</p>
