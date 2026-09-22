@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  addressWithUnit,
   formatMapboxAddress,
   isFullStreetAddress,
   stripCountry,
@@ -19,6 +20,13 @@ test("formatMapboxAddress keeps street, city, state, and ZIP", () => {
   });
   assert.equal(line, "123 Orange Avenue, Orlando, FL 32801");
   assert.equal(isFullStreetAddress(line), true);
+});
+
+test("addressWithUnit keeps city, state, and ZIP after the unit", () => {
+  assert.equal(
+    addressWithUnit("123 Orange Avenue, Orlando, FL 32801", "4B"),
+    "123 Orange Avenue, 4B, Orlando, FL 32801",
+  );
 });
 
 test("stripCountry removes a trailing country only", () => {

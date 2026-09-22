@@ -325,7 +325,6 @@ export function validateStep(step: 1 | 2 | 3 | 4, p: MoveChecklistPayload): stri
     }
     if (p.specialtyItems.length) {
       if (!p.specialtyDescription.trim()) return "Describe the specialty item(s).";
-      if (p.specialtyPhotos.length < 1) return "Upload 1–3 photos of the specialty item(s).";
       if (!p.specialtyAccessConcern) {
         return "Are there access concerns for the specialty item?";
       }

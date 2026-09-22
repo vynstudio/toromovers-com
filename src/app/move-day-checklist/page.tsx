@@ -5,9 +5,9 @@ import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 import "./checklist.css";
 
 export const metadata: Metadata = {
-  title: "Help Us Finalize Your Move",
+  title: "Confirm your move",
   description:
-    "Complete your Toro Movers move-day checklist after deposit so we can confirm details, prepare the crew, and send your final booking confirmation.",
+    "Deposit received. Finish this checklist. Toro Movers sends the booking confirmation after review.",
   robots: { index: false, follow: false },
   alternates: { canonical: "/move-day-checklist" },
 };
@@ -24,6 +24,10 @@ export default function MoveDayChecklistPage() {
             {PHONE_DISPLAY}
           </a>
         </div>
+        <p className="mdc-status">
+          Deposit received. Finish this checklist. We send the booking
+          confirmation after we review it.
+        </p>
       </header>
       <MoveChecklistWizard />
     </main>
