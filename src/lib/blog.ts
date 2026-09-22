@@ -31,7 +31,7 @@ export type BlogPost = {
   };
   /**
    * Full AEO article body. A paragraph that starts with "## " renders as an H2
-   * (the marker is not shown). Internal paths such as /quotes render as links.
+   * (the marker is not shown). Internal paths such as /quotes render as worded links.
    */
   body: readonly string[];
   /** Optional FAQ block — visible text must match FAQPage schema when present */
