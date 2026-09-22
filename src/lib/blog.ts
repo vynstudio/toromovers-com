@@ -40,6 +40,64 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-same-day-movers",
+    illustration: "loading",
+    eyebrow: "Same-day · Orlando",
+    title: "Same-day movers in Orlando: what’s realistic",
+    teaser:
+      "Same-day movers in Orlando: when a crew is open, what blocks true same-day, and how Toro quotes local hourly jobs.",
+    description:
+      "Same-day movers in Orlando: what’s realistic when a crew is open, what blocks true same-day, and how Toro quotes local hourly Central Florida jobs.",
+    date: "2026-09-22",
+    dateLabel: "Sep 22, 2026",
+    image: {
+      src: "/images/moves/real-22.webp",
+      alt: "Mover loading a quilt-wrapped piece up a truck ramp on a sunny Central Florida driveway",
+      position: "object-[center_40%]",
+      dedicated: true,
+    },
+    body: [
+      "Same-day movers in Orlando are often possible for a local Central Florida hop when a crew is open and both stops stay nearby—not a guarantee. Share addresses, stairs or elevator, how packed you are, and truck vs labor-only right away. Toro Movers quotes same-day local jobs by the hour with clear rates before the crew rolls.",
+      "## When same-day is realistic",
+      "Same-day fits a local hop: both addresses inside Central Florida, a crew still open that day, and access that does not need a reservation you never made. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request, so Sunday same-day only works if that window was confirmed. A packed studio or one-bedroom with clear parking can often start the same day. A labor-only load into a U-Haul or POD already at the curb can too — see /labor-only-moving and /blog/orlando-pod-uhaul-storage-loading.",
+      "Florida heat and long carries still matter on a same-day clock. Stairs, elevator waits, and a long walk from parking add time. They are not a separate fee. Ask early whether the drop-off is still local. If it leaves Central Florida, that job is a trip quote, not a same-day hourly metro hop — see /blog/orlando-local-vs-long-distance-movers.",
+      "## What to share immediately",
+      "When you need the same day, lead with facts the crew needs to say yes or no. Pickup and drop-off addresses. Stairs or a reserved elevator at either stop. How packed you will be when the crew arrives. Whether you need the truck or only labor on a rental or container you already have. Photos of bulky pieces help size the crew. Gate codes, HOA rules, and any loading-zone limit should go in the first message, not after the truck is rolling.",
+      "Full-service is the crew and the truck door to door. Labor-only is the carry when you already have the vehicle. Compare those bookings in /full-service-moving and /labor-only-moving. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando.",
+      "## When same-day is not realistic",
+      "True same-day falls apart when the building controls the clock and the window was never reserved. Many Orlando apartments and HOAs require an elevator reservation, advance paperwork, or a short dock window that cannot be opened the morning of the move. Details are in /blog/orlando-apartment-high-rise-movers. A huge unpacked house, a piano or safe with no plan, or a second stop that suddenly leaves Central Florida also push the job past a same-day start. Sunday without a prior confirm is not a walk-up booking.",
+      "Long-distance is not same-day local work. Timing follows the route and the inventory, not a same-day metro clock. If you are still packing when you call, say so. The crew can still help on an hourly clock once a slot is open, but an empty-house promise with rooms still full will burn the day.",
+      "## How Toro quotes same-day local jobs",
+      "Local same-day jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, elevator waits, heat, and a long carry add time on the hourly clock; they are not a separate line item. Crew size, how packed you are, and truck versus labor-only still change the total. There is no one-size rate card.",
+      "That hourly model is for local Central Florida work. A long-distance or out-of-state drop-off is a trip quote from origin, destination, and inventory — see /blog/orlando-local-vs-long-distance-movers. Same-day availability depends on an open crew that day. A quote explains the rate and the start window before the crew rolls. It is not a promise that every date and every building will fit.",
+      "## Request a same-day quote",
+      "Request the quote at /quotes. Share both addresses, stairs or elevator, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "Can I book same-day movers in Orlando?",
+        a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Share addresses, stairs or elevators, and how packed you are. Request a quote at /quotes or call or text (689) 600-2720. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+      {
+        q: "What should I share for a same-day moving quote?",
+        a: "Share pickup and drop-off addresses, stairs or a reserved elevator, parking or gate codes, how packed you will be, and whether you need a truck or labor-only help on a U-Haul or POD. Photos of bulky pieces help size the crew. Request the quote at /quotes.",
+      },
+      {
+        q: "Why might same-day not work for my Orlando apartment?",
+        a: "Many apartments and HOAs require an elevator reservation, a short dock window, or paperwork that cannot be opened the morning of the move. If that window was never reserved, true same-day often fails. Apartment access details are in /blog/orlando-apartment-high-rise-movers. Ask the property rules first, then request a quote at /quotes.",
+      },
+      {
+        q: "Is a same-day local move priced like long-distance?",
+        a: "No. Same-day local jobs inside Central Florida are hourly. Long-distance or out-of-state jobs are a trip quote from origin, destination, and inventory — not the same local hourly clock. Compare the two in /blog/orlando-local-vs-long-distance-movers.",
+      },
+      {
+        q: "How do I request a same-day quote from Toro?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share both addresses, the date, stairs or elevator, parking, and truck vs labor-only. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request.",
+      },
+    ],
+  },
+
+  {
     slug: "how-much-to-tip-movers-orlando",
     illustration: "crew",
     eyebrow: "Tipping · Orlando",
