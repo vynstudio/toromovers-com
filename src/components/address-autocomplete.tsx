@@ -228,7 +228,11 @@ type Props = {
   name?: string;
   id?: string;
   className?: string;
-  /** Only offer numbered street addresses, and save street, city, state, ZIP. */
+  required?: boolean;
+  /**
+   * Only offer numbered street addresses, and save street, city, state, ZIP.
+   * On by default so every address field captures a full address.
+   */
   streetOnly?: boolean;
 };
 
@@ -241,7 +245,8 @@ export function AddressAutocomplete({
   name,
   id,
   className,
-  streetOnly = false,
+  required,
+  streetOnly = true,
 }: Props) {
   const reactId = useId();
   const listId = `${reactId}-list`;
@@ -254,7 +259,9 @@ export function AddressAutocomplete({
   const tokenRef = useRef(newToken());
   const fetchSeq = useRef(0);
   const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  });
 
   useEffect(() => {
     const onDocPointer = (e: Event) => {
@@ -360,6 +367,7 @@ export function AddressAutocomplete({
         id={id}
         name={name}
         type="text"
+        required={required}
         autoComplete={autoComplete}
         autoCorrect="off"
         autoCapitalize="words"
