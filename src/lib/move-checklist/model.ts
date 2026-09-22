@@ -1,3 +1,5 @@
+import { isFullStreetAddress } from "@/lib/address-format";
+
 export const PROPERTY_TYPES = [
   "House",
   "Apartment",
@@ -285,8 +287,12 @@ export function validateStep(step: 1 | 2 | 3 | 4, p: MoveChecklistPayload): stri
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email.trim())) return "Enter a valid email.";
     if (p.phone.replace(/\D/g, "").length < 10) return "Enter a valid mobile number.";
     if (!p.moveDate) return "Pick your scheduled move date.";
-    if (p.pickupAddress.trim().length < 8) return "Pickup address is required.";
-    if (p.deliveryAddress.trim().length < 8) return "Delivery address is required.";
+    if (!isFullStreetAddress(p.pickupAddress)) {
+      return "Choose a full pickup address (street, city, and ZIP).";
+    }
+    if (!isFullStreetAddress(p.deliveryAddress)) {
+      return "Choose a full delivery address (street, city, and ZIP).";
+    }
     if (!p.presentPickup) return "Will you be present at pickup?";
     if (p.presentPickup === "No") {
       if (!p.pickupContactName.trim() || p.pickupContactPhone.replace(/\D/g, "").length < 10) {
@@ -304,7 +310,9 @@ export function validateStep(step: 1 | 2 | 3 | 4, p: MoveChecklistPayload): stri
     }
     if (!p.additionalStop) return "Is there an additional stop?";
     if (p.additionalStop === "Yes") {
-      if (p.extraStopAddress.trim().length < 8) return "Additional-stop address is required.";
+      if (!isFullStreetAddress(p.extraStopAddress)) {
+        return "Choose a full additional-stop address (street, city, and ZIP).";
+      }
       if (!p.extraStopKind) return "Say whether items are picked up or dropped off.";
     }
   }

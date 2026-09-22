@@ -37,6 +37,7 @@ import {
   type QuoteFields,
   type TipType,
 } from "@/lib/payments";
+import { AddressAutocomplete } from "@/components/address-autocomplete";
 import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 import { STRIPE_PUBLISHABLE_KEY } from "@/lib/stripe-public";
 
@@ -734,13 +735,15 @@ export default function PayFlow({
             </label>
             <label className="pay-label pay-span-2">
               Full address
-              <input
+              <AddressAutocomplete
                 required
-                autoComplete="street-address"
                 value={quote.pickup_address}
-                onChange={(event) =>
-                  setQuote((current) => ({ ...current, pickup_address: event.target.value }))
+                onChange={(value) =>
+                  setQuote((current) => ({ ...current, pickup_address: value }))
                 }
+                placeholder="Street, city, ZIP"
+                ariaLabel="Full address"
+                autoComplete="street-address"
               />
             </label>
             <label className="pay-label pay-span-2">
@@ -784,20 +787,25 @@ export default function PayFlow({
             </label>
             <label className="pay-label">
               Pickup address
-              <input
+              <AddressAutocomplete
                 value={quote.pickup_address}
-                onChange={(event) =>
-                  setQuote((current) => ({ ...current, pickup_address: event.target.value }))
+                onChange={(value) =>
+                  setQuote((current) => ({ ...current, pickup_address: value }))
                 }
+                placeholder="Street, city, ZIP"
+                ariaLabel="Pickup address"
+                autoComplete="street-address"
               />
             </label>
             <label className="pay-label pay-span-2">
               Delivery address
-              <input
+              <AddressAutocomplete
                 value={quote.delivery_address}
-                onChange={(event) =>
-                  setQuote((current) => ({ ...current, delivery_address: event.target.value }))
+                onChange={(value) =>
+                  setQuote((current) => ({ ...current, delivery_address: value }))
                 }
+                placeholder="Street, city, ZIP"
+                ariaLabel="Delivery address"
               />
             </label>
           </div>
