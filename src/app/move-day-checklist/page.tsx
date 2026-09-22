@@ -24,6 +24,10 @@ export default function MoveDayChecklistPage() {
             {PHONE_DISPLAY}
           </a>
         </div>
+        <p className="mdc-status">
+          Deposit received. Finish this checklist. We send the booking
+          confirmation after we review it.
+        </p>
       </header>
       <MoveChecklistWizard />
     </main>
