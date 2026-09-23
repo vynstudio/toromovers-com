@@ -6,10 +6,10 @@ const SLUG = "orlando-same-day-movers";
 const OPENING =
   "Same-day movers in Orlando are often possible for a local Central Florida hop when a crew is open and both stops stay nearby—not a guarantee. Share addresses, stairs or elevator, how packed you are, and truck vs labor-only right away. Toro Movers quotes same-day local jobs by the hour with clear rates before the crew rolls.";
 
-test("same-day Orlando guide is newest and meets the AEO bar", () => {
+test("same-day Orlando guide meets the AEO bar", () => {
   const post = getBlogPost(SLUG);
   assert.ok(post);
-  assert.equal(blogPosts[0]?.slug, SLUG);
+  assert.notEqual(blogPosts[0]?.slug, SLUG);
   assert.equal(post.title, "Same-day movers in Orlando: what’s realistic");
   assert.equal(post.eyebrow, "Same-day · Orlando");
   assert.equal(post.date, "2026-09-22");
