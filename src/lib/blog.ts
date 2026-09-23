@@ -51,8 +51,8 @@ export const blogPosts: readonly BlogPost[] = [
     date: "2026-09-23",
     dateLabel: "Sep 23, 2026",
     image: {
-      src: "/images/moves/real-19.webp",
-      alt: "Two movers carrying a mattress out of a single-story house, with a third crew member nearby, on a sunny Central Florida job",
+      src: "/images/moves/real-24.webp",
+      alt: "Movers carrying a teal-wrapped mattress beside a box truck on a sunny Central Florida driveway",
       position: "object-[center_45%]",
       dedicated: true,
     },
