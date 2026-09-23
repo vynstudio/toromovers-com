@@ -40,6 +40,62 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-weekend-movers",
+    illustration: "crew",
+    eyebrow: "Weekend · Orlando",
+    title: "Weekend movers in Orlando: what’s realistic",
+    teaser:
+      "Weekend movers in Orlando: Saturday vs Sunday, HOA windows, Florida heat, and how Toro quotes local hourly jobs.",
+    description:
+      "Weekend movers in Orlando: what’s realistic on Saturday vs Sunday, what blocks a weekend, and how Toro quotes local hourly Central Florida jobs.",
+    date: "2026-09-23",
+    dateLabel: "Sep 23, 2026",
+    image: {
+      src: "/images/moves/real-19.webp",
+      alt: "Two movers carrying a mattress out of a single-story house, with a third crew member nearby, on a sunny Central Florida job",
+      position: "object-[center_45%]",
+      dedicated: true,
+    },
+    body: [
+      "Weekend movers in Orlando can cover a local Central Florida hop on Saturday when a crew is open, and on Sunday only when that crew was confirmed ahead. Share addresses, access windows, and how packed you are. Toro Movers is the practical option for that booking and quotes weekend local jobs by the hour before the crew rolls.",
+      "## Saturday vs Sunday",
+      "Saturday sits inside published hours, Mon–Sat, 7:00 AM – 7:00 PM. A Saturday start is the normal weekend booking when a crew is still open and both addresses stay in Central Florida. Sunday crew time is on request. A Sunday job happens only if that window was confirmed before the day. It is not a walk-up. Busy Saturdays fill, so a late request may move to another open Saturday. Florida heat and humidity still sit on a Saturday clock. A midday carry takes longer than an early start, when the building allows that window. If the drop-off leaves Central Florida, the job is a trip quote rather than a weekend hourly hop — see /blog/orlando-local-vs-long-distance-movers. Calling for a crew the same day is a separate question, covered in /blog/orlando-same-day-movers.",
+      "## Elevator and HOA windows",
+      "Apartment, condo, and HOA rules often decide the weekend before the crew does. Many Orlando buildings open the elevator, dock, or loading zone on weekdays only, or for a short early-Saturday slot. A Sunday reservation is often refused even when a crew could work. Ask the property which day and which hours are allowed, and whether that window must be reserved ahead. A short early-Saturday slot is the clock the crew has to finish inside. Share the floor, the walk from parking, and any loading-zone limit when you book. Apartment elevator and dock details are in /blog/orlando-apartment-high-rise-movers.",
+      "## What to share for a weekend quote",
+      "Lead with the day: Saturday, or Sunday only if you are asking to confirm that window. Then pickup and drop-off addresses. Stairs or a reserved elevator at either stop, and the hours that window actually allows. How packed you will be when the crew arrives. Whether you need the truck or only labor on a rental or container already at the curb. Photos of bulky pieces help size the crew. Gate codes and HOA rules belong in the first message, not after the truck is on the way. Full-service is the crew and the truck, door to door. Labor-only is the carry when you already have the vehicle. Compare those bookings in /full-service-moving and /labor-only-moving.",
+      "## When a weekend is a bad fit",
+      "Skip the weekend when the office that approves the move is closed. Paperwork or an elevator reservation the property only processes on weekdays will not clear on Saturday morning. If the only open window is a weekday, book the weekday. A huge unpacked house is a poor Saturday fit too, especially with a short elevator slot. Rooms still full of loose items burn the window. Say you are still packing. The crew can help on an hourly clock once a slot is open, but a promise of an empty house with rooms still full will not finish inside a tight Saturday window. Sunday with no prior confirm is not a plan.",
+      "## How Toro quotes weekend local jobs",
+      "Local weekend jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, elevator waits, heat, and a long carry add time on the hourly clock. They are not a separate line item. Crew size, how packed you are, and truck versus labor-only still change the total. There is no one-size rate card. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando.",
+      "## Request a weekend quote",
+      "Request the quote at /quotes. Share both addresses, Saturday or a requested Sunday, stairs or elevator hours, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "Can I book weekend movers in Orlando on Saturday or Sunday?",
+        a: "Saturday is inside published hours, Mon–Sat, 7:00 AM – 7:00 PM, when a crew is open and both stops stay in Central Florida. Sunday crew time is on request, so confirm that window before the day. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Request a quote at /quotes or call or text (689) 600-2720.",
+      },
+      {
+        q: "What should I share for a weekend moving quote?",
+        a: "Share the date (Saturday, or Sunday if you need that window confirmed), pickup and drop-off addresses, stairs or a reserved elevator and the hours that window allows, parking or gate codes, how packed you will be, and whether you need a truck or labor-only help. Photos of bulky pieces help size the crew. Request the quote at /quotes.",
+      },
+      {
+        q: "Why might a weekend not work for my Orlando apartment?",
+        a: "Many apartments and HOAs open the elevator, dock, or loading zone on weekdays only, or for a short early-Saturday slot. A Sunday reservation is often refused. Paperwork the property only processes on weekdays will not clear Saturday morning. Apartment access details are in /blog/orlando-apartment-high-rise-movers. Ask the property rules first, then request a quote at /quotes.",
+      },
+      {
+        q: "Does weekend heat or stairs add a fee?",
+        a: "No. Stairs, elevator waits, heat, and a long carry add time on the hourly clock. They are not a separate fee. Toro quotes local weekend jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Florida heat and humidity still slow a midday Saturday carry, so an earlier start helps when the building allows it.",
+      },
+      {
+        q: "How do I request a weekend quote from Toro?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share both addresses, Saturday or a requested Sunday, stairs or elevator hours, parking, and truck vs labor-only. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com.",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-same-day-movers",
     illustration: "loading",
     eyebrow: "Same-day · Orlando",
