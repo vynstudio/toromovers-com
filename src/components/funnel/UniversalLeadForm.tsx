@@ -1,9 +1,5 @@
 "use client";
 
-import {
-  AddressAutocomplete,
-  isFullStreetAddress,
-} from "@/components/address-autocomplete";
 import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
@@ -20,6 +16,7 @@ import {
 } from "@/lib/funnel-offer";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
 import { PHONE_DISPLAY } from "@/lib/site";
+import { formatUsZip, quoteZipError } from "@/lib/us-zip";
 
 export type { ServiceType };
 
@@ -248,14 +245,12 @@ export default function UniversalLeadForm({
   }
 
   function completeStep(next: number, stepName: string) {
-    if (
-      stepName === "move_logistics" &&
-      (!isFullStreetAddress(origin) || !isFullStreetAddress(destination))
-    ) {
-      setError(
-        "Choose the full pickup and drop-off addresses from the suggestions (street, city, and ZIP).",
-      );
-      return;
+    if (stepName === "move_logistics") {
+      const zipError = quoteZipError(origin, destination);
+      if (zipError) {
+        setError(zipError);
+        return;
+      }
     }
     setError("");
     trackFunnelEvent("form_step_complete", {
@@ -448,26 +443,37 @@ export default function UniversalLeadForm({
             />
           </label>
           <label className="block text-sm font-bold">
-            Moving from
-            <AddressAutocomplete
-              streetOnly
+            Pickup ZIP
+            <input
+              inputMode="numeric"
+              autoComplete="off"
+              maxLength={10}
+              pattern="\d{5}(-\d{4})?"
               value={origin}
-              onChange={setOrigin}
+              onChange={(event) => {
+                setOrigin(formatUsZip(event.target.value));
+                if (error) setError("");
+              }}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Street, city, ZIP"
-              ariaLabel="Pickup address"
-              autoComplete="street-address"
+              placeholder="32801"
+              aria-label="Pickup ZIP"
             />
           </label>
           <label className="block text-sm font-bold">
-            Moving to
-            <AddressAutocomplete
-              streetOnly
+            Drop-off ZIP
+            <input
+              inputMode="numeric"
+              autoComplete="off"
+              maxLength={10}
+              pattern="\d{5}(-\d{4})?"
               value={destination}
-              onChange={setDestination}
+              onChange={(event) => {
+                setDestination(formatUsZip(event.target.value));
+                if (error) setError("");
+              }}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Street, city, ZIP"
-              ariaLabel="Drop-off address"
+              placeholder="32803"
+              aria-label="Drop-off ZIP"
             />
           </label>
           <label className="block text-sm font-bold">
@@ -495,11 +501,7 @@ export default function UniversalLeadForm({
             </button>
             <button
               type="button"
-              disabled={
-                !moveDate ||
-                !isFullStreetAddress(origin) ||
-                !isFullStreetAddress(destination)
-              }
+              disabled={!moveDate}
               onClick={() => completeStep(4, "move_logistics")}
               className={`flex-1 ${primaryBtn}`}
             >

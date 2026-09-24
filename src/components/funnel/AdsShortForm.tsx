@@ -1,10 +1,6 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
-import {
-  AddressAutocomplete,
-  isFullStreetAddress,
-} from "@/components/address-autocomplete";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
 import {
@@ -22,6 +18,7 @@ import { fireAdsLeadOnce, mintEventId } from "@/lib/meta-pixel";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
 import { quotePage } from "@/lib/quote-page";
 import { PHONE_DISPLAY } from "@/lib/site";
+import { formatUsZip, quoteZipError } from "@/lib/us-zip";
 
 const primaryBtn =
   "gmp-submit disabled:cursor-not-allowed disabled:opacity-40";
@@ -70,10 +67,9 @@ export default function AdsShortForm() {
       setError("Enter a valid email, or leave it blank.");
       return;
     }
-    if (!isFullStreetAddress(origin) || !isFullStreetAddress(destination)) {
-      setError(
-        "Choose the full pickup and drop-off addresses from the suggestions (street, city, and ZIP).",
-      );
+    const zipError = quoteZipError(origin, destination);
+    if (zipError) {
+      setError(zipError);
       return;
     }
     if (!name.trim() || name.trim().length < 2 || !phoneE164 || !consent) {
@@ -100,7 +96,7 @@ export default function AdsShortForm() {
         origin: origin.trim(),
         destination: destination.trim(),
         access_conditions: "",
-        notes: "Meta ads quote form (name, phone, full pickup and drop-off).",
+        notes: "Meta ads quote form (name, phone, pickup ZIP and drop-off ZIP).",
       },
       contact: {
         full_name: name.trim(),
@@ -220,36 +216,46 @@ export default function AdsShortForm() {
           />
         </label>
 
-        <label>
-          Pickup address
-          <AddressAutocomplete
-            streetOnly
-            value={origin}
-            onChange={(next) => {
-              setOrigin(next);
-              if (error) setError("");
-            }}
-            className={fieldClass}
-            placeholder="Street, city, ZIP"
-            ariaLabel="Pickup address"
-            autoComplete="street-address"
-          />
-        </label>
-
-        <label>
-          Drop-off address
-          <AddressAutocomplete
-            streetOnly
-            value={destination}
-            onChange={(next) => {
-              setDestination(next);
-              if (error) setError("");
-            }}
-            className={fieldClass}
-            placeholder="Street, city, ZIP"
-            ariaLabel="Drop-off address"
-          />
-        </label>
+        <div className="gmp-form-row">
+          <label>
+            Pickup ZIP
+            <input
+              required
+              inputMode="numeric"
+              autoComplete="off"
+              maxLength={10}
+              pattern="\d{5}(-\d{4})?"
+              value={origin}
+              onChange={(e) => {
+                setOrigin(formatUsZip(e.target.value));
+                if (error) setError("");
+              }}
+              className={fieldClass}
+              placeholder="32801"
+              aria-label="Pickup ZIP"
+              enterKeyHint="next"
+            />
+          </label>
+          <label>
+            Drop-off ZIP
+            <input
+              required
+              inputMode="numeric"
+              autoComplete="off"
+              maxLength={10}
+              pattern="\d{5}(-\d{4})?"
+              value={destination}
+              onChange={(e) => {
+                setDestination(formatUsZip(e.target.value));
+                if (error) setError("");
+              }}
+              className={fieldClass}
+              placeholder="32803"
+              aria-label="Drop-off ZIP"
+              enterKeyHint="next"
+            />
+          </label>
+        </div>
 
         <label>
           Service
