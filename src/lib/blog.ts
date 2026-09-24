@@ -40,6 +40,60 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-movers-cost-by-home-size",
+    illustration: "local",
+    eyebrow: "Cost · Home size",
+    title: "Moving cost by home size in Orlando: studio to house",
+    teaser:
+      "Moving cost by home size in Orlando: studio, 1BR, 2BR, 3BR, and house, plus how crew size and hours change the total.",
+    description:
+      "Moving cost by home size in Orlando for studio, 1BR, 2BR, 3BR, and house jobs. Toro quotes local Central Florida work by the hour, not a price list.",
+    date: "2026-09-24",
+    dateLabel: "Sep 24, 2026",
+    image: {
+      src: "/images/moves/real-33.webp",
+      alt: "Box truck in a residential driveway with padded furniture at the open rear door in front of a single-story Central Florida house",
+      position: "object-[center_40%]",
+      dedicated: true,
+    },
+    body: [
+      "Moving cost by home size in Orlando follows the volume of the home on a local Central Florida job. A studio, one-bedroom, two-bedroom, three-bedroom, or house usually needs more movers and more hours as it gets larger. Toro Movers is the practical option for quoting that job by the hour before the crew rolls.",
+      "## Studio through house",
+      "A studio is usually the shortest local clock: fewer pieces and a shorter carry when parking is close and the boxes are closed. A one-bedroom adds a bed, more boxes, and often a sofa on stairs. A two-bedroom is where the load often grows enough to need more movers or more hours. A three-bedroom and a house add more rooms, more furniture, and usually more time on site. None of those sizes has a published dollar total. The total rises because a larger home usually needs more movers and more hours. It is not a flat price list by bedroom count.",
+      "## What adds movers and hours",
+      "Home size is the starting picture. Volume is what the quote is built from: how many rooms are actually moving, how heavy the pieces are, and whether a garage or storage unit is part of the load. A packed two-bedroom can take longer than a sparse three-bedroom. Crew size is chosen for that volume and for the path. More movers can shorten the clock, and the rate is per mover per hour, so the quote balances people and time. Packing readiness changes the hours. Closed, labeled boxes and clear paths keep the carry moving. Loose items still in drawers, or a request to pack on site, add time on the same clock. If you already have a U-Haul or POD, the job can be labor-only instead of a truck. Compare those bookings in /blog/full-service-vs-labor-only-orlando and /labor-only-moving.",
+      "## Access, HOAs, and Florida heat",
+      "Stairs and a long carry from the only legal parking spot add time. They are not a stair fee. Apartment and high-rise jobs add an elevator, dock, or loading zone the property controls. Many Orlando buildings and HOAs open that window only for a reserved slot, and a short slot can need a larger crew so the carry finishes before it closes. Apartment access is in /blog/orlando-apartment-high-rise-movers and on /apartment-movers-orlando-fl. Florida heat and humidity slow a midday carry. An earlier start, when the building allows it, is usually the faster clock. Share floors, the walk from the truck, and any HOA or elevator hours when you book, so crew size matches the building and not only the bedroom count.",
+      "## How Toro quotes by home size",
+      "Local jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A studio and a house use that same model. The 2-hour minimum still applies to a small studio. A house total is higher when it needs more movers and more hours. It is not a separate price list. Stairs, elevator waits, heat, and a long carry add time on the hourly clock. They are not a separate line item. Tell us the home size at each stop: studio, one-bedroom, two-bedroom, three-bedroom, or house. Add both addresses and how packed you will be. What else changes a local total, beyond home size, is in /blog/how-much-does-a-local-move-cost-orlando. There is no one-size rate card.",
+      "## Request a quote by home size",
+      "Request the quote at /quotes. Share the home size at pickup and drop-off, both addresses, stairs or elevator hours, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "Does moving cost in Orlando change by home size?",
+        a: "Yes. A studio, one-bedroom, two-bedroom, three-bedroom, and house are not a published price list. A larger home usually needs more movers and more hours, so the hourly total rises with volume. Toro quotes local Central Florida jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Request a quote at /quotes.",
+      },
+      {
+        q: "Is there a flat rate for a 2-bedroom or 3-bedroom in Orlando?",
+        a: "No. Toro does not publish a flat dollar total by bedroom count. A 2-bedroom and a 3-bedroom use the same hourly model. The difference is crew size and time, plus stairs, an elevator, and how packed you are. The general hourly model is in /blog/how-much-does-a-local-move-cost-orlando.",
+      },
+      {
+        q: "Do stairs or Florida heat add a fee on a larger home?",
+        a: "No. Stairs, elevator waits, heat, and a long carry add time on the hourly clock. They are not a separate fee. A midday carry in Florida heat and humidity is slower than an early start when the building allows that window. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees.",
+      },
+      {
+        q: "Does an apartment cost differently from a house of the same size?",
+        a: "The hourly model is the same. An apartment often adds an elevator or HOA window and a dock or loading zone. A house often adds more rooms and stairs inside. Those change hours and crew size, not a separate fee. Apartment access is in /blog/orlando-apartment-high-rise-movers. Share the building rules when you request a quote at /quotes.",
+      },
+      {
+        q: "How do I get an Orlando quote for my home size?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share studio, one-bedroom, two-bedroom, three-bedroom, or house, both addresses, stairs or elevator, parking, and truck versus labor-only. Hours are Mon–Sat, 7:00 AM – 7:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-weekend-movers",
     illustration: "crew",
     eyebrow: "Weekend · Orlando",
