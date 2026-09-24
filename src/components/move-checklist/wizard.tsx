@@ -29,6 +29,7 @@ import {
 } from "@/lib/move-checklist/track";
 import {
   CHECKLIST_SECTIONS,
+  CHECKLIST_TITLES,
   advanceStep,
   clearProgress,
   readProgress,
@@ -50,22 +51,33 @@ function storage(): Storage | null {
 }
 
 export function MoveChecklistWizard() {
-  const [screen, setScreen] = useState<"intro" | "form" | "done">(
-    () => readProgress(storage())?.screen ?? "intro",
-  );
-  const [step, setStep] = useState<ChecklistStep>(() => readProgress(storage())?.step ?? 1);
-  const [data, setData] = useState<MoveChecklistPayload>(
-    () => readProgress(storage())?.data ?? emptyPayload(),
-  );
+  const [screen, setScreen] = useState<"intro" | "form" | "done">("intro");
+  const [step, setStep] = useState<ChecklistStep>(1);
+  const [data, setData] = useState<MoveChecklistPayload>(emptyPayload);
   const [err, setErr] = useState("");
   const [sending, setSending] = useState(false);
   const [reviewId, setReviewId] = useState("");
   const started = useRef(false);
   const pendingScroll = useRef(false);
+  const stepRef = useRef<ChecklistStep>(1);
+  const screenRef = useRef<"intro" | "form" | "done">("intro");
+
+  useLayoutEffect(() => {
+    stepRef.current = step;
+    screenRef.current = screen;
+  }, [step, screen]);
 
   useLayoutEffect(() => {
     document.documentElement.dataset.jsf = "1";
     trackChecklistViewed();
+    const saved = readProgress(storage());
+    if (saved && (saved.screen !== screenRef.current || saved.step !== stepRef.current)) {
+      screenRef.current = saved.screen;
+      stepRef.current = saved.step;
+      setScreen(saved.screen);
+      setStep(saved.step);
+      setData(saved.data);
+    }
     return () => {
       delete document.documentElement.dataset.jsf;
     };
@@ -85,23 +97,29 @@ export function MoveChecklistWizard() {
     nextStep: ChecklistStep,
     nextData: MoveChecklistPayload,
   ) {
+    screenRef.current = nextScreen;
+    stepRef.current = nextStep;
     writeProgress(storage(), { screen: nextScreen, step: nextStep, data: nextData });
   }
 
   function showStep(nextStep: ChecklistStep) {
     pendingScroll.current = true;
+    stepRef.current = nextStep;
     setStep(nextStep);
   }
 
   function patch(partial: Partial<MoveChecklistPayload>) {
     setData((current) => {
       const next = { ...current, ...partial };
-      if (screen === "form") remember("form", step, next);
+      const active = screenRef.current;
+      if (active === "form") remember("form", stepRef.current, next);
       return next;
     });
   }
 
   function start() {
+    screenRef.current = "form";
+    stepRef.current = 1;
     setScreen("form");
     setStep(1);
     remember("form", 1, data);
@@ -112,27 +130,31 @@ export function MoveChecklistWizard() {
   }
 
   function next() {
-    const msg = validateStep(step, data);
+    const currentStep = stepRef.current;
+    const msg = validateStep(currentStep, data);
     if (msg) {
       setErr(msg);
-      trackChecklistValidationError(step, msg);
+      trackChecklistValidationError(currentStep, msg);
       return;
     }
     setErr("");
-    trackChecklistStep(step);
-    if (step >= 4) return;
-    const upcoming = advanceStep(step);
+    trackChecklistStep(currentStep);
+    if (currentStep >= 4) return;
+    const upcoming = advanceStep(currentStep);
     remember("form", upcoming, data);
     showStep(upcoming);
   }
 
   function back() {
     setErr("");
-    const previous = retreatStep(step);
+    const previous = retreatStep(stepRef.current);
     remember(previous.screen, previous.step, data);
     setScreen(previous.screen);
     if (previous.screen === "form") showStep(previous.step);
-    else setStep(previous.step);
+    else {
+      stepRef.current = previous.step;
+      setStep(previous.step);
+    }
   }
 
   function onFormSubmit(event: FormEvent<HTMLFormElement>) {
@@ -183,31 +205,15 @@ export function MoveChecklistWizard() {
   if (screen === "intro") {
     return (
       <div className="mdc-wrap mdc-doc">
-        <Pipeline stage="checklist" />
         <h1 className="mdc-title">Confirm your move</h1>
         <p className="mdc-lede">
           The deposit is in. This checklist is the last step. After we review it, we
           send your booking confirmation.
         </p>
         <ol className="mdc-benefits">
-          <li>
-            <span>01</span>
-            <span>
-              <b>Stops.</b> Stops and who will be there
-            </span>
-          </li>
-          <li>
-            <span>02</span>
-            <span>
-              <b>Access.</b> How we get in
-            </span>
-          </li>
-          <li>
-            <span>03</span>
-            <span>
-              <b>Inventory.</b> What we are moving, then you send it
-            </span>
-          </li>
+          <li>Stops and who will be there</li>
+          <li>How we get in</li>
+          <li>What we are moving, then you send it</li>
         </ol>
         <button type="button" className="mdc-btn mdc-btn-primary" onClick={start}>
           Start checklist
@@ -220,7 +226,6 @@ export function MoveChecklistWizard() {
   if (screen === "done") {
     return (
       <div className="mdc-wrap mdc-doc">
-        <Pipeline stage="confirm" />
         <h1 className="mdc-title">Checklist sent</h1>
         <p className="mdc-lede">
           Your move is not confirmed until we send the booking confirmation.
@@ -241,15 +246,10 @@ export function MoveChecklistWizard() {
     );
   }
 
-  const steps = [
-    { title: "Confirm the stops" },
-    { title: "Pickup access" },
-    { title: "Delivery access" },
-    { title: "Inventory and send" },
-  ] as const;
+  const steps = CHECKLIST_TITLES;
 
   function goTo(nextStep: ChecklistStep) {
-    if (nextStep >= step) return;
+    if (nextStep >= stepRef.current) return;
     setErr("");
     remember("form", nextStep, data);
     showStep(nextStep);
@@ -261,16 +261,20 @@ export function MoveChecklistWizard() {
     return line.length > 42 ? `${line.slice(0, 40)}…` : line;
   }
 
-  const section = CHECKLIST_SECTIONS[step <= 1 ? 0 : step <= 3 ? 1 : 2];
-  const part = step === 2 ? "Pickup" : step === 3 ? "Delivery" : "";
-  const progressLabel = `Step ${section.num} of 03 · ${section.label}${part ? ` · ${part}` : ""}`;
-  const fill = ({ 1: 22, 2: 48, 3: 74, 4: 100 } as const)[step];
+  const section = CHECKLIST_SECTIONS[step - 1];
+  const progressLabel = `Step ${section.num} of 04 · ${section.label}`;
+  const fill = ({ 1: 25, 2: 50, 3: 75, 4: 100 } as const)[step];
 
   return (
-    <form className="mdc-wrap" onSubmit={onFormSubmit} noValidate>
+    <form
+      id="move-checklist"
+      className="mdc-wrap"
+      data-mdc-step={step}
+      onSubmit={onFormSubmit}
+      noValidate
+    >
       <div className="mdc-shell">
         <aside className="mdc-rail" aria-label="Checklist steps">
-          <Pipeline stage="checklist" />
           <StepList step={step} onGo={goTo} variant="rail" />
           <div className="mdc-rail-notes">
             {data.fullName ? <p>{data.fullName}</p> : null}
@@ -283,7 +287,6 @@ export function MoveChecklistWizard() {
           </div>
         </aside>
         <div className="mdc-main">
-          <Pipeline stage="checklist" className="mdc-pipeline-main" />
           <StepList step={step} onGo={goTo} variant="bar" />
           <p className="mdc-progress" aria-live="polite">
             {progressLabel}
@@ -292,14 +295,8 @@ export function MoveChecklistWizard() {
             <span style={{ width: `${fill}%` }} />
           </div>
           <h1 id="mdc-step-title" className="mdc-title">
-            {steps[step - 1].title}
+            {steps[step - 1]}
           </h1>
-          {step === 2 || step === 3 ? (
-            <div className="mdc-substeps" aria-label="Access parts">
-              <Substep label="Pickup" n={2} current={step} onGo={goTo} />
-              <Substep label="Delivery" n={3} current={step} onGo={goTo} />
-            </div>
-          ) : null}
           {step === 2 && data.pickupAddress ? (
             <p className="mdc-recall">{data.pickupAddress}</p>
           ) : null}
@@ -366,29 +363,6 @@ export function MoveChecklistWizard() {
   );
 }
 
-function Pipeline({
-  stage,
-  className,
-}: {
-  stage: "checklist" | "confirm";
-  className?: string;
-}) {
-  const current = stage === "confirm" ? 2 : 1;
-  const items = ["Deposit", "Checklist", "Confirm"];
-  return (
-    <ol className={className ? `mdc-pipeline ${className}` : "mdc-pipeline"} aria-label="Booking progress">
-      {items.map((label, index) => {
-        const state = index < current ? "is-done" : index === current ? "is-on" : "is-upcoming";
-        return (
-          <li key={label} className={state} aria-current={index === current ? "step" : undefined}>
-            {label}
-          </li>
-        );
-      })}
-    </ol>
-  );
-}
-
 function StepList({
   step,
   onGo,
@@ -402,70 +376,29 @@ function StepList({
     <ol className={variant === "rail" ? "mdc-rail-list" : "mdc-steps"} aria-label="Checklist steps">
       {CHECKLIST_SECTIONS.map((section) => {
         const state = sectionState(section.steps, step);
-        const detail =
-          section.num === "02"
-            ? step === 2
-              ? "Pickup"
-              : step === 3
-                ? "Delivery"
-                : step > 3
-                  ? "Pickup and delivery"
-                  : section.hint
-            : section.hint;
+        const n = section.steps[0] as ChecklistStep;
         const body = (
           <>
             <span className="mdc-step-num">{state === "done" ? "✓" : section.num}</span>
             <span className="mdc-step-copy">
               <span>{section.label}</span>
-              {variant === "rail" || state === "on" ? <small>{detail}</small> : null}
+              <small>{section.hint}</small>
             </span>
           </>
         );
         return (
-          <li key={section.num} className={state === "on" ? "is-on" : state === "done" ? "is-done" : "is-upcoming"}>
+          <li key={section.label} className={state === "on" ? "is-on" : state === "done" ? "is-done" : "is-upcoming"}>
             {state === "done" ? (
-              <button type="button" onClick={() => onGo(section.steps[0] as ChecklistStep)}>
+              <button type="button" onClick={() => onGo(n)}>
                 {body}
               </button>
             ) : (
               <span aria-current={state === "on" ? "step" : undefined}>{body}</span>
             )}
-            {variant === "rail" && section.num === "02" ? (
-              <div className="mdc-substeps mdc-substeps-rail">
-                <Substep label="Pickup" n={2} current={step} onGo={onGo} />
-                <Substep label="Delivery" n={3} current={step} onGo={onGo} />
-              </div>
-            ) : null}
           </li>
         );
       })}
     </ol>
-  );
-}
-
-function Substep({
-  label,
-  n,
-  current,
-  onGo,
-}: {
-  label: string;
-  n: ChecklistStep;
-  current: ChecklistStep;
-  onGo: (next: ChecklistStep) => void;
-}) {
-  const state = current === n ? "is-on" : current > n ? "is-done" : "is-upcoming";
-  if (current > n) {
-    return (
-      <button type="button" className={`mdc-substep ${state}`} onClick={() => onGo(n)}>
-        {label}
-      </button>
-    );
-  }
-  return (
-    <span className={`mdc-substep ${state}`} aria-current={current === n ? "step" : undefined}>
-      {label}
-    </span>
   );
 }
 

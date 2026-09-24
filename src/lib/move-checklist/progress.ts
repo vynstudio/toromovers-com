@@ -7,24 +7,17 @@ export type ChecklistScreen = "intro" | "form" | "done";
 export type ChecklistStep = 1 | 2 | 3 | 4;
 
 export const CHECKLIST_SECTIONS = [
-  {
-    num: "01",
-    label: "Stops",
-    hint: "Who, when, and both addresses",
-    steps: [1],
-  },
-  {
-    num: "02",
-    label: "Access",
-    hint: "How we get in",
-    steps: [2, 3],
-  },
-  {
-    num: "03",
-    label: "Inventory",
-    hint: "What we are moving",
-    steps: [4],
-  },
+  { num: "01", label: "Details", hint: "Who, when, and both addresses", steps: [1] },
+  { num: "02", label: "Pickup", hint: "How we get in", steps: [2] },
+  { num: "03", label: "Delivery", hint: "How we get in", steps: [3] },
+  { num: "04", label: "Review", hint: "Check it, then send", steps: [4] },
+] as const;
+
+export const CHECKLIST_TITLES = [
+  "Confirm the stops",
+  "Pickup access",
+  "Delivery access",
+  "Send for confirmation",
 ] as const;
 
 export type SectionState = "done" | "on" | "upcoming";
@@ -75,9 +68,7 @@ export function sectionState(steps: readonly number[], current: ChecklistStep): 
 }
 
 export function sectionIndex(step: ChecklistStep): number {
-  if (step <= 1) return 0;
-  if (step <= 3) return 1;
-  return 2;
+  return clampStep(step) - 1;
 }
 
 /** Fill missing nested fields so a partial draft cannot crash the next step. */
