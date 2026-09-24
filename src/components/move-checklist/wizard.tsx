@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { AddressAutocomplete } from "@/components/address-autocomplete";
 import { addressWithUnit, isFullStreetAddress } from "@/lib/address-format";
@@ -27,65 +27,84 @@ import {
   trackChecklistValidationError,
   trackChecklistViewed,
 } from "@/lib/move-checklist/track";
+import {
+  CHECKLIST_SECTIONS,
+  advanceStep,
+  clearProgress,
+  readProgress,
+  retreatStep,
+  sectionState,
+  writeProgress,
+  type ChecklistStep,
+} from "@/lib/move-checklist/progress";
 
-const STORAGE = "toro-move-checklist-v1";
 const START = typeof performance !== "undefined" ? performance.now() : Date.now();
 
-function loadDraft(): MoveChecklistPayload {
-  if (typeof window === "undefined") return emptyPayload();
+function storage(): Storage | null {
+  if (typeof window === "undefined") return null;
   try {
-    const raw = localStorage.getItem(STORAGE);
-    if (!raw) return emptyPayload();
-    return { ...emptyPayload(), ...JSON.parse(raw) };
+    return window.localStorage;
   } catch {
-    return emptyPayload();
-  }
-}
-
-function saveDraft(p: MoveChecklistPayload) {
-  try {
-    localStorage.setItem(STORAGE, JSON.stringify({ ...p, hp: "" }));
-  } catch {
-    /* quota */
+    return null;
   }
 }
 
 export function MoveChecklistWizard() {
-  const [screen, setScreen] = useState<"intro" | "form" | "done">("intro");
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
-  const [data, setData] = useState<MoveChecklistPayload>(emptyPayload);
+  const [screen, setScreen] = useState<"intro" | "form" | "done">(
+    () => readProgress(storage())?.screen ?? "intro",
+  );
+  const [step, setStep] = useState<ChecklistStep>(() => readProgress(storage())?.step ?? 1);
+  const [data, setData] = useState<MoveChecklistPayload>(
+    () => readProgress(storage())?.data ?? emptyPayload(),
+  );
   const [err, setErr] = useState("");
   const [sending, setSending] = useState(false);
   const [reviewId, setReviewId] = useState("");
-  const errRef = useRef<HTMLDivElement>(null);
   const started = useRef(false);
+  const pendingScroll = useRef(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.documentElement.dataset.jsf = "1";
     trackChecklistViewed();
-    setData(loadDraft());
     return () => {
       delete document.documentElement.dataset.jsf;
     };
   }, []);
 
-  useEffect(() => {
-    if (screen === "form") saveDraft(data);
-  }, [data, screen]);
+  useLayoutEffect(() => {
+    if (!pendingScroll.current || screen !== "form") return;
+    pendingScroll.current = false;
+    document.getElementById("mdc-step-title")?.scrollIntoView({
+      block: "start",
+      behavior: "auto",
+    });
+  }, [step, screen]);
 
-  useEffect(() => {
-    if (err && errRef.current) {
-      errRef.current.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-  }, [err]);
+  function remember(
+    nextScreen: "intro" | "form",
+    nextStep: ChecklistStep,
+    nextData: MoveChecklistPayload,
+  ) {
+    writeProgress(storage(), { screen: nextScreen, step: nextStep, data: nextData });
+  }
+
+  function showStep(nextStep: ChecklistStep) {
+    pendingScroll.current = true;
+    setStep(nextStep);
+  }
 
   function patch(partial: Partial<MoveChecklistPayload>) {
-    setData((d) => ({ ...d, ...partial }));
+    setData((current) => {
+      const next = { ...current, ...partial };
+      if (screen === "form") remember("form", step, next);
+      return next;
+    });
   }
 
   function start() {
     setScreen("form");
     setStep(1);
+    remember("form", 1, data);
     if (!started.current) {
       started.current = true;
       trackChecklistStarted();
@@ -101,16 +120,26 @@ export function MoveChecklistWizard() {
     }
     setErr("");
     trackChecklistStep(step);
-    if (step < 4) setStep((s) => (s + 1) as 1 | 2 | 3 | 4);
+    if (step >= 4) return;
+    const upcoming = advanceStep(step);
+    remember("form", upcoming, data);
+    showStep(upcoming);
   }
 
   function back() {
     setErr("");
-    if (step === 1) {
-      setScreen("intro");
-      return;
-    }
-    setStep((s) => (s - 1) as 1 | 2 | 3 | 4);
+    const previous = retreatStep(step);
+    remember(previous.screen, previous.step, data);
+    setScreen(previous.screen);
+    if (previous.screen === "form") showStep(previous.step);
+    else setStep(previous.step);
+  }
+
+  function onFormSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (sending) return;
+    if (step < 4) next();
+    else void submit();
   }
 
   async function submit() {
@@ -141,11 +170,7 @@ export function MoveChecklistWizard() {
         return;
       }
       trackChecklistSubmitted(json.id);
-      try {
-        localStorage.removeItem(STORAGE);
-      } catch {
-        /* */
-      }
+      clearProgress(storage());
       setReviewId(json.id || "");
       setScreen("done");
     } catch {
@@ -158,15 +183,31 @@ export function MoveChecklistWizard() {
   if (screen === "intro") {
     return (
       <div className="mdc-wrap mdc-doc">
+        <Pipeline stage="checklist" />
         <h1 className="mdc-title">Confirm your move</h1>
         <p className="mdc-lede">
           The deposit is in. This checklist is the last step. After we review it, we
           send your booking confirmation.
         </p>
         <ol className="mdc-benefits">
-          <li>Stops and who will be there</li>
-          <li>How we get in</li>
-          <li>What we are moving, then you send it</li>
+          <li>
+            <span>01</span>
+            <span>
+              <b>Stops.</b> Stops and who will be there
+            </span>
+          </li>
+          <li>
+            <span>02</span>
+            <span>
+              <b>Access.</b> How we get in
+            </span>
+          </li>
+          <li>
+            <span>03</span>
+            <span>
+              <b>Inventory.</b> What we are moving, then you send it
+            </span>
+          </li>
         </ol>
         <button type="button" className="mdc-btn mdc-btn-primary" onClick={start}>
           Start checklist
@@ -179,6 +220,7 @@ export function MoveChecklistWizard() {
   if (screen === "done") {
     return (
       <div className="mdc-wrap mdc-doc">
+        <Pipeline stage="confirm" />
         <h1 className="mdc-title">Checklist sent</h1>
         <p className="mdc-lede">
           Your move is not confirmed until we send the booking confirmation.
@@ -200,16 +242,17 @@ export function MoveChecklistWizard() {
   }
 
   const steps = [
-    { short: "Details", title: "Confirm the stops", blurb: "Who, when, and both addresses" },
-    { short: "Pickup", title: "Pickup access", blurb: "How we get in" },
-    { short: "Delivery", title: "Delivery access", blurb: "How we get in" },
-    { short: "Review", title: "Send for confirmation", blurb: "Check it, then send" },
+    { title: "Confirm the stops" },
+    { title: "Pickup access" },
+    { title: "Delivery access" },
+    { title: "Inventory and send" },
   ] as const;
 
-  function goTo(nextStep: 1 | 2 | 3 | 4) {
+  function goTo(nextStep: ChecklistStep) {
     if (nextStep >= step) return;
     setErr("");
-    setStep(nextStep);
+    remember("form", nextStep, data);
+    showStep(nextStep);
   }
 
   function shortAddress(value: string) {
@@ -218,31 +261,17 @@ export function MoveChecklistWizard() {
     return line.length > 42 ? `${line.slice(0, 40)}…` : line;
   }
 
+  const section = CHECKLIST_SECTIONS[step <= 1 ? 0 : step <= 3 ? 1 : 2];
+  const part = step === 2 ? "Pickup" : step === 3 ? "Delivery" : "";
+  const progressLabel = `Step ${section.num} of 03 · ${section.label}${part ? ` · ${part}` : ""}`;
+  const fill = ({ 1: 22, 2: 48, 3: 74, 4: 100 } as const)[step];
+
   return (
-    <div className="mdc-wrap">
+    <form className="mdc-wrap" onSubmit={onFormSubmit} noValidate>
       <div className="mdc-shell">
         <aside className="mdc-rail" aria-label="Checklist steps">
-          <ol>
-            {steps.map((item, index) => {
-              const n = (index + 1) as 1 | 2 | 3 | 4;
-              const on = step === n;
-              return (
-                <li key={item.short} className={on ? "is-on" : undefined}>
-                  {n < step ? (
-                    <button type="button" onClick={() => goTo(n)}>
-                      <span>{item.short}</span>
-                      <small>{item.blurb}</small>
-                    </button>
-                  ) : (
-                    <span>
-                      <span>{item.short}</span>
-                      <small>{item.blurb}</small>
-                    </span>
-                  )}
-                </li>
-              );
-            })}
-          </ol>
+          <Pipeline stage="checklist" />
+          <StepList step={step} onGo={goTo} variant="rail" />
           <div className="mdc-rail-notes">
             {data.fullName ? <p>{data.fullName}</p> : null}
             {data.pickupAddress ? (
@@ -254,82 +283,74 @@ export function MoveChecklistWizard() {
           </div>
         </aside>
         <div className="mdc-main">
-      <nav className="mdc-steps" aria-label="Checklist steps">
-        {steps.map((item, index) => {
-          const n = (index + 1) as 1 | 2 | 3 | 4;
-          const on = step === n;
-          return n < step ? (
-            <button key={item.short} type="button" onClick={() => goTo(n)}>
-              {item.short}
-            </button>
-          ) : (
-            <span key={item.short} className={on ? "is-on" : undefined}>
-              {item.short}
-            </span>
-          );
-        })}
-      </nav>
-      <h1 className="mdc-title">{steps[step - 1].title}</h1>
-      {step === 2 && data.pickupAddress ? (
-        <p className="mdc-recall">{data.pickupAddress}</p>
-      ) : null}
-      {step === 3 && data.deliveryAddress ? (
-        <p className="mdc-recall">{data.deliveryAddress}</p>
-      ) : null}
+          <Pipeline stage="checklist" className="mdc-pipeline-main" />
+          <StepList step={step} onGo={goTo} variant="bar" />
+          <p className="mdc-progress" aria-live="polite">
+            {progressLabel}
+          </p>
+          <div className="mdc-meter" aria-hidden>
+            <span style={{ width: `${fill}%` }} />
+          </div>
+          <h1 id="mdc-step-title" className="mdc-title">
+            {steps[step - 1].title}
+          </h1>
+          {step === 2 || step === 3 ? (
+            <div className="mdc-substeps" aria-label="Access parts">
+              <Substep label="Pickup" n={2} current={step} onGo={goTo} />
+              <Substep label="Delivery" n={3} current={step} onGo={goTo} />
+            </div>
+          ) : null}
+          {step === 2 && data.pickupAddress ? (
+            <p className="mdc-recall">{data.pickupAddress}</p>
+          ) : null}
+          {step === 3 && data.deliveryAddress ? (
+            <p className="mdc-recall">{data.deliveryAddress}</p>
+          ) : null}
 
-      {step === 1 ? (
-        <StepDetails data={data} patch={patch} />
-      ) : null}
-      {step === 2 ? (
-        <AccessFields
-          location="pickup"
-          value={data.pickup}
-          onChange={(pickup) => patch({ pickup })}
-        />
-      ) : null}
-      {step === 3 ? (
-        <AccessFields
-          location="delivery"
-          value={data.delivery}
-          onChange={(delivery) => patch({ delivery })}
-        />
-      ) : null}
-      {step === 4 ? (
-        <StepFour data={data} patch={patch} onEdit={setStep} />
-      ) : null}
+          {step === 1 ? <StepDetails data={data} patch={patch} /> : null}
+          {step === 2 ? (
+            <AccessFields
+              location="pickup"
+              value={data.pickup}
+              onChange={(pickup) => patch({ pickup })}
+            />
+          ) : null}
+          {step === 3 ? (
+            <AccessFields
+              location="delivery"
+              value={data.delivery}
+              onChange={(delivery) => patch({ delivery })}
+            />
+          ) : null}
+          {step === 4 ? <StepFour data={data} patch={patch} onEdit={goTo} /> : null}
 
-      {step === 4 ? (
-        <p className="mdc-send-note">
-          We review this, then send your booking confirmation.
-        </p>
-      ) : null}
+          {step === 4 ? (
+            <p className="mdc-send-note">
+              We review this, then send your booking confirmation.
+            </p>
+          ) : null}
         </div>
       </div>
       <div className="mdc-nav">
         <div className="mdc-nav-inner">
-          {err ? (
-            <div ref={errRef} className="mdc-banner" role="alert">
-              {err}
-            </div>
-          ) : null}
           <div className="mdc-nav-actions">
-        <button type="button" className="mdc-btn mdc-btn-ghost" onClick={back}>
-          Back
-        </button>
-        {step < 4 ? (
-          <button type="button" className="mdc-btn mdc-btn-primary" onClick={next}>
-            Continue
-          </button>
-        ) : (
-          <button
-            type="button"
-            className="mdc-btn mdc-btn-primary"
-            disabled={sending}
-            onClick={() => void submit()}
-          >
-            {sending ? "Sending…" : "Send checklist"}
-          </button>
-        )}
+            {err ? (
+              <div className="mdc-banner" role="alert">
+                {err}
+              </div>
+            ) : null}
+            <button type="button" className="mdc-btn mdc-btn-ghost" onClick={back}>
+              Back
+            </button>
+            {step < 4 ? (
+              <button type="submit" className="mdc-btn mdc-btn-primary">
+                Continue
+              </button>
+            ) : (
+              <button type="submit" className="mdc-btn mdc-btn-primary" disabled={sending}>
+                {sending ? "Sending…" : "Send checklist"}
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -341,7 +362,110 @@ export function MoveChecklistWizard() {
         value={data.hp}
         onChange={(e) => patch({ hp: e.target.value })}
       />
-    </div>
+    </form>
+  );
+}
+
+function Pipeline({
+  stage,
+  className,
+}: {
+  stage: "checklist" | "confirm";
+  className?: string;
+}) {
+  const current = stage === "confirm" ? 2 : 1;
+  const items = ["Deposit", "Checklist", "Confirm"];
+  return (
+    <ol className={className ? `mdc-pipeline ${className}` : "mdc-pipeline"} aria-label="Booking progress">
+      {items.map((label, index) => {
+        const state = index < current ? "is-done" : index === current ? "is-on" : "is-upcoming";
+        return (
+          <li key={label} className={state} aria-current={index === current ? "step" : undefined}>
+            {label}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+function StepList({
+  step,
+  onGo,
+  variant,
+}: {
+  step: ChecklistStep;
+  onGo: (next: ChecklistStep) => void;
+  variant: "rail" | "bar";
+}) {
+  return (
+    <ol className={variant === "rail" ? "mdc-rail-list" : "mdc-steps"} aria-label="Checklist steps">
+      {CHECKLIST_SECTIONS.map((section) => {
+        const state = sectionState(section.steps, step);
+        const detail =
+          section.num === "02"
+            ? step === 2
+              ? "Pickup"
+              : step === 3
+                ? "Delivery"
+                : step > 3
+                  ? "Pickup and delivery"
+                  : section.hint
+            : section.hint;
+        const body = (
+          <>
+            <span className="mdc-step-num">{state === "done" ? "✓" : section.num}</span>
+            <span className="mdc-step-copy">
+              <span>{section.label}</span>
+              {variant === "rail" || state === "on" ? <small>{detail}</small> : null}
+            </span>
+          </>
+        );
+        return (
+          <li key={section.num} className={state === "on" ? "is-on" : state === "done" ? "is-done" : "is-upcoming"}>
+            {state === "done" ? (
+              <button type="button" onClick={() => onGo(section.steps[0] as ChecklistStep)}>
+                {body}
+              </button>
+            ) : (
+              <span aria-current={state === "on" ? "step" : undefined}>{body}</span>
+            )}
+            {variant === "rail" && section.num === "02" ? (
+              <div className="mdc-substeps mdc-substeps-rail">
+                <Substep label="Pickup" n={2} current={step} onGo={onGo} />
+                <Substep label="Delivery" n={3} current={step} onGo={onGo} />
+              </div>
+            ) : null}
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+function Substep({
+  label,
+  n,
+  current,
+  onGo,
+}: {
+  label: string;
+  n: ChecklistStep;
+  current: ChecklistStep;
+  onGo: (next: ChecklistStep) => void;
+}) {
+  const state = current === n ? "is-on" : current > n ? "is-done" : "is-upcoming";
+  if (current > n) {
+    return (
+      <button type="button" className={`mdc-substep ${state}`} onClick={() => onGo(n)}>
+        {label}
+      </button>
+    );
+  }
+  return (
+    <span className={`mdc-substep ${state}`} aria-current={current === n ? "step" : undefined}>
+      {label}
+    </span>
   );
 }
 

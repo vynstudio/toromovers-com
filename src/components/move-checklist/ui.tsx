@@ -96,6 +96,7 @@ export function TextInput(props: {
       placeholder={props.placeholder}
       name={props.name}
       inputMode={props.inputMode}
+      enterKeyHint="next"
       onChange={(e) => props.onChange(e.target.value)}
     />
   );
