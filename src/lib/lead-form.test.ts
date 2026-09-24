@@ -252,8 +252,9 @@ test("payload keeps visible answers, nulls hidden fields, and notifies with the 
   assert.equal(intake.flat.phone, "3215550100");
   assert.equal(intake.payload.service, "house_2plus_move");
   assert.equal(intake.payload.service_label, "House — 2+ rooms");
-  assert.deepEqual(intake.payload.items, ["2 bedrooms"]);
-  assert.equal(intake.payload.primary_detail, "2 bedrooms");
+  assert.equal(intake.payload.when, "This week");
+  assert.deepEqual(intake.payload.items, ["Boxes"]);
+  assert.equal(intake.payload.primary_detail, "Boxes");
   assert.equal(intake.flat.serviceType, "House — 2+ rooms");
   assert.equal(intake.flat.service, "house_2plus_move");
   assert.equal(intake.flat.city, "32801 → 32789");
@@ -280,86 +281,89 @@ test("contact groups stay on the last step", () => {
   assert.match(String(validateLeadForm(state)), /email/);
 });
 
-test("item checklist uses the quote form list for the derived service", () => {
+test("item checklist is inventory for the mapped quote service", () => {
   const home = filled("home");
+  assert.ok(itemChecklist(home).includes("Sofa or sectional"));
+  assert.ok(itemChecklist(home).includes("Washer and dryer"));
+  home.answers.truck = "I have U-Haul, POD, or rental truck";
   assert.deepEqual(
     [...itemChecklist(home)],
-    ["2 bedrooms", "3 bedrooms", "4+ bedrooms"],
+    ["Boxes", "Furniture", "Appliances", "Loading", "Unloading"],
   );
-  home.answers.distance = "Long-distance";
-  assert.deepEqual(
-    [...itemChecklist(home)],
-    ["Within Florida", "Out of state", "Not sure yet"],
-  );
-  const pruned = pruneItems({ ...home, items: ["2 bedrooms", "Within Florida"] });
-  assert.deepEqual(pruned.items, ["Within Florida"]);
+  assert.ok(itemChecklist(home).length < 9);
+  const pruned = pruneItems({
+    ...home,
+    items: ["Sofa or sectional", "Boxes"],
+  });
+  assert.deepEqual(pruned.items, ["Boxes"]);
 
   const apartment = filled("apartment");
   const condo = filled("condo");
   assert.deepEqual([...itemChecklist(apartment)], [...itemChecklist(condo)]);
-  assert.deepEqual(
-    [...itemChecklist(apartment)],
-    ["2 bedrooms", "3 bedrooms", "3+ bedrooms"],
-  );
+  assert.ok(itemChecklist(apartment).includes("Dining table"));
 
   const storage = filled("storage");
-  assert.deepEqual(
-    [...itemChecklist(storage)],
-    ["Load container", "Unload container", "Load + unload"],
-  );
-  storage.answers.truck = "Need Toro truck";
-  assert.ok(itemChecklist(storage).includes("Office / commercial"));
+  assert.ok(itemChecklist(storage).includes("Garage or storage items"));
+  assert.equal(itemChecklist(storage).includes("Dining table"), false);
 
   const item = filled("single_item");
   assert.deepEqual(itemChecklist(item)[0], "Couch / sectional");
   item.answers.item_type = "Piano or safe";
-  assert.deepEqual(itemChecklist(item)[0], "Piano");
+  assert.deepEqual(itemChecklist(item)[0], "Couch / sectional");
+  item.answers.truck = "I have a truck";
+  assert.ok(itemChecklist(item).includes("Loading"));
 
-  home.answers.distance = "Local";
-  home.items = ["2 bedrooms", "Not a CRM option"];
+  home.answers.truck = "Need Toro truck";
+  home.items = ["Boxes", "Not a CRM option"];
   assert.equal(validateLeadForm(home), null);
   const payload = toPayload(home, {
     page_url: "https://toromovers.com/quotes",
     timestamp: "2026-09-24T15:10:00.000Z",
   });
-  assert.deepEqual(payload?.items, ["2 bedrooms"]);
-  assert.equal(payload?.primary_detail, "2 bedrooms");
+  assert.deepEqual(payload?.items, ["Boxes"]);
+  assert.equal(payload?.service_label, "House — 2+ rooms");
+  assert.equal(payload?.when, "This week");
 
   home.items = [];
-  assert.match(String(validateLeadForm(home)), /at least one/);
+  assert.equal(validateLeadForm(home), null);
+  assert.deepEqual(
+    toPayload(home, {
+      page_url: "https://toromovers.com/quotes",
+      timestamp: "2026-09-24T15:10:00.000Z",
+    })?.items,
+    [],
+  );
 });
 
-test("legacy service comes from move type, truck, and distance", () => {
+test("service label follows the live quote names", () => {
   const home = filled("home");
   home.answers.truck = "Need Toro truck";
-  home.answers.distance = "Local";
-  assert.equal(legacyService(home).service, "house_2plus_move");
+  home.answers.distance = "Long-distance";
+  assert.equal(legacyService(home).label, "House — 2+ rooms");
 
   home.answers.truck = "I have U-Haul, POD, or rental truck";
-  assert.equal(legacyService(home).service, "rental_truck_labor");
-
-  home.answers.distance = "Long-distance";
-  assert.equal(legacyService(home).service, "long_distance_move");
+  assert.equal(legacyService(home).label, "U-Haul / rental truck");
 
   const apartment = filled("apartment");
   apartment.answers.truck = "Need Toro truck";
-  apartment.answers.distance = "Local";
-  assert.equal(legacyService(apartment).service, "apartment_2plus_move");
+  assert.equal(legacyService(apartment).label, "Apartment — 2+ rooms");
 
   const condo = filled("condo");
   condo.answers.truck = "Need Toro truck";
-  condo.answers.distance = "Not sure";
-  assert.equal(legacyService(condo).service, "apartment_2plus_move");
+  assert.equal(legacyService(condo).label, "Apartment — 2+ rooms");
+  condo.answers.truck = "I have U-Haul, POD, or rental truck";
+  assert.equal(legacyService(condo).label, "U-Haul / rental truck");
 
   const storage = filled("storage");
   storage.answers.truck = "I already have truck or POD";
-  assert.equal(legacyService(storage).service, "pod_storage_container");
+  assert.equal(legacyService(storage).label, "POD / container");
   storage.answers.truck = "Need Toro truck";
-  assert.equal(legacyService(storage).service, "full_service_move");
+  assert.equal(legacyService(storage).label, "POD / container");
 
   const item = filled("single_item");
-  item.answers.item_type = "Sofa";
-  assert.equal(legacyService(item).service, "single_item_move");
   item.answers.item_type = "Piano or safe";
-  assert.equal(legacyService(item).service, "special_item_move");
+  item.answers.truck = "Need Toro truck";
+  assert.equal(legacyService(item).label, "Single item");
+  item.answers.truck = "I have a truck";
+  assert.equal(legacyService(item).label, "U-Haul / rental truck");
 });

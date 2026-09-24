@@ -5,7 +5,7 @@
  */
 
 import {
-  SERVICE_DETAIL_OPTIONS,
+  SERVICE_INVENTORY,
   SERVICE_LABELS,
   type ServiceType,
 } from "./funnel-service.ts";
@@ -87,13 +87,18 @@ export const CONTACT_GROUPS: Array<{ id: ContactGroupId; title: string }> = [
   { id: "who", title: "How we reach you" },
 ];
 
-/**
- * Quote-form detail list for the service this lead maps to.
- * Labels are SERVICE_DETAIL_OPTIONS. The quote form has no quantities.
- */
+/** Live /quotes When control. This week is the default. */
+export const WHEN_OPTIONS = ["This week", "Flexible"] as const;
+export type WhenOption = (typeof WHEN_OPTIONS)[number];
+
+export function isWhen(value: string): value is WhenOption {
+  return (WHEN_OPTIONS as readonly string[]).includes(value);
+}
+
+/** Inventory for the quote service this lead maps to. Optional. No quantities. */
 export function itemChecklist(state: LeadFormState): readonly string[] {
   if (!state.moveType) return [];
-  return SERVICE_DETAIL_OPTIONS[legacyService(state).service];
+  return SERVICE_INVENTORY[legacyService(state).service];
 }
 
 export function pruneItems(state: LeadFormState): LeadFormState {
@@ -374,6 +379,7 @@ export type LeadFormState = {
   fromPlace: string;
   toPlace: string;
   preferredDate: string;
+  when: WhenOption;
   name: string;
   phone: string;
   email: string;
@@ -395,6 +401,7 @@ export function emptyLeadFormState(): LeadFormState {
     fromPlace: "",
     toPlace: "",
     preferredDate: "",
+    when: "This week",
     name: "",
     phone: "",
     email: "",
@@ -423,36 +430,27 @@ const CUSTOMER_TRUCK = new Set([
 ]);
 
 /**
- * CRM still stores the older service codes. Step 1 stays the five move types.
- * Long-distance wins over truck. A customer truck is labor or POD, not full-service.
+ * CRM service label from the five move types.
+ * Home → House — 2+ rooms. Apartment and condo → Apartment — 2+ rooms.
+ * Storage → POD / container. Single item → Single item.
+ * A customer truck maps to U-Haul / rental truck, except storage stays POD.
  */
 export function legacyService(state: LeadFormState): {
   service: ServiceType;
   label: string;
 } {
-  const truck = state.answers.truck.trim();
-  const distance = state.answers.distance.trim();
-  const item = state.answers.item_type.trim();
-  let service: ServiceType = "full_service_move";
-  if (state.moveType === "single_item") {
-    service = item === "Piano or safe" ? "special_item_move" : "single_item_move";
-  } else if (
-    (state.moveType === "home" ||
-      state.moveType === "apartment" ||
-      state.moveType === "condo") &&
-    distance === "Long-distance"
-  ) {
-    service = "long_distance_move";
-  } else if (state.moveType === "storage") {
-    service = CUSTOMER_TRUCK.has(truck)
-      ? "pod_storage_container"
-      : "full_service_move";
-  } else if (CUSTOMER_TRUCK.has(truck)) {
+  const customerTruck = CUSTOMER_TRUCK.has(state.answers.truck.trim());
+  let service: ServiceType = "house_2plus_move";
+  if (state.moveType === "storage") {
+    service = "pod_storage_container";
+  } else if (customerTruck) {
     service = "rental_truck_labor";
   } else if (state.moveType === "home") {
     service = "house_2plus_move";
   } else if (state.moveType === "apartment" || state.moveType === "condo") {
     service = "apartment_2plus_move";
+  } else if (state.moveType === "single_item") {
+    service = "single_item_move";
   }
   return { service, label: SERVICE_LABELS[service] };
 }
@@ -535,16 +533,12 @@ export function validateContactGroup(
     return null;
   }
   if (id === "when") {
+    if (!isWhen(state.when)) return "Choose when.";
     const date = state.preferredDate.trim();
     if (!date) return dateOptional(state) ? null : "Choose a preferred date.";
     return isIsoDate(date) ? null : "Choose a preferred date.";
   }
-  if (id === "items") {
-    const allowed = new Set(itemChecklist(state));
-    const picked = state.items.filter((item) => allowed.has(item));
-    if (!picked.length) return "Choose at least one that describes the move.";
-    return null;
-  }
+  if (id === "items") return null;
   if (state.name.trim().length < 2) return "Enter your name.";
   if (!normalizeUsPhone(state.phone)) return "Enter a valid phone number.";
   const email = state.email.trim();
@@ -592,8 +586,9 @@ export type LeadFormPayload = {
   phone: string;
   email: string | null;
   notes: string | null;
-  items: string[] | null;
-  /** Quote-form field. Joined checklist labels. No quantities — the quote form has none. */
+  items: string[];
+  when: WhenOption;
+  /** Joined inventory labels. No quantities. */
   primary_detail: string | null;
   service: ServiceType;
   service_label: string;
@@ -621,11 +616,12 @@ export function toPayload(
     from_place: state.fromPlace.trim(),
     to_place: state.toPlace.trim(),
     preferred_date: state.preferredDate.trim() || null,
+    when: isWhen(state.when) ? state.when : "This week",
     name: state.name.trim(),
     phone: phone || "",
     email: state.email.trim().toLowerCase() || null,
     notes: state.notes.trim() || null,
-    items: items.length ? items : null,
+    items,
     primary_detail: items.length ? items.join(", ") : null,
     service: legacy.service,
     service_label: legacy.label,
@@ -651,7 +647,8 @@ export function leadFormNote(payload: LeadFormPayload): string {
     }
   }
   if (payload.item_type === "Piano or safe") lines.push(PIANO_NOTE);
-  if (payload.items?.length) lines.push(`Items: ${payload.items.join(", ")}`);
+  lines.push(`When: ${payload.when}`);
+  if (payload.items.length) lines.push(`Items: ${payload.items.join(", ")}`);
   if (payload.service) lines.push(`Service code: ${payload.service}`);
   if (payload.notes) lines.push(`Notes: ${payload.notes}`);
   return lines.join("\n");
@@ -673,6 +670,7 @@ export function stateFromBody(body: Record<string, unknown>): LeadFormState {
     fromPlace: textField(body.from_place),
     toPlace: textField(body.to_place),
     preferredDate: textField(body.preferred_date),
+    when: isWhen(textField(body.when)) ? (textField(body.when) as WhenOption) : "This week",
     name: textField(body.name),
     phone: textField(body.phone),
     email: textField(body.email),

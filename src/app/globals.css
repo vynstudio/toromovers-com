@@ -1228,6 +1228,31 @@ html:has(.gmp-page) body,
   background: #e20613;
   color: #fff;
 }
+.lf-checks {
+  display: grid;
+  gap: 0.45rem;
+}
+.lf-check {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 48px;
+  border: 2px solid #d4d4d8;
+  border-radius: 0.85rem;
+  background: #fff;
+  color: #0a0a0a;
+  font-weight: 800;
+  padding: 0.55rem 0.8rem;
+}
+.lf-check:has(input:checked) {
+  border-color: #e20613;
+  background: #fce6e8;
+}
+.lf-check input {
+  width: 1.15rem;
+  height: 1.15rem;
+  accent-color: #e20613;
+}
 .lf-choices.is-compact {
   grid-template-columns: 1fr 1fr;
 }

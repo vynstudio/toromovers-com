@@ -28,6 +28,7 @@ import {
   validateLeadForm,
   validateStep1,
   validateStep2,
+  WHEN_OPTIONS,
   type FieldDef,
   type FieldKey,
   type LeadFormState,
@@ -514,6 +515,25 @@ export default function MultiStepLeadForm() {
               }
               data-group="when"
             >
+              <fieldset className="lf-q" data-field="when">
+                <legend>When</legend>
+                <div className="lf-choices is-compact" role="radiogroup" aria-label="When">
+                  {WHEN_OPTIONS.map((option) => (
+                    <button
+                      key={option}
+                      type="button"
+                      role="radio"
+                      aria-checked={state.when === option}
+                      className={
+                        state.when === option ? "lf-choice is-on" : "lf-choice"
+                      }
+                      onClick={() => patch({ when: option })}
+                    >
+                      {option}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
               <label className="lf-label" data-field="preferred_date">
                 <span>
                   Preferred date
@@ -546,37 +566,20 @@ export default function MultiStepLeadForm() {
             >
               <fieldset className="lf-q" data-field="items">
                 <legend>
-                  {state.moveType
-                    ? legacyService(state).label
-                    : "Items"}
+                  {state.moveType ? legacyService(state).label : "Items"}
+                  <span className="gmp-optional"> (optional)</span>
                 </legend>
-                <p className="lf-hint">
-                  Choose the option that best describes your move.
-                </p>
-                <div
-                  className="lf-choices"
-                  role="group"
-                  aria-label={
-                    state.moveType ? legacyService(state).label : "Items"
-                  }
-                >
-                  {itemChecklist(state).map(
-                    (item) => (
-                      <button
-                        key={item}
-                        type="button"
-                        aria-pressed={state.items.includes(item)}
-                        className={
-                          state.items.includes(item)
-                            ? "lf-choice is-on"
-                            : "lf-choice"
-                        }
-                        onClick={() => toggleItem(item)}
-                      >
-                        {item}
-                      </button>
-                    ),
-                  )}
+                <div className="lf-checks" role="group" aria-label="Items">
+                  {itemChecklist(state).map((item) => (
+                    <label key={item} className="lf-check">
+                      <input
+                        type="checkbox"
+                        checked={state.items.includes(item)}
+                        onChange={() => toggleItem(item)}
+                      />
+                      <span>{item}</span>
+                    </label>
+                  ))}
                 </div>
               </fieldset>
             </div>

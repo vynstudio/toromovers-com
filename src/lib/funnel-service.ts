@@ -128,6 +128,66 @@ export const SERVICE_DETAIL_OPTIONS: Record<ServiceType, readonly string[]> = {
   ],
 };
 
+const FURNITURE_ITEMS = [
+  "Boxes",
+  "Bed or mattress",
+  "Dresser",
+  "Sofa or sectional",
+  "Dining table",
+  "Appliances",
+  "Washer and dryer",
+  "Desk",
+  "TV",
+] as const;
+
+const LABOR_ITEMS = [
+  "Boxes",
+  "Furniture",
+  "Appliances",
+  "Loading",
+  "Unloading",
+] as const;
+
+const STORAGE_ITEMS = [
+  "Boxes",
+  "Furniture",
+  "Appliances",
+  "Mattress",
+  "Garage or storage items",
+] as const;
+
+const SINGLE_ITEM_LIST = [
+  "Couch / sectional",
+  "Bed / mattress",
+  "Dining set",
+  "Appliance",
+  "Desk / office furniture",
+  "Other",
+] as const;
+
+const SPECIAL_ITEM_LIST = [
+  "Piano",
+  "Safe",
+  "Large furniture",
+  "Appliance",
+  "Exercise equipment",
+  "Other",
+] as const;
+
+/** Inventory checkboxes for the lead form. Keyed by the live /quotes service. */
+export const SERVICE_INVENTORY: Record<ServiceType, readonly string[]> = {
+  house_2plus_move: FURNITURE_ITEMS,
+  apartment_2plus_move: FURNITURE_ITEMS,
+  long_distance_move: FURNITURE_ITEMS,
+  full_service_move: FURNITURE_ITEMS,
+  labor_only: LABOR_ITEMS,
+  same_building_move: FURNITURE_ITEMS,
+  special_item_move: SPECIAL_ITEM_LIST,
+  pod_storage_container: STORAGE_ITEMS,
+  rental_truck_labor: LABOR_ITEMS,
+  single_item_move: SINGLE_ITEM_LIST,
+};
+
 export const SERVICE_OPTIONS: Array<{ value: ServiceType; label: string }> = [
   { value: "house_2plus_move", label: SERVICE_LABELS.house_2plus_move },
   { value: "apartment_2plus_move", label: SERVICE_LABELS.apartment_2plus_move },
