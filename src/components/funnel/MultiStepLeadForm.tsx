@@ -17,7 +17,9 @@ import {
   dateOptional,
   emptyLeadFormState,
   itemChecklist,
+  legacyService,
   moveTypeLabel,
+  pruneItems,
   questionGroups,
   selectMoveType,
   toPayload,
@@ -170,10 +172,12 @@ export default function MultiStepLeadForm() {
   }
 
   function setAnswer(key: FieldKey, value: string) {
-    setState((current) => ({
-      ...current,
-      answers: { ...current.answers, [key]: value },
-    }));
+    setState((current) =>
+      pruneItems({
+        ...current,
+        answers: { ...current.answers, [key]: value },
+      }),
+    );
     setError("");
   }
 
@@ -542,11 +546,21 @@ export default function MultiStepLeadForm() {
             >
               <fieldset className="lf-q" data-field="items">
                 <legend>
-                  What&apos;s moving?
-                  <span className="gmp-optional"> (optional)</span>
+                  {state.moveType
+                    ? legacyService(state).label
+                    : "Items"}
                 </legend>
-                <div className="lf-choices" role="group" aria-label="What's moving?">
-                  {(state.moveType ? itemChecklist(state.moveType) : []).map(
+                <p className="lf-hint">
+                  Choose the option that best describes your move.
+                </p>
+                <div
+                  className="lf-choices"
+                  role="group"
+                  aria-label={
+                    state.moveType ? legacyService(state).label : "Items"
+                  }
+                >
+                  {itemChecklist(state).map(
                     (item) => (
                       <button
                         key={item}

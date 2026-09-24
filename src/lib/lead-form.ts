@@ -4,7 +4,11 @@
  * Switching move type clears step 2 and the item checklist. Contact stays.
  */
 
-import { SERVICE_LABELS, type ServiceType } from "./funnel-service.ts";
+import {
+  SERVICE_DETAIL_OPTIONS,
+  SERVICE_LABELS,
+  type ServiceType,
+} from "./funnel-service.ts";
 import { normalizeUsPhone } from "./phone.ts";
 
 export function markNow(): number {
@@ -79,62 +83,24 @@ export type ContactGroupId = "places" | "when" | "items" | "who";
 export const CONTACT_GROUPS: Array<{ id: ContactGroupId; title: string }> = [
   { id: "places", title: "Where" },
   { id: "when", title: "When" },
-  { id: "items", title: "What's moving" },
+  { id: "items", title: "Items" },
   { id: "who", title: "How we reach you" },
 ];
 
-/** Optional inventory. Different list per move type — not the old 10 services. */
-export const ITEM_CHECKLIST: Record<MoveType, readonly string[]> = {
-  home: [
-    "Boxes",
-    "Beds and mattresses",
-    "Dressers",
-    "Sofa or sectional",
-    "Dining set",
-    "Appliances",
-    "Washer and dryer",
-    "Garage or patio",
-    "Piano or safe",
-  ],
-  apartment: [
-    "Boxes",
-    "Beds and mattresses",
-    "Sofa or sectional",
-    "Desk",
-    "Appliances",
-    "Washer and dryer",
-    "TV",
-  ],
-  condo: [
-    "Boxes",
-    "Beds and mattresses",
-    "Sofa or sectional",
-    "Appliances",
-    "Washer and dryer",
-    "Oversized furniture",
-    "Piano or safe",
-  ],
-  storage: [
-    "Boxes",
-    "Furniture",
-    "Appliances",
-    "Mattress",
-    "Gym equipment",
-    "Not sure",
-  ],
-  single_item: [
-    "Sofa",
-    "Mattress",
-    "Fridge",
-    "Washer-dryer",
-    "Treadmill",
-    "Piano or safe",
-    "Other",
-  ],
-};
+/**
+ * Quote-form detail list for the service this lead maps to.
+ * Labels are SERVICE_DETAIL_OPTIONS. The quote form has no quantities.
+ */
+export function itemChecklist(state: LeadFormState): readonly string[] {
+  if (!state.moveType) return [];
+  return SERVICE_DETAIL_OPTIONS[legacyService(state).service];
+}
 
-export function itemChecklist(type: MoveType): readonly string[] {
-  return ITEM_CHECKLIST[type];
+export function pruneItems(state: LeadFormState): LeadFormState {
+  const allowed = new Set(itemChecklist(state));
+  const items = state.items.filter((item) => allowed.has(item));
+  if (items.length === state.items.length) return state;
+  return { ...state, items };
 }
 
 const BEDROOMS = ["Studio", "1", "2", "3", "4+"] as const;
@@ -573,7 +539,12 @@ export function validateContactGroup(
     if (!date) return dateOptional(state) ? null : "Choose a preferred date.";
     return isIsoDate(date) ? null : "Choose a preferred date.";
   }
-  if (id === "items") return null;
+  if (id === "items") {
+    const allowed = new Set(itemChecklist(state));
+    const picked = state.items.filter((item) => allowed.has(item));
+    if (!picked.length) return "Choose at least one that describes the move.";
+    return null;
+  }
   if (state.name.trim().length < 2) return "Enter your name.";
   if (!normalizeUsPhone(state.phone)) return "Enter a valid phone number.";
   const email = state.email.trim();
@@ -622,6 +593,8 @@ export type LeadFormPayload = {
   email: string | null;
   notes: string | null;
   items: string[] | null;
+  /** Quote-form field. Joined checklist labels. No quantities — the quote form has none. */
+  primary_detail: string | null;
   service: ServiceType;
   service_label: string;
 } & Record<FieldKey, string | null>;
@@ -638,8 +611,7 @@ export function toPayload(
     details[key] = visible.has(key) && raw ? raw : null;
   }
   const phone = normalizeUsPhone(state.phone);
-  const allowed = new Set(itemChecklist(state.moveType));
-  const items = state.items.filter((item) => allowed.has(item));
+  const items = pruneItems(state).items;
   const legacy = legacyService(state);
   return {
     move_type: state.moveType,
@@ -654,6 +626,7 @@ export function toPayload(
     email: state.email.trim().toLowerCase() || null,
     notes: state.notes.trim() || null,
     items: items.length ? items : null,
+    primary_detail: items.length ? items.join(", ") : null,
     service: legacy.service,
     service_label: legacy.label,
     ...details,

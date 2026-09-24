@@ -13,6 +13,7 @@ import {
   emptyLeadFormState,
   itemChecklist,
   leadFormIntake,
+  pruneItems,
   legacyService,
   leadFormNote,
   leadFormTitle,
@@ -41,6 +42,7 @@ function filled(type: MoveType): LeadFormState {
   state.phone = "(321) 555-0100";
   state.email = "Ada@Example.com";
   state.notes = "Gate code 12";
+  state.items = [itemChecklist(state)[0]];
   return state;
 }
 
@@ -153,7 +155,7 @@ test("switching move type resets step 2 and keeps contact", () => {
   const home = filled("home");
   home.answers.bedrooms = "3";
   home.answers.stairs_pickup = "Yes";
-  home.items = ["Sofa or sectional", "Boxes"];
+  home.items = ["2 bedrooms", "3 bedrooms"];
   const apartment = selectMoveType(home, "apartment");
   assert.equal(apartment.moveType, "apartment");
   assert.equal(apartment.name, "Ada Perez");
@@ -194,6 +196,7 @@ test("single item can be ASAP and a piano asks for a phone confirm", () => {
   const item = filled("single_item");
   item.answers.timing = "ASAP";
   item.answers.item_type = "Piano or safe";
+  item.items = ["Piano"];
   item.preferredDate = "";
   assert.equal(validateLeadForm(item), null);
   const payload = toPayload(item, {
@@ -249,7 +252,8 @@ test("payload keeps visible answers, nulls hidden fields, and notifies with the 
   assert.equal(intake.flat.phone, "3215550100");
   assert.equal(intake.payload.service, "house_2plus_move");
   assert.equal(intake.payload.service_label, "House — 2+ rooms");
-  assert.equal(intake.payload.items, null);
+  assert.deepEqual(intake.payload.items, ["2 bedrooms"]);
+  assert.equal(intake.payload.primary_detail, "2 bedrooms");
   assert.equal(intake.flat.serviceType, "House — 2+ rooms");
   assert.equal(intake.flat.service, "house_2plus_move");
   assert.equal(intake.flat.city, "32801 → 32789");
@@ -276,21 +280,53 @@ test("contact groups stay on the last step", () => {
   assert.match(String(validateLeadForm(state)), /email/);
 });
 
-test("item checklists differ by move type and do not block submit", () => {
-  const signatures = MOVE_TYPES.map((type) => itemChecklist(type.value).join("|"));
-  assert.equal(new Set(signatures).size, 5);
-  assert.ok(itemChecklist("home").includes("Garage or patio"));
-  assert.equal(itemChecklist("apartment").includes("Garage or patio"), false);
-  assert.ok(itemChecklist("storage").includes("Not sure"));
-  assert.ok(itemChecklist("condo").includes("Oversized furniture"));
+test("item checklist uses the quote form list for the derived service", () => {
   const home = filled("home");
-  home.items = ["Boxes", "Not a CRM option"];
+  assert.deepEqual(
+    [...itemChecklist(home)],
+    ["2 bedrooms", "3 bedrooms", "4+ bedrooms"],
+  );
+  home.answers.distance = "Long-distance";
+  assert.deepEqual(
+    [...itemChecklist(home)],
+    ["Within Florida", "Out of state", "Not sure yet"],
+  );
+  const pruned = pruneItems({ ...home, items: ["2 bedrooms", "Within Florida"] });
+  assert.deepEqual(pruned.items, ["Within Florida"]);
+
+  const apartment = filled("apartment");
+  const condo = filled("condo");
+  assert.deepEqual([...itemChecklist(apartment)], [...itemChecklist(condo)]);
+  assert.deepEqual(
+    [...itemChecklist(apartment)],
+    ["2 bedrooms", "3 bedrooms", "3+ bedrooms"],
+  );
+
+  const storage = filled("storage");
+  assert.deepEqual(
+    [...itemChecklist(storage)],
+    ["Load container", "Unload container", "Load + unload"],
+  );
+  storage.answers.truck = "Need Toro truck";
+  assert.ok(itemChecklist(storage).includes("Office / commercial"));
+
+  const item = filled("single_item");
+  assert.deepEqual(itemChecklist(item)[0], "Couch / sectional");
+  item.answers.item_type = "Piano or safe";
+  assert.deepEqual(itemChecklist(item)[0], "Piano");
+
+  home.answers.distance = "Local";
+  home.items = ["2 bedrooms", "Not a CRM option"];
   assert.equal(validateLeadForm(home), null);
   const payload = toPayload(home, {
     page_url: "https://toromovers.com/quotes",
     timestamp: "2026-09-24T15:10:00.000Z",
   });
-  assert.deepEqual(payload?.items, ["Boxes"]);
+  assert.deepEqual(payload?.items, ["2 bedrooms"]);
+  assert.equal(payload?.primary_detail, "2 bedrooms");
+
+  home.items = [];
+  assert.match(String(validateLeadForm(home)), /at least one/);
 });
 
 test("legacy service comes from move type, truck, and distance", () => {

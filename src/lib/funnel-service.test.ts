@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import {
+  SERVICE_DETAIL_OPTIONS,
   SERVICE_LABELS,
   SERVICE_OPTIONS,
   resolveServiceParam,
@@ -25,5 +26,6 @@ test("every service option has a label", () => {
   for (const option of SERVICE_OPTIONS) {
     assert.equal(SERVICE_LABELS[option.value], option.label);
     assert.ok(option.label.length > 2);
+    assert.ok(SERVICE_DETAIL_OPTIONS[option.value].length > 0);
   }
 });

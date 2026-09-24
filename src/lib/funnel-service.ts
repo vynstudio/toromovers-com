@@ -75,6 +75,59 @@ export const SERVICE_LABELS: Record<ServiceType, string> = {
   long_distance_move: "Long-distance / interstate",
 };
 
+/**
+ * Step-2 choices on the quote form (`UniversalLeadForm`).
+ * One list per service. The quote form picks one; it has no quantities.
+ */
+export const SERVICE_DETAIL_OPTIONS: Record<ServiceType, readonly string[]> = {
+  house_2plus_move: ["2 bedrooms", "3 bedrooms", "4+ bedrooms"],
+  apartment_2plus_move: ["2 bedrooms", "3 bedrooms", "3+ bedrooms"],
+  long_distance_move: ["Within Florida", "Out of state", "Not sure yet"],
+  full_service_move: [
+    "Studio",
+    "1 bedroom",
+    "2 bedrooms",
+    "3 bedrooms",
+    "4+ bedrooms",
+    "Office / commercial",
+  ],
+  labor_only: [
+    "Loading only",
+    "Unloading only",
+    "Loading + unloading",
+    "In-home moving",
+  ],
+  same_building_move: [
+    "Studio",
+    "1 bedroom",
+    "2 bedrooms",
+    "3+ bedrooms",
+    "Office / commercial",
+  ],
+  special_item_move: [
+    "Piano",
+    "Safe",
+    "Large furniture",
+    "Appliance",
+    "Exercise equipment",
+    "Other",
+  ],
+  pod_storage_container: ["Load container", "Unload container", "Load + unload"],
+  rental_truck_labor: [
+    "Load rental truck",
+    "Unload rental truck",
+    "Load + unload",
+  ],
+  single_item_move: [
+    "Couch / sectional",
+    "Bed / mattress",
+    "Dining set",
+    "Appliance",
+    "Desk / office furniture",
+    "Other",
+  ],
+};
+
 export const SERVICE_OPTIONS: Array<{ value: ServiceType; label: string }> = [
   { value: "house_2plus_move", label: SERVICE_LABELS.house_2plus_move },
   { value: "apartment_2plus_move", label: SERVICE_LABELS.apartment_2plus_move },
