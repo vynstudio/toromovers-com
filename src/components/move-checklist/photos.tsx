@@ -76,18 +76,19 @@ export function PhotoPicker({
   max?: number;
   onChange: (next: UploadedRef[]) => void;
 }) {
+  const saved = Array.isArray(files) ? files : [];
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
 
-  async function onPick(list: FileList | null) {
-    if (!list?.length) return;
+  async function onPick(picked: FileList | null) {
+    if (!picked?.length) return;
     setErr("");
     setBusy(true);
     try {
-      const room = Math.max(0, max - files.length);
-      const slice = Array.from(list).slice(0, room);
+      const room = Math.max(0, max - saved.length);
+      const slice = Array.from(picked).slice(0, room);
       const uploaded = await uploadFiles(slice);
-      onChange([...files, ...uploaded]);
+      onChange([...saved, ...uploaded]);
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Upload failed.");
     } finally {
@@ -98,15 +99,15 @@ export function PhotoPicker({
   return (
     <div className="mdc-photos">
       <span className="mdc-label">{label}</span>
-      {files.length ? (
+      {saved.length ? (
         <ul className="mdc-photo-list">
-          {files.map((f) => (
+          {saved.map((f) => (
             <li key={f.key}>
               <span>{f.filename}</span>
               <button
                 type="button"
                 className="mdc-link"
-                onClick={() => onChange(files.filter((x) => x.key !== f.key))}
+                onClick={() => onChange(saved.filter((x) => x.key !== f.key))}
               >
                 Remove
               </button>
@@ -114,7 +115,7 @@ export function PhotoPicker({
           ))}
         </ul>
       ) : null}
-      {files.length < max ? (
+      {saved.length < max ? (
         <label className="mdc-upload">
           <input
             type="file"

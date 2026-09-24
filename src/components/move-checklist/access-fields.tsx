@@ -23,6 +23,8 @@ export function AccessFields({
   onChange: (next: AccessSite) => void;
   location: "pickup" | "delivery";
 }) {
+  const photos: AccessSite["photos"] =
+    value?.photos && typeof value.photos === "object" ? value.photos : {};
   const set = <K extends keyof AccessSite>(key: K, v: AccessSite[K]) =>
     onChange({ ...value, [key]: v });
 
@@ -149,10 +151,10 @@ export function AccessFields({
           </Field>
           <PhotoPicker
             label="Upload COI requirements or a sample (optional)"
-            files={value.photos.coi || []}
+            files={photos.coi || []}
             max={2}
             onChange={(next) =>
-              set("photos", { ...value.photos, coi: next })
+              set("photos", { ...photos, coi: next })
             }
           />
         </>
@@ -162,9 +164,9 @@ export function AccessFields({
         <PhotoPicker
           key={slot}
           label={slot}
-          files={value.photos[slot] || []}
+          files={photos[slot] || []}
           max={2}
-          onChange={(next) => set("photos", { ...value.photos, [slot]: next })}
+          onChange={(next) => set("photos", { ...photos, [slot]: next })}
         />
       ))}
     </>

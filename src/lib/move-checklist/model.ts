@@ -1,4 +1,4 @@
-import { isFullStreetAddress } from "@/lib/address-format";
+import { isFullStreetAddress } from "../address-format.ts";
 
 export const PROPERTY_TYPES = [
   "House",

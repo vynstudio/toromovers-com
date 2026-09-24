@@ -70,6 +70,7 @@
   letter-spacing: -0.03em;
   line-height: 1.1;
   color: #000;
+  scroll-margin-top: 132px;
 }
 .mdc-lede {
   margin: 0 0 16px;
@@ -92,13 +93,76 @@
 }
 .mdc-benefits {
   margin: 0 0 24px;
-  padding: 0 0 0 1.2rem;
+  padding: 0;
+  list-style: none;
   color: #000;
   font-size: 1rem;
   line-height: 1.45;
 }
 .mdc-benefits li {
-  margin-bottom: 6px;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  border: 1px solid #000;
+}
+.mdc-benefits li span:first-child {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.mdc-pipeline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.mdc-pipeline li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  color: rgba(0, 0, 0, 0.38);
+}
+.mdc-pipeline li:not(:last-child)::after {
+  content: "";
+  width: 16px;
+  height: 1px;
+  margin: 0 8px;
+  background: rgba(0, 0, 0, 0.28);
+}
+.mdc-pipeline .is-done {
+  color: #000;
+}
+.mdc-pipeline .is-on {
+  margin-right: 0;
+  padding: 4px 8px;
+  background: #000;
+  color: #fff;
+}
+.mdc-progress {
+  margin: 0 0 8px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.mdc-meter {
+  height: 4px;
+  margin: 0 0 16px;
+  background: rgba(0, 0, 0, 0.12);
+}
+.mdc-meter > span {
+  display: block;
+  height: 100%;
+  background: #000;
 }
 .mdc-hint {
   margin: 10px 0 0;
@@ -112,30 +176,105 @@
 }
 
 .mdc-steps {
-  display: flex;
-  gap: 16px;
-  margin: 0 0 18px;
-  font-size: 0.84rem;
-  font-weight: 600;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+.mdc-steps li {
+  min-width: 0;
 }
 .mdc-steps button,
-.mdc-steps span {
-  padding: 0 0 3px;
-  border: 0;
-  background: none;
+.mdc-steps li > span {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+  min-height: 64px;
+  padding: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.28);
+  background: #fff;
   color: rgba(0, 0, 0, 0.4);
   font: inherit;
-  font-weight: 600;
+  font-weight: 700;
+  text-align: left;
 }
 .mdc-steps button {
   cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+}
+.mdc-step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border: 1px solid currentColor;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+}
+.mdc-step-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  font-size: 0.84rem;
+}
+.mdc-step-copy small {
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.mdc-steps .is-upcoming > span {
+  background: #fff;
+}
+.mdc-steps .is-done > button {
+  border-color: #000;
   color: #000;
 }
-.mdc-steps .is-on {
+.mdc-steps .is-done .mdc-step-num {
+  background: #000;
+  color: #fff;
+  border-color: #000;
+}
+.mdc-steps .is-on > span {
+  border: 2px solid #000;
+  background: #000;
+  color: #fff;
+}
+.mdc-steps .is-on .mdc-step-num {
+  border-color: #fff;
+  color: #fff;
+}
+.mdc-substeps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+.mdc-substep {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.28);
+  background: #fff;
+  color: rgba(0, 0, 0, 0.4);
+  font: inherit;
+  font-weight: 700;
+}
+button.mdc-substep {
+  cursor: pointer;
+}
+.mdc-substep.is-done {
+  border-color: #000;
   color: #000;
-  box-shadow: inset 0 -1px 0 #000;
+}
+.mdc-substep.is-on {
+  border: 2px solid #000;
+  background: #000;
+  color: #fff;
 }
 
 .mdc-recall {
@@ -272,6 +411,7 @@
   align-items: center;
 }
 .mdc-banner {
+  grid-column: 1 / -1;
   margin: 0 0 8px;
   padding: 0;
   color: #000;
@@ -458,7 +598,9 @@
 }
 
 @media (min-width: 900px) {
-  .mdc-steps {
+  .mdc-steps,
+  .mdc-pipeline-main,
+  .mdc-main > .mdc-substeps {
     display: none;
   }
   .mdc-shell {
@@ -472,42 +614,80 @@
     position: sticky;
     top: 92px;
   }
-  .mdc-rail ol {
+  .mdc-rail-list {
     margin: 0;
     padding: 0;
     list-style: none;
   }
-  .mdc-rail li {
-    border-left: 2px solid transparent;
-    padding: 0 0 14px 12px;
+  .mdc-rail-list > li {
+    margin: 0 0 8px;
+    border: 1px solid rgba(0, 0, 0, 0.28);
+    background: #fff;
+    color: rgba(0, 0, 0, 0.4);
   }
-  .mdc-rail li.is-on {
-    border-left-color: #000;
-  }
-  .mdc-rail button,
-  .mdc-rail li > span {
+  .mdc-rail-list > li > button,
+  .mdc-rail-list > li > span {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    align-items: flex-start;
+    gap: 10px;
     width: 100%;
-    padding: 0;
+    padding: 10px 12px;
     border: 0;
     background: none;
-    color: rgba(0, 0, 0, 0.4);
+    color: inherit;
     font: inherit;
+    font-weight: 700;
     text-align: left;
   }
-  .mdc-rail button {
+  .mdc-rail-list > li > button {
     cursor: pointer;
+  }
+  .mdc-rail-list > li.is-done {
+    border-color: #000;
     color: #000;
   }
-  .mdc-rail li.is-on button,
-  .mdc-rail li.is-on > span {
+  .mdc-rail-list > li.is-done .mdc-step-num {
+    background: #000;
+    color: #fff;
+    border-color: #000;
+  }
+  .mdc-rail-list > li.is-on {
+    border: 2px solid #000;
+    background: #000;
+    color: #fff;
+  }
+  .mdc-rail-list > li.is-on .mdc-step-num {
+    border-color: #fff;
+  }
+  .mdc-rail-list small {
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+  .mdc-substeps-rail {
+    grid-template-columns: 1fr;
+    gap: 0;
+    margin: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.28);
+  }
+  .mdc-rail-list > li.is-upcoming .mdc-substeps-rail,
+  .mdc-rail-list > li.is-done .mdc-substeps-rail {
+    border-top-color: rgba(0, 0, 0, 0.16);
+  }
+  .mdc-substeps-rail .mdc-substep {
+    justify-content: flex-start;
+    min-height: 36px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+  }
+  .mdc-rail-list > li.is-on .mdc-substep.is-on {
+    background: #fff;
     color: #000;
   }
-  .mdc-rail small {
-    font-size: 0.8rem;
-    font-weight: 500;
+  .mdc-rail-list > li.is-on .mdc-substep.is-upcoming,
+  .mdc-rail-list > li.is-on .mdc-substep.is-done {
+    color: rgba(255, 255, 255, 0.72);
   }
   .mdc-rail-notes {
     margin-top: 8px;
