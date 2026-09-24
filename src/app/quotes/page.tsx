@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import MultiStepLeadForm from "@/components/funnel/MultiStepLeadForm";
+import AdsShortForm from "@/components/funnel/AdsShortForm";
 import { ToroLockup } from "@/components/funnel/ToroLockup";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
 import {
@@ -81,7 +81,7 @@ export default function QuotesPage() {
       <section className="gmp-land-body">
         <h1>{page.hero.h1}</h1>
         <p className="aeo-answer">{page.hero.lede}</p>
-        <MultiStepLeadForm />
+        <AdsShortForm />
       </section>
 
       <footer className="gmp-nap">

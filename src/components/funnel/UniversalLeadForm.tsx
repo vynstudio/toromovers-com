@@ -7,7 +7,6 @@ import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
 import {
   resolveServiceParam,
-  SERVICE_DETAIL_OPTIONS,
   type ServiceType,
 } from "@/lib/funnel-service";
 import {
@@ -106,6 +105,55 @@ const services: Array<{
     alt: "One mover carrying a couch from a house to the curb",
   },
 ];
+
+const choices: Record<ServiceType, string[]> = {
+  house_2plus_move: ["2 bedrooms", "3 bedrooms", "4+ bedrooms"],
+  apartment_2plus_move: ["2 bedrooms", "3 bedrooms", "3+ bedrooms"],
+  long_distance_move: ["Within Florida", "Out of state", "Not sure yet"],
+  full_service_move: [
+    "Studio",
+    "1 bedroom",
+    "2 bedrooms",
+    "3 bedrooms",
+    "4+ bedrooms",
+    "Office / commercial",
+  ],
+  labor_only: [
+    "Loading only",
+    "Unloading only",
+    "Loading + unloading",
+    "In-home moving",
+  ],
+  same_building_move: [
+    "Studio",
+    "1 bedroom",
+    "2 bedrooms",
+    "3+ bedrooms",
+    "Office / commercial",
+  ],
+  special_item_move: [
+    "Piano",
+    "Safe",
+    "Large furniture",
+    "Appliance",
+    "Exercise equipment",
+    "Other",
+  ],
+  pod_storage_container: ["Load container", "Unload container", "Load + unload"],
+  rental_truck_labor: [
+    "Load rental truck",
+    "Unload rental truck",
+    "Load + unload",
+  ],
+  single_item_move: [
+    "Couch / sectional",
+    "Bed / mattress",
+    "Dining set",
+    "Appliance",
+    "Desk / office furniture",
+    "Other",
+  ],
+};
 
 function isServiceType(value: string | undefined): value is ServiceType {
   return Boolean(value && services.some((item) => item.value === value));
@@ -389,7 +437,7 @@ export default function UniversalLeadForm({
             Choose the option that best describes your move.
           </p>
           <ChoiceGrid
-            options={[...SERVICE_DETAIL_OPTIONS[service]]}
+            options={choices[service]}
             value={detail}
             onChange={setDetail}
           />
