@@ -5,6 +5,8 @@ export type MapboxFeature = {
   place_name?: string;
   text?: string;
   address?: string;
+  /** [longitude, latitude] from Mapbox. */
+  center?: [number, number];
   context?: MapboxContext[];
 };
 

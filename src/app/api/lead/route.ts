@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { sendCapiLead } from "@/lib/capi";
 import { notifyLead } from "@/lib/notify";
+import { quoteStops } from "@/lib/quote-address";
 
 /**
  * Lead intake for toromovers.com
@@ -49,6 +50,7 @@ function flattenLead(body: Record<string, unknown>) {
     body.consentSms !== false &&
     body.consentSms !== "false" &&
     contact?.sms_call_consent !== false;
+  const stops = quoteStops(source, details).stops;
   const note = [
     str(body.note),
     serviceType && `Service: ${serviceType}`,
@@ -56,6 +58,9 @@ function flattenLead(body: Record<string, unknown>) {
     moveDate && `When: ${moveDate}`,
     str(details?.origin) && `From: ${str(details?.origin)}`,
     str(details?.destination) && `To: ${str(details?.destination)}`,
+    stops
+      ? `Distance: ${stops.distanceMiles.toFixed(1)} mi between addresses`
+      : "",
     str(details?.access_conditions) &&
       `Access: ${str(details?.access_conditions)}`,
     str(details?.notes),
@@ -100,6 +105,14 @@ export async function POST(req: Request) {
   }
 
   const flat = flattenLead(body);
+  const details = asRecord(body.service_details);
+  const quoted = quoteStops(flat.source, details);
+  if (quoted.required && !quoted.stops) {
+    return NextResponse.json(
+      { error: "full_address_required" },
+      { status: 400 },
+    );
+  }
   const name = flat.name;
   const phone = flat.phone;
   const email = flat.email;
@@ -133,6 +146,9 @@ export async function POST(req: Request) {
       note: flat.note || undefined,
       moveDate: flat.moveDate || undefined,
       city: flat.city || undefined,
+      pickup: quoted.stops?.origin,
+      dropoff: quoted.stops?.destination,
+      distanceMiles: quoted.stops?.distanceMiles,
       funnel,
       source: flat.source,
       consentSms: soft ? false : consentSms,
@@ -196,6 +212,15 @@ export async function POST(req: Request) {
           note: flat.note || undefined,
           moveDate: flat.moveDate || undefined,
           city: flat.city || undefined,
+          pickupAddress: quoted.stops?.origin,
+          dropoffAddress: quoted.stops?.destination,
+          originPlaceId: quoted.stops?.originPlaceId,
+          destinationPlaceId: quoted.stops?.destinationPlaceId,
+          originLng: quoted.stops?.originLng,
+          originLat: quoted.stops?.originLat,
+          destinationLng: quoted.stops?.destinationLng,
+          destinationLat: quoted.stops?.destinationLat,
+          distanceMiles: quoted.stops?.distanceMiles,
           funnel,
           source: flat.source,
           site: "toromovers.com",

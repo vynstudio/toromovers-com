@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  AddressAutocomplete,
-  isFullStreetAddress,
-} from "@/components/address-autocomplete";
+import { AddressAutocomplete } from "@/components/address-autocomplete";
 import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
@@ -19,6 +16,7 @@ import {
   FUNNEL_SLA,
 } from "@/lib/funnel-offer";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
+import { haversineMiles, type SelectedPlace } from "@/lib/selected-place";
 import { PHONE_DISPLAY } from "@/lib/site";
 
 export type { ServiceType };
@@ -204,8 +202,11 @@ export default function UniversalLeadForm({
   );
   const [detail, setDetail] = useState("");
   const [moveDate, setMoveDate] = useState("");
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
+  const [originText, setOriginText] = useState("");
+  const [destinationText, setDestinationText] = useState("");
+  const [origin, setOrigin] = useState<SelectedPlace | null>(null);
+  const [destination, setDestination] = useState<SelectedPlace | null>(null);
+  const [searchDown, setSearchDown] = useState(false);
   const [access, setAccess] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -248,14 +249,19 @@ export default function UniversalLeadForm({
   }
 
   function completeStep(next: number, stepName: string) {
-    if (
-      stepName === "move_logistics" &&
-      (!isFullStreetAddress(origin) || !isFullStreetAddress(destination))
-    ) {
-      setError(
-        "Choose the full pickup and drop-off addresses from the suggestions (street, city, and ZIP).",
-      );
-      return;
+    if (stepName === "move_logistics") {
+      if (searchDown && (!origin || !destination)) {
+        setError(
+          `Address search is unavailable. Call ${PHONE_DISPLAY} and we will quote the move.`,
+        );
+        return;
+      }
+      if (!origin || !destination) {
+        setError(
+          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+        );
+        return;
+      }
     }
     setError("");
     trackFunnelEvent("form_step_complete", {
@@ -269,6 +275,12 @@ export default function UniversalLeadForm({
   async function submit(event: FormEvent) {
     event.preventDefault();
     const phoneE164 = normalizeUsPhone(phone);
+    if (!origin || !destination) {
+      setError(
+        "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+      );
+      return;
+    }
     if (!service || !name.trim() || !email.trim() || !phoneE164 || !consent) {
       setError(
         "Please enter your name, a valid mobile number, email address, and consent before continuing.",
@@ -283,8 +295,14 @@ export default function UniversalLeadForm({
       service_details: {
         primary_detail: detail,
         move_date: moveDate,
-        origin,
-        destination,
+        origin: origin?.line || "",
+        destination: destination?.line || "",
+        origin_place_id: origin?.placeId,
+        destination_place_id: destination?.placeId,
+        origin_lng: origin?.lng,
+        origin_lat: origin?.lat,
+        destination_lng: destination?.lng,
+        destination_lat: destination?.lat,
         access_conditions: access,
         notes,
       },
@@ -303,12 +321,28 @@ export default function UniversalLeadForm({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+      const failure = (await response.clone().json().catch(() => ({}))) as {
+        error?: string;
+      };
+      if (failure.error === "full_address_required") {
+        setError(
+          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+        );
+        setSubmitting(false);
+        return;
+      }
       if (!response.ok) throw new Error("Lead submission failed");
       const result = await response.json().catch(() => ({}));
       trackFunnelEvent("generate_lead", {
         service_type: service,
         form_location: source,
         lead_id: result.lead_id || result.id || undefined,
+        pickup_selected: Boolean(origin),
+        dropoff_selected: Boolean(destination),
+        distance_miles:
+          origin && destination
+            ? Math.round(haversineMiles(origin, destination))
+            : undefined,
       });
       window.location.assign("/thank-you");
     } catch {
@@ -448,26 +482,57 @@ export default function UniversalLeadForm({
             />
           </label>
           <label className="block text-sm font-bold">
-            Moving from
+            Pickup address
             <AddressAutocomplete
-              streetOnly
-              value={origin}
-              onChange={setOrigin}
+              value={originText}
+              onChange={(next) => {
+                setOriginText(next);
+                setOrigin((current) => (current?.line === next ? current : null));
+                if (error) setError("");
+              }}
+              onSelect={(place) => {
+                setOrigin(place);
+                setOriginText(place.line);
+                setSearchDown(false);
+                trackFunnelEvent("address_selected", {
+                  form_location: source,
+                  field: "pickup",
+                });
+                if (error) setError("");
+              }}
+              onSearchState={(state) => setSearchDown(state === "down")}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Street, city, ZIP"
+              placeholder="Street number and name"
               ariaLabel="Pickup address"
-              autoComplete="street-address"
+              autoComplete="off"
             />
           </label>
           <label className="block text-sm font-bold">
-            Moving to
+            Drop-off address
             <AddressAutocomplete
-              streetOnly
-              value={destination}
-              onChange={setDestination}
+              value={destinationText}
+              onChange={(next) => {
+                setDestinationText(next);
+                setDestination((current) =>
+                  current?.line === next ? current : null,
+                );
+                if (error) setError("");
+              }}
+              onSelect={(place) => {
+                setDestination(place);
+                setDestinationText(place.line);
+                setSearchDown(false);
+                trackFunnelEvent("address_selected", {
+                  form_location: source,
+                  field: "dropoff",
+                });
+                if (error) setError("");
+              }}
+              onSearchState={(state) => setSearchDown(state === "down")}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Street, city, ZIP"
+              placeholder="Street number and name"
               ariaLabel="Drop-off address"
+              autoComplete="off"
             />
           </label>
           <label className="block text-sm font-bold">
@@ -495,11 +560,7 @@ export default function UniversalLeadForm({
             </button>
             <button
               type="button"
-              disabled={
-                !moveDate ||
-                !isFullStreetAddress(origin) ||
-                !isFullStreetAddress(destination)
-              }
+              disabled={!moveDate}
               onClick={() => completeStep(4, "move_logistics")}
               className={`flex-1 ${primaryBtn}`}
             >
