@@ -16,10 +16,12 @@ import {
   allowsOnePlace,
   dateOptional,
   emptyLeadFormState,
+  itemAmount,
   itemChecklist,
   legacyService,
   moveTypeLabel,
   pruneItems,
+  setItemQty,
   questionGroups,
   selectMoveType,
   toPayload,
@@ -162,12 +164,10 @@ export default function MultiStepLeadForm() {
     setError("");
   }
 
-  function toggleItem(item: string) {
+  function changeQty(label: string, qty: number) {
     setState((current) => ({
       ...current,
-      items: current.items.includes(item)
-        ? current.items.filter((entry) => entry !== item)
-        : [...current.items, item],
+      items: setItemQty(current.items, label, qty),
     }));
     setError("");
   }
@@ -569,17 +569,48 @@ export default function MultiStepLeadForm() {
                   {state.moveType ? legacyService(state).label : "Items"}
                   <span className="gmp-optional"> (optional)</span>
                 </legend>
-                <div className="lf-checks" role="group" aria-label="Items">
-                  {itemChecklist(state).map((item) => (
-                    <label key={item} className="lf-check">
-                      <input
-                        type="checkbox"
-                        checked={state.items.includes(item)}
-                        onChange={() => toggleItem(item)}
-                      />
-                      <span>{item}</span>
-                    </label>
-                  ))}
+                <div className="lf-qtys" role="group" aria-label="Items">
+                  {itemChecklist(state).map((item) => {
+                    const qty = itemAmount(state.items, item);
+                    return (
+                      <div
+                        key={item}
+                        className={qty > 0 ? "lf-qty is-on" : "lf-qty"}
+                        data-item={item}
+                      >
+                        <span className="lf-qty-name">{item}</span>
+                        <div className="lf-stepper">
+                          <button
+                            type="button"
+                            aria-label={`Less ${item}`}
+                            disabled={qty <= 0}
+                            onClick={() => changeQty(item, qty - 1)}
+                          >
+                            −
+                          </button>
+                          <input
+                            type="number"
+                            inputMode="numeric"
+                            min={0}
+                            max={99}
+                            value={qty}
+                            aria-label={`${item} amount`}
+                            onChange={(event) =>
+                              changeQty(item, Number(event.target.value))
+                            }
+                          />
+                          <button
+                            type="button"
+                            aria-label={`More ${item}`}
+                            disabled={qty >= 99}
+                            onClick={() => changeQty(item, qty + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </fieldset>
             </div>

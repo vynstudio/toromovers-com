@@ -11,7 +11,10 @@ import {
   STEP1_HELPER,
   STEP_LABELS,
   emptyLeadFormState,
+  formatItemList,
+  ITEM_QTY_MAX,
   itemChecklist,
+  itemsFromBody,
   leadFormIntake,
   pruneItems,
   legacyService,
@@ -42,7 +45,7 @@ function filled(type: MoveType): LeadFormState {
   state.phone = "(321) 555-0100";
   state.email = "Ada@Example.com";
   state.notes = "Gate code 12";
-  state.items = [itemChecklist(state)[0]];
+  state.items = [{ label: itemChecklist(state)[0], qty: 1 }];
   return state;
 }
 
@@ -155,7 +158,10 @@ test("switching move type resets step 2 and keeps contact", () => {
   const home = filled("home");
   home.answers.bedrooms = "3";
   home.answers.stairs_pickup = "Yes";
-  home.items = ["2 bedrooms", "3 bedrooms"];
+  home.items = [
+    { label: "Boxes", qty: 4 },
+    { label: "Sofa or sectional", qty: 1 },
+  ];
   const apartment = selectMoveType(home, "apartment");
   assert.equal(apartment.moveType, "apartment");
   assert.equal(apartment.name, "Ada Perez");
@@ -196,7 +202,7 @@ test("single item can be ASAP and a piano asks for a phone confirm", () => {
   const item = filled("single_item");
   item.answers.timing = "ASAP";
   item.answers.item_type = "Piano or safe";
-  item.items = ["Piano"];
+  item.items = [{ label: "Piano", qty: 1 }];
   item.preferredDate = "";
   assert.equal(validateLeadForm(item), null);
   const payload = toPayload(item, {
@@ -253,8 +259,9 @@ test("payload keeps visible answers, nulls hidden fields, and notifies with the 
   assert.equal(intake.payload.service, "house_2plus_move");
   assert.equal(intake.payload.service_label, "House — 2+ rooms");
   assert.equal(intake.payload.when, "This week");
-  assert.deepEqual(intake.payload.items, ["Boxes"]);
-  assert.equal(intake.payload.primary_detail, "Boxes");
+  assert.deepEqual(intake.payload.items, [{ label: "Boxes", qty: 1 }]);
+  assert.equal(intake.payload.primary_detail, "Boxes × 1");
+  assert.match(intake.flat.note, /Items: Boxes × 1/);
   assert.equal(intake.flat.serviceType, "House — 2+ rooms");
   assert.equal(intake.flat.service, "house_2plus_move");
   assert.equal(intake.flat.city, "32801 → 32789");
@@ -293,9 +300,12 @@ test("item checklist is inventory for the mapped quote service", () => {
   assert.ok(itemChecklist(home).length < 9);
   const pruned = pruneItems({
     ...home,
-    items: ["Sofa or sectional", "Boxes"],
+    items: [
+      { label: "Sofa or sectional", qty: 2 },
+      { label: "Boxes", qty: 12 },
+    ],
   });
-  assert.deepEqual(pruned.items, ["Boxes"]);
+  assert.deepEqual(pruned.items, [{ label: "Boxes", qty: 12 }]);
 
   const apartment = filled("apartment");
   const condo = filled("condo");
@@ -314,15 +324,30 @@ test("item checklist is inventory for the mapped quote service", () => {
   assert.ok(itemChecklist(item).includes("Loading"));
 
   home.answers.truck = "Need Toro truck";
-  home.items = ["Boxes", "Not a CRM option"];
+  home.items = [
+    { label: "Boxes", qty: 12 },
+    { label: "Sofa or sectional", qty: 1 },
+    { label: "Not a CRM option", qty: 4 },
+    { label: "TV", qty: 0 },
+    { label: "Desk", qty: 120 },
+  ];
   assert.equal(validateLeadForm(home), null);
   const payload = toPayload(home, {
     page_url: "https://toromovers.com/quotes",
     timestamp: "2026-09-24T15:10:00.000Z",
   });
-  assert.deepEqual(payload?.items, ["Boxes"]);
+  assert.deepEqual(payload?.items, [
+    { label: "Boxes", qty: 12 },
+    { label: "Sofa or sectional", qty: 1 },
+    { label: "Desk", qty: ITEM_QTY_MAX },
+  ]);
+  assert.equal(
+    payload?.primary_detail,
+    "Boxes × 12, Sofa or sectional × 1, Desk × 99",
+  );
   assert.equal(payload?.service_label, "House — 2+ rooms");
   assert.equal(payload?.when, "This week");
+  assert.match(leadFormNote(payload!), /Boxes × 12/);
 
   home.items = [];
   assert.equal(validateLeadForm(home), null);
@@ -332,6 +357,15 @@ test("item checklist is inventory for the mapped quote service", () => {
       timestamp: "2026-09-24T15:10:00.000Z",
     })?.items,
     [],
+  );
+
+  assert.deepEqual(itemsFromBody(["Boxes", "TV"]), [
+    { label: "Boxes", qty: 1 },
+    { label: "TV", qty: 1 },
+  ]);
+  assert.equal(
+    formatItemList(itemsFromBody({ Boxes: 3, Desk: 0 })),
+    "Boxes × 3",
   );
 });
 

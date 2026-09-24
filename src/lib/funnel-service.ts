@@ -174,7 +174,7 @@ const SPECIAL_ITEM_LIST = [
   "Other",
 ] as const;
 
-/** Inventory checkboxes for the lead form. Keyed by the live /quotes service. */
+/** Short moving-day inventory. Each row gets a quantity on the lead form. */
 export const SERVICE_INVENTORY: Record<ServiceType, readonly string[]> = {
   house_2plus_move: FURNITURE_ITEMS,
   apartment_2plus_move: FURNITURE_ITEMS,

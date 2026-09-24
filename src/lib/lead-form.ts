@@ -95,16 +95,89 @@ export function isWhen(value: string): value is WhenOption {
   return (WHEN_OPTIONS as readonly string[]).includes(value);
 }
 
-/** Inventory for the quote service this lead maps to. Optional. No quantities. */
+export const ITEM_QTY_MAX = 99;
+
+export type ItemQty = { label: string; qty: number };
+
+/** Inventory for the quote service this lead maps to. Optional. Qty 0 means not selected. */
 export function itemChecklist(state: LeadFormState): readonly string[] {
   if (!state.moveType) return [];
   return SERVICE_INVENTORY[legacyService(state).service];
 }
 
+export function clampItemQty(value: number): number {
+  if (!Number.isFinite(value)) return 0;
+  const qty = Math.trunc(value);
+  if (qty <= 0) return 0;
+  return Math.min(ITEM_QTY_MAX, qty);
+}
+
+export function itemAmount(items: readonly ItemQty[], label: string): number {
+  return items.find((item) => item.label === label)?.qty ?? 0;
+}
+
+export function setItemQty(
+  items: readonly ItemQty[],
+  label: string,
+  qty: number,
+): ItemQty[] {
+  const next = clampItemQty(qty);
+  const rest = items.filter((item) => item.label !== label);
+  if (next === 0) return rest;
+  return [...rest, { label, qty: next }];
+}
+
+/** A bare label from an older payload means one of that item. */
+export function itemsFromBody(value: unknown): ItemQty[] {
+  if (Array.isArray(value)) {
+    const items: ItemQty[] = [];
+    for (const entry of value) {
+      if (typeof entry === "string") {
+        const label = entry.trim();
+        if (label) items.push({ label, qty: 1 });
+        continue;
+      }
+      if (!entry || typeof entry !== "object") continue;
+      const record = entry as { label?: unknown; qty?: unknown };
+      const label = typeof record.label === "string" ? record.label.trim() : "";
+      const raw = typeof record.qty === "number" ? record.qty : Number(record.qty);
+      const qty = clampItemQty(raw);
+      if (label && qty > 0) items.push({ label, qty });
+    }
+    return items;
+  }
+  if (value && typeof value === "object") {
+    const items: ItemQty[] = [];
+    for (const [key, raw] of Object.entries(value as Record<string, unknown>)) {
+      const qty = clampItemQty(typeof raw === "number" ? raw : Number(raw));
+      const label = key.trim();
+      if (label && qty > 0) items.push({ label, qty });
+    }
+    return items;
+  }
+  return [];
+}
+
+export function formatItemList(items: readonly ItemQty[]): string {
+  return items.map((item) => `${item.label} × ${item.qty}`).join(", ");
+}
+
 export function pruneItems(state: LeadFormState): LeadFormState {
-  const allowed = new Set(itemChecklist(state));
-  const items = state.items.filter((item) => allowed.has(item));
-  if (items.length === state.items.length) return state;
+  const allowed = itemChecklist(state);
+  const amounts = new Map(state.items.map((item) => [item.label, item.qty]));
+  const items = allowed
+    .map((label) => ({ label, qty: clampItemQty(amounts.get(label) ?? 0) }))
+    .filter((item) => item.qty > 0);
+  if (
+    items.length === state.items.length &&
+    items.every(
+      (item, index) =>
+        item.label === state.items[index]?.label &&
+        item.qty === state.items[index]?.qty,
+    )
+  ) {
+    return state;
+  }
   return { ...state, items };
 }
 
@@ -375,7 +448,7 @@ export function visibleFieldKeys(type: MoveType): FieldKey[] {
 export type LeadFormState = {
   moveType: MoveType | "";
   answers: Record<FieldKey, string>;
-  items: string[];
+  items: ItemQty[];
   fromPlace: string;
   toPlace: string;
   preferredDate: string;
@@ -586,9 +659,9 @@ export type LeadFormPayload = {
   phone: string;
   email: string | null;
   notes: string | null;
-  items: string[];
+  items: ItemQty[];
   when: WhenOption;
-  /** Joined inventory labels. No quantities. */
+  /** Inventory with amounts, e.g. "Boxes × 12, Sofa or sectional × 1". */
   primary_detail: string | null;
   service: ServiceType;
   service_label: string;
@@ -622,7 +695,7 @@ export function toPayload(
     email: state.email.trim().toLowerCase() || null,
     notes: state.notes.trim() || null,
     items,
-    primary_detail: items.length ? items.join(", ") : null,
+    primary_detail: items.length ? formatItemList(items) : null,
     service: legacy.service,
     service_label: legacy.label,
     ...details,
@@ -648,7 +721,7 @@ export function leadFormNote(payload: LeadFormPayload): string {
   }
   if (payload.item_type === "Piano or safe") lines.push(PIANO_NOTE);
   lines.push(`When: ${payload.when}`);
-  if (payload.items.length) lines.push(`Items: ${payload.items.join(", ")}`);
+  if (payload.items.length) lines.push(`Items: ${formatItemList(payload.items)}`);
   if (payload.service) lines.push(`Service code: ${payload.service}`);
   if (payload.notes) lines.push(`Notes: ${payload.notes}`);
   return lines.join("\n");
@@ -675,9 +748,7 @@ export function stateFromBody(body: Record<string, unknown>): LeadFormState {
     phone: textField(body.phone),
     email: textField(body.email),
     notes: textField(body.notes),
-    items: Array.isArray(body.items)
-      ? body.items.filter((item): item is string => typeof item === "string")
-      : [],
+    items: itemsFromBody(body.items),
   };
 }
 

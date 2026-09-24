@@ -1228,30 +1228,67 @@ html:has(.gmp-page) body,
   background: #e20613;
   color: #fff;
 }
-.lf-checks {
+.lf-qtys {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.4rem;
 }
-.lf-check {
+.lf-qty {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  justify-content: space-between;
+  gap: 0.75rem;
   min-height: 48px;
   border: 2px solid #d4d4d8;
   border-radius: 0.85rem;
   background: #fff;
-  color: #0a0a0a;
-  font-weight: 800;
-  padding: 0.55rem 0.8rem;
+  padding: 0.35rem 0.45rem 0.35rem 0.8rem;
 }
-.lf-check:has(input:checked) {
+.lf-qty.is-on {
   border-color: #e20613;
   background: #fce6e8;
 }
-.lf-check input {
-  width: 1.15rem;
-  height: 1.15rem;
-  accent-color: #e20613;
+.lf-qty-name {
+  font-weight: 800;
+  line-height: 1.25;
+}
+.lf-stepper {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+.lf-stepper button,
+.lf-stepper input {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 2px solid #0a0a0a;
+  background: #fff;
+  color: #0a0a0a;
+  font-weight: 800;
+  text-align: center;
+}
+.lf-stepper button {
+  cursor: pointer;
+}
+.lf-stepper button:first-child {
+  border-radius: 0.55rem 0 0 0.55rem;
+}
+.lf-stepper button:last-child {
+  border-radius: 0 0.55rem 0.55rem 0;
+}
+.lf-stepper button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.lf-stepper input {
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+.lf-stepper input::-webkit-outer-spin-button,
+.lf-stepper input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .lf-choices.is-compact {
   grid-template-columns: 1fr 1fr;
