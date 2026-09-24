@@ -1105,6 +1105,208 @@ html:has(.gmp-page) body,
   }
 }
 
+/* /quotes multi-step lead form. Mobile shows one question group. */
+.gmp-land-body:has(.lf) {
+  max-width: 32rem;
+  padding-bottom: 1.25rem;
+}
+.lf h2 {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  outline: none;
+}
+.lf-help,
+.lf-hint,
+.lf-bilingual,
+.lf-type-name,
+.lf-sla {
+  margin: 0.35rem 0 0;
+  color: #3f3f46;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+.lf-bilingual,
+.lf-type-name {
+  font-weight: 800;
+  color: #0a0a0a;
+}
+.lf-type-name {
+  color: #e20613;
+}
+.lf-count {
+  margin: 0.45rem 0 0;
+  color: #e20613;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.lf-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+  margin: 0 0 0.85rem;
+  padding: 0;
+  list-style: none;
+}
+.lf-steps button {
+  display: flex;
+  width: 100%;
+  min-height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+  border: 0;
+  border-bottom: 3px solid #e4e4e7;
+  background: transparent;
+  color: #71717a;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+.lf-step-num {
+  display: grid;
+  width: 1.55rem;
+  height: 1.55rem;
+  place-items: center;
+  border: 2px solid #d4d4d8;
+  border-radius: 999px;
+  font-size: 0.75rem;
+}
+.lf-steps .is-current {
+  border-bottom-color: #e20613;
+  color: #0a0a0a;
+}
+.lf-steps .is-current .lf-step-num,
+.lf-steps .is-done .lf-step-num {
+  border-color: #e20613;
+  background: #e20613;
+  color: #fff;
+}
+.lf form {
+  display: grid;
+  gap: 0.75rem;
+}
+.lf-types,
+.lf-choices,
+.lf-group {
+  display: grid;
+  gap: 0.45rem;
+}
+.lf-group {
+  display: none;
+}
+.lf-group.is-current {
+  display: grid;
+}
+.lf-type,
+.lf-choice {
+  width: 100%;
+  min-height: 48px;
+  border: 2px solid #d4d4d8;
+  border-radius: 0.85rem;
+  background: #fff;
+  color: #0a0a0a;
+  font-weight: 800;
+  text-align: left;
+  padding: 0.7rem 0.9rem;
+  line-height: 1.25;
+}
+.lf-type {
+  min-height: 3.35rem;
+  font-size: 1.05rem;
+}
+.lf-type.is-on {
+  border-color: #e20613;
+  background: #fce6e8;
+}
+.lf-choice.is-on {
+  border-color: #e20613;
+  background: #e20613;
+  color: #fff;
+}
+.lf-choices.is-compact {
+  grid-template-columns: 1fr 1fr;
+}
+.lf-q {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.lf-q legend,
+.lf-label {
+  display: grid;
+  gap: 0.2rem;
+  color: #0a0a0a;
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+.lf-note {
+  margin: 0.15rem 0 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.7rem;
+  background: #0a0a0a;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.lf-actions {
+  display: grid;
+  gap: 0.45rem;
+}
+.lf .gmp-submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.lf-call {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #0a0a0a;
+  border-radius: 0.75rem;
+  color: #0a0a0a;
+  font-weight: 800;
+  text-decoration: none;
+}
+.lf-call:hover {
+  background: #0a0a0a;
+  color: #fff;
+}
+.lf-back {
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: #0a0a0a;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.lf-area {
+  min-height: 5.5rem;
+  resize: vertical;
+}
+.lf-sla {
+  text-align: center;
+  font-size: 0.75rem;
+}
+@media (min-width: 640px) {
+  .gmp-land-body:has(.lf) {
+    max-width: 38rem;
+  }
+  .lf-count {
+    display: none;
+  }
+  .lf-group {
+    display: grid;
+    margin-bottom: 0.35rem;
+  }
+}
+
 .brand-name {
   font-size: 0.75rem;
   font-weight: 700;

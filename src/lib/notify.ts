@@ -248,6 +248,8 @@ export type LeadNotifyInput = {
   source?: string;
   consentSms?: boolean;
   landingPage?: string;
+  /** Team alert headline. Lead form uses move type, date, and from → to. */
+  title?: string;
 };
 
 function firstName(name: string) {
@@ -261,12 +263,16 @@ function teamMessage(lead: LeadNotifyInput): string {
     `${lead.moveDate || ""}`.toLowerCase().includes("asap") ||
     `${lead.moveDate || ""}`.toLowerCase().includes("this week");
 
-  return [
-    lead.kind === "soft"
+  const headline = lead.title
+    ? `${priority ? "🔥 PRIORITY" : lead.kind === "soft" ? "⚡" : "🚚"} ${lead.title}`
+    : lead.kind === "soft"
       ? `⚡ Soft lead · toromovers.com — still qualifying`
       : priority
         ? `🔥 PRIORITY lead · toromovers.com — call ASAP`
-        : `🚚 New lead · toromovers.com`,
+        : `🚚 New lead · toromovers.com`;
+
+  return [
+    headline,
     ``,
     `Name: ${lead.name}`,
     `Phone: ${phone}`,

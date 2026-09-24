@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendCapiLead } from "@/lib/capi";
+import { leadFormIntake } from "@/lib/lead-form";
 import { notifyLead } from "@/lib/notify";
 import { quoteStops } from "@/lib/quote-address";
 
@@ -104,7 +105,12 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, spam: true });
   }
 
-  const flat = flattenLead(body);
+  const intake = leadFormIntake(body);
+  if (intake && !intake.ok) {
+    return NextResponse.json({ error: intake.error }, { status: 400 });
+  }
+
+  const flat = intake?.ok ? intake.flat : flattenLead(body);
   const details = asRecord(body.service_details);
   const quoted = quoteStops(flat.source, details);
   if (quoted.required && !quoted.stops) {
@@ -126,12 +132,14 @@ export async function POST(req: Request) {
 
   const soft = isSoft(body, flat.serviceType, flat.note);
   const consentSms = flat.consentSms;
-  const funnel =
-    typeof body.funnel === "string" && body.funnel
+  const funnel = intake?.ok
+    ? "lead-form"
+    : typeof body.funnel === "string" && body.funnel
       ? body.funnel
       : "full-service";
-  const landingPage =
-    typeof body.landingPage === "string" && body.landingPage
+  const landingPage = intake?.ok
+    ? intake.landingPage
+    : typeof body.landingPage === "string" && body.landingPage
       ? body.landingPage
       : "https://toromovers.com/quotes";
 
@@ -153,6 +161,7 @@ export async function POST(req: Request) {
       source: flat.source,
       consentSms: soft ? false : consentSms,
       landingPage,
+      title: intake?.ok ? intake.title : undefined,
     });
     console.info(
       "[lead] notify",
@@ -166,7 +175,11 @@ export async function POST(req: Request) {
 
   const attr = asRecord(body.attribution);
   const eventId = str(attr?.event_id) || str(body.eventId);
-  if (eventId && !soft && flat.source === "ads_short_form") {
+  if (
+    eventId &&
+    !soft &&
+    (flat.source === "ads_short_form" || flat.source === "lead_form")
+  ) {
     try {
       const capi = await sendCapiLead({
         eventId,
@@ -174,7 +187,8 @@ export async function POST(req: Request) {
         phone,
         email: email || undefined,
         sourceUrl: landingPage || headerSourceUrl,
-        contentName: "ads_short_callback",
+        contentName:
+          flat.source === "lead_form" ? "lead_form" : "ads_short_callback",
         fbp: str(attr?.fbp),
         fbc: str(attr?.fbc),
         clientIp,
@@ -209,6 +223,7 @@ export async function POST(req: Request) {
           phone,
           email: email || undefined,
           serviceType: flat.serviceType || undefined,
+          service: intake?.ok ? intake.payload.service : undefined,
           note: flat.note || undefined,
           moveDate: flat.moveDate || undefined,
           city: flat.city || undefined,
@@ -226,6 +241,9 @@ export async function POST(req: Request) {
           site: "toromovers.com",
           consentSms: soft ? false : consentSms,
           landingPage,
+          ...(intake?.ok
+            ? { lead_form: intake.payload, title: intake.title }
+            : {}),
         }),
       });
       forwardStatus = res.status;

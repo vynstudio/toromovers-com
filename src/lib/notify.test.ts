@@ -270,3 +270,42 @@ test("HTTP 401 on client SMS tells ops to rotate QUO_API_KEY", async () => {
     restore();
   }
 });
+
+test("lead form title leads the team Telegram alert", async () => {
+  const restore = stubEnv({
+    TELEGRAM_BOT_TOKEN: "tg",
+    TELEGRAM_CHAT_ID: "1",
+    QUO_API_KEY: "quo",
+    RESEND_API_KEY: "re_test",
+    RESEND_FROM_EMAIL: "hello@toromovers.net",
+  });
+  const calls: FetchCall[] = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = (async (url, init) => {
+    calls.push({
+      url: String(url),
+      headers: headerMap(init),
+      body: JSON.parse(String(init?.body || "{}")),
+    });
+    return new Response("{}", { status: 200 });
+  }) as typeof fetch;
+  try {
+    await notifyLead({
+      ...sampleLead,
+      moveDate: "2026-10-04",
+      source: "lead_form",
+      title: "Home · 2026-10-04 · 32801 → 32789",
+    });
+    const telegram = calls.find((call) =>
+      call.url.includes("api.telegram.org"),
+    );
+    assert.ok(telegram);
+    assert.match(
+      String(telegram.body.text),
+      /^🚚 Home · 2026-10-04 · 32801 → 32789/,
+    );
+  } finally {
+    globalThis.fetch = originalFetch;
+    restore();
+  }
+});
