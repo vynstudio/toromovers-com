@@ -22,6 +22,9 @@ export type LeadEmailInput = {
   serviceType?: string;
   city?: string;
   moveDate?: string;
+  pickup?: string;
+  dropoff?: string;
+  distanceMiles?: number;
 };
 
 const INK = FUNNEL_INK;
@@ -116,7 +119,11 @@ export function buildLeadConfirmationEmail(lead: LeadEmailInput): {
   const phone = PHONE_DISPLAY;
   const rows = [
     lead.serviceType ? ["Service", lead.serviceType] : null,
-    lead.city ? ["From", lead.city] : null,
+    lead.pickup ? ["Pickup", lead.pickup] : lead.city ? ["From", lead.city] : null,
+    lead.dropoff ? ["Drop-off", lead.dropoff] : null,
+    lead.distanceMiles != null
+      ? ["Distance", `${lead.distanceMiles.toFixed(1)} mi`]
+      : null,
     lead.moveDate ? ["When", lead.moveDate] : null,
   ].filter((row): row is [string, string] => row !== null);
 
@@ -126,6 +133,11 @@ export function buildLeadConfirmationEmail(lead: LeadEmailInput): {
     `We received your quote request. ${FUNNEL_SLA}.`,
     ``,
     lead.serviceType ? `What you selected: ${lead.serviceType}` : "",
+    lead.pickup ? `Pickup: ${lead.pickup}` : "",
+    lead.dropoff ? `Drop-off: ${lead.dropoff}` : "",
+    lead.distanceMiles != null
+      ? `Distance: ${lead.distanceMiles.toFixed(1)} mi between addresses`
+      : "",
     ``,
     `Need us sooner? Call or text ${phone}.`,
     FUNNEL_ESPANOL,

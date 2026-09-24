@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { AddressAutocomplete } from "@/components/address-autocomplete";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
 import {
@@ -17,8 +18,8 @@ import {
 import { fireAdsLeadOnce, mintEventId } from "@/lib/meta-pixel";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
 import { quotePage } from "@/lib/quote-page";
+import { haversineMiles, type SelectedPlace } from "@/lib/selected-place";
 import { PHONE_DISPLAY } from "@/lib/site";
-import { formatUsZip, quoteZipError } from "@/lib/us-zip";
 
 const primaryBtn =
   "gmp-submit disabled:cursor-not-allowed disabled:opacity-40";
@@ -39,8 +40,11 @@ export default function AdsShortForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
+  const [originText, setOriginText] = useState("");
+  const [destinationText, setDestinationText] = useState("");
+  const [origin, setOrigin] = useState<SelectedPlace | null>(null);
+  const [destination, setDestination] = useState<SelectedPlace | null>(null);
+  const [searchDown, setSearchDown] = useState(false);
   const [service, setService] = useState<ServiceType>("house_2plus_move");
   const [when, setWhen] = useState<(typeof WHEN)[number]["id"]>("This week");
   const [consent, setConsent] = useState(true);
@@ -67,9 +71,16 @@ export default function AdsShortForm() {
       setError("Enter a valid email, or leave it blank.");
       return;
     }
-    const zipError = quoteZipError(origin, destination);
-    if (zipError) {
-      setError(zipError);
+    if (searchDown && (!origin || !destination)) {
+      setError(
+        `Address search is unavailable. Call ${PHONE_DISPLAY} and we will quote the move.`,
+      );
+      return;
+    }
+    if (!origin || !destination) {
+      setError(
+        "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+      );
       return;
     }
     if (!name.trim() || name.trim().length < 2 || !phoneE164 || !consent) {
@@ -93,10 +104,16 @@ export default function AdsShortForm() {
       service_details: {
         primary_detail: "",
         move_date: when,
-        origin: origin.trim(),
-        destination: destination.trim(),
+        origin: origin.line,
+        destination: destination.line,
+        origin_place_id: origin.placeId,
+        destination_place_id: destination.placeId,
+        origin_lng: origin.lng,
+        origin_lat: origin.lat,
+        destination_lng: destination.lng,
+        destination_lat: destination.lat,
         access_conditions: "",
-        notes: "Meta ads quote form (name, phone, pickup ZIP and drop-off ZIP).",
+        notes: "Meta ads quote form (name, phone, full pickup and drop-off).",
       },
       contact: {
         full_name: name.trim(),
@@ -131,6 +148,13 @@ export default function AdsShortForm() {
         spam?: boolean;
         error?: string;
       };
+      if (result.error === "full_address_required") {
+        setError(
+          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+        );
+        setSubmitting(false);
+        return;
+      }
       if (!response.ok || result.ok === false) {
         throw new Error(result.error || "Lead submission failed");
       }
@@ -139,6 +163,11 @@ export default function AdsShortForm() {
         trackFunnelEvent("generate_lead", {
           service_type: service,
           form_location: "ads_short_form",
+          pickup_selected: true,
+          dropoff_selected: true,
+          distance_miles: Math.round(
+            haversineMiles(origin, destination),
+          ),
         });
       }
       window.location.assign("/thank-you");
@@ -216,46 +245,61 @@ export default function AdsShortForm() {
           />
         </label>
 
-        <div className="gmp-form-row">
-          <label>
-            Pickup ZIP
-            <input
-              required
-              inputMode="numeric"
-              autoComplete="off"
-              maxLength={10}
-              pattern="\d{5}(-\d{4})?"
-              value={origin}
-              onChange={(e) => {
-                setOrigin(formatUsZip(e.target.value));
-                if (error) setError("");
-              }}
-              className={fieldClass}
-              placeholder="32801"
-              aria-label="Pickup ZIP"
-              enterKeyHint="next"
-            />
-          </label>
-          <label>
-            Drop-off ZIP
-            <input
-              required
-              inputMode="numeric"
-              autoComplete="off"
-              maxLength={10}
-              pattern="\d{5}(-\d{4})?"
-              value={destination}
-              onChange={(e) => {
-                setDestination(formatUsZip(e.target.value));
-                if (error) setError("");
-              }}
-              className={fieldClass}
-              placeholder="32803"
-              aria-label="Drop-off ZIP"
-              enterKeyHint="next"
-            />
-          </label>
-        </div>
+        <label>
+          Pickup address
+          <AddressAutocomplete
+            value={originText}
+            onChange={(next) => {
+              setOriginText(next);
+              setOrigin((current) => (current?.line === next ? current : null));
+              if (error) setError("");
+            }}
+            onSelect={(place) => {
+              setOrigin(place);
+              setOriginText(place.line);
+              setSearchDown(false);
+              trackFunnelEvent("address_selected", {
+                form_location: "ads_short_form",
+                field: "pickup",
+              });
+              if (error) setError("");
+            }}
+            onSearchState={(state) => setSearchDown(state === "down")}
+            className={fieldClass}
+            placeholder="Street number and name"
+            ariaLabel="Pickup address"
+            autoComplete="off"
+          />
+        </label>
+
+        <label>
+          Drop-off address
+          <AddressAutocomplete
+            value={destinationText}
+            onChange={(next) => {
+              setDestinationText(next);
+              setDestination((current) =>
+                current?.line === next ? current : null,
+              );
+              if (error) setError("");
+            }}
+            onSelect={(place) => {
+              setDestination(place);
+              setDestinationText(place.line);
+              setSearchDown(false);
+              trackFunnelEvent("address_selected", {
+                form_location: "ads_short_form",
+                field: "dropoff",
+              });
+              if (error) setError("");
+            }}
+            onSearchState={(state) => setSearchDown(state === "down")}
+            className={fieldClass}
+            placeholder="Street number and name"
+            ariaLabel="Drop-off address"
+            autoComplete="off"
+          />
+        </label>
 
         <label>
           Service

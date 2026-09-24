@@ -241,6 +241,9 @@ export type LeadNotifyInput = {
   note?: string;
   moveDate?: string;
   city?: string;
+  pickup?: string;
+  dropoff?: string;
+  distanceMiles?: number;
   funnel?: string;
   source?: string;
   consentSms?: boolean;
@@ -269,6 +272,11 @@ function teamMessage(lead: LeadNotifyInput): string {
     `Phone: ${phone}`,
     lead.email ? `Email: ${lead.email}` : `Email: —`,
     lead.city ? `City/ZIP: ${lead.city}` : "",
+    lead.pickup ? `Pickup: ${lead.pickup}` : "",
+    lead.dropoff ? `Drop-off: ${lead.dropoff}` : "",
+    lead.distanceMiles != null
+      ? `Distance: ${lead.distanceMiles.toFixed(1)} mi between addresses`
+      : "",
     lead.serviceType ? `Service: ${lead.serviceType}` : "",
     lead.moveDate ? `When: ${lead.moveDate}` : "",
     lead.funnel ? `Funnel: ${lead.funnel}` : "",
@@ -312,7 +320,15 @@ export async function notifyLead(lead: LeadNotifyInput): Promise<NotifyResult[]>
       detail: "no client email on lead",
     });
   } else {
-    const copy = buildLeadConfirmationEmail(lead);
+    const copy = buildLeadConfirmationEmail({
+      name: lead.name,
+      serviceType: lead.serviceType,
+      city: lead.city,
+      moveDate: lead.moveDate,
+      pickup: lead.pickup,
+      dropoff: lead.dropoff,
+      distanceMiles: lead.distanceMiles,
+    });
     results.push(
       await sendEmail({
         to: email,

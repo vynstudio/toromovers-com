@@ -100,6 +100,18 @@ test("formatResendError explains domain verification and invalid from", () => {
   );
 });
 
+test("confirmation email includes the picked pickup and drop-off", () => {
+  const copy = buildLeadConfirmationEmail({
+    name: "Ada Perez",
+    pickup: "1305 Morgan Stanley Ave, Winter Park, FL 32789",
+    dropoff: "100 South Orange Avenue, Orlando, FL 32801",
+    distanceMiles: 6.2,
+  });
+  assert.match(copy.text, /1305 Morgan Stanley Ave, Winter Park, FL 32789/);
+  assert.match(copy.html, /100 South Orange Avenue, Orlando, FL 32801/);
+  assert.match(copy.text, /6\.2 mi/);
+});
+
 test("confirmation email is branded and does not claim licensed or insured", () => {
   const copy = buildLeadConfirmationEmail({
     name: "Ada Perez",
