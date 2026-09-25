@@ -40,6 +40,71 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-packing-help-movers",
+    illustration: "packing",
+    eyebrow: "Packing · Orlando",
+    title: "When to book packing help vs full packing in Orlando",
+    teaser:
+      "Packing help vs full packing in Orlando: kitchen, closets, or fragile boxes only, versus the crew packing the home.",
+    description:
+      "Packing help vs full packing in Orlando: when a partial pack makes sense on site, and how Toro quotes that time by the hour in Central Florida.",
+    date: "2026-09-25",
+    dateLabel: "Sep 25, 2026",
+    image: {
+      src: "/images/moves/real-11.webp",
+      alt: "Mover loading stacked cardboard boxes on a hand truck into a box truck on a Central Florida move",
+      position: "object-[center_42%]",
+      dedicated: true,
+    },
+    body: [
+      "Packing help in Orlando is for the rooms you do not want to box yourself. Full packing is the crew boxing the home before the carry. Both sit on the same hourly clock. Toro Movers is the practical option when you want that split named before the crew rolls in Central Florida.",
+      "## Self-pack, packing help, or full packing",
+      "Three ways to handle boxes on a local Central Florida move. Self-pack means every carton is closed, taped, and labeled before the crew arrives. The crew pads furniture, carries, and loads. Packing help means you packed most of the home and the crew boxes a named slice: the kitchen, the closets, a fragile shelf, or the one room you ran out of time on. Full packing means the crew boxes the household goods that are still loose, then moves them. Furniture gets pads and wrap on all three. The difference is whose time closes the cartons.",
+      "None of the three is a separate price list. Packing the crew does is time on the same hourly clock as the carry. A self-packed apartment and a fully packed house use one model. The house runs longer when it needs more movers and more hours, including hours spent boxing. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando. How home size changes crew size and hours is in /blog/orlando-movers-cost-by-home-size.",
+      "Pick self-pack when you have the days and you want the shortest on-site clock. Pick packing help when the furniture and most boxes are ready and one or two rooms are the problem. Pick full packing when closets, cabinets, and shelves are still full and you want the crew to start from that. Say which one when you book. A quote built for closed boxes will not cover a house that is still in drawers. Even on a full pack, keep documents, medication, laptops, jewelry, and a change of clothes with you. Point those out so they are not boxed.",
+      "## What partial packing help covers",
+      "Kitchen. Dishes, glass, small appliances, and the pantry goods you are actually moving take longer than a closet of clothes, because each piece is wrapped and the cabinet is emptied in order. If you only want the kitchen done, say kitchen. Leave the other rooms closed and labeled. A half-empty cabinet the crew was not asked to finish still slows the day if someone has to decide what is trash. Pack or discard the food you do not want boxed. Open containers and anything that will spoil in a hot truck should not go in a carton. Point out pieces that must ride upright.",
+      "Closets and wardrobes. Hanging clothes and folded stacks are a common partial pack. Leave hangers on the rod and the closet floor clear of the donate pile. Name the closets: primary bedroom, hall linen, and the other bedrooms. A closet pack is enough when the rest of the home is already in cartons. It is not enough when every dresser drawer is still full and you call that a wardrobe. Drawers you want emptied are part of the pack. Say so. In Florida humidity, do not seal damp towels or clothes into a box the day before. They sit wet. Dry them, or leave that closet for the crew on move morning.",
+      "Fragile only. Mirrors, framed art, lamps, a glass tabletop, or one shelf of breakables. This is the smallest packing help. It still needs a clear path and a place to wrap. One room of fragile pieces is a short add on the clock. Fragile goods spread through every room, with nothing else boxed, is closer to a full pack. Do not label the whole house fragile and expect a fragile-only visit. Books and heavy small goods belong in small cartons you can lift, not one oversized box that splits on the stairs.",
+      "Partial help is not a pause the crew absorbs while the truck is loading. If they stop the carry to box a room, those minutes are the job. Name the rooms in the quote so the start time and the crew size match the pack. Pads and wrap for furniture are part of the move. There is no carton rate and no packing menu. If the crew is boxing rooms, say which rooms so they arrive ready for those goods. A self-pack means your cartons are already closed. Overfilled boxes and boxes with split seams get rebuilt on site, and that rebuild is time.",
+      "## How packing changes the hours",
+      "Closed, labeled boxes and a clear path let the crew start the carry. Label the destination room, not only what is inside. A box marked for the kitchen is useful at the new place. A stack marked misc is a sort, and sorting is time. Empty the path from each room to the door. Cartons piled in front of the sofa get moved twice. If a garage, shed, or storage unit is part of the load, say so. Those rooms are volume, and an unpacked garage is a second pack.",
+      "Loose items can change the clock more than bedroom count. A packed two-bedroom with closed boxes can finish faster than a larger home where the closets and kitchen are still open. Share both: home size and how packed you will be. Volume is the rooms that are actually moving, the heavy pieces, and whether packing is still undone. Packing left open is extra time, measured in hours, not a fee schedule.",
+      "Local jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Crew size is chosen for the volume and for the pack. More movers can box and carry at the same time, which can shorten the clock. The rate is per mover per hour, so the quote balances people and time. A one-bedroom with a kitchen pack is often a smaller crew. A house with full packing usually needs more people so the boxes and the furniture both finish. The 2-hour minimum still applies. A short fragile pack plus a short carry can land on that minimum. A full pack of a house will run past it. Stairs, elevator waits, and a long walk from parking add time. They are not a stair fee.",
+      "Packing help can sit on a full-service job or a labor-only job. Full-service is the crew and the truck, door to door. Labor-only is the crew when you already have a U-Haul, POD, or container. The crew can box the rooms you named and then load your vehicle. The truck is still yours. Compare those bookings in /blog/full-service-vs-labor-only-orlando and /labor-only-moving. If the building window is the constraint, plan access before the first box in /blog/plan-orlando-move-before-first-box.",
+      "## Apartment windows and Florida heat",
+      "On-site packing uses the elevator or loading-zone window. Many Orlando apartments, condos, and HOAs open the elevator, dock, or loading zone only for a reserved slot. If the crew spends the first part of that slot boxing a kitchen, that time is inside the window. It is not time that sits before the reservation starts. For a short slot, finish the partial pack the day before, or self-pack, and use the window for the carry. If the pack has to happen inside the reservation, ask the property for a longer window or book a larger crew, and say the boxes are not done. Apartment elevators, docks, and reservation rules are on /apartment-movers-orlando-fl.",
+      "A reservation that assumes a packed unit will not stretch because the closets were still full. Tell the property and the crew the truth about packing. The building’s office sets the elevator hold and the dock. The crew cannot open a window that was never reserved. If the only open window is early, book the early start and leave the rooms you want packed easy to reach. Gate codes, the floor, the walk from legal parking, and any rule about floor protection belong in the quote, not after the truck is on the street.",
+      "Florida heat and humidity slow a midday pack. A closed apartment, a west-facing kitchen, and a garage after lunch are harder work than an early start. Heat does not add a fee. It adds minutes, and minutes are the hourly clock. The same is true on a house with no elevator. A hot garage and a long driveway still add time, whether the boxes were yours or the crew just taped them. When the building allows it, an earlier start is the faster pack. Stage the rooms you want boxed on a clear path so the crew is not hunting through a living room that is already stacked. Water for the household is your call. The clock still runs while people stop in the heat.",
+      "## How to request packing help",
+      "Request the quote at /quotes. Lead with the pack: self-pack, packing help, or full packing. If it is packing help, name the rooms. Kitchen, closets, fragile only, or the list you actually mean. Add pickup and drop-off addresses, home or apartment size, stairs or elevator hours, parking or a loading zone, and whether you need a truck or labor-only help. Photos of the kitchen, the closets, or the garage you want packed help size the hours. Say what is not moving: trash, donations, and the items you will carry yourself.",
+      "Hours are Mon–Sat, 7:00 AM – 7:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "What is the difference between packing help and full packing in Orlando?",
+        a: "Packing help means the crew boxes a named slice, such as the kitchen, closets, or fragile pieces, after you packed the rest. Full packing means the crew boxes the household goods that are still loose, then moves them. Self-pack means your cartons are already closed. All three use the same hourly rate. Toro quotes local Central Florida jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees.",
+      },
+      {
+        q: "Is there a separate price for packing help?",
+        a: "No. There is no packing price list and no carton rate. Time the crew spends boxing is on the same hourly clock as the carry, from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A larger pack needs more hours, and sometimes more movers. The hourly model is in /blog/how-much-does-a-local-move-cost-orlando.",
+      },
+      {
+        q: "When is partial packing help enough for an Orlando move?",
+        a: "Partial help is enough when most cartons are already closed and labeled and you want the crew on a named slice: the kitchen, the closets, or fragile pieces. It is a weak fit when every drawer and cabinet is still full. That job is full packing. Name the rooms when you request a quote at /quotes.",
+      },
+      {
+        q: "Will packing on site use my apartment elevator window?",
+        a: "Yes, if the crew boxes during the reserved slot. Many Orlando buildings open the elevator, dock, or loading zone only for that window, and packing time counts inside it. For a short slot, self-pack or finish the partial pack before the reservation, and use the window for the carry. Apartment access is on /apartment-movers-orlando-fl.",
+      },
+      {
+        q: "How do I request packing help from Toro?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Email hello@toromovers.com.",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-movers-cost-by-home-size",
     illustration: "local",
     eyebrow: "Cost · Home size",
