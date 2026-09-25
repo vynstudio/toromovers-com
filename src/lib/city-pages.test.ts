@@ -1,7 +1,13 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { customerProof, hero } from "./content.ts";
-import { allCityPages, getCityPage } from "./city-pages.ts";
+import {
+  allCityPages,
+  citiesByCounty,
+  getCityPage,
+  nearbyCityPages,
+  serviceCityPages,
+} from "./city-pages.ts";
 import { blogPosts } from "./blog.ts";
 import { servicesHub } from "./services-hub.ts";
 import { SITE_DESCRIPTION, SITE_TITLE } from "./site.ts";
@@ -71,8 +77,35 @@ test("homepage vs central-florida-movers copy does not cannibalize", () => {
   assert.doesNotMatch(cf.h1, /orlando/i);
   assert.notEqual(cf.why.h2, customerProof.title);
   assert.equal(cf.about.h2, "Cities we serve in Central Florida");
-  assert.equal(cf.why.h2, "Local-only region moves");
+  assert.equal(cf.why.h2, "Central Florida and beyond");
+  assert.doesNotMatch(cf.about.body, /surrounding city/i);
+  assert.match(cf.about.body, /home base/i);
+  assert.doesNotMatch(cf.faqs.map((item) => item.a).join(" "), /surrounding city/i);
   assert.equal(cf.closing.title, "Request a Central Florida moving estimate");
+});
+
+test("hub links every city and each city links nearby pages", () => {
+  const cities = serviceCityPages();
+  assert.equal(cities.length, 28);
+  assert.ok(getCityPage("lake-nona-movers"));
+  assert.ok(getCityPage("dr-phillips-movers"));
+
+  const linked = citiesByCounty().flatMap((group) => group.cities.map((city) => city.slug));
+  assert.deepEqual(new Set(linked), new Set(cities.map((city) => city.slug)));
+  assert.ok(cities.every((city) => city.county.length > 0));
+
+  const mentioned = new Set<string>();
+  for (const city of cities) {
+    const nearby = nearbyCityPages(city.slug);
+    assert.ok(nearby.length >= 4 && nearby.length <= 8, city.slug);
+    assert.ok(nearby.every((item) => item.slug !== city.slug));
+    for (const item of nearby) mentioned.add(item.slug);
+  }
+  assert.ok(mentioned.has("lake-nona-movers"));
+  assert.ok(mentioned.has("dr-phillips-movers"));
+  for (const city of cities) {
+    assert.ok(mentioned.has(city.slug), city.slug);
+  }
 });
 
 test("service and blog art is explicit, not index-cycled", () => {
@@ -85,18 +118,23 @@ test("service and blog art is explicit, not index-cycled", () => {
     ],
   );
   assert.deepEqual(
-    servicesHub.secondary.map((item) => [item.title, item.illustration]),
+    servicesHub.secondary.map((item) => [item.title, item.illustration, item.href]),
     [
-      ["Loading & unloading", "loading"],
-      ["Recent moves", "packing"],
-      ["Central Florida coverage", "long-distance"],
+      ["Loading & unloading", "loading", "/loading-unloading"],
+      ["Recent moves", "packing", "/orlando-movers-gallery"],
+      ["Central Florida coverage", "long-distance", "/central-florida-movers"],
+      ["Packing services", "packing", "/packing-services-orlando"],
+      ["Office movers", "office", "/office-movers-orlando"],
+      ["Same-day movers", "access", "/same-day-movers-orlando"],
     ],
   );
-  const hubKeys = [...servicesHub.primary, ...servicesHub.secondary].map(
-    (item) => item.illustration,
+  const primaryKeys = servicesHub.primary.map((item) => item.illustration);
+  assert.equal(new Set(primaryKeys).size, primaryKeys.length);
+  assert.ok(
+    [...servicesHub.primary, ...servicesHub.secondary].every(
+      (item) => item.illustration.length > 0,
+    ),
   );
-  assert.equal(new Set(hubKeys).size, hubKeys.length);
-  assert.equal((hubKeys as readonly string[]).includes("access"), false);
 
   const bySlug = Object.fromEntries(
     blogPosts.map((post) => [post.slug, post.illustration]),

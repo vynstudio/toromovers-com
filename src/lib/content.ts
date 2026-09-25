@@ -1,7 +1,7 @@
 // Homepage copy — mobile-first layout adapted for Toro Movers.
 // SEO/AEO answer-first copy. Real business facts only (phone, rating, services, area).
 
-import { CAREERS_OPS_COORDINATOR_PATH, QUOTE_PATH } from "./site";
+import { CAREERS_OPS_COORDINATOR_PATH, QUOTE_PATH } from "./site.ts";
 
 /**
  * Primary nav — professional local-service IA.
@@ -241,6 +241,9 @@ export const footer = {
         { label: "Residential moving", href: "/full-service-moving" },
         { label: "Labor-only moving", href: "/labor-only-moving" },
         { label: "Single item & delivery", href: "/loading-unloading" },
+        { label: "Packing services", href: "/packing-services-orlando" },
+        { label: "Office movers", href: "/office-movers-orlando" },
+        { label: "Same-day movers", href: "/same-day-movers-orlando" },
       ],
     },
     {

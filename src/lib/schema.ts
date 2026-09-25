@@ -4,10 +4,8 @@ import {
   GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
   PHONE_E164,
-  POSTAL_CODE,
   QUOTE_PATH,
   REVIEW_COUNT,
-  SERVICE_BASE_LOCALITY,
   SERVICE_REGION,
   SITE_DESCRIPTION,
   SITE_TITLE,
@@ -18,6 +16,7 @@ import {
 import { faq, process } from "@/lib/content";
 import type { CityPageContent } from "@/lib/city-pages";
 import { googleReviews } from "@/lib/reviews";
+import { businessAreaServed, businessPostalAddress } from "./business-profile.ts";
 
 /** Organization / LocalBusiness description — visible-facts only. */
 const organizationDescription =
@@ -28,6 +27,8 @@ const homepageDescription = SITE_DESCRIPTION;
 
 /** Freshness for WebPage / GEO audits */
 const DATE_MODIFIED = new Date().toISOString().slice(0, 10);
+
+export { businessAreaServed, businessPostalAddress };
 
 export function organizationGraph() {
   return {
@@ -51,27 +52,8 @@ export function organizationGraph() {
         priceRange: "$$",
         currenciesAccepted: "USD",
         paymentAccepted: "Cash, Credit Card, Debit Card",
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: SERVICE_BASE_LOCALITY,
-          addressRegion: "FL",
-          postalCode: POSTAL_CODE,
-          addressCountry: "US",
-        },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: 28.5383,
-          longitude: -81.3792,
-        },
-        areaServed: [
-          { "@type": "City", name: "Orlando" },
-          { "@type": "AdministrativeArea", name: "Orange County" },
-          { "@type": "AdministrativeArea", name: "Seminole County" },
-          { "@type": "AdministrativeArea", name: "Osceola County" },
-          { "@type": "AdministrativeArea", name: "Lake County" },
-          { "@type": "AdministrativeArea", name: "Polk County" },
-          { "@type": "AdministrativeArea", name: SERVICE_REGION },
-        ],
+        address: businessPostalAddress(),
+        areaServed: businessAreaServed(),
         aggregateRating: {
           "@type": "AggregateRating",
           ratingValue: GOOGLE_RATING,
@@ -135,6 +117,33 @@ export function organizationGraph() {
                 "@type": "Service",
                 name: "Apartment and condo moving",
                 serviceType: "Apartment moving",
+                areaServed: SERVICE_REGION,
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Packing services",
+                serviceType: "Packing",
+                areaServed: SERVICE_REGION,
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Office and small commercial moving",
+                serviceType: "Commercial moving",
+                areaServed: SERVICE_REGION,
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Same-day local moving",
+                serviceType: "Same-day moving",
                 areaServed: SERVICE_REGION,
               },
             },
@@ -240,24 +249,14 @@ export function cityPageGraph(city: CityPageContent) {
         email: EMAIL,
         description: city.metadata.description,
         areaServed: [
-          { "@type": "City", name: `${city.name}, FL` },
+          { "@type": "City", name: city.name },
           { "@type": "AdministrativeArea", name: SERVICE_REGION },
         ],
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: SERVICE_BASE_LOCALITY,
-          addressRegion: "FL",
-          addressCountry: "US",
-        },
+        address: businessPostalAddress(),
         parentOrganization: {
           "@type": "MovingCompany",
           name: BUSINESS_NAME,
           "@id": `${SITE_URL}/#movingcompany`,
-        },
-        geo: {
-          "@type": "GeoCoordinates",
-          latitude: city.schema.lat,
-          longitude: city.schema.lng,
         },
         aggregateRating: {
           "@type": "AggregateRating",

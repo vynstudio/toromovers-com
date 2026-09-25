@@ -108,8 +108,6 @@ export const metadata: Metadata = {
   other: {
     "geo.region": "US-FL",
     "geo.placename": "Orlando",
-    "geo.position": "28.5383;-81.3792",
-    ICBM: "28.5383, -81.3792",
   },
 };
 

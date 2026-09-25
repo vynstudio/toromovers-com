@@ -2677,6 +2677,44 @@ a.trust-chip {
   color: var(--foreground);
   font-size: 0.875rem;
   font-weight: 500;
+  text-decoration: none;
+}
+
+a.nbhd-tag:hover,
+a.nbhd-tag:focus-visible {
+  background: #fff;
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+
+.city-county-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 52rem;
+  margin: 2.5rem auto 0;
+}
+
+.city-county-name {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.service-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.service-crumbs a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 /* Service areas — coverage band (homepage + city landings) */

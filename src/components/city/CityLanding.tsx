@@ -7,7 +7,12 @@ import { ClosingCta } from "@/components/ClosingCta";
 import { Areas } from "@/components/Areas";
 import { IconArrow } from "@/components/icons";
 import { VectorSlot } from "@/components/ServiceIllustrations";
-import type { CityPageContent } from "@/lib/city-pages";
+import {
+  CENTRAL_FLORIDA_HUB,
+  citiesByCounty,
+  nearbyCityPages,
+  type CityPageContent,
+} from "@/lib/city-pages";
 import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH } from "@/lib/site";
 
 /**
@@ -99,24 +104,87 @@ export function CityLanding({ city }: { city: CityPageContent }) {
         </div>
       </section>
 
-      {/* Neighborhoods */}
-      <section
-        className="full-bleed section-pad w-full bg-white"
-        aria-labelledby="areas-local-heading"
-      >
-        <div className="site-container text-center">
-          <h2 id="areas-local-heading" className="fluid-h2 text-foreground">
-            Serving {city.name} &amp; nearby
-          </h2>
-          <ul className="nbhd-tags mt-8" aria-label={`${city.name} neighborhoods`}>
-            {city.neighborhoods.map((n) => (
-              <li key={n}>
-                <span className="nbhd-tag">{n}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {city.slug === "central-florida-movers" ? (
+        <section
+          className="full-bleed section-pad w-full bg-white"
+          aria-labelledby="city-directory-heading"
+        >
+          <div className="site-container text-center">
+            <h2 id="city-directory-heading" className="fluid-h2 text-foreground">
+              Every city we serve
+            </h2>
+            <p className="aeo-answer fluid-lede mx-auto mt-4 max-w-2xl text-muted">
+              Orlando is home base. Each city below has its own movers page,
+              grouped by county.
+            </p>
+            <div className="city-county-list">
+              {citiesByCounty().map((group) => (
+                <div key={group.county}>
+                  <h3 className="city-county-name">{group.county}</h3>
+                  <ul className="nbhd-tags" aria-label={group.county}>
+                    {group.cities.map((item) => (
+                      <li key={item.href}>
+                        <a className="nbhd-tag" href={item.href}>
+                          {item.name} movers
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : (
+        <>
+          <section
+            className="full-bleed section-pad w-full bg-white"
+            aria-labelledby="areas-local-heading"
+          >
+            <div className="site-container text-center">
+              <h2 id="areas-local-heading" className="fluid-h2 text-foreground">
+                Serving {city.name} &amp; nearby
+              </h2>
+              <ul className="nbhd-tags mt-8" aria-label={`${city.name} neighborhoods`}>
+                {city.neighborhoods.map((n) => (
+                  <li key={n}>
+                    <span className="nbhd-tag">{n}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section
+            className="full-bleed section-pad w-full border-t border-border bg-white"
+            aria-labelledby="nearby-cities-heading"
+          >
+            <div className="site-container text-center">
+              <h2 id="nearby-cities-heading" className="fluid-h2 text-foreground">
+                Nearby cities we serve
+              </h2>
+              <p className="aeo-answer mx-auto mt-4 max-w-2xl text-muted">
+                Local hops from {city.name} use the same up-front hourly model.
+                Pick a nearby city, or see every Central Florida page.
+              </p>
+              <ul className="nbhd-tags mt-8" aria-label={`Cities near ${city.name}`}>
+                {nearbyCityPages(city.slug).map((item) => (
+                  <li key={item.href}>
+                    <a className="nbhd-tag" href={item.href}>
+                      {item.name} movers
+                    </a>
+                  </li>
+                ))}
+                <li>
+                  <a className="nbhd-tag" href={CENTRAL_FLORIDA_HUB}>
+                    Central Florida movers
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </>
+      )}
 
       {/* Why */}
       <section
