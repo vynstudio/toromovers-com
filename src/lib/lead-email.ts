@@ -184,7 +184,7 @@ export function buildLeadConfirmationEmail(lead: LeadEmailInput): {
 </head>
 <body bgcolor="#f4f4f5" style="margin:0;padding:0;background-color:#f4f4f5;color:${INK};font-family:Arial,Helvetica,sans-serif;">
   <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;">
-    We received your quote request. Usually call back within 15 minutes Mon–Sat, 7am–7pm.
+    We received your quote request. Usually call back within 15 minutes Sun–Fri, 7am–7pm; Sat, 9am–5pm.
   </div>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f4f4f5" style="background-color:#f4f4f5;font-family:Arial,Helvetica,sans-serif;">
     <tr>

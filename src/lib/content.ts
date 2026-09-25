@@ -334,7 +334,7 @@ export const faq = {
     },
     {
       q: "How do I get a moving quote from Toro Movers?",
-      a: "Call or text (689) 600-2720, or request a quote online. Share what you are moving, pickup and drop-off locations, and access details such as stairs, elevator, and parking. We match crew size, explain up-front hourly rates, and help plan your Orlando move. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      a: "Call or text (689) 600-2720, or request a quote online. Share what you are moving, pickup and drop-off locations, and access details such as stairs, elevator, and parking. We match crew size, explain up-front hourly rates, and help plan your Orlando move. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       linkHref: QUOTE_PATH,
       linkLabel: "Get my price",
     },

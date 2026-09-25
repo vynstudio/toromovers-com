@@ -125,8 +125,9 @@ test("confirmation email is branded and does not claim licensed or insured", () 
   assert.doesNotMatch(copy.html, /#e10600/);
   assert.doesNotMatch(copy.html, /:hover/i);
   assert.match(copy.html, /15 minutes/);
-  assert.match(copy.html, /Mon–Sat/);
+  assert.match(copy.html, /Sun–Fri/);
   assert.match(copy.html, /7am–7pm/);
+  assert.match(copy.html, /9am–5pm/);
   assert.match(copy.html, /689/);
   assert.match(copy.html, new RegExp(FUNNEL_ESPANOL));
   assert.match(copy.html, /Bilingual/);

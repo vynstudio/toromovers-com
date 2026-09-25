@@ -108,7 +108,7 @@ export default function AboutPage() {
                     </li>
                   </ol>
                   <p className="about-how-hours text-muted">
-                    Hours: {HOURS_LABEL}. Sunday on request.
+                    Hours: {HOURS_LABEL}.
                   </p>
                 </div>
 

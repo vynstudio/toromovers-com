@@ -19,7 +19,7 @@ export const FUNNEL_BILINGUAL = "Bilingual — English & Spanish";
 export const FUNNEL_ESPANOL = "Se habla español";
 export const FUNNEL_CTA = "Get my free moving quote";
 export const FUNNEL_SLA =
-  "Usually call back within 15 minutes during business hours (Mon–Sat, 7am–7pm)";
+  "Usually call back within 15 minutes during business hours (Sun–Fri, 7am–7pm; Sat, 9am–5pm)";
 export const FUNNEL_PHONE = PHONE_DISPLAY;
 export const FUNNEL_LOCAL_NOTE =
   "Local Central Florida, long-distance, and interstate — request a quote for the job you have.";

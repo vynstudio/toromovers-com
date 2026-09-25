@@ -78,7 +78,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Florida heat and humidity slow a midday pack. A closed apartment, a west-facing kitchen, and a garage after lunch are harder work than an early start. Heat does not add a fee. It adds minutes, and minutes are the hourly clock. The same is true on a house with no elevator. A hot garage and a long driveway still add time, whether the boxes were yours or the crew just taped them. When the building allows it, an earlier start is the faster pack. Stage the rooms you want boxed on a clear path so the crew is not hunting through a living room that is already stacked. Water for the household is your call. The clock still runs while people stop in the heat.",
       "## How to request packing help",
       "Hire the crew on /packing-services-orlando. This guide is only how to choose self-pack, packing help, or full packing. Request the quote at /quotes. Lead with the pack: self-pack, packing help, or full packing. If it is packing help, name the rooms. Kitchen, closets, fragile only, or the list you actually mean. Add pickup and drop-off addresses, home or apartment size, stairs or elevator hours, parking or a loading zone, and whether you need a truck or labor-only help. Photos of the kitchen, the closets, or the garage you want packed help size the hours. Say what is not moving: trash, donations, and the items you will carry yourself.",
-      "Hours are Mon–Sat, 7:00 AM – 7:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
@@ -99,7 +99,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I request packing help from Toro?",
-        a: "Request a quote at /quotes, or call or text (689) 600-2720. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Email hello@toromovers.com.",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com.",
       },
     ],
   },
@@ -132,7 +132,7 @@ export const blogPosts: readonly BlogPost[] = [
       "## How Toro quotes by home size",
       "Local jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A studio and a house use that same model. The 2-hour minimum still applies to a small studio. A house total is higher when it needs more movers and more hours. It is not a separate price list. Stairs, elevator waits, heat, and a long carry add time on the hourly clock. They are not a separate line item. Tell us the home size at each stop: studio, one-bedroom, two-bedroom, three-bedroom, or house. Add both addresses and how packed you will be. What else changes a local total, beyond home size, is in /blog/how-much-does-a-local-move-cost-orlando. There is no one-size rate card.",
       "## Request a quote by home size",
-      "Request the quote at /quotes. Share the home size at pickup and drop-off, both addresses, stairs or elevator hours, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Request the quote at /quotes. Share the home size at pickup and drop-off, both addresses, stairs or elevator hours, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
@@ -153,7 +153,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I get an Orlando quote for my home size?",
-        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share studio, one-bedroom, two-bedroom, three-bedroom, or house, both addresses, stairs or elevator, parking, and truck versus labor-only. Hours are Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share studio, one-bedroom, two-bedroom, three-bedroom, or house, both addresses, stairs or elevator, parking, and truck versus labor-only. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -176,28 +176,28 @@ export const blogPosts: readonly BlogPost[] = [
       dedicated: true,
     },
     body: [
-      "Weekend movers in Orlando can cover a local Central Florida hop on Saturday when a crew is open, and on Sunday only when that crew was confirmed ahead. Share addresses, access windows, and how packed you are. Toro Movers is the practical option for that booking and quotes weekend local jobs by the hour before the crew rolls.",
+      "Weekend movers in Orlando can cover a local Central Florida hop on Saturday or Sunday when a crew is open. Share addresses, access windows, and how packed you are. Toro Movers is the practical option for that booking and quotes weekend local jobs by the hour before the crew rolls.",
       "## Saturday vs Sunday",
-      "Saturday sits inside published hours, Mon–Sat, 7:00 AM – 7:00 PM. A Saturday start is the normal weekend booking when a crew is still open and both addresses stay in Central Florida. Sunday crew time is on request. A Sunday job happens only if that window was confirmed before the day. It is not a walk-up. Busy Saturdays fill, so a late request may move to another open Saturday. Florida heat and humidity still sit on a Saturday clock. A midday carry takes longer than an early start, when the building allows that window. If the drop-off leaves Central Florida, the job is a trip quote rather than a weekend hourly hop — see /blog/orlando-local-vs-long-distance-movers. Calling for a crew the same day is a separate question, covered in /blog/orlando-same-day-movers.",
+      "Saturday hours are 9:00 AM – 5:00 PM. Sunday–Friday hours are 7:00 AM – 7:00 PM. A Saturday or Sunday start is a normal weekend booking when a crew is still open and both addresses stay in Central Florida. Busy Saturdays fill, so a late request may move to another open Saturday. Florida heat and humidity still sit on a Saturday clock. A midday carry takes longer than an early start, when the building allows that window. If the drop-off leaves Central Florida, the job is a trip quote rather than a weekend hourly hop — see /blog/orlando-local-vs-long-distance-movers. Calling for a crew the same day is a separate question, covered in /blog/orlando-same-day-movers.",
       "## Elevator and HOA windows",
       "Apartment, condo, and HOA rules often decide the weekend before the crew does. Many Orlando buildings open the elevator, dock, or loading zone on weekdays only, or for a short early-Saturday slot. A Sunday reservation is often refused even when a crew could work. Ask the property which day and which hours are allowed, and whether that window must be reserved ahead. A short early-Saturday slot is the clock the crew has to finish inside. Share the floor, the walk from parking, and any loading-zone limit when you book. Apartment elevator and dock details are in /blog/orlando-apartment-high-rise-movers.",
       "## What to share for a weekend quote",
-      "Lead with the day: Saturday, or Sunday only if you are asking to confirm that window. Then pickup and drop-off addresses. Stairs or a reserved elevator at either stop, and the hours that window actually allows. How packed you will be when the crew arrives. Whether you need the truck or only labor on a rental or container already at the curb. Photos of bulky pieces help size the crew. Gate codes and HOA rules belong in the first message, not after the truck is on the way. Full-service is the crew and the truck, door to door. Labor-only is the carry when you already have the vehicle. Compare those bookings in /full-service-moving and /labor-only-moving.",
+      "Lead with the day: Saturday or Sunday. Then pickup and drop-off addresses. Stairs or a reserved elevator at either stop, and the hours that window actually allows. How packed you will be when the crew arrives. Whether you need the truck or only labor on a rental or container already at the curb. Photos of bulky pieces help size the crew. Gate codes and HOA rules belong in the first message, not after the truck is on the way. Full-service is the crew and the truck, door to door. Labor-only is the carry when you already have the vehicle. Compare those bookings in /full-service-moving and /labor-only-moving.",
       "## When a weekend is a bad fit",
-      "Skip the weekend when the office that approves the move is closed. Paperwork or an elevator reservation the property only processes on weekdays will not clear on Saturday morning. If the only open window is a weekday, book the weekday. A huge unpacked house is a poor Saturday fit too, especially with a short elevator slot. Rooms still full of loose items burn the window. Say you are still packing. The crew can help on an hourly clock once a slot is open, but a promise of an empty house with rooms still full will not finish inside a tight Saturday window. Sunday with no prior confirm is not a plan.",
+      "Skip the weekend when the office that approves the move is closed. Paperwork or an elevator reservation the property only processes on weekdays will not clear on Saturday morning. If the only open window is a weekday, book the weekday. A huge unpacked house is a poor Saturday fit too, especially with a short elevator slot. Rooms still full of loose items burn the window. Say you are still packing. The crew can help on an hourly clock once a slot is open, but a promise of an empty house with rooms still full will not finish inside a tight Saturday window.",
       "## How Toro quotes weekend local jobs",
       "Local weekend jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, elevator waits, heat, and a long carry add time on the hourly clock. They are not a separate line item. Crew size, how packed you are, and truck versus labor-only still change the total. There is no one-size rate card. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando.",
       "## Request a weekend quote",
-      "Request the quote at /quotes. Share both addresses, Saturday or a requested Sunday, stairs or elevator hours, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Request the quote at /quotes. Share both addresses, Saturday or Sunday, stairs or elevator hours, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
         q: "Can I book weekend movers in Orlando on Saturday or Sunday?",
-        a: "Saturday is inside published hours, Mon–Sat, 7:00 AM – 7:00 PM, when a crew is open and both stops stay in Central Florida. Sunday crew time is on request, so confirm that window before the day. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Request a quote at /quotes or call or text (689) 600-2720.",
+        a: "Saturday hours are 9:00 AM – 5:00 PM, and Sunday–Friday hours are 7:00 AM – 7:00 PM, when a crew is open and both stops stay in Central Florida. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Request a quote at /quotes or call or text (689) 600-2720.",
       },
       {
         q: "What should I share for a weekend moving quote?",
-        a: "Share the date (Saturday, or Sunday if you need that window confirmed), pickup and drop-off addresses, stairs or a reserved elevator and the hours that window allows, parking or gate codes, how packed you will be, and whether you need a truck or labor-only help. Photos of bulky pieces help size the crew. Request the quote at /quotes.",
+        a: "Share the date (Saturday or Sunday), pickup and drop-off addresses, stairs or a reserved elevator and the hours that window allows, parking or gate codes, how packed you will be, and whether you need a truck or labor-only help. Photos of bulky pieces help size the crew. Request the quote at /quotes.",
       },
       {
         q: "Why might a weekend not work for my Orlando apartment?",
@@ -209,7 +209,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I request a weekend quote from Toro?",
-        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share both addresses, Saturday or a requested Sunday, stairs or elevator hours, parking, and truck vs labor-only. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com.",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share both addresses, Saturday or Sunday, stairs or elevator hours, parking, and truck vs labor-only. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com.",
       },
     ],
   },
@@ -234,24 +234,24 @@ export const blogPosts: readonly BlogPost[] = [
     body: [
       "Same-day movers in Orlando are often possible for a local Central Florida hop when a crew is open and both stops stay nearby—not a guarantee. Share addresses, stairs or elevator, how packed you are, and truck vs labor-only right away. Toro Movers quotes same-day local jobs by the hour with clear rates before the crew rolls.",
       "## When same-day is realistic",
-      "Same-day fits a local hop: both addresses inside Central Florida, a crew still open that day, and access that does not need a reservation you never made. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request, so Sunday same-day only works if that window was confirmed. A packed studio or one-bedroom with clear parking can often start the same day. A labor-only load into a U-Haul or POD already at the curb can too — see /labor-only-moving and /blog/orlando-pod-uhaul-storage-loading.",
+      "Same-day fits a local hop: both addresses inside Central Florida, a crew still open that day, and access that does not need a reservation you never made. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. A packed studio or one-bedroom with clear parking can often start the same day. A labor-only load into a U-Haul or POD already at the curb can too — see /labor-only-moving and /blog/orlando-pod-uhaul-storage-loading.",
       "Florida heat and long carries still matter on a same-day clock. Stairs, elevator waits, and a long walk from parking add time. They are not a separate fee. Ask early whether the drop-off is still local. If it leaves Central Florida, that job is a trip quote, not a same-day hourly metro hop — see /blog/orlando-local-vs-long-distance-movers.",
       "## What to share immediately",
       "When you need the same day, lead with facts the crew needs to say yes or no. Pickup and drop-off addresses. Stairs or a reserved elevator at either stop. How packed you will be when the crew arrives. Whether you need the truck or only labor on a rental or container you already have. Photos of bulky pieces help size the crew. Gate codes, HOA rules, and any loading-zone limit should go in the first message, not after the truck is rolling.",
       "Full-service is the crew and the truck door to door. Labor-only is the carry when you already have the vehicle. Compare those bookings in /full-service-moving and /labor-only-moving. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando.",
       "## When same-day is not realistic",
-      "True same-day falls apart when the building controls the clock and the window was never reserved. Many Orlando apartments and HOAs require an elevator reservation, advance paperwork, or a short dock window that cannot be opened the morning of the move. Details are in /blog/orlando-apartment-high-rise-movers. A huge unpacked house, a piano or safe with no plan, or a second stop that suddenly leaves Central Florida also push the job past a same-day start. Sunday without a prior confirm is not a walk-up booking.",
+      "True same-day falls apart when the building controls the clock and the window was never reserved. Many Orlando apartments and HOAs require an elevator reservation, advance paperwork, or a short dock window that cannot be opened the morning of the move. Details are in /blog/orlando-apartment-high-rise-movers. A huge unpacked house, a piano or safe with no plan, or a second stop that suddenly leaves Central Florida also push the job past a same-day start.",
       "Long-distance is not same-day local work. Timing follows the route and the inventory, not a same-day metro clock. If you are still packing when you call, say so. The crew can still help on an hourly clock once a slot is open, but an empty-house promise with rooms still full will burn the day.",
       "## How Toro quotes same-day local jobs",
       "Local same-day jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, elevator waits, heat, and a long carry add time on the hourly clock; they are not a separate line item. Crew size, how packed you are, and truck versus labor-only still change the total. There is no one-size rate card.",
       "That hourly model is for local Central Florida work. A long-distance or out-of-state drop-off is a trip quote from origin, destination, and inventory — see /blog/orlando-local-vs-long-distance-movers. Same-day availability depends on an open crew that day. A quote explains the rate and the start window before the crew rolls. It is not a promise that every date and every building will fit.",
       "## Request a same-day quote",
-      "Book on /same-day-movers-orlando when you already know you want a crew today. This guide is what is realistic before you call. Request the quote at /quotes. Share both addresses, stairs or elevator, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Book on /same-day-movers-orlando when you already know you want a crew today. This guide is what is realistic before you call. Request the quote at /quotes. Share both addresses, stairs or elevator, parking, how packed you are, and whether you need a truck or labor-only help. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
         q: "Can I book same-day movers in Orlando?",
-        a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Share addresses, stairs or elevators, and how packed you are. Request a quote at /quotes or call or text (689) 600-2720. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Share addresses, stairs or elevators, and how packed you are. Request a quote at /quotes or call or text (689) 600-2720. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
       {
         q: "What should I share for a same-day moving quote?",
@@ -267,7 +267,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I request a same-day quote from Toro?",
-        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share both addresses, the date, stairs or elevator, parking, and truck vs labor-only. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request.",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share both addresses, the date, stairs or elevator, parking, and truck vs labor-only. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -311,7 +311,7 @@ export const blogPosts: readonly BlogPost[] = [
       "## How the hourly quote relates",
       "The number you approve before move day is the moving charge. Local jobs are quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. That rate pays for the crew’s time. It does not include a gratuity, and tipping does not change the quote you were given. There is no public rate card for the move, and there is no required tip schedule.",
       "What else changes a local total — crew size, access, how packed you are, and truck versus labor-only — is in /blog/how-much-does-a-local-move-cost-orlando. If the drop-off leaves Central Florida, that job is a trip quote rather than the local hourly clock. See /blog/orlando-local-vs-long-distance-movers.",
-      "Set the move budget from the quote. Set aside a tip only if you want to give one, as cash for move day or as an optional card amount after the work. Request the quote at /quotes. Share both addresses, stairs or an elevator, parking, and whether you need a truck or help with a rental. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Set the move budget from the quote. Set aside a tip only if you want to give one, as cash for move day or as an optional card amount after the work. Request the quote at /quotes. Share both addresses, stairs or an elevator, parking, and whether you need a truck or help with a rental. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
@@ -332,7 +332,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "Is tipping movers required?",
-        a: "No. Tipping is optional. You can tip less, or not at all, if the work was poor. Cash at the end of the job is the usual way to tip. An optional card tip can be added when you pay Toro, and no tip is a complete choice. Call or text (689) 600-2720 or email hello@toromovers.com. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "No. Tipping is optional. You can tip less, or not at all, if the work was poor. Cash at the end of the job is the usual way to tip. An optional card tip can be added when you pay Toro, and no tip is a complete choice. Call or text (689) 600-2720 or email hello@toromovers.com. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -365,7 +365,7 @@ export const blogPosts: readonly BlogPost[] = [
       "## Apartments, townhomes, offices, and containers",
       "Use the same questions for the building you are leaving. An apartment or high-rise adds an elevator window, a dock or loading zone, and the carry from the truck. Details are in /blog/orlando-apartment-high-rise-movers and on /apartment-movers-orlando-fl. A townhome or condo often adds stairs and an HOA window. Details are in /blog/central-florida-townhome-condo-movers. An office move adds after-hours timing and a person on site who can say where each piece goes. Details are in /blog/orlando-office-small-commercial-movers. If you already have a U-Haul or POD, book labor-only loading instead of a second truck. That job is covered in /blog/orlando-pod-uhaul-storage-loading.",
       "## How to request the quote",
-      "Request the quote at /quotes. Share pickup and drop-off, whether it is an apartment, townhome, house, or office, stairs or elevator, parking, and whether you already have a truck or container. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida.",
+      "Request the quote at /quotes. Share pickup and drop-off, whether it is an apartment, townhome, house, or office, stairs or elevator, parking, and whether you already have a truck or container. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida.",
     ],
     faqs: [
       {
@@ -386,7 +386,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I request a moving quote?",
-        a: "Request a quote at /quotes. Share both addresses, the date, whether the job is an apartment, townhome, house, or office, stairs or elevator, parking, and whether you need a truck or help with a U-Haul or POD. Hours are Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Request a quote at /quotes. Share both addresses, the date, whether the job is an apartment, townhome, house, or office, stairs or elevator, parking, and whether you need a truck or help with a U-Haul or POD. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -409,17 +409,17 @@ export const blogPosts: readonly BlogPost[] = [
     },
     body: [
       "Small office and commercial moves need crews who work around business hours, protect desks and IT gear, and keep downtime short. Toro Movers handles office and light commercial moves across Orlando and Central Florida with clear hourly rates and bilingual crews.",
-      "After-hours and weekend moves. A small office loses the day if the crew works while people are still at their desks. Schedule the load after close, early in the morning, or on Saturday so the suite is empty and downtime stays short. Published hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. If the building only allows a window outside those hours, say so when you book and confirm the start time before the quote is final. A short evening or weekend slot often needs a larger crew so the job finishes before the office reopens. Reserve the freight elevator and the dock for that same window.",
+      "After-hours and weekend moves. A small office loses the day if the crew works while people are still at their desks. Schedule the load after close, early in the morning, or on Saturday so the suite is empty and downtime stays short. Published hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. If the building only allows a window outside those hours, say so when you book and confirm the start time before the quote is final. A short evening or weekend slot often needs a larger crew so the job finishes before the office reopens. Reserve the freight elevator and the dock for that same window.",
       "Desks, filing, and IT equipment. Label desks, chairs, and file cabinets by room and by who uses them so the new office is placed, not sorted again. Empty drawers on heavy filing cabinets before the carry. Power down computers and monitors, label cables, and pack small electronics in closed boxes if you want the crew on the furniture. Say which pieces are fragile or must stay upright. Pads and wrap protect desks and cabinets through doorways, elevators, and the truck. The crew moves the equipment. They do not set up networks or migrate data. Packing still left undone adds time on the hourly clock.",
       "Building access, freight elevators, and a certificate of insurance. Office parks and commercial buildings often require a freight elevator, a loading dock, a service entrance, and a certificate of insurance (COI) before the truck can enter. Ask the property manager or landlord for the written rules when the date is set: allowed hours, whether after-hours or weekends are required, dock or elevator reservations, and any COI wording or deadline. Send Toro the manager’s name, email, required wording, and the deadline with the booking so the paperwork the property asks for can go out in time. Many offices want that several business days ahead, not the morning of the move. A dock shared with deliveries, or a freight elevator on a short reservation, adds time. Share the floor, the carry from the dock to the suite, and any loading-zone limit. Apartment docks and elevator timing are in /blog/orlando-apartment-high-rise-movers. Townhome stairs and HOA windows are in /blog/central-florida-townhome-condo-movers.",
       "How Toro quotes office jobs. Local office and light commercial moves are hourly. Toro quotes local jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. After-hours windows, freight-elevator waits, and a long carry from the dock add time on the hourly clock; they are not a separate fee. Crew size, how packed the suite is, and whether you need a truck or labor-only help on a rental still change the total. If the new office leaves Central Florida, that job is a trip quote — see /blog/orlando-local-vs-long-distance-movers. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando. There is no one-size rate card.",
       "What to prep before the crew arrives. Clear paths from each office to the freight elevator or the door. Disconnect computers and label cables if the IT gear is moving with the desks. Close and tape boxes, and mark the destination room, not only the contents. Share gate codes, the suite number, dock rules, and a contact who can open the building if the crew arrives before staff. Photos of bulky pieces — large desks, copiers, conference tables — help size the crew. If you already have a truck or container, say so. That booking is labor-only. If you want the truck and the crew together, that is full-service. See /full-service-moving and /labor-only-moving.",
-      "Hire the crew on /office-movers-orlando. This guide is the prep for after-hours timing, desks, and building paperwork. Request an office or small commercial quote at /quotes, or call or text (689) 600-2720. Share both addresses, floors, freight elevator or dock rules, after-hours or weekend limits, and your date. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Hire the crew on /office-movers-orlando. This guide is the prep for after-hours timing, desks, and building paperwork. Request an office or small commercial quote at /quotes, or call or text (689) 600-2720. Share both addresses, floors, freight elevator or dock rules, after-hours or weekend limits, and your date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
         q: "Do you move small offices on weekends?",
-        a: "Yes. Saturday is inside published hours, Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request, so confirm the date when you book. A weekend window is often how a small office avoids weekday downtime. Reserve the freight elevator, dock, or loading zone for that same window, and share any landlord hour limits. A short slot often needs a larger crew so the job finishes before the office reopens. Request the window at /quotes or call or text (689) 600-2720.",
+        a: "Yes. Saturday hours are 9:00 AM – 5:00 PM, and Sunday–Friday hours are 7:00 AM – 7:00 PM. Confirm the date when you book. A weekend window is often how a small office avoids weekday downtime. Reserve the freight elevator, dock, or loading zone for that same window, and share any landlord hour limits. A short slot often needs a larger crew so the job finishes before the office reopens. Request the window at /quotes or call or text (689) 600-2720.",
       },
       {
         q: "What if the commercial landlord requires a certificate of insurance (COI)?",
@@ -431,7 +431,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I get an office or small commercial moving quote?",
-        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share suite size, floors, freight elevator or dock rules, after-hours or weekend limits, and whether you need a truck or labor-only help. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share suite size, floors, freight elevator or dock rules, after-hours or weekend limits, and whether you need a truck or labor-only help. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -459,7 +459,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Parking and truck size in planned communities. Guest spots, short loading zones, shared docks, and streets that do not allow a large truck are common. A long carry from the only legal parking spot adds time on the hourly clock. Share street width, gate codes, and any limit on truck size so the crew plans the walk and the truck. Tight townhome courts show up across Orlando, Kissimmee, Winter Garden, Celebration, and nearby cities.",
       "Packing tips for multi-level homes. Pack room by room and label the floor and the room, not only the contents. Close and tape boxes before the crew arrives; packing still left undone adds time. Clear stairs and landings so each trip is a carry. Empty drawers on heavy dressers. On a split-level or three-story townhome, stage boxes near the stairs you want used, and point out fragile pieces and tight turns at landings. If the association wants floors protected, say so when you book.",
       "How Toro quotes townhome and condo jobs. Local moves are hourly. Toro quotes local jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, elevator waits, and a long carry from tight parking add time on the hourly clock; they are not a separate fee. Crew size, how packed you are, and whether you need a truck or labor-only help on a U-Haul or POD still change the total. If the drop-off leaves Central Florida, that job is a trip quote — see /blog/orlando-local-vs-long-distance-movers. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando. There is no one-size rate card.",
-      "Request a townhome or condo quote at /quotes, or call or text (689) 600-2720. Share both addresses, floors, stairs or elevator, HOA or condo rules, parking, and your date. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Request a townhome or condo quote at /quotes, or call or text (689) 600-2720. Share both addresses, floors, stairs or elevator, HOA or condo rules, parking, and your date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
@@ -468,7 +468,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "What if the community only allows a weekend move window?",
-        a: "Book inside the hours the HOA or condo actually allows, including Saturday limits. Reserve the elevator, dock, or loading zone for that same window. A short weekend slot often needs a larger crew so the carry finishes before the window closes. Sunday crew time is on request, so confirm both the community rules and the date when you book. Share the written window with your quote at /quotes.",
+        a: "Book inside the hours the HOA or condo actually allows, including Saturday limits. Reserve the elevator, dock, or loading zone for that same window. A short weekend slot often needs a larger crew so the carry finishes before the window closes. Confirm both the community rules and the date when you book. Share the written window with your quote at /quotes.",
       },
       {
         q: "What if the HOA requires a certificate of insurance (COI)?",
@@ -476,7 +476,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I get a townhome or condo moving quote?",
-        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share floors, stairs or elevator, HOA or condo rules, parking, and whether you need a truck or labor-only help. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share floors, stairs or elevator, HOA or condo rules, parking, and whether you need a truck or labor-only help. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -503,12 +503,12 @@ export const blogPosts: readonly BlogPost[] = [
       "When a job becomes long-distance. The drop-off leaves that short Central Florida drive. That is another Florida region, or a move out of state. The truck is committed to a longer route, timing is not the same as a same-day metro hop, and the quote is built from where you start, where you finish, and what is going. If you already have a U-Haul or POD and only need loading help, that is labor-only — see /blog/orlando-pod-uhaul-storage-loading.",
       "How pricing differs. Local moves are hourly. Toro quotes local jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs and long carries add time on the hourly clock; they are not a separate fee. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando. Long-distance and interstate moves are a trip quote from origin, destination, and inventory — not the same hourly clock as a Central Florida hop. Both models are explained before you book. There is no one-size rate card for either type.",
       "What to ask before you book. Confirm both addresses and whether the job stays in Central Florida. Ask if the price is hourly or a trip quote, what crew size is planned, and whether load, transport, unload, and placement are included. Share stairs, elevators, parking, and how packed you will be when the crew arrives. For a longer job, add the destination city, a target date, and photos or a list of bulky pieces so the trip quote matches the load.",
-      "How Toro quotes each type. A local Central Florida move gets an up-front hourly quote: crew size, the hourly rate, and the 2-hour minimum, explained before move day. A long-distance or out-of-state move gets a trip quote from the pickup, the destination, and the inventory. Request either at /quotes, or call or text (689) 600-2720. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned crew in Orlando. English and Spanish on the phone and on the job.",
+      "How Toro quotes each type. A local Central Florida move gets an up-front hourly quote: crew size, the hourly rate, and the 2-hour minimum, explained before move day. A long-distance or out-of-state move gets a trip quote from the pickup, the destination, and the inventory. Request either at /quotes, or call or text (689) 600-2720. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Toro Movers is a family-owned crew in Orlando. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
         q: "Can I book a same-day local move in Orlando?",
-        a: "Often, when both stops stay inside Central Florida and a crew is open. Same-day local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Share addresses, stairs or elevators, and how packed you are. Request a quote at /quotes or call or text (689) 600-2720. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Often, when both stops stay inside Central Florida and a crew is open. Same-day local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Share addresses, stairs or elevators, and how packed you are. Request a quote at /quotes or call or text (689) 600-2720. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
       {
         q: "Do long-distance moves take more than one day?",
@@ -520,7 +520,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I get a local or long-distance quote?",
-        a: "Request a quote at /quotes, or call or text (689) 600-2720. Say whether both stops are in Central Florida or the job is long-distance, and share dates, access, and inventory. Local jobs are hourly. Long-distance jobs are a trip quote. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Say whether both stops are in Central Florida or the job is long-distance, and share dates, access, and inventory. Local jobs are hourly. Long-distance jobs are a trip quote. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -548,7 +548,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Full-service vs labor-only in apartments. Full-service is the crew, truck, load, transport, unload, and placement—one local team door to door. Labor-only is when you already have a U-Haul, POD, or rental truck and only need loading or unloading help by the hour. Stairs, elevator windows, and dock rules apply either way. If you are unsure which fits, compare /blog/full-service-vs-labor-only-orlando, then see /full-service-moving and /labor-only-moving.",
       "How Toro quotes apartment jobs. Apartment and high-rise moves are quoted with up-front hourly rates explained before move day. The total depends on crew size, time on site, floors, elevator or stair access, dock or parking distance, how packed you are when the crew arrives, and whether the truck is included. We do not publish a one-size rate card. Share unit size, floors, and the building rules when you request a quote. More on what changes a local total: /blog/how-much-does-a-local-move-cost-orlando.",
       "When you need a bigger crew. Two movers fit many studio and one-bedroom loads when the elevator is reserved and the carry from the truck is short. Add people for a walk-up, a long dock-to-unit carry, a short elevator window, or a two-bedroom or larger home with heavy furniture. A larger crew is often how you finish inside a tight HOA window instead of running past it on the hourly clock.",
-      "Request an apartment or high-rise quote at /quotes, or call or text (689) 600-2720. Share pickup and drop-off, floors, elevator or stairs, dock or parking rules, and your date. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Request an apartment or high-rise quote at /quotes, or call or text (689) 600-2720. Share pickup and drop-off, floors, elevator or stairs, dock or parking rules, and your date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
@@ -557,7 +557,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "What if the HOA only allows a weekend move window?",
-        a: "Book inside the hours the building actually allows, including Saturday limits. Reserve the elevator and the dock or loading zone for that same window. A short weekend slot often needs a larger crew so the job finishes before the window closes. Sunday crew time is on request, so confirm both the building rules and the date when you book. Share the written rules with your quote.",
+        a: "Book inside the hours the building actually allows, including Saturday limits. Reserve the elevator and the dock or loading zone for that same window. A short weekend slot often needs a larger crew so the job finishes before the window closes. Confirm both the building rules and the date when you book. Share the written rules with your quote.",
       },
       {
         q: "Is a walk-up harder than an elevator building?",
@@ -565,7 +565,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I book an Orlando apartment or high-rise move?",
-        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share floors, elevator or stairs, dock or parking rules, and whether you need a truck or labor-only help. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Share floors, elevator or stairs, dock or parking rules, and whether you need a truck or labor-only help. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -594,7 +594,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Storage unit moves. Gate codes, unit size, aisle width, and the hours the facility actually stays open decide whether the job stays short. A same-day transfer from a unit into a rental truck, a reload into a new unit, or an unload from a truck into a unit all fit labor-only when you already have the vehicle or the unit. Share the facility name and any time limit so the crew is not waiting on a closed gate.",
       "What to have ready. Have the truck, POD, or storage access on site when the crew arrives — keys, gate code, and unit number. Clear a path from the rooms to the door. Pack small goods in boxes if you want the crew on furniture and heavy pieces; packing that is still undone adds time. Photos of bulky items, the floor count, and parking or dock notes help size the crew. If the building asks for a certificate of insurance, send the manager’s contact and deadline with the booking. Apartment dock and elevator details are in /blog/orlando-apartment-high-rise-movers.",
       "How Toro quotes short labor jobs. Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, long carries, and a late gate still add time on the hourly clock; they are not a separate fee. Crew size and whether you book one stop or two change the total. The model is explained before move day. Request the quote at /quotes and describe the job as labor-only, a POD, or a U-Haul.",
-      "Hire the crew on /pod-loading-orlando. This guide is what to have ready for a container, a rental truck, or a storage unit. A single piece or a furniture pickup is /small-moves-orlando. A short lift that is neither stays on /loading-unloading. The broader labor-only comparison is /labor-only-moving. Call or text (689) 600-2720, or request a quote at /quotes. Share truck or unit size, one end or both, and access notes. Hours: Mon–Sat, 7:00 AM – 7:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+      "Hire the crew on /pod-loading-orlando. This guide is what to have ready for a container, a rental truck, or a storage unit. A single piece or a furniture pickup is /small-moves-orlando. A short lift that is neither stays on /loading-unloading. The broader labor-only comparison is /labor-only-moving. Call or text (689) 600-2720, or request a quote at /quotes. Share truck or unit size, one end or both, and access notes. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
     ],
     faqs: [
       {
@@ -611,7 +611,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I book storage, POD, or U-Haul labor in Orlando?",
-        a: "Request a labor-only, POD, or U-Haul quote at /quotes, or call or text (689) 600-2720. Share truck or unit size, one end or both, and access notes. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Request a labor-only, POD, or U-Haul quote at /quotes, or call or text (689) 600-2720. Share truck or unit size, one end or both, and access notes. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -639,7 +639,7 @@ export const blogPosts: readonly BlogPost[] = [
       "U-Haul and rental trucks: share truck size, whether the load is one-way or local, and how packed you will be when we arrive. Tight parking, long driveway carries, and second-floor walk-ups change time on site. Photos of bulky items help us plan the crew.",
       "PODs and portable storage: container doors, driveway placement, and HOA or apartment rules matter as much as the furniture list. Confirm where the unit will sit, whether stairs or elevators are involved from the home to the container, and any building time windows.",
       "Access still drives the clock. Stairs, elevators, COI or loading-dock rules, street parking, and how ready the home is when the crew shows up all affect how long a U-Haul or POD load takes. Apartment and condo moves should share floor counts and elevator reservations up front.",
-      "Pricing for U-Haul and POD help is typically hourly. Totals depend on crew size, time on site, and access—not a one-size rate card. We explain the hourly model before move day. Call or text (689) 600-2720 with truck or container details, or request a quote online. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      "Pricing for U-Haul and POD help is typically hourly. Totals depend on crew size, time on site, and access—not a one-size rate card. We explain the hourly model before move day. Call or text (689) 600-2720 with truck or container details, or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       "Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job. Hire POD, U-Haul, or storage loading on /pod-loading-orlando. The broader labor-only page is /labor-only-moving. A small move or single item is /small-moves-orlando.",
     ],
     faqs: [
@@ -661,7 +661,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I book loading help?",
-        a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, truck or POD details, and access notes. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, truck or POD details, and access notes. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -687,7 +687,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Choose full-service when you want one local team door to door and do not want to rent or drive a truck. It fits homes, townhomes, and apartments across Orlando and Central Florida when access, parking, and placement all need coordinating with the same crew.",
       "Choose labor-only when the vehicle is already handled. You save the truck portion of the job and pay for careful loading or unloading by the hour—including tight packs for PODs and rental trucks. Stairs, elevators, and long carries still matter, so share access details either way.",
       "Both options from Toro Movers use up-front hourly rates explained before move day. The total still depends on crew size, time on site, access, and readiness—not a fake website rate card. For deeper cost factors, read /blog/how-much-does-a-local-move-cost-orlando. For dedicated pages, see /full-service-moving and /labor-only-moving.",
-      "Not sure which fits? Call or text (689) 600-2720 with addresses, home type, and whether you have a truck. We will recommend crew size and the clearer option. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      "Not sure which fits? Call or text (689) 600-2720 with addresses, home type, and whether you have a truck. We will recommend crew size and the clearer option. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     ],
     faqs: [
       {
@@ -708,7 +708,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I get a quote?",
-        a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, whether you have a truck, and access details. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, whether you have a truck, and access details. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },
@@ -735,7 +735,7 @@ export const blogPosts: readonly BlogPost[] = [
       "Full-service local moving includes the crew, truck, loading, transport, unloading, and placement. Labor-only moving is for customers who already have a rental truck, POD, or trailer and only need loading or unloading help. Labor-only is usually less than full-service because you are not paying for the truck and transport portion.",
       "Access changes the clock. Walk-up apartments, reserved elevators, long carries from the door to the truck, and tight parking all add time. Share floors, elevator windows, and loading rules when you request a quote so the crew size and timing match the building.",
       "Industry websites and aggregators publish Orlando averages that vary by source and year. Treat those figures as market context only—not a Toro price. For apartment-specific planning, see /apartment-movers-orlando-fl. For DIY truck help, see /labor-only-moving.",
-      "To get a clear explanation for your move, call or text (689) 600-2720 or request a quote online. Share pickup and drop-off, home or apartment type, stairs or elevator details, and whether you need a truck. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      "To get a clear explanation for your move, call or text (689) 600-2720 or request a quote online. Share pickup and drop-off, home or apartment type, stairs or elevator details, and whether you need a truck. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     ],
     faqs: [
       {
@@ -756,7 +756,7 @@ export const blogPosts: readonly BlogPost[] = [
       },
       {
         q: "How do I get a moving quote from Toro Movers?",
-        a: "Call or text (689) 600-2720, or request a quote online. Share what you are moving, pickup and drop-off, and access details. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+        a: "Call or text (689) 600-2720, or request a quote online. Share what you are moving, pickup and drop-off, and access details. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       },
     ],
   },

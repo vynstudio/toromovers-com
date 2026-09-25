@@ -120,7 +120,7 @@ export const packingServicesPage: ServiceGuide = {
       h2: "Where we pack in Central Florida",
       paragraphs: [
         "Toro Movers is based in Orlando and packs on local jobs across Central Florida, including Lake Nona, Dr. Phillips, Winter Park, Kissimmee, Winter Garden, and Lake Mary. The hourly model is the same on a short metro hop. Drive time between those cities is on the clock and quoted honestly.",
-        "If the drop-off leaves Central Florida, that job is a trip quote rather than this local hourly pack. Say so when you call so we do not plan a same-metro crew for a longer route. For local work, hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request.",
+        "If the drop-off leaves Central Florida, that job is a trip quote rather than this local hourly pack. Say so when you call so we do not plan a same-metro crew for a longer route. For local work, hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       ],
     },
   ],
@@ -149,7 +149,7 @@ export const packingServicesPage: ServiceGuide = {
     },
     {
       q: "How do I book packing services in Orlando?",
-      a: "Call or text (689) 600-2720, or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      a: "Call or text (689) 600-2720, or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ],
   closing: {
@@ -204,7 +204,7 @@ export const officeMoversPage: ServiceGuide = {
     {
       h2: "After hours, Saturday, and a short window",
       paragraphs: [
-        "A small office loses the day if the crew works while people are still at their desks. Schedule the load after close, early in the morning, or on Saturday so the suite is empty and downtime stays short. Published hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. If the building only allows a window outside those hours, say so when you book and confirm the start before the quote is final.",
+        "A small office loses the day if the crew works while people are still at their desks. Schedule the load after close, early in the morning, or on Saturday so the suite is empty and downtime stays short. Published hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. If the building only allows a window outside those hours, say so when you book and confirm the start before the quote is final.",
         "A short evening or weekend slot often needs a larger crew so the job finishes before the office reopens. Reserve the freight elevator and the dock for that same window. Share a contact who can open the building if the crew arrives before staff. Photos of bulky pieces — large desks, copiers, conference tables — help size that crew.",
         "After-hours does not add a named surcharge in the pitch. It adds time, and sometimes more movers, on the hourly clock. We explain that before the day so a tight window is not a surprise at the dock.",
       ],
@@ -229,7 +229,7 @@ export const officeMoversPage: ServiceGuide = {
       h2: "How an office move is quoted",
       paragraphs: [
         "Local office and light commercial moves are hourly. Toro quotes local jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Freight-elevator waits and a long carry from the dock add time on that clock. They are not a separate line. Crew size, how packed the suite is, and truck versus labor-only still change the total. There is no one-size rate card.",
-        "Share both addresses, floors, the date, and whether the suite will be empty. Hours are Mon–Sat, 7:00 AM – 7:00 PM. We serve Orlando and the other Central Florida cities linked below.",
+        "Share both addresses, floors, the date, and whether the suite will be empty. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. We serve Orlando and the other Central Florida cities linked below.",
       ],
     },
   ],
@@ -250,7 +250,7 @@ export const officeMoversPage: ServiceGuide = {
     },
     {
       q: "Can the crew move an office after hours or on Saturday?",
-      a: "Saturday is inside published hours, Mon–Sat, 7:00 AM – 7:00 PM. Sunday is on request. If the building only allows a window outside those hours, say so when you book and confirm the start before the quote is final. A short slot often needs a larger crew. Reserve the freight elevator or dock for that same window.",
+      a: "Saturday hours are 9:00 AM – 5:00 PM. Sunday–Friday hours are 7:00 AM – 7:00 PM. If the building only allows a window outside those hours, say so when you book and confirm the start before the quote is final. A short slot often needs a larger crew. Reserve the freight elevator or dock for that same window.",
     },
     {
       q: "What if the landlord wants a certificate of insurance?",
@@ -258,7 +258,7 @@ export const officeMoversPage: ServiceGuide = {
     },
     {
       q: "How do I get an office moving quote?",
-      a: "Request a quote at the quote page, or call or text (689) 600-2720. Share both addresses, floors, dock or freight-elevator rules, after-hours limits, and truck versus labor-only. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      a: "Request a quote at the quote page, or call or text (689) 600-2720. Share both addresses, floors, dock or freight-elevator rules, after-hours limits, and truck versus labor-only. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ],
   closing: {
@@ -306,7 +306,7 @@ export const sameDayMoversPage: ServiceGuide = {
     {
       h2: "What same-day means here",
       paragraphs: [
-        "Same-day movers in Orlando, for Toro, means a local job we can still put on today’s board. Both addresses stay inside Central Florida. A crew is open. Access does not depend on a reservation you never made. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request, so a Sunday same-day start only works if that window was confirmed. Calling at noon does not create a crew that is already on another job.",
+        "Same-day movers in Orlando, for Toro, means a local job we can still put on today’s board. Both addresses stay inside Central Florida. A crew is open. Access does not depend on a reservation you never made. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Calling at noon does not create a crew that is already on another job.",
         "A packed studio or one-bedroom with clear parking can often start the same day. A labor-only load into a U-Haul or POD that is already at the curb can too, if the path is clear. A full-service hop — crew and truck — can also fit when the route is short and the home is ready. The truck choice does not make same-day automatic. The open slot does.",
         "We will say no when the day is full or the building cannot take a truck today. A quote explains the rate and the start window. It is not a promise that every date and every property will fit.",
       ],
@@ -322,7 +322,7 @@ export const sameDayMoversPage: ServiceGuide = {
       h2: "What usually blocks a same-day start",
       paragraphs: [
         "True same-day falls apart when the building controls the clock and the window was never reserved. Many Orlando apartments and HOAs require an elevator reservation, advance paperwork, or a short dock window that cannot be opened the morning of the move. If that window was never reserved, we cannot invent one. Ask the property first, then call us with the answer.",
-        "A huge unpacked house, a second stop that leaves Central Florida, or a Sunday request that was not confirmed also push the job past a same-day start. Long-distance is not same-day local work. Timing follows the route and the inventory, not a metro clock. If you are still packing when you call, say so. The crew can still help on an hourly clock once a slot is open, but an empty-house promise with rooms still full will burn the day.",
+        "A huge unpacked house or a second stop that leaves Central Florida also pushes the job past a same-day start. Long-distance is not same-day local work. Timing follows the route and the inventory, not a metro clock. If you are still packing when you call, say so. The crew can still help on an hourly clock once a slot is open, but an empty-house promise with rooms still full will burn the day.",
         "A same-day ask is also the wrong tool when you need a certificate or a dock hold that the property only processes on weekdays. That paperwork will not clear because the truck is already nearby. Book the next window the building will actually open.",
       ],
     },
@@ -337,7 +337,7 @@ export const sameDayMoversPage: ServiceGuide = {
       h2: "What to send in the first message",
       paragraphs: [
         "Lead with the facts a dispatcher needs to say yes or no. Pickup and drop-off addresses. Stairs or a reserved elevator at either stop. How packed you will be when the crew arrives. Whether you need the truck or only labor on a rental or container you already have. Photos of bulky pieces help size the crew. Gate codes, HOA rules, and any loading-zone limit should be in that first message.",
-        "Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Email hello@toromovers.com, or call or text (689) 600-2720. If you are still deciding whether today is realistic, read the same-day guide first, then request the quote with the addresses in hand.",
+        "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. If you are still deciding whether today is realistic, read the same-day guide first, then request the quote with the addresses in hand.",
       ],
     },
   ],
@@ -350,7 +350,7 @@ export const sameDayMoversPage: ServiceGuide = {
   faqs: [
     {
       q: "Can I book same-day movers in Orlando?",
-      a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Call or text (689) 600-2720 or request a quote online. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Call or text (689) 600-2720 or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
     {
       q: "What should I send for a same-day quote?",
@@ -436,7 +436,7 @@ export const smallMovesPage: ServiceGuide = {
       h2: "How a short job is quoted",
       paragraphs: [
         "Local small jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on that minimum. Stairs, an elevator wait, a long walk from parking, and a piece that has to come apart add time on the same clock. They are not a separate fee. Two movers fit many single pieces. A heavier piece may need more people. The rate is per mover per hour, so the quote balances people and time.",
-        "A clear path from the room to the door, and a place to park that is actually legal, keeps the minimum realistic. A building that makes the crew wait for an elevator spends that wait on the clock. Florida heat slows a midday carry. Heat does not add a fee. When the building allows it, an earlier start is the faster job. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request.",
+        "A clear path from the room to the door, and a place to park that is actually legal, keeps the minimum realistic. A building that makes the crew wait for an elevator spends that wait on the clock. Florida heat slows a midday carry. Heat does not add a fee. When the building allows it, an earlier start is the faster job. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       ],
     },
     {
@@ -556,7 +556,7 @@ export const podLoadingPage: ServiceGuide = {
       h2: "Where we load containers and rental trucks",
       paragraphs: [
         "Toro Movers is based in Orlando and does this work across Central Florida, including Winter Springs, Deltona, Horizon West, Lake Nona, Dr. Phillips, Winter Park, and Winter Garden. Drive time between two local stops is on the clock and quoted honestly. If the drop-off leaves Central Florida, that route is a trip quote rather than this local hourly load. You would still drive a rental. The quote follows the route.",
-        "Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Call or text (689) 600-2720, or email hello@toromovers.com. Lead with the vehicle: POD, U-Haul or other rental, or storage unit. Add the size, one end or both, the addresses or the facility name, and stairs or an elevator.",
+        "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Call or text (689) 600-2720, or email hello@toromovers.com. Lead with the vehicle: POD, U-Haul or other rental, or storage unit. Add the size, one end or both, the addresses or the facility name, and stairs or an elevator.",
       ],
     },
   ],
@@ -585,7 +585,7 @@ export const podLoadingPage: ServiceGuide = {
     },
     {
       q: "How much does POD or U-Haul loading cost?",
-      a: "Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a late gate, and a long carry add time. They are not a separate fee. Call or text (689) 600-2720 or request a quote online. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      a: "Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a late gate, and a long carry add time. They are not a separate fee. Call or text (689) 600-2720 or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ],
   closing: {
