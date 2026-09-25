@@ -770,6 +770,135 @@ const EXTRA_CITIES: CityPageContent[] = [
     lat: 28.451,
     lng: -81.492,
   }),
+  extraCity({
+    slug: "winter-springs-movers",
+    name: "Winter Springs",
+    county: "Seminole County",
+    title: "Winter Springs Movers | Local Moving Company | Toro Movers",
+    description:
+      "Need movers in Winter Springs? Toro Movers handles Seminole County homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+    h1: "Winter Springs Movers for Seminole County Local Moves",
+    lede:
+      "Toro Movers serves Winter Springs with full-service household moves, townhome help, and labor-only loading — up-front hourly pricing from a local crew.",
+    about: {
+      h2: "Local movers in Winter Springs, FL",
+      body: "Winter Springs sits in Seminole County between Longwood, Oviedo, and Casselberry, with established subdivisions off SR-434 and a straight shot to the Seminole Expressway. Toro Movers plans driveway depth, HOA streets, and short hops for homes, townhomes, and rental-truck labor in Winter Springs.",
+    },
+    angle: {
+      h2: "Built for Tuskawilla streets and SR-434 access",
+      body: "Winter Springs jobs often mean a subdivision street off SR-434, a Tuskawilla driveway, or a short carry where guest parking is tight. Toro plans the truck you can actually stage and quotes the Seminole hop by the hour.",
+    },
+    neighborhoods: [
+      "Tuskawilla",
+      "Town Center",
+      "SR-434",
+      "Red Bug Lake Road",
+      "Central Winds",
+      "SR-417",
+    ],
+    faqs: [
+      {
+        q: "Do you move homes in Winter Springs?",
+        a: "Yes. Toro Movers handles household and townhome moves in Winter Springs and nearby Seminole County with up-front hourly rates.",
+      },
+      {
+        q: "Can you move me from Winter Springs to Oviedo or Orlando?",
+        a: "Yes. Hops between Winter Springs, Oviedo, Longwood, Lake Mary, and Orlando use the same hourly model. Drive time is on the clock and quoted honestly.",
+      },
+      {
+        q: "Do you offer labor-only movers in Winter Springs?",
+        a: "Yes. If you already have a U-Haul, POD, or rental truck, Toro loads or unloads it by the hour.",
+      },
+    ],
+    lat: 28.6986,
+    lng: -81.2736,
+  }),
+  extraCity({
+    slug: "deltona-movers",
+    name: "Deltona",
+    county: "Volusia County",
+    title: "Deltona Movers | Local Moving Company | Toro Movers",
+    description:
+      "Need movers in Deltona? Toro Movers handles Volusia County homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+    h1: "Deltona Movers for Volusia County Local Moves",
+    lede:
+      "Toro Movers serves Deltona with full-service household moves, townhome help, and labor-only loading — up-front hourly pricing, local crew.",
+    about: {
+      h2: "Local movers in Deltona, FL",
+      body: "Deltona is a Volusia County city on I-4, northeast of Sanford, with lake subdivisions and long residential streets rather than a downtown high-rise. Toro Movers quotes homes, townhomes, and rental-truck labor by the hour and treats the drive toward Orlando as time on the clock.",
+    },
+    angle: {
+      h2: "Built for Volusia subdivisions and the I-4 hop",
+      body: "Deltona jobs often mean a subdivision off Howland or Saxon Boulevard and a longer hop than a Seminole County move. Toro books a realistic arrival and quotes that drive honestly — no mileage surcharge on top of the hourly rate.",
+    },
+    neighborhoods: [
+      "Deltona Lakes",
+      "Howland Boulevard",
+      "Saxon Boulevard",
+      "Providence Boulevard",
+      "Enterprise",
+      "I-4",
+    ],
+    faqs: [
+      {
+        q: "Do you move homes in Deltona?",
+        a: "Yes. Toro Movers handles household and townhome moves in Deltona and nearby Volusia County with up-front hourly rates.",
+      },
+      {
+        q: "How do you price a Deltona to Orlando move?",
+        a: "Up-front hourly rates. The drive is longer than a move inside Seminole County, and that time is on the clock and quoted honestly — no separate mileage fee.",
+      },
+      {
+        q: "Do you offer labor-only movers in Deltona?",
+        a: "Yes. If you already have a U-Haul, POD, or rental truck, Toro loads or unloads it by the hour.",
+      },
+    ],
+    lat: 28.9006,
+    lng: -81.2397,
+  }),
+  extraCity({
+    slug: "horizon-west-movers",
+    name: "Horizon West",
+    county: "Orange County",
+    title: "Horizon West Movers | Local Moving Company | Toro Movers",
+    description:
+      "Need movers in Horizon West? Toro Movers handles west Orange new homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+    h1: "Horizon West Movers for West Orange Local Moves",
+    lede:
+      "Toro Movers serves Horizon West with full-service household moves, new-home move-ins, and labor-only loading — up-front hourly pricing from a local crew.",
+    about: {
+      h2: "Local movers in Horizon West, FL",
+      body: "Horizon West is a west Orange community south of Winter Garden and west of Windermere, with new houses, townhomes, and gated streets along Avalon Road and SR-429. Toro Movers plans builder and HOA windows, protects new finishes, and quotes homes and rental-truck labor by the hour.",
+    },
+    angle: {
+      h2: "Built for new Horizon West streets and HOA gates",
+      body: "Horizon West jobs often mean fresh floors, a gate, and a new street that is still tight for a truck. Toro books the arrival window you share and quotes the hop to Winter Garden, Windermere, or the rest of Orlando honestly by the hour.",
+    },
+    neighborhoods: [
+      "Hamlin",
+      "Summerlake",
+      "Waterleigh",
+      "Avalon Road",
+      "Town Center",
+      "SR-429",
+    ],
+    faqs: [
+      {
+        q: "Do you move new homes in Horizon West?",
+        a: "Yes. Share builder or HOA windows, stairs, and parking limits when you book. We protect new floors and paint and quote the job by the hour.",
+      },
+      {
+        q: "Can you move me from Horizon West to Winter Garden or Windermere?",
+        a: "Yes. Those west Orange hops use the same up-front hourly model. Winter Garden and Windermere each have their own movers page. Drive time is on the clock and quoted honestly.",
+      },
+      {
+        q: "Do you offer labor-only movers in Horizon West?",
+        a: "Yes. If you already have a U-Haul, POD, or rental truck, Toro loads or unloads it by the hour.",
+      },
+    ],
+    lat: 28.4353,
+    lng: -81.5639,
+  }),
 ];
 
 const CENTRAL_FLORIDA: CityPageContent = {
@@ -788,7 +917,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
     "Toro Movers handles local home and apartment moves across Central Florida — full-service, labor-only, and up-front hourly rates. Call or text (689) 600-2720.",
   about: {
     h2: "Cities we serve in Central Florida",
-    body: "Orlando is our home base. Dedicated local pages cover the other Central Florida cities we serve, grouped by county on this page — including Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, Lake Mary, Lake Nona, and Dr. Phillips.",
+    body: "Orlando is our home base. Dedicated local pages cover the other Central Florida cities we serve, grouped by county on this page — including Winter Park, Kissimmee, Clermont, Sanford, Winter Springs, Deltona, Winter Garden, Horizon West, Lake Nona, and Dr. Phillips.",
   },
   sections: [
     {
@@ -819,7 +948,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
   faqs: [
     {
       q: "What cities do Central Florida movers from Toro cover?",
-      a: "Orlando is our home base. This page links a local movers page for every Central Florida city we serve, grouped by county — including Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, Lake Nona, and Dr. Phillips.",
+      a: "Orlando is our home base. This page links a local movers page for every Central Florida city we serve, grouped by county — including Winter Park, Kissimmee, Clermont, Sanford, Winter Springs, Deltona, Winter Garden, Horizon West, Lake Nona, and Dr. Phillips.",
     },
     {
       q: "Do you do long-distance or out-of-state moves?",
@@ -870,6 +999,7 @@ const COUNTY_ORDER = [
   "Osceola County",
   "Lake County",
   "Polk County",
+  "Volusia County",
 ] as const;
 
 /** Real city pages only — the regional hub is not a city. */

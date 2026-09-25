@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { businessPostalAddress } from "./business-profile.ts";
+import { businessAreaServed, businessPostalAddress } from "./business-profile.ts";
 import { blogPosts } from "./blog.ts";
 import {
   citiesByCounty,
@@ -12,7 +12,7 @@ import { serviceGuideWordCount, serviceGuides } from "./service-guides.ts";
 
 test("every city page is linked from the hub and from a nearby block", () => {
   const cities = serviceCityPages();
-  assert.equal(cities.length, 28);
+  assert.equal(cities.length, 31);
   const linked = citiesByCounty().flatMap((group) => group.cities.map((city) => city.slug));
   assert.deepEqual([...linked].sort(), cities.map((city) => city.slug).sort());
   const mentioned = new Set<string>();
@@ -52,6 +52,8 @@ test("new service pages stay in the word range and cross-link the guides", () =>
     ["/packing-services-orlando", "orlando-packing-help-movers"],
     ["/office-movers-orlando", "orlando-office-small-commercial-movers"],
     ["/same-day-movers-orlando", "orlando-same-day-movers"],
+    ["/small-moves-orlando", "careful-furniture-handling-orlando-movers"],
+    ["/pod-loading-orlando", "uhaul-pod-loading-help-orlando"],
   ] as const;
 
   assert.deepEqual(
@@ -82,4 +84,17 @@ test("new service pages stay in the word range and cross-link the guides", () =>
   for (const [path] of expected) {
     assert.ok(footer.includes(`href: "${path}"`), path);
   }
+
+  const storage = blogPosts.find((item) => item.slug === "orlando-pod-uhaul-storage-loading");
+  assert.ok(storage);
+  assert.match(storage.body.join("\n"), /\/pod-loading-orlando/);
+  const pod = serviceGuides.find((item) => item.path === "/pod-loading-orlando");
+  assert.ok(pod?.related?.some((link) => link.href === "/blog/orlando-pod-uhaul-storage-loading"));
+  assert.ok(pod?.related?.some((link) => link.href === "/loading-unloading"));
+  assert.ok(pod?.related?.some((link) => link.href === "/labor-only-moving"));
+
+  const areas = businessAreaServed();
+  assert.ok(areas.some((area) => area.name === "Volusia County"));
+  assert.ok(areas.some((area) => area.name === "Deltona"));
+  assert.equal(areas.some((area) => "postalCode" in area), false);
 });

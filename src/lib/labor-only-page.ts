@@ -40,7 +40,7 @@ export const laborOnlyPage = {
       "Are doing a DIY move across Orlando or nearby Central Florida cities and want to save the truck cost",
     ] as const,
     aside:
-      "If you need the truck, transport, and placement end to end, see our services hub or ask us which option fits when you call.",
+      "Labor-only here is the crew for a move when you already have the truck or container, including a household load. POD loading help is the page for a container, a U-Haul, or a storage unit. A single piece or furniture pickup is a small move. A short lift that is none of those is loading and unloading. A whole home with our truck is full-service.",
   },
   included: {
     h2: "What's included with Toro labor-only help",

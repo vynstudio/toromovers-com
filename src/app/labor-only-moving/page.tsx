@@ -128,6 +128,14 @@ export default function LaborOnlyMovingPage() {
             </ul>
             <p className="text-muted" style={{ marginTop: "1rem" }}>
               {page.forWhom.aside}{" "}
+              <a href="/pod-loading-orlando">POD, U-Haul, and storage loading</a>
+              {" · "}
+              <a href="/small-moves-orlando">Small moves</a>
+              {" · "}
+              <a href="/loading-unloading">Loading and unloading</a>
+              {" · "}
+              <a href="/full-service-moving">Full-service</a>
+              {" · "}
               <a href="/services">View all services</a>.
             </p>
 

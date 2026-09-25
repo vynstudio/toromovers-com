@@ -38,6 +38,8 @@ export type ServiceGuide = {
   faqs: readonly { q: string; a: string }[];
   closing: { h2: string; body: string };
   service: { name: string; serviceType: string };
+  /** Replaces the default related line when the page needs a tighter set of links. */
+  related?: readonly { label: string; href: string }[];
 };
 
 const AREA_LINKS = [
@@ -48,6 +50,9 @@ const AREA_LINKS = [
   { label: "Kissimmee", href: "/kissimmee-movers" },
   { label: "Winter Garden", href: "/winter-garden-movers" },
   { label: "Lake Mary", href: "/lake-mary-movers" },
+  { label: "Winter Springs", href: "/winter-springs-movers" },
+  { label: "Horizon West", href: "/horizon-west-movers" },
+  { label: "Deltona", href: "/deltona-movers" },
   { label: "Central Florida", href: "/central-florida-movers" },
 ] as const;
 
@@ -374,10 +379,238 @@ export const sameDayMoversPage: ServiceGuide = {
   },
 };
 
+export const smallMovesPage: ServiceGuide = {
+  path: "/small-moves-orlando",
+  crumb: "Small moves",
+  metadata: {
+    title: "Small movers in Orlando | Single item & delivery",
+    description:
+      "Small movers in Orlando for one piece, a few items, or furniture pickup and delivery. Up-front hourly rates. Call (689) 600-2720.",
+    ogTitle: "Small movers in Orlando",
+    ogDescription:
+      "Single-item movers and local furniture pickup in Orlando and Central Florida, with up-front hourly rates.",
+  },
+  hero: {
+    eyebrow: "Small moves · Orlando",
+    h1: "Small movers in Orlando",
+    lede:
+      "Small movers in Orlando are for a job that is not a whole household: one heavy piece, a short list of furniture, or a furniture pickup and delivery between two Central Florida addresses. Toro Movers sends a local crew sized for that list, with the same up-front hourly rate used on larger local jobs. The crew is family-owned and bilingual in English and Spanish. There is no single-item menu and no flat delivery price.",
+    image: {
+      src: "/images/moves/real-21.webp",
+      alt: "Toro Movers crew carrying furniture up stairs on a Central Florida job",
+    },
+    chips: [
+      "One piece or a few",
+      "Furniture pickup",
+      "Truck or labor-only",
+      "Up-front hourly rates",
+    ],
+    blogHref: "/blog/careful-furniture-handling-orlando-movers",
+    blogLabel: "how furniture is protected on the carry",
+    blogNote:
+      "That note is pads, wrap, and tight turns. This page is how you hire small movers in Orlando once you know the job is one piece or a short list, not a household and not a POD.",
+  },
+  sections: [
+    {
+      h2: "What a small move covers",
+      paragraphs: [
+        "A small move can use our truck or yours. Full-service is the crew and the truck, door to door, when you do not want to rent a vehicle for a sofa, a bedroom set, or a few pieces leaving a previous address. Labor-only is the crew when you already have a van, a U-Haul, or another truck and only need the lift. Say which booking you need so the quote matches the day. This is a local crew moving the pieces you name. It is not a store’s delivery contract and not a freight shipment.",
+        "The quote form already treats this as its own job: one item, a furniture pickup, or a small move. Lead with that list. If the garage, the closets, and another bedroom are also going, the job is a household. A quote built for one piece will not cover a home that is still full.",
+      ],
+    },
+    {
+      h2: "Single-item movers and furniture pickup",
+      paragraphs: [
+        "Single item movers in Orlando are the same crew, booked for one piece. A sofa, a mattress, a dresser, an appliance, or a piece of gym equipment is a normal short job when the path is clear. Photos matter more than a bedroom count. A sleeper sofa on a turn in a stairwell is a different carry than a mattress already at the curb. Share the piece, the floor at each stop, and whether it has to come apart.",
+        "Furniture pickup and delivery means two addresses inside Central Florida. The piece starts at a house, an apartment, or another stop you already have access to, and it ends in the room where it belongs. Tell us the placement, not only the street. A second-floor bedroom is not the same clock as a garage. If the pickup is a dock or a loading zone with a short window, say so. We cannot open a window the building never reserved.",
+      ],
+    },
+    {
+      h2: "How this differs from loading help and a POD load",
+      paragraphs: [
+        "Three other pages cover work that sounds similar and should stay separate. Loading and unloading is a short lift: help with a truck that is already on site, a curb unload, or a transfer that is not a planned furniture delivery. Labor-only moving is the broader booking when you already have the vehicle and the job is a real household load, not one named piece. POD loading help is a container, a U-Haul or other rental truck, or a storage unit. You keep that vehicle or unit, and the crew packs it.",
+        "A POD, a rental truck, or a storage unit is POD loading help. A sofa from one Orlando address to another is this page. The contents of an apartment are full-service or labor-only, depending on who brings the truck. Same crew and the same hourly model. The page changes so the quote matches the list.",
+      ],
+    },
+    {
+      h2: "How a short job is quoted",
+      paragraphs: [
+        "Local small jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on that minimum. Stairs, an elevator wait, a long walk from parking, and a piece that has to come apart add time on the same clock. They are not a separate fee. Two movers fit many single pieces. A heavier piece may need more people. The rate is per mover per hour, so the quote balances people and time.",
+        "A clear path from the room to the door, and a place to park that is actually legal, keeps the minimum realistic. A building that makes the crew wait for an elevator spends that wait on the clock. Florida heat slows a midday carry. Heat does not add a fee. When the building allows it, an earlier start is the faster job. Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request.",
+      ],
+    },
+    {
+      h2: "Where we take small moves",
+      paragraphs: [
+        "Toro Movers is based in Orlando and takes small moves and furniture pickups across Central Florida, including Winter Springs, Deltona, Horizon West, Lake Nona, Dr. Phillips, Winter Park, and Winter Garden. The hourly model is the same on a short metro hop. Drive time between the two addresses is on the clock and quoted honestly. A Deltona pickup with an Orlando drop-off is a longer local hop than a move inside one neighborhood. It is still this page if the list is small.",
+        "If the drop-off leaves Central Florida, that job is a trip quote rather than this local hourly clock. Lead with the piece, send photos, and give both addresses. Add stairs or a reserved elevator, parking, and whether you need our truck or only labor. If more than one piece is moving, list them.",
+      ],
+    },
+  ],
+  areas: {
+    h2: "Small moves across Central Florida",
+    intro:
+      "Family-owned local movers based in Orlando. Small moves and furniture pickups in these cities:",
+    links: AREA_LINKS,
+  },
+  faqs: [
+    {
+      q: "What are small movers in Orlando?",
+      a: "Small movers means a crew for one heavy piece, a short list of furniture, or a furniture pickup and delivery between two Central Florida addresses. It is not a whole-home move. The job can use our truck or yours, on the same hourly rate as other local work.",
+    },
+    {
+      q: "Do you offer single item movers in Orlando?",
+      a: "Yes. A sofa, mattress, dresser, appliance, or piece of gym equipment can be booked on its own when the path is clear. Send photos, both floors, and whether the piece has to come apart. There is no single-item price list.",
+    },
+    {
+      q: "Can you pick up furniture and deliver it locally?",
+      a: "Yes, between two Central Florida addresses you already have access to. Tell us where the piece starts, where it should be placed, and any dock or elevator window. A drop-off that leaves Central Florida is a trip quote, not this local hourly job.",
+    },
+    {
+      q: "How much do small movers cost in Orlando?",
+      a: "Local jobs are quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on the minimum. Stairs, elevator waits, and a long walk from parking add time. They are not a separate fee.",
+    },
+    {
+      q: "How is this different from POD loading or labor-only?",
+      a: "This page is one piece or a short furniture list, often with our truck. POD loading help is a container, a U-Haul, or a storage unit you already have. Labor-only is a household load on your truck. Loading and unloading is a short lift that is not a planned delivery. Call or text (689) 600-2720 if you are unsure which fits.",
+    },
+  ],
+  closing: {
+    h2: "Ready for small movers in Orlando?",
+    body: "Name the piece or the short list, send photos, and give both addresses. We will match the crew, explain the hourly rate, and say whether this page, a household move, or a POD load is the better booking.",
+  },
+  service: {
+    name: "Small movers in Orlando",
+    serviceType: "Small moves and single-item moving",
+  },
+  related: [
+    { label: "loading and unloading", href: "/loading-unloading" },
+    { label: "POD and U-Haul loading", href: "/pod-loading-orlando" },
+    { label: "labor-only moving", href: "/labor-only-moving" },
+    { label: "full-service moving", href: "/full-service-moving" },
+    { label: "all services", href: "/services" },
+  ],
+};
+
+export const podLoadingPage: ServiceGuide = {
+  path: "/pod-loading-orlando",
+  crumb: "POD loading",
+  metadata: {
+    title: "POD loading help in Orlando | U-Haul & storage",
+    description:
+      "POD loading help in Orlando for a container, U-Haul, or storage unit. You keep the truck. Up-front hourly rates. Call (689) 600-2720.",
+    ogTitle: "POD loading help in Orlando",
+    ogDescription:
+      "Load or unload a POD, U-Haul, or storage unit in Orlando. Labor by the hour, with the vehicle staying yours.",
+  },
+  hero: {
+    eyebrow: "POD, U-Haul & storage · Orlando",
+    h1: "POD loading help in Orlando",
+    lede:
+      "POD loading help in Orlando is labor for a container, a U-Haul or other rental truck, or a storage unit you already have. Toro Movers loads it, unloads it, or both, with up-front hourly rates explained before the crew starts. You keep the vehicle or the unit. We do not bring a moving truck on this booking. The crew is family-owned and bilingual in English and Spanish.",
+    image: {
+      src: "/images/moves/svc-labor.webp",
+      alt: "Toro Movers crew padding furniture on a labor-only load in Central Florida",
+    },
+    chips: [
+      "POD and containers",
+      "U-Haul and rental trucks",
+      "Storage unit loading",
+      "You keep the vehicle",
+    ],
+    blogHref: "/blog/uhaul-pod-loading-help-orlando",
+    blogLabel: "what to have ready for a U-Haul or POD",
+    blogNote:
+      "That guide, and the storage, POD, and U-Haul guide, are the prep: truck size, container placement, and facility hours. This page is how you hire the crew. It is not the short-lift page and not the whole-home labor comparison.",
+  },
+  sections: [
+    {
+      h2: "What this page is for",
+      paragraphs: [
+        "Book POD loading help when the thing being filled is a portable container, a rental truck, or a storage unit. A POD in the driveway, a U-Haul, Penske, or Budget truck at the curb, and a unit at a storage facility all fit. One end is load-only or unload-only. Both ends means a crew at each stop. You still drive the rental, or the container company moves the POD.",
+        "The pack has to stay stable after the crew leaves, so placement matters as much as the furniture list. Tell us the truck length or the unit size, where the ramp or the container doors will sit, and the carry from the home to that opening. Stairs, an elevator, or a long sidewalk belong in the booking. If the container company moves the unit, book the crew for the day it is on site.",
+      ],
+    },
+    {
+      h2: "U-Haul, POD, and storage are not the same clock",
+      paragraphs: [
+        "A U-Haul load is your rental. Share the truck length, where the ramp will sit, and whether the job is one-way or a local hop you are driving. A short unload at one house is a different clock than a full truck on a walk-up. Toro does not drive the rental on this booking. If you want the truck and the crew together, that is full-service moving, not POD loading help.",
+        "A POD needs a dense, protected pack because it may travel after we leave. HOA rules and driveway placement decide whether the doors can open where the container sits. A storage unit adds a gate code, a unit number, aisle width, and the hours the facility stays open. A transfer from a unit into a rental, or from a truck into a unit, fits when you already have the vehicle or the unit.",
+      ],
+    },
+    {
+      h2: "How this differs from labor-only and loading help",
+      paragraphs: [
+        "Labor-only moving is the broader service: you already have a truck or container, and you are choosing that model for the move, including a household load. Use that page when you are comparing labor-only with full-service. Use this page when you already know the job is POD loading help, U-Haul loading, or storage unit loading. Same crew, same hourly model, a tighter booking so those three jobs are not mixed with a whole-home decision.",
+        "Loading and unloading is the short lift that is not a container, a rental-truck pack, or a storage unit. A curb unload, or help with a truck that only needs a few minutes, stays there. A single piece or a furniture pickup and delivery between two addresses is a small move, and it often uses our truck. If your list is one sofa and no container, book small movers. If your list is the unit, the POD, or the U-Haul, book this page.",
+      ],
+    },
+    {
+      h2: "How the hourly clock works",
+      paragraphs: [
+        "Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a long carry, a late gate, and an elevator wait add time on the hourly clock. They are not a separate fee. Crew size, and whether you book one stop or two, still change the total. Many loads start with two movers. A tight stair or a heavier inventory may need more so the pack finishes inside the window you actually have. The rate is per mover per hour, so the quote balances people and time.",
+        "Have the truck, the container, or the storage access on site when the crew arrives: keys, gate code, and unit number. Clear a path from the rooms to the door. Closed boxes let the crew stay on furniture. Packing that is still undone adds time on the same clock. Photos of bulky pieces help size the crew. If the building asks for a certificate, send the manager’s contact and the deadline when you book.",
+      ],
+    },
+    {
+      h2: "Where we load containers and rental trucks",
+      paragraphs: [
+        "Toro Movers is based in Orlando and does this work across Central Florida, including Winter Springs, Deltona, Horizon West, Lake Nona, Dr. Phillips, Winter Park, and Winter Garden. Drive time between two local stops is on the clock and quoted honestly. If the drop-off leaves Central Florida, that route is a trip quote rather than this local hourly load. You would still drive a rental. The quote follows the route.",
+        "Hours are Mon–Sat, 7:00 AM – 7:00 PM. Sunday crew time is on request. Call or text (689) 600-2720, or email hello@toromovers.com. Lead with the vehicle: POD, U-Haul or other rental, or storage unit. Add the size, one end or both, the addresses or the facility name, and stairs or an elevator.",
+      ],
+    },
+  ],
+  areas: {
+    h2: "POD and U-Haul loading across Central Florida",
+    intro:
+      "Family-owned local movers based in Orlando. Container, rental-truck, and storage loading in these cities:",
+    links: AREA_LINKS,
+  },
+  faqs: [
+    {
+      q: "Do you offer POD loading help in Orlando?",
+      a: "Yes. Toro loads or unloads a POD or similar container when it is on site. Tell us where it will sit, how the doors open, and the path from the home, including stairs, an elevator, or an HOA window. You keep the container. The container company moves it.",
+    },
+    {
+      q: "Do you load U-Haul trucks and storage units?",
+      a: "Yes. U-Haul, Penske, Budget, and other rental trucks, plus storage units, are this booking when you already have the vehicle or the unit. Share truck length or unit size, the gate code, and whether you need one end or both. Toro does not bring a moving truck on this page.",
+    },
+    {
+      q: "How is this different from labor-only moving?",
+      a: "Labor-only is the broader choice when you have a truck and you are comparing that model with full-service for a household. This page is the hire page for POD loading help, U-Haul loading, and storage unit loading. The crew and the hourly rate are the same.",
+    },
+    {
+      q: "How is this different from loading and unloading or a small move?",
+      a: "Loading and unloading is a short lift that is not a container, a rental pack, or a storage unit. A small move is one piece or a short furniture list, often with our truck. A POD, U-Haul, or storage unit belongs here.",
+    },
+    {
+      q: "How much does POD or U-Haul loading cost?",
+      a: "Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a late gate, and a long carry add time. They are not a separate fee. Call or text (689) 600-2720 or request a quote online. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+    },
+  ],
+  closing: {
+    h2: "Ready for POD loading help in Orlando?",
+    body: "Tell us whether it is a container, a U-Haul, or a storage unit, and whether you need one end or both. We will match the crew, explain the hourly rate, and confirm this is the right page before anyone rolls.",
+  },
+  service: {
+    name: "POD loading help in Orlando",
+    serviceType: "POD, U-Haul, and storage unit loading",
+  },
+  related: [
+    { label: "storage, POD, and U-Haul guide", href: "/blog/orlando-pod-uhaul-storage-loading" },
+    { label: "loading and unloading", href: "/loading-unloading" },
+    { label: "labor-only moving", href: "/labor-only-moving" },
+    { label: "small moves", href: "/small-moves-orlando" },
+    { label: "all services", href: "/services" },
+  ],
+};
+
 export const serviceGuides = [
   packingServicesPage,
   officeMoversPage,
   sameDayMoversPage,
+  smallMovesPage,
+  podLoadingPage,
 ] as const;
 
 export function serviceGuideGraph(page: ServiceGuide) {

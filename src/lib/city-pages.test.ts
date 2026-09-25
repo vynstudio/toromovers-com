@@ -86,9 +86,12 @@ test("homepage vs central-florida-movers copy does not cannibalize", () => {
 
 test("hub links every city and each city links nearby pages", () => {
   const cities = serviceCityPages();
-  assert.equal(cities.length, 28);
+  assert.equal(cities.length, 31);
   assert.ok(getCityPage("lake-nona-movers"));
   assert.ok(getCityPage("dr-phillips-movers"));
+  assert.equal(getCityPage("winter-springs-movers")?.county, "Seminole County");
+  assert.equal(getCityPage("deltona-movers")?.county, "Volusia County");
+  assert.equal(getCityPage("horizon-west-movers")?.county, "Orange County");
 
   const linked = citiesByCounty().flatMap((group) => group.cities.map((city) => city.slug));
   assert.deepEqual(new Set(linked), new Set(cities.map((city) => city.slug)));
@@ -103,6 +106,9 @@ test("hub links every city and each city links nearby pages", () => {
   }
   assert.ok(mentioned.has("lake-nona-movers"));
   assert.ok(mentioned.has("dr-phillips-movers"));
+  assert.ok(mentioned.has("winter-springs-movers"));
+  assert.ok(mentioned.has("deltona-movers"));
+  assert.ok(mentioned.has("horizon-west-movers"));
   for (const city of cities) {
     assert.ok(mentioned.has(city.slug), city.slug);
   }
@@ -126,6 +132,8 @@ test("service and blog art is explicit, not index-cycled", () => {
       ["Packing services", "packing", "/packing-services-orlando"],
       ["Office movers", "office", "/office-movers-orlando"],
       ["Same-day movers", "access", "/same-day-movers-orlando"],
+      ["Small moves", "crew", "/small-moves-orlando"],
+      ["POD & U-Haul loading", "labor-only", "/pod-loading-orlando"],
     ],
   );
   const primaryKeys = servicesHub.primary.map((item) => item.illustration);

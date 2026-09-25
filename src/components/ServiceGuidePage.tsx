@@ -32,6 +32,11 @@ export function serviceGuideMetadata(page: ServiceGuide): Metadata {
 
 export function ServiceGuidePage({ page }: { page: ServiceGuide }) {
   const cta = page.path.replace(/^\//, "");
+  const related = page.related ?? [
+    { label: "full-service moving", href: "/full-service-moving" },
+    { label: "labor-only moving", href: "/labor-only-moving" },
+    { label: "all services", href: "/services" },
+  ];
   return (
     <>
       <script
@@ -135,12 +140,12 @@ export function ServiceGuidePage({ page }: { page: ServiceGuide }) {
 
             <p className="text-muted" style={{ marginTop: "1.25rem" }}>
               Related: <a href={page.hero.blogHref}>{page.hero.blogLabel}</a>
-              {" · "}
-              <a href="/full-service-moving">full-service moving</a>
-              {" · "}
-              <a href="/labor-only-moving">labor-only moving</a>
-              {" · "}
-              <a href="/services">all services</a>
+              {related.map((link) => (
+                <span key={link.href}>
+                  {" · "}
+                  <a href={link.href}>{link.label}</a>
+                </span>
+              ))}
             </p>
 
             <section id="faq" style={{ marginTop: "2.5rem" }}>
