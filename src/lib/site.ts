@@ -37,8 +37,12 @@ export const PAY_BALANCE_URL = "https://toromovers.com/pay?type=balance";
 export const EMAIL = "hello@toromovers.com";
 export const EMAIL_HREF = "mailto:hello@toromovers.com";
 
-export const HOURS_LABEL = "Mon–Sat · 7:00 AM – 7:00 PM";
-export const HOURS_NOTE = "Sunday on request";
+/** Sunday–Friday window. Middle-dot label style used in NAP lines. */
+export const HOURS_SUN_FRI_LABEL = "Sun–Fri · 7:00 AM – 7:00 PM";
+/** Saturday window. Shorter than the Sunday–Friday day. */
+export const HOURS_SAT_LABEL = "Sat · 9:00 AM – 5:00 PM";
+/** Full published hours for footer, contact meta, and other one-line NAP slots. */
+export const HOURS_LABEL = `${HOURS_SUN_FRI_LABEL} · ${HOURS_SAT_LABEL}`;
 
 export const GOOGLE_RATING = "5";
 export const REVIEW_COUNT = "36";

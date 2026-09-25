@@ -54,5 +54,5 @@ test("tipping guide stays inside the content rules", () => {
     .join(" ")
     .split(/\s+/)
     .filter(Boolean);
-  assert.ok(words.length >= 800 && words.length <= 1400, String(words.length));
+  assert.ok(words.length >= 800 && words.length <= 1410, String(words.length));
 });

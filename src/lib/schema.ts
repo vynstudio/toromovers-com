@@ -78,15 +78,21 @@ export function organizationGraph() {
           {
             "@type": "OpeningHoursSpecification",
             dayOfWeek: [
+              "Sunday",
               "Monday",
               "Tuesday",
               "Wednesday",
               "Thursday",
               "Friday",
-              "Saturday",
             ],
             opens: "07:00",
             closes: "19:00",
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: "Saturday",
+            opens: "09:00",
+            closes: "17:00",
           },
         ],
         hasOfferCatalog: {

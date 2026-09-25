@@ -56,7 +56,7 @@ test("same-day Orlando guide meets the AEO bar", () => {
   assert.match(copy, /2-hour minimum/);
   assert.match(copy, /no fuel surcharge/);
   assert.match(copy, /no stair fees/);
-  assert.match(copy, /Mon–Sat/);
+  assert.match(copy, /Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM/);
   assert.match(copy, /\(689\) 600-2720/);
 
   const phoneOutsideCtaFaq = [...post.body.slice(0, -1), post.description, post.teaser].join("\n");

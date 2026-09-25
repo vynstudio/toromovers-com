@@ -193,7 +193,7 @@ export const laborOnlyPage = {
     },
     {
       q: "How do I get a labor-only quote?",
-      a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off (if any), truck or container type, stairs/elevator details, and preferred date. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off (if any), truck or container type, stairs/elevator details, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ] as const,
   closing: {

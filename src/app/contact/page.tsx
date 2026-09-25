@@ -10,7 +10,8 @@ import {
   EMAIL_HREF,
   GOOGLE_MAPS_REVIEWS_URL,
   HOURS_LABEL,
-  HOURS_NOTE,
+  HOURS_SAT_LABEL,
+  HOURS_SUN_FRI_LABEL,
   PHONE_DISPLAY,
   PHONE_TEL,
   QUOTE_PATH,
@@ -83,9 +84,9 @@ export default function ContactPage() {
                     {PHONE_DISPLAY}
                   </a>
                   <p className="contact-info-meta text-muted">
-                    {HOURS_LABEL}
+                    {HOURS_SUN_FRI_LABEL}
                     <br />
-                    {HOURS_NOTE}
+                    {HOURS_SAT_LABEL}
                   </p>
                 </div>
 

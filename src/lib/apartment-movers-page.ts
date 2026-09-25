@@ -141,7 +141,7 @@ export const apartmentMoversPage = {
     },
     {
       q: "How do I get an apartment moving quote?",
-      a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, floors, elevator or stairs, parking, and preferred date. Hours: Mon–Sat, 7:00 AM – 7:00 PM.",
+      a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, floors, elevator or stairs, parking, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ] as const,
   closing: {

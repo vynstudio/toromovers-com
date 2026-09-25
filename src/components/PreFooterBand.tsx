@@ -2,6 +2,7 @@ import { IconArrow } from "@/components/icons";
 import {
   GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
+  HOURS_LABEL,
   PHONE_DISPLAY,
   PHONE_TEL,
   SERVICE_REGION,
@@ -30,7 +31,7 @@ export function PreFooterBand() {
               <IconArrow />
             </a>
             <p className="pre-footer-meta text-muted">
-              Mon–Sat · 7:00 AM – 7:00 PM · English &amp; Spanish
+              {HOURS_LABEL} · English &amp; Spanish
             </p>
           </div>
 
