@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { CAREERS_OPS_COORDINATOR_PATH, SITE_URL } from "@/lib/site";
 import { allCityPages } from "@/lib/city-pages";
 import { blogPosts } from "@/lib/blog";
+import { serviceGuides } from "@/lib/service-guides";
 
 /**
  * Design-owned sitemap entries.
@@ -73,6 +74,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.85,
     },
+    ...serviceGuides.map((page) => ({
+      url: `${SITE_URL}${page.path}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.9,
+    })),
     {
       url: `${SITE_URL}/about`,
       lastModified: now,

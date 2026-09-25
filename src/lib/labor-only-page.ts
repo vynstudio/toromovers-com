@@ -1,6 +1,7 @@
 /** Copy for /labor-only-moving — keep FAQ text identical to on-page FAQ (schema). */
 
-import { SITE_URL } from "@/lib/site";
+import { businessAreaServed } from "./business-profile.ts";
+import { SITE_URL } from "./site.ts";
 
 export const laborOnlyPage = {
   path: "/labor-only-moving",
@@ -212,7 +213,7 @@ export function laborOnlyPageGraph() {
         name: "Labor-only moving",
         serviceType: "Labor-only loading and unloading",
         provider: { "@id": `${SITE_URL}/#movingcompany` },
-        areaServed: "Central Florida",
+        areaServed: businessAreaServed(),
         url: pageUrl,
         description: laborOnlyPage.metadata.description,
       },

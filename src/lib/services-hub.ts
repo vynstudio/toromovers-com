@@ -117,6 +117,33 @@ export const servicesHub = {
       linkLabel: "View coverage",
       illustration: "long-distance",
     },
+    {
+      title: "Packing services",
+      body: "Crew boxes a named room or the loose goods before the carry—same hourly rate as the move.",
+      href: "/packing-services-orlando",
+      image: "/images/moves/real-11.webp",
+      imageAlt: "Boxes loaded on a hand truck during a Central Florida packing job",
+      linkLabel: "View service",
+      illustration: "packing",
+    },
+    {
+      title: "Office movers",
+      body: "Small offices and light commercial suites, including after-hours windows when the building allows.",
+      href: "/office-movers-orlando",
+      image: "/images/moves/svc-loading.webp",
+      imageAlt: "Furniture wrapped before an Orlando office or commercial load",
+      linkLabel: "View service",
+      illustration: "office",
+    },
+    {
+      title: "Same-day movers",
+      body: "A local hop when a crew is still open. Not a guarantee—ask with both addresses.",
+      href: "/same-day-movers-orlando",
+      image: "/images/moves/real-22.webp",
+      imageAlt: "Crew loading a wrapped piece on a Central Florida driveway",
+      linkLabel: "View service",
+      illustration: "access",
+    },
   ] satisfies ServiceHubItem[],
 } as const;
 

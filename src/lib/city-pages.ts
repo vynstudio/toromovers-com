@@ -15,6 +15,8 @@ export type CityPageContent = {
   slug: string;
   href: string;
   name: string;
+  /** Empty string on the regional hub. Real cities use a county label. */
+  county: string;
   badge: string;
   metadata: {
     title: string;
@@ -44,6 +46,7 @@ export const ORLANDO: CityPageContent = {
   slug: "orlando-movers",
   href: "/orlando-movers",
   name: "Orlando",
+  county: "Orange County",
   badge: "Orlando, FL movers",
   metadata: {
     // 50–60 chars
@@ -191,11 +194,35 @@ function defaultSections(city: CityData): CityPageContent["sections"] {
   ];
 }
 
+const ENGINE_COUNTY: Record<string, string> = {
+  "lake-mary-movers": "Seminole County",
+  "winter-park-movers": "Orange County",
+  "kissimmee-movers": "Osceola County",
+  "sanford-movers": "Seminole County",
+  "clermont-movers": "Lake County",
+  "oviedo-movers": "Seminole County",
+  "winter-garden-movers": "Orange County",
+  "altamonte-springs-movers": "Seminole County",
+  "apopka-movers": "Orange County",
+  "st-cloud-movers": "Osceola County",
+  "windermere-movers": "Orange County",
+  "maitland-movers": "Orange County",
+  "davenport-movers": "Polk County",
+  "lakeland-movers": "Polk County",
+  "winter-haven-movers": "Polk County",
+  "fern-park-movers": "Seminole County",
+};
+
 function fromEngine(city: CityData): CityPageContent {
+  const county = ENGINE_COUNTY[city.slug];
+  if (!county) {
+    throw new Error(`Add a county for ${city.slug}`);
+  }
   return {
     slug: city.slug,
     href: city.href,
     name: city.name,
+    county,
     badge: `${city.name}, FL movers`,
     metadata: city.metadata,
     h1: city.h1,
@@ -217,6 +244,7 @@ function fromEngine(city: CityData): CityPageContent {
 function extraCity(opts: {
   slug: string;
   name: string;
+  county: string;
   title: string;
   description: string;
   h1: string;
@@ -233,6 +261,7 @@ function extraCity(opts: {
     slug: opts.slug,
     href: `/${opts.slug}`,
     name: opts.name,
+    county: opts.county,
     badge: `${opts.name}, FL movers`,
     metadata: { title: opts.title, description: opts.description },
     h1: opts.h1,
@@ -272,6 +301,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "ocoee-movers",
     name: "Ocoee",
+    county: "Orange County",
     title: "Ocoee Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Ocoee, FL? Toro Movers handles local moves, apartments, and labor-only loading with up-front hourly rates. Call (689) 600-2720.",
@@ -315,6 +345,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "longwood-movers",
     name: "Longwood",
+    county: "Seminole County",
     title: "Longwood Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Longwood, FL? Toro Movers handles local moves, historic homes, and labor-only loading with up-front hourly rates. Call (689) 600-2720.",
@@ -358,6 +389,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "casselberry-movers",
     name: "Casselberry",
+    county: "Seminole County",
     title: "Casselberry Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Casselberry, FL? Toro Movers handles local moves, condos, and labor-only loading with up-front hourly rates. Call (689) 600-2720.",
@@ -400,6 +432,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "celebration-movers",
     name: "Celebration",
+    county: "Osceola County",
     title: "Celebration Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Celebration, FL? Toro Movers handles HOA and planned-community moves with up-front hourly rates. Call (689) 600-2720.",
@@ -442,6 +475,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "poinciana-movers",
     name: "Poinciana",
+    county: "Osceola County",
     title: "Poinciana Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Poinciana, FL? Toro Movers handles HOA and Solivita-area moves with up-front hourly rates. Call (689) 600-2720.",
@@ -483,6 +517,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "minneola-movers",
     name: "Minneola",
+    county: "Lake County",
     title: "Minneola Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Minneola, FL? Toro Movers handles Lake County local moves and new-construction move-ins with up-front hourly rates. Call (689) 600-2720.",
@@ -524,6 +559,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "mount-dora-movers",
     name: "Mount Dora",
+    county: "Lake County",
     title: "Mount Dora Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Mount Dora, FL? Toro Movers handles historic downtown and hillside homes with up-front hourly rates. Call (689) 600-2720.",
@@ -566,6 +602,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "leesburg-movers",
     name: "Leesburg",
+    county: "Lake County",
     title: "Leesburg Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Leesburg, FL? Toro Movers handles Lake County local moves with up-front hourly rates. Call (689) 600-2720.",
@@ -608,6 +645,7 @@ const EXTRA_CITIES: CityPageContent[] = [
   extraCity({
     slug: "tavares-movers",
     name: "Tavares",
+    county: "Lake County",
     title: "Tavares Movers | Local Moving Company | Toro Movers",
     description:
       "Need movers in Tavares, FL? Toro Movers handles Lake County waterfront and household moves with up-front hourly rates. Call (689) 600-2720.",
@@ -646,12 +684,99 @@ const EXTRA_CITIES: CityPageContent[] = [
     lat: 28.8042,
     lng: -81.7256,
   }),
+  extraCity({
+    slug: "lake-nona-movers",
+    name: "Lake Nona",
+    county: "Orange County",
+    title: "Lake Nona Movers | Local Moving Company | Toro Movers",
+    description:
+      "Need movers in Lake Nona? Toro Movers handles southeast Orlando homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+    h1: "Lake Nona Movers for Southeast Orlando Local Moves",
+    lede:
+      "Toro Movers serves Lake Nona with full-service household moves, townhome and apartment help, and labor-only loading — up-front hourly pricing from a local crew.",
+    about: {
+      h2: "Local movers in Lake Nona, Orlando",
+      body: "Lake Nona sits in southeast Orlando, with Medical City, master-planned neighborhoods, and a mix of new houses and townhomes off Narcoossee Road and Lake Nona Boulevard. Toro Movers plans builder and HOA timing, protects new finishes, and quotes homes, apartments, and rental-truck labor by the hour.",
+    },
+    angle: {
+      h2: "Built for new Lake Nona homes and planned-community access",
+      body: "Lake Nona jobs often mean fresh floors, a gate or HOA window, and a longer carry through a new street that is still tight for a truck. Toro books the arrival you share and quotes the drive from the rest of Orlando honestly by the hour.",
+    },
+    neighborhoods: [
+      "Laureate Park",
+      "Medical City",
+      "Lake Nona Boulevard",
+      "Narcoossee Road",
+      "Boggy Creek",
+      "Moss Park",
+    ],
+    faqs: [
+      {
+        q: "Do you move new homes in Lake Nona?",
+        a: "Yes. Share builder or HOA windows, stairs, and parking limits when you book. We protect new floors and paint and quote the job by the hour.",
+      },
+      {
+        q: "Can you move me from Lake Nona to another Orlando neighborhood?",
+        a: "Yes. Hops between Lake Nona, Dr. Phillips, downtown Orlando, and nearby cities use the same up-front hourly model. Drive time is on the clock and quoted honestly.",
+      },
+      {
+        q: "Do you offer labor-only movers in Lake Nona?",
+        a: "Yes. If you already have a U-Haul, POD, or rental truck, Toro loads or unloads it by the hour.",
+      },
+    ],
+    lat: 28.369,
+    lng: -81.279,
+  }),
+  extraCity({
+    slug: "dr-phillips-movers",
+    name: "Dr. Phillips",
+    county: "Orange County",
+    title: "Dr. Phillips Movers | Local Moving Company | Toro Movers",
+    description:
+      "Need movers in Dr. Phillips? Toro Movers handles southwest Orlando homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+    h1: "Dr. Phillips Movers for Southwest Orlando Local Moves",
+    lede:
+      "Toro Movers serves Dr. Phillips with full-service household moves, townhome help, and labor-only loading — up-front hourly pricing, local crew.",
+    about: {
+      h2: "Local movers in Dr. Phillips, Orlando",
+      body: "Dr. Phillips is southwest Orlando along Sand Lake Road and Dr. Phillips Boulevard, with established houses, townhome courts, and short hops toward Bay Hill, Windermere, and the rest of the city. Toro Movers plans tight guest parking and quotes homes, apartments, and rental-truck labor by the hour.",
+    },
+    angle: {
+      h2: "Built for southwest Orlando streets and townhome courts",
+      body: "Dr. Phillips jobs often mean a short loading zone, a townhome stair, or a driveway that will not hold a large truck. Toro plans the carry you describe and bills by the hour — no surprise stair or fuel fee.",
+    },
+    neighborhoods: [
+      "Bay Hill",
+      "Sand Lake Road",
+      "Dr. Phillips Boulevard",
+      "Restaurant Row",
+      "Turkey Lake",
+      "Southwest Orlando",
+    ],
+    faqs: [
+      {
+        q: "Do you move houses and townhomes in Dr. Phillips?",
+        a: "Yes. Toro Movers handles household and townhome moves in Dr. Phillips and nearby southwest Orlando with up-front hourly rates.",
+      },
+      {
+        q: "How do you handle parking in Dr. Phillips?",
+        a: "Share the driveway, guest spot, or loading-zone limit when you book. A longer carry from legal parking is time on the hourly clock, not a separate fee.",
+      },
+      {
+        q: "Is labor-only available in Dr. Phillips?",
+        a: "Yes, for U-Haul, POD, and rental-truck loading or unloading by the hour.",
+      },
+    ],
+    lat: 28.451,
+    lng: -81.492,
+  }),
 ];
 
 const CENTRAL_FLORIDA: CityPageContent = {
   slug: "central-florida-movers",
   href: "/central-florida-movers",
   name: "Central Florida",
+  county: "",
   badge: "Central Florida movers",
   metadata: {
     title: "Central Florida Movers | Local Moves Across the Region",
@@ -663,7 +788,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
     "Toro Movers handles local home and apartment moves across Central Florida — full-service, labor-only, and up-front hourly rates. Call or text (689) 600-2720.",
   about: {
     h2: "Cities we serve in Central Florida",
-    body: "Dedicated local pages cover Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, Lake Mary, Altamonte Springs, Oviedo, Apopka, Windermere, Maitland, St. Cloud, Davenport, Fern Park, Lakeland, Winter Haven, and nearby west and Lake County cities. Orlando is a surrounding city we also serve.",
+    body: "Orlando is our home base. Dedicated local pages cover the other Central Florida cities we serve, grouped by county on this page — including Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, Lake Mary, Lake Nona, and Dr. Phillips.",
   },
   sections: [
     {
@@ -694,7 +819,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
   faqs: [
     {
       q: "What cities do Central Florida movers from Toro cover?",
-      a: "Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, Lake Mary, Altamonte Springs, Oviedo, Apopka, Windermere, Maitland, St. Cloud, Davenport, and nearby cities. Orlando is a surrounding city we also serve.",
+      a: "Orlando is our home base. This page links a local movers page for every Central Florida city we serve, grouped by county — including Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, Lake Nona, and Dr. Phillips.",
     },
     {
       q: "Do you do long-distance or out-of-state moves?",
@@ -735,5 +860,58 @@ export function allCitySlugs(): string[] {
 
 export function allCityPages(): CityPageContent[] {
   return Object.values(CITY_PAGES);
+}
+
+export const CENTRAL_FLORIDA_HUB = "/central-florida-movers";
+
+const COUNTY_ORDER = [
+  "Orange County",
+  "Seminole County",
+  "Osceola County",
+  "Lake County",
+  "Polk County",
+] as const;
+
+/** Real city pages only — the regional hub is not a city. */
+export function serviceCityPages(): CityPageContent[] {
+  return allCityPages().filter((city) => city.county);
+}
+
+export function citiesByCounty(): { county: string; cities: CityPageContent[] }[] {
+  const pages = serviceCityPages();
+  return COUNTY_ORDER.map((county) => ({
+    county,
+    cities: pages
+      .filter((city) => city.county === county)
+      .sort((a, b) => {
+        if (a.slug === "orlando-movers") return -1;
+        if (b.slug === "orlando-movers") return 1;
+        return a.name.localeCompare(b.name);
+      }),
+  })).filter((group) => group.cities.length > 0);
+}
+
+const NEARBY_COUNT = 6;
+
+function milesApart(
+  a: { lat: number; lng: number },
+  b: { lat: number; lng: number },
+) {
+  const midLat = ((a.lat + b.lat) / 2) * (Math.PI / 180);
+  const dLat = (a.lat - b.lat) * 69;
+  const dLng = (a.lng - b.lng) * 69 * Math.cos(midLat);
+  return Math.hypot(dLat, dLng);
+}
+
+/** 4–8 geographically nearest city pages. The hub is linked separately. */
+export function nearbyCityPages(slug: string): CityPageContent[] {
+  const city = getCityPage(slug);
+  if (!city?.county) return [];
+  return serviceCityPages()
+    .filter((other) => other.slug !== slug)
+    .map((other) => ({ other, miles: milesApart(city.schema, other.schema) }))
+    .sort((a, b) => a.miles - b.miles || a.other.name.localeCompare(b.other.name))
+    .slice(0, NEARBY_COUNT)
+    .map((row) => row.other);
 }
 

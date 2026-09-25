@@ -22,7 +22,7 @@ type Props = { params: Promise<{ slug: string }> };
 
 /** Paths written in guide copy. The href stays the path; the label is words. */
 const INTERNAL_PATH =
-  /\/(?:quotes|apartment-movers-orlando-fl|full-service-moving|labor-only-moving|loading-unloading|blog\/[a-z0-9-]+)/g;
+  /\/(?:quotes|apartment-movers-orlando-fl|full-service-moving|labor-only-moving|loading-unloading|packing-services-orlando|office-movers-orlando|same-day-movers-orlando|blog\/[a-z0-9-]+)/g;
 
 const PATH_LABELS: Record<string, string> = {
   "/quotes": "the quote page",
@@ -30,6 +30,9 @@ const PATH_LABELS: Record<string, string> = {
   "/full-service-moving": "full-service moving",
   "/labor-only-moving": "labor-only moving",
   "/loading-unloading": "loading and unloading",
+  "/packing-services-orlando": "packing services in Orlando",
+  "/office-movers-orlando": "office movers in Orlando",
+  "/same-day-movers-orlando": "same-day movers in Orlando",
 };
 
 function linkLabel(href: string): string {

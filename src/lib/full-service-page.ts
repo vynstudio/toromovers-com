@@ -1,6 +1,7 @@
 /** Copy for /full-service-moving — FAQ text must match on-page FAQ (schema). */
 
-import { SITE_URL } from "@/lib/site";
+import { businessAreaServed } from "./business-profile.ts";
+import { SITE_URL } from "./site.ts";
 
 export const fullServicePage = {
   path: "/full-service-moving",
@@ -163,7 +164,7 @@ export function fullServicePageGraph() {
         name: "Full-service local moving",
         serviceType: "Full-service moving",
         provider: { "@id": `${SITE_URL}/#movingcompany` },
-        areaServed: "Central Florida",
+        areaServed: businessAreaServed(),
         url: pageUrl,
         description: fullServicePage.metadata.description,
       },

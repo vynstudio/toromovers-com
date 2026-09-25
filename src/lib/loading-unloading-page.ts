@@ -1,6 +1,7 @@
 /** Copy for /loading-unloading — single-item / short loading help. FAQ = schema. */
 
-import { SITE_URL } from "@/lib/site";
+import { businessAreaServed } from "./business-profile.ts";
+import { SITE_URL } from "./site.ts";
 
 export const loadingUnloadingPage = {
   path: "/loading-unloading",
@@ -126,7 +127,7 @@ export function loadingUnloadingPageGraph() {
         name: "Loading and unloading help",
         serviceType: "Loading, unloading, and single-item moving",
         provider: { "@id": `${SITE_URL}/#movingcompany` },
-        areaServed: "Central Florida",
+        areaServed: businessAreaServed(),
         url: pageUrl,
         description: loadingUnloadingPage.metadata.description,
       },

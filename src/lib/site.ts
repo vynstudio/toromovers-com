@@ -50,7 +50,15 @@ export const GOOGLE_MAPS_REVIEWS_URL =
 export const SERVICE_REGION = "Central Florida";
 export const SERVICE_BASE_CITY = "Orlando, FL";
 export const SERVICE_BASE_LOCALITY = "Orlando";
-export const POSTAL_CODE = "32789";
+export const SERVICE_BASE_REGION = "FL";
+export const SERVICE_BASE_COUNTRY = "US";
+
+/**
+ * Service-area business with a hidden street address.
+ * Do not publish a street line or a postal code. A ZIP would imply a
+ * storefront and previously pointed at a Winter Park code that does not
+ * match the hidden-address listing.
+ */
 
 export const SOCIAL = {
   facebook: "https://www.facebook.com/722514634274519",

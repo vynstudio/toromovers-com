@@ -1,6 +1,7 @@
 /** Copy for /apartment-movers-orlando-fl — FAQ text must match on-page FAQ (schema). */
 
-import { SITE_URL } from "@/lib/site";
+import { businessAreaServed } from "./business-profile.ts";
+import { SITE_URL } from "./site.ts";
 
 export const apartmentMoversPage = {
   path: "/apartment-movers-orlando-fl",
@@ -160,7 +161,7 @@ export function apartmentMoversPageGraph() {
         name: "Apartment moving",
         serviceType: "Apartment and condo moving",
         provider: { "@id": `${SITE_URL}/#movingcompany` },
-        areaServed: "Central Florida",
+        areaServed: businessAreaServed(),
         url: pageUrl,
         description: apartmentMoversPage.metadata.description,
       },
