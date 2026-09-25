@@ -34,6 +34,7 @@ export function businessAreaServed() {
     "Osceola County",
     "Lake County",
     "Polk County",
+    "Volusia County",
   ].map((name) => ({ "@type": "AdministrativeArea" as const, name }));
 
   return [

@@ -91,7 +91,7 @@ export const servicesHub = {
   secondary: [
     {
       title: "Loading & unloading",
-      body: "Short loading jobs, single-item furniture moves, and truck unload help—quoted by the hour.",
+      body: "Short truck load and unload help when the job is not a household, a single-item delivery, or a POD pack.",
       href: "/loading-unloading",
       image: "/images/moves/svc-loading.webp",
       imageAlt:
@@ -143,6 +143,24 @@ export const servicesHub = {
       imageAlt: "Crew loading a wrapped piece on a Central Florida driveway",
       linkLabel: "View service",
       illustration: "access",
+    },
+    {
+      title: "Small moves",
+      body: "One piece, a few pieces, or a furniture pickup and delivery inside Central Florida—quoted by the hour.",
+      href: "/small-moves-orlando",
+      image: "/images/moves/real-21.webp",
+      imageAlt: "Crew carrying furniture on stairs during a small Central Florida move",
+      linkLabel: "View service",
+      illustration: "crew",
+    },
+    {
+      title: "POD & U-Haul loading",
+      body: "Load or unload a POD, U-Haul, or storage unit. You keep the truck or container.",
+      href: "/pod-loading-orlando",
+      image: "/images/moves/svc-labor.webp",
+      imageAlt: "Crew padding furniture before a POD or rental-truck load",
+      linkLabel: "View service",
+      illustration: "labor-only",
     },
   ] satisfies ServiceHubItem[],
 } as const;

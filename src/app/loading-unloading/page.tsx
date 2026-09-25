@@ -14,7 +14,7 @@ const page = loadingUnloadingPage;
 const pageUrl = `${SITE_URL}${page.path}`;
 
 export const metadata: Metadata = {
-  title: "Loading & unloading help in Orlando | Single-item movers",
+  title: "Loading & unloading help in Orlando | Short jobs",
   description: page.metadata.description,
   alternates: { canonical: page.path },
   robots: { index: true, follow: true },
@@ -73,6 +73,10 @@ export default function LoadingUnloadingPage() {
             </ul>
             <p className="text-muted" style={{ marginTop: "1rem" }}>
               {page.forWhom.aside}{" "}
+              <a href="/small-moves-orlando">Small moves</a>
+              {" · "}
+              <a href="/pod-loading-orlando">POD, U-Haul, and storage loading</a>
+              {" · "}
               <a href="/full-service-moving">Full-service</a>
               {" · "}
               <a href="/labor-only-moving">Labor-only</a>.
