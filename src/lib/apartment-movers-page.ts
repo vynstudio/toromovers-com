@@ -1,14 +1,14 @@
 /** Copy for /apartment-movers-orlando-fl — FAQ text must match on-page FAQ (schema). */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { SITE_URL } from "./site.ts";
+import { SITE_URL, PHONE_LINES} from "./site.ts";
 
 export const apartmentMoversPage = {
   path: "/apartment-movers-orlando-fl",
   metadata: {
     title: "Apartment movers Orlando | Stairs & elevators",
     description:
-      "Orlando apartment movers for walk-ups, elevators & loading zones—planned before move day. Up-front hourly rates. Call (689) 600-2720.",
+      "Orlando apartment movers for walk-ups, elevators & loading zones—planned before move day. Up-front hourly rates. Call " + PHONE_LINES + ".",
     ogTitle: "Apartment movers in Orlando",
     ogDescription:
       "Local crews for Orlando apartments and condos—stairs, elevators, and building rules planned with up-front hourly rates.",
@@ -133,7 +133,7 @@ export const apartmentMoversPage = {
     },
     {
       q: "How much do apartment movers cost in Orlando?",
-      a: "Most apartment moves are quoted with up-front hourly rates. The total depends on crew size, access, readiness, and whether you need a truck. Call or text (689) 600-2720 with your details for a clear explanation before move day.",
+      a: "Most apartment moves are quoted with up-front hourly rates. The total depends on crew size, access, readiness, and whether you need a truck. Call or text " + PHONE_LINES + " with your details for a clear explanation before move day.",
     },
     {
       q: "Are your movers bilingual?",
@@ -141,7 +141,7 @@ export const apartmentMoversPage = {
     },
     {
       q: "How do I get an apartment moving quote?",
-      a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, floors, elevator or stairs, parking, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share pickup and drop-off, floors, elevator or stairs, parking, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ] as const,
   closing: {

@@ -38,7 +38,8 @@ import {
   type TipType,
 } from "@/lib/payments";
 import { AddressAutocomplete } from "@/components/address-autocomplete";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { PHONE_LINES } from "@/lib/site";
 import { STRIPE_PUBLISHABLE_KEY } from "@/lib/stripe-public";
 
 const TIP_OPTIONS: TipType[] = ["none", "10_percent", "15_percent", "20_percent", "custom"];
@@ -231,7 +232,7 @@ export default function PayFlow({
         };
         if (token && data.signed === false) {
           setError(
-            `This payment link is invalid. Call ${PHONE_DISPLAY} and we will send a new one.`,
+            `This payment link is invalid. Call ${PHONE_LINES} and we will send a new one.`,
           );
         }
         if (data.quote) {
@@ -332,10 +333,10 @@ export default function PayFlow({
       : depositValid && customTipValid;
 
   function checkoutDisabledReason(): string {
-    if (!ready) return `Checkout is not connected yet. Call ${PHONE_DISPLAY}.`;
+    if (!ready) return `Checkout is not connected yet. Call ${PHONE_LINES}.`;
     if (kind === "balance" && lookupState === "loading") return "Checking for a deposit…";
     if (kind === "balance" && lookupState === "error") {
-      return `Could not verify the deposit. Call ${PHONE_DISPLAY} before paying the remaining balance.`;
+      return `Could not verify the deposit. Call ${PHONE_LINES} before paying the remaining balance.`;
     }
     if (kind === "balance" && !hasBalanceBase) {
       return "Enter the approved quote total.";
@@ -463,7 +464,7 @@ export default function PayFlow({
         STRIPE_PUBLISHABLE_KEY;
       const promise = stripePromise || (pk ? loadStripe(pk) : null);
       if (!promise) {
-        throw new Error(`Checkout is not connected yet. Call ${PHONE_DISPLAY}.`);
+        throw new Error(`Checkout is not connected yet. Call ${PHONE_LINES}.`);
       }
       if (!stripePromise) setStripePromise(promise);
       setChargedCents(todayCents);
@@ -566,7 +567,7 @@ export default function PayFlow({
               <button type="button" className="pay-ghost" onClick={clearCheckout}>
                 Change amount
               </button>{" "}
-              or call {PHONE_DISPLAY}.
+              or call {PHONE_LINES}.
             </p>
           }
         >
@@ -577,9 +578,11 @@ export default function PayFlow({
       </div>
       <p className="pay-help">
         Secure card checkout on this page. Need help?{" "}
-        <a href={PHONE_TEL} className="pay-ghost">
-          Call {PHONE_DISPLAY}
-        </a>
+        <CompanyPhoneLinks
+          cta="pay-call"
+          prefix="Call "
+          linkClassName="pay-ghost"
+        />
         .
       </p>
     </div>
@@ -597,7 +600,7 @@ export default function PayFlow({
       >
       {!ready && (
         <p className="pay-banner pay-banner--warn" role="status">
-          Card checkout is not connected yet. Call {PHONE_DISPLAY} to pay by phone.
+          Card checkout is not connected yet. Call {PHONE_LINES} to pay by phone.
         </p>
       )}
       {quoteSigned && quote.quote_number && (
@@ -685,7 +688,7 @@ export default function PayFlow({
             {lookupState === "loading"
               ? "Checking for a deposit…"
               : lookupState === "error"
-                ? `Could not verify the deposit. Call ${PHONE_DISPLAY} before paying the remaining balance.`
+                ? `Could not verify the deposit. Call ${PHONE_LINES} before paying the remaining balance.`
                 : depositPaidCents > 0
                   ? `Deposit received: ${formatUsd(depositPaidCents)} (processing fee not credited).`
                   : "No deposit has been applied."}
@@ -869,7 +872,7 @@ export default function PayFlow({
         <p className="pay-help">The move date is held after this deposit payment succeeds.</p>
       )}
       <p className="pay-help">
-        Card details stay on this page. Stripe processes the payment. Call {PHONE_DISPLAY} if
+        Card details stay on this page. Stripe processes the payment. Call {PHONE_LINES} if
         anything looks off.
       </p>
       </form>

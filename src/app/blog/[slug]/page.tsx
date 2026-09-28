@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
@@ -11,8 +12,6 @@ import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { VectorSlot } from "@/components/ServiceIllustrations";
 import {
   BUSINESS_NAME,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   QUOTE_PATH,
   SITE_URL,
 } from "@/lib/site";
@@ -232,13 +231,11 @@ export default async function BlogPostPage({ params }: Props) {
           ) : null}
 
           <div className="mt-10 flex flex-col gap-3 border-t border-border pt-8 sm:flex-row sm:items-center">
-            <a
-              href={PHONE_TEL}
-              data-cta="blog-call"
-              className="btn-primary btn-fluid tap-target inline-flex justify-center"
-            >
-              Call {PHONE_DISPLAY}
-            </a>
+            <CompanyPhoneLinks
+              cta="blog-call"
+              prefix="Call "
+              linkClassName="btn-primary btn-fluid tap-target inline-flex justify-center"
+            />
             <a
               href={QUOTE_PATH}
               data-cta="blog-quote"

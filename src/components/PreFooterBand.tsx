@@ -1,10 +1,9 @@
 import { IconArrow } from "@/components/icons";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import {
   GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
   HOURS_LABEL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   SERVICE_REGION,
 } from "@/lib/site";
 
@@ -22,14 +21,11 @@ export function PreFooterBand() {
         <div className="pre-footer-grid">
           <div className="pre-footer-block">
             <p className="pre-footer-label">Talk to a local crew</p>
-            <a
-              href={PHONE_TEL}
-              className="pre-footer-link"
-              data-cta="prefooter-phone"
-            >
-              Call {PHONE_DISPLAY}
-              <IconArrow />
-            </a>
+            <CompanyPhoneLinks
+              cta="prefooter-phone"
+              prefix="Call "
+              linkClassName="pre-footer-link"
+            />
             <p className="pre-footer-meta text-muted">
               {HOURS_LABEL} · English &amp; Spanish
             </p>

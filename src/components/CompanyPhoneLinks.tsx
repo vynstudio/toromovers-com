@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { COMPANY_PHONES } from "@/lib/site";
 
 type CompanyPhoneLinksProps = {
@@ -6,6 +7,9 @@ type CompanyPhoneLinksProps = {
   linkClassName: string;
   /** Wrap the pair when they should sit together (footer, contact card). */
   groupClassName?: string;
+  /** Optional label before each formatted number, e.g. "Call ". */
+  prefix?: string;
+  style?: CSSProperties;
 };
 
 /**
@@ -16,6 +20,8 @@ export function CompanyPhoneLinks({
   cta,
   linkClassName,
   groupClassName,
+  prefix = "",
+  style,
 }: CompanyPhoneLinksProps) {
   const links = COMPANY_PHONES.map((phone, index) => (
     <a
@@ -23,7 +29,9 @@ export function CompanyPhoneLinks({
       href={phone.tel}
       data-cta={index === 0 ? cta : `${cta}-2`}
       className={linkClassName}
+      style={style}
     >
+      {prefix}
       {phone.display}
     </a>
   ));

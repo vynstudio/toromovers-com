@@ -1,12 +1,8 @@
 import { HeroSkyline } from "@/components/HeroSkyline";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { IconArrow } from "@/components/icons";
-import {
-  GOOGLE_RATING,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  QUOTE_PATH,
-} from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { GOOGLE_RATING, QUOTE_PATH } from "@/lib/site";
 
 type CityHeroProps = {
   badge: string;
@@ -54,14 +50,11 @@ export function CityHero({
             </p>
 
             <div className="tap-stack mx-auto mt-7 max-w-sm sm:mt-8 sm:max-w-md">
-              <a
-                href={PHONE_TEL}
-                data-cta={`${source}-call`}
-                className="btn-primary btn-fluid tap-target inline-flex w-full"
-              >
-                <span className="sm:hidden">Call now</span>
-                <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
-              </a>
+              <CompanyPhoneLinks
+                cta={`${source}-call`}
+                prefix="Call "
+                linkClassName="btn-primary btn-fluid tap-target inline-flex w-full"
+              />
               <a
                 href={QUOTE_PATH}
                 data-cta={`${source}-quote`}

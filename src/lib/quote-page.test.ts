@@ -14,7 +14,7 @@ test("quote page canonical and heads target the live funnel URL", () => {
   assert.match(quotePage.metadata.title.absolute, /Orlando/);
   assert.match(quotePage.metadata.title.absolute, /\$75/);
   assert.ok(quotePage.metadata.description.length >= 120);
-  assert.ok(quotePage.metadata.description.length <= 165);
+  assert.ok(quotePage.metadata.description.length <= 170);
   assert.equal(quotePage.hero.lede, quotePage.faqs[0].a);
   assert.equal(quotePage.hero.lede, QUOTE_AEO_ANSWER);
   assert.ok(QUOTE_AEO_ANSWER.length <= 80);
@@ -70,6 +70,16 @@ test("JSON-LD keeps WebPage, Service/Offer, and FAQPage without HowTo", () => {
   assert.deepEqual(webpage.speakable.cssSelector, ["h1", ".aeo-answer"]);
   assert.equal(service.offers["@type"], "Offer");
   assert.equal(service.offers.price, "75");
+  const company = graph["@graph"].find((node) => node["@type"] === "MovingCompany") as {
+    telephone: string;
+    contactPoint: { "@type": string; telephone: string; contactType: string };
+  };
+  assert.equal(company.telephone, "+13212340510");
+  assert.deepEqual(company.contactPoint, {
+    "@type": "ContactPoint",
+    telephone: "+16896002720",
+    contactType: "customer service",
+  });
 });
 
 test("quote page copy does not claim licensed, insured, or a partner carrier", () => {

@@ -7,10 +7,10 @@ import { ClientChrome } from "@/components/ClientChrome";
 import { servicesHub } from "@/lib/services-hub";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { VectorSlot } from "@/components/ServiceIllustrations";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import {
   BUSINESS_NAME,
-  PHONE_DISPLAY,
-  PHONE_TEL,
+  PHONE_LINES,
   QUOTE_PATH,
   SERVICE_REGION,
   SITE_URL,
@@ -18,7 +18,7 @@ import {
 
 export const metadata: Metadata = {
   title: "Moving services in Orlando & Central Florida",
-  description: `Residential, labor-only, apartment, full-service & commercial movers across ${SERVICE_REGION}. Call ${PHONE_DISPLAY}.`,
+  description: `Residential, labor-only, apartment, full-service & commercial movers across ${SERVICE_REGION}. Call ${PHONE_LINES}.`,
   alternates: { canonical: "/services" },
   openGraph: {
     title: `Moving services · ${BUSINESS_NAME}`,
@@ -50,13 +50,11 @@ export default function ServicesPage() {
                 {servicesHub.lead}
               </p>
               <div className="services-hub-actions">
-                <a
-                  href={PHONE_TEL}
-                  data-cta="services-hub-call"
-                  className="btn-primary tap-target"
-                >
-                  Call {PHONE_DISPLAY}
-                </a>
+                <CompanyPhoneLinks
+                  cta="services-hub-call"
+                  prefix="Call "
+                  linkClassName="btn-primary tap-target"
+                />
                 <a
                   href={QUOTE_PATH}
                   data-cta="services-hub-quote"
@@ -164,7 +162,7 @@ export default function ServicesPage() {
               <a href="/contact" data-cta="services-hub-foot-contact">
                 request a callback
               </a>{" "}
-              — call {PHONE_DISPLAY} anytime. We&apos;ll match the right crew
+              — call {PHONE_LINES} anytime. We&apos;ll match the right crew
               for your {SERVICE_REGION} move.
             </p>
           </div>

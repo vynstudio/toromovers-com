@@ -52,14 +52,14 @@ test("homepage vs central-florida-movers copy does not cannibalize", () => {
   );
   assert.equal(
     SITE_DESCRIPTION,
-    "Toro Movers is a family-owned, bilingual Orlando moving company with upfront hourly rates and no hidden fees. Call or text (689) 600-2720.",
+    "Toro Movers is a family-owned, bilingual Orlando moving company with upfront hourly rates and no hidden fees. Call or text (321) 234-0510 or (689) 600-2720.",
   );
   assert.equal(hero.h1, "Trusted Orlando & Central Florida movers");
   assert.equal(
     hero.lede,
     "Home, apartment, townhome, condo, and office moves — plus storage, POD, and U-Haul load & unload. Local and long-distance across Orlando and Central Florida. Family-owned, bilingual, with upfront hourly rates and no hidden fees.",
   );
-  assert.doesNotMatch(hero.lede, /600-2720/);
+  assert.doesNotMatch(hero.lede, /234-0510|600-2720|758-0094/);
   assert.equal(customerProof.title, "Why Orlando customers book Toro");
   assert.deepEqual(
     customerProof.regionLinks.map((l) => l.label),
@@ -70,7 +70,7 @@ test("homepage vs central-florida-movers copy does not cannibalize", () => {
   assert.equal(cf.metadata.title, "Central Florida Movers | Local Moves Across the Region");
   assert.equal(
     cf.metadata.description,
-    "Central Florida movers for local jobs in Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, and nearby cities. Up-front hourly rates. Call (689) 600-2720.",
+    "Central Florida movers for local jobs in Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, and nearby cities. Up-front hourly rates. Call (321) 234-0510 or (689) 600-2720.",
   );
   assert.equal(cf.h1, "Central Florida Movers for Local Home & Apartment Moves");
   assert.doesNotMatch(cf.metadata.title, /orlando/i);

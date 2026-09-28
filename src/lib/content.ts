@@ -1,7 +1,12 @@
 // Homepage copy — mobile-first layout adapted for Toro Movers.
 // SEO/AEO answer-first copy. Real business facts only (phone, rating, services, area).
 
-import { CAREERS_OPS_COORDINATOR_PATH, QUOTE_PATH } from "./site.ts";
+import {
+  CAREERS_OPS_COORDINATOR_PATH,
+  PHONE_LINES,
+  PHONE_TEL,
+  QUOTE_PATH,
+} from "./site.ts";
 
 /**
  * Primary nav — professional local-service IA.
@@ -206,7 +211,7 @@ export const featureGrid = {
 export const closing = {
   eyebrow: "Book local movers",
   title: "Get your Orlando moving estimate",
-  body: "Call or text (689) 600-2720—or get a free quote online. Share what you are moving, pickup and drop-off, and access details. We match crew size, explain up-front hourly rates, and help plan your Central Florida move.",
+  body: "Call or text " + PHONE_LINES + "—or get a free quote online. Share what you are moving, pickup and drop-off, and access details. We match crew size, explain up-front hourly rates, and help plan your Central Florida move.",
   ctaPhone: "Call",
   ctaQuote: "Get a quote",
   formCta: "Request callback",
@@ -274,7 +279,7 @@ export const footer = {
         { label: "Contact page", href: "/contact" },
         { label: "Get a quote", href: QUOTE_PATH },
         { label: "Pay", href: "/pay" },
-        { label: "Call us", href: "tel:+16896002720" },
+        { label: "Call us", href: PHONE_TEL },
         { label: "Email", href: "mailto:hello@toromovers.com" },
       ],
     },
@@ -298,7 +303,7 @@ export const faq = {
   items: [
     {
       q: "How much do movers cost in Orlando?",
-      a: "Toro Movers quotes most Orlando moves with up-front hourly rates. The final cost depends on crew size, truck needs, stairs, elevators, distance, and how much you need moved. Call or text (689) 600-2720 with your move details—or request a quote online—and we will explain the hourly pricing model before move day.",
+      a: "Toro Movers quotes most Orlando moves with up-front hourly rates. The final cost depends on crew size, truck needs, stairs, elevators, distance, and how much you need moved. Call or text " + PHONE_LINES + " with your move details—or request a quote online—and we will explain the hourly pricing model before move day.",
       linkHref: "/blog/how-much-does-a-local-move-cost-orlando",
       linkLabel: "How Orlando moving costs work",
     },
@@ -322,19 +327,19 @@ export const faq = {
     },
     {
       q: "Can you load a U-Haul or POD in Orlando?",
-      a: "Yes. If you already have a U-Haul, POD, or rental truck, Toro Movers provides labor-only loading and unloading by the hour. Share truck or container size, floors, and parking when you call or text (689) 600-2720 or request a quote.",
+      a: "Yes. If you already have a U-Haul, POD, or rental truck, Toro Movers provides labor-only loading and unloading by the hour. Share truck or container size, floors, and parking when you call or text " + PHONE_LINES + " or request a quote.",
       linkHref: "/blog/uhaul-pod-loading-help-orlando",
       linkLabel: "U-Haul and POD loading help",
     },
     {
       q: "Are your movers bilingual?",
-      a: "Yes. Toro Movers has an English and Spanish-speaking crew. Bilingual communication helps customers explain timing, access instructions, fragile items, furniture placement, and building rules from the first quote to the last box. Call or text (689) 600-2720 or request a quote online.",
+      a: "Yes. Toro Movers has an English and Spanish-speaking crew. Bilingual communication helps customers explain timing, access instructions, fragile items, furniture placement, and building rules from the first quote to the last box. Call or text " + PHONE_LINES + " or request a quote online.",
       linkHref: QUOTE_PATH,
       linkLabel: "Get my price",
     },
     {
       q: "How do I get a moving quote from Toro Movers?",
-      a: "Call or text (689) 600-2720, or request a quote online. Share what you are moving, pickup and drop-off locations, and access details such as stairs, elevator, and parking. We match crew size, explain up-front hourly rates, and help plan your Orlando move. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share what you are moving, pickup and drop-off locations, and access details such as stairs, elevator, and parking. We match crew size, explain up-front hourly rates, and help plan your Orlando move. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       linkHref: QUOTE_PATH,
       linkLabel: "Get my price",
     },

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
@@ -12,8 +13,7 @@ import {
   HOURS_LABEL,
   LEGAL_NAME,
   MOVES_DONE,
-  PHONE_DISPLAY,
-  PHONE_TEL,
+  PHONE_LINES,
   QUOTE_PATH,
   REVIEW_COUNT,
   SERVICE_BASE_CITY,
@@ -24,7 +24,7 @@ import {
 
 export const metadata: Metadata = {
   title: "About us | Family-owned Orlando movers",
-  description: `Family-owned local movers in ${SERVICE_BASE_CITY} serving ${SERVICE_REGION}. ${GOOGLE_RATING}★ Google, bilingual crews, up-front rates. Call ${PHONE_DISPLAY}.`,
+  description: `Family-owned local movers in ${SERVICE_BASE_CITY} serving ${SERVICE_REGION}. ${GOOGLE_RATING}★ Google, bilingual crews, up-front rates. Call ${PHONE_LINES}.`,
   alternates: { canonical: "/about" },
   openGraph: {
     title: `About ${BUSINESS_NAME}`,
@@ -113,13 +113,11 @@ export default function AboutPage() {
                 </div>
 
                 <div className="about-page-actions">
-                  <a
-                    href={PHONE_TEL}
-                    data-cta="about-call"
-                    className="btn-primary tap-target"
-                  >
-                    Call {PHONE_DISPLAY}
-                  </a>
+                  <CompanyPhoneLinks
+                    cta="about-call"
+                    prefix="Call "
+                    linkClassName="btn-primary tap-target"
+                  />
                   <a
                     href={QUOTE_PATH}
                     data-cta="about-quote"

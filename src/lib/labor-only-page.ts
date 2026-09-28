@@ -1,14 +1,14 @@
 /** Copy for /labor-only-moving — keep FAQ text identical to on-page FAQ (schema). */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { SITE_URL } from "./site.ts";
+import { SITE_URL, PHONE_LINES} from "./site.ts";
 
 export const laborOnlyPage = {
   path: "/labor-only-moving",
   metadata: {
     title: "Labor-only Orlando movers | Load & unload",
     description:
-      "Labor-only loading & unloading in Orlando—U-Haul, POD, storage & rental trucks. Up-front hourly rates. Call (689) 600-2720.",
+      "Labor-only loading & unloading in Orlando—U-Haul, POD, storage & rental trucks. Up-front hourly rates. Call " + PHONE_LINES + ".",
     ogTitle: "Labor-only movers in Orlando",
     ogDescription:
       "Your truck or container. Our crew. Load, unload, or both—with clear hourly pricing before move day.",
@@ -193,7 +193,7 @@ export const laborOnlyPage = {
     },
     {
       q: "How do I get a labor-only quote?",
-      a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off (if any), truck or container type, stairs/elevator details, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share pickup and drop-off (if any), truck or container type, stairs/elevator details, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ] as const,
   closing: {

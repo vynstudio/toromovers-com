@@ -13,7 +13,7 @@ import {
   HOURS_LABEL,
   HOURS_SAT_LABEL,
   HOURS_SUN_FRI_LABEL,
-  PHONE_DISPLAY,
+  PHONE_LINES,
   QUOTE_PATH,
   SERVICE_BASE_CITY,
   SERVICE_REGION,
@@ -22,11 +22,11 @@ import {
 
 export const metadata: Metadata = {
   title: "Contact · Get a free quote",
-  description: `Contact ${BUSINESS_NAME} for an Orlando & Central Florida moving quote. Call ${PHONE_DISPLAY} or get a free quote online. ${HOURS_LABEL}.`,
+  description: `Contact ${BUSINESS_NAME} for an Orlando & Central Florida moving quote. Call ${PHONE_LINES} or get a free quote online. ${HOURS_LABEL}.`,
   alternates: { canonical: "/contact" },
   openGraph: {
     title: `Contact ${BUSINESS_NAME}`,
-    description: `Call ${PHONE_DISPLAY} or get a free moving quote in ${SERVICE_REGION}.`,
+    description: `Call ${PHONE_LINES} or get a free moving quote in ${SERVICE_REGION}.`,
     url: `${SITE_URL}/contact`,
   },
 };
@@ -50,7 +50,7 @@ export default function ContactPage() {
                 Get your Orlando moving quote
               </h1>
               <p className="aeo-answer contact-page-lede text-muted">
-                Call {PHONE_DISPLAY} or get a free quote online — share what
+                Call {PHONE_LINES} or get a free quote online — share what
                 you&apos;re moving and when. Prefer we call you? Use the
                 callback form below for immediate service.
               </p>

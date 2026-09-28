@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import Link from "next/link";
 import { LEGAL } from "@/lib/legal";
 import {
@@ -6,8 +7,6 @@ import {
   EMAIL,
   EMAIL_HREF,
   LEGAL_NAME,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   SITE_URL,
 } from "@/lib/site";
 
@@ -484,9 +483,10 @@ export default function PrivacyPage() {
             </li>
             <li>
               Calling{" "}
-              <a className="text-foreground underline" href={PHONE_TEL}>
-                {PHONE_DISPLAY}
-              </a>
+              <CompanyPhoneLinks
+                cta="privacy-call"
+                linkClassName="text-foreground underline"
+              />
             </li>
           </ul>
           <p>
@@ -527,9 +527,10 @@ export default function PrivacyPage() {
               {EMAIL}
             </a>
             <br />
-            <a className="underline" href={PHONE_TEL}>
-              {PHONE_DISPLAY}
-            </a>
+            <CompanyPhoneLinks
+              cta="privacy-nap"
+              linkClassName="underline"
+            />
           </p>
           <p>
             Please include enough detail for us to locate your records. We will

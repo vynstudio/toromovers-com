@@ -13,7 +13,8 @@ import {
   nearbyCityPages,
   type CityPageContent,
 } from "@/lib/city-pages";
-import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { QUOTE_PATH } from "@/lib/site";
 
 /**
  * City SEO landing — homepage design system, city-only copy.
@@ -200,13 +201,11 @@ export function CityLanding({ city }: { city: CityPageContent }) {
             {city.why.body}
           </p>
           <div className="tap-stack mt-8 justify-center">
-            <a
-              href={PHONE_TEL}
-              data-cta={`city-${city.slug}-why-call`}
-              className="btn-primary btn-fluid tap-target inline-flex w-full sm:w-auto"
-            >
-              Call {PHONE_DISPLAY}
-            </a>
+            <CompanyPhoneLinks
+              cta={`city-${city.slug}-why-call`}
+              prefix="Call "
+              linkClassName="btn-primary btn-fluid tap-target inline-flex w-full sm:w-auto"
+            />
             <a
               href={QUOTE_PATH}
               className="btn-outline btn-fluid tap-target inline-flex w-full sm:w-auto"

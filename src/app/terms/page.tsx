@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import Link from "next/link";
 import { BUSINESS_NAME, EMAIL, SITE_URL } from "@/lib/site";
 
@@ -39,6 +40,11 @@ export default function TermsPage() {
           <a className="text-foreground underline" href={`mailto:${EMAIL}`}>
             {EMAIL}
           </a>
+          {" or "}
+          <CompanyPhoneLinks
+            cta="terms-phone"
+            linkClassName="text-foreground underline"
+          />
           .
         </p>
       </div>

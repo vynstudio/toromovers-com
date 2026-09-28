@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
@@ -9,8 +10,6 @@ import {
   apartmentMoversPageGraph,
 } from "@/lib/apartment-movers-page";
 import {
-  PHONE_DISPLAY,
-  PHONE_TEL,
   QUOTE_PATH,
   SITE_URL,
 } from "@/lib/site";
@@ -72,13 +71,11 @@ export default function ApartmentMoversOrlandoPage() {
                   ))}
                 </ul>
                 <div className="about-page-actions">
-                  <a
-                    href={PHONE_TEL}
-                    data-cta="apartment-movers-call"
-                    className="btn-primary tap-target"
-                  >
-                    Call {PHONE_DISPLAY}
-                  </a>
+                  <CompanyPhoneLinks
+                    cta="apartment-movers-call"
+                    prefix="Call "
+                    linkClassName="btn-primary tap-target"
+                  />
                   <a
                     href={QUOTE_PATH}
                     data-cta="apartment-movers-quote"
@@ -181,7 +178,11 @@ export default function ApartmentMoversOrlandoPage() {
             </ol>
             <p className="text-muted" style={{ marginTop: "1rem" }}>
               {page.pricing.close} Call or text{" "}
-              <a href={PHONE_TEL}>{PHONE_DISPLAY}</a> or{" "}
+              <CompanyPhoneLinks
+                cta="apartment-inline"
+                linkClassName="underline"
+              />{" "}
+              or{" "}
               <a href={QUOTE_PATH}>get a free quote online</a>. Read our guide:{" "}
               <a href="/blog/how-much-does-a-local-move-cost-orlando">
                 how much movers cost in Orlando
@@ -257,14 +258,12 @@ export default function ApartmentMoversOrlandoPage() {
                   marginTop: "1.25rem",
                 }}
               >
-                <a
-                  href={PHONE_TEL}
-                  data-cta="apartment-movers-close-call"
-                  className="btn-primary tap-target"
+                <CompanyPhoneLinks
+                  cta="apartment-movers-close-call"
+                  prefix="Call "
+                  linkClassName="btn-primary tap-target"
                   style={{ background: "#fff", color: "#000" }}
-                >
-                  Call {PHONE_DISPLAY}
-                </a>
+                />
                 <a
                   href={QUOTE_PATH}
                   data-cta="apartment-movers-close-quote"

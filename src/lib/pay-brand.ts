@@ -1,4 +1,4 @@
-import { BUSINESS_NAME, PHONE_DISPLAY } from "./site.ts";
+import { BUSINESS_NAME, PHONE_LINES } from "./site.ts";
 import type { PaymentKind } from "./payments.ts";
 
 /** Isolated pay-page tokens. Do not import funnel-offer copy here. */
@@ -38,7 +38,7 @@ export function stripeCheckoutCustomText(kind: PaymentKind): {
   return {
     submit: { message: submit },
     after_submit: {
-      message: `Questions? Call Toro Movers at ${PHONE_DISPLAY}.`,
+      message: `Questions? Call Toro Movers at ${PHONE_LINES}.`,
     },
   };
 }

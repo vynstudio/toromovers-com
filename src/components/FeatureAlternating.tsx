@@ -1,7 +1,8 @@
 import { features } from "@/lib/content";
 import { IconArrow } from "@/components/icons";
 import { SplitBand } from "@/components/SplitBand";
-import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { QUOTE_PATH } from "@/lib/site";
 
 /**
  * Discover split-bands — identical size/frame as every homepage section.
@@ -22,14 +23,11 @@ export function FeatureAlternating() {
           <h2 className="split-band-title">{f.title}</h2>
           <p className="aeo-answer split-band-lede text-muted">{f.body}</p>
           <div className="split-band-actions">
-            <a
-              href={PHONE_TEL}
-              data-cta={`feature-${f.id}-call`}
-              className="btn-primary btn-fluid tap-target inline-flex"
-            >
-              <span className="sm:hidden">Call now</span>
-              <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
-            </a>
+            <CompanyPhoneLinks
+              cta={`feature-${f.id}-call`}
+              prefix="Call "
+              linkClassName="btn-primary btn-fluid tap-target inline-flex"
+            />
             <a
               href={QUOTE_PATH}
               data-cta={`feature-${f.id}-quote`}

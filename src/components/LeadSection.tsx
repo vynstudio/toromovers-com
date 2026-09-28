@@ -2,7 +2,8 @@
 
 import { CallbackForm } from "@/components/CallbackForm";
 import { closing } from "@/lib/content";
-import { HOURS_LABEL, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { HOURS_LABEL } from "@/lib/site";
 
 /**
  * Homepage conversion close — callback form only (no photo / placeholder).
@@ -35,9 +36,11 @@ export function LeadSection() {
 
         <p className="callback-phone callback-section-phone">
           Prefer to talk?{" "}
-          <a href={PHONE_TEL} data-cta="callback-section-phone">
-            Call {PHONE_DISPLAY}
-          </a>
+          <CompanyPhoneLinks
+            cta="callback-section-phone"
+            prefix="Call "
+            linkClassName="underline underline-offset-2"
+          />
           <span className="text-muted"> · {HOURS_LABEL}</span>
         </p>
       </div>

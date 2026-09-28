@@ -258,7 +258,10 @@ test("checkout button copy matches deposit vs remaining balance", () => {
     stripeCheckoutCustomText("balance").submit.message,
     "Pay remaining balance",
   );
-  assert.match(stripeCheckoutCustomText("deposit").after_submit.message, /689/);
+  assert.match(
+    stripeCheckoutCustomText("deposit").after_submit.message,
+    /\(321\) 234-0510 or \(689\) 600-2720/,
+  );
 });
 
 test("invalid quote token is unsigned so /pay can warn", () => {

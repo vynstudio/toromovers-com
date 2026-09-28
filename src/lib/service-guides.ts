@@ -5,7 +5,7 @@
  */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { SITE_URL } from "./site.ts";
+import { SITE_URL, PHONE_LINES} from "./site.ts";
 
 export type ServiceGuide = {
   path: string;
@@ -62,7 +62,7 @@ export const packingServicesPage: ServiceGuide = {
   metadata: {
     title: "Packing services in Orlando | Help by the hour",
     description:
-      "Packing services in Orlando for kitchens, closets, or a full household pack. Same up-front hourly rate as the move. Call (689) 600-2720.",
+      "Packing services in Orlando for kitchens, closets, or a full household pack. Same up-front hourly rate as the move. Call " + PHONE_LINES + ".",
     ogTitle: "Packing services in Orlando",
     ogDescription:
       "Hire Toro to box named rooms or the whole home before the carry. Up-front hourly rates across Central Florida.",
@@ -149,7 +149,7 @@ export const packingServicesPage: ServiceGuide = {
     },
     {
       q: "How do I book packing services in Orlando?",
-      a: "Call or text (689) 600-2720, or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text " + PHONE_LINES + ", or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ],
   closing: {
@@ -168,7 +168,7 @@ export const officeMoversPage: ServiceGuide = {
   metadata: {
     title: "Office movers in Orlando | Small commercial moves",
     description:
-      "Office movers in Orlando for small offices and light commercial jobs. After-hours crews, desks, and hourly rates. Call (689) 600-2720.",
+      "Office movers in Orlando for small offices and light commercial jobs. After-hours crews, desks, and hourly rates. Call " + PHONE_LINES + ".",
     ogTitle: "Office movers in Orlando",
     ogDescription:
       "Small office and light commercial moves across Orlando and Central Florida, with up-front hourly rates and bilingual crews.",
@@ -242,7 +242,7 @@ export const officeMoversPage: ServiceGuide = {
   faqs: [
     {
       q: "Do you offer office movers in Orlando?",
-      a: "Yes. Toro Movers handles small office and light commercial moves in Orlando and Central Florida: desks, files, and boxed equipment, with up-front hourly rates. We do not set up networks or migrate data. Call or text (689) 600-2720 or request a quote online.",
+      a: "Yes. Toro Movers handles small office and light commercial moves in Orlando and Central Florida: desks, files, and boxed equipment, with up-front hourly rates. We do not set up networks or migrate data. Call or text " + PHONE_LINES + " or request a quote online.",
     },
     {
       q: "Are you commercial movers for a small suite?",
@@ -258,7 +258,7 @@ export const officeMoversPage: ServiceGuide = {
     },
     {
       q: "How do I get an office moving quote?",
-      a: "Request a quote at the quote page, or call or text (689) 600-2720. Share both addresses, floors, dock or freight-elevator rules, after-hours limits, and truck versus labor-only. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Request a quote at the quote page, or call or text " + PHONE_LINES + ". Share both addresses, floors, dock or freight-elevator rules, after-hours limits, and truck versus labor-only. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ],
   closing: {
@@ -277,7 +277,7 @@ export const sameDayMoversPage: ServiceGuide = {
   metadata: {
     title: "Same-day movers in Orlando | When a crew is open",
     description:
-      "Same-day movers in Orlando when a local crew is open. Not a guarantee. Up-front hourly rates for Central Florida hops. Call (689) 600-2720.",
+      "Same-day movers in Orlando when a local crew is open. Not a guarantee. Up-front hourly rates for Central Florida hops. Call " + PHONE_LINES + ".",
     ogTitle: "Same-day movers in Orlando",
     ogDescription:
       "Local same-day moving in Orlando when a crew is still open. Hourly rates, clear limits, bilingual crew.",
@@ -337,7 +337,7 @@ export const sameDayMoversPage: ServiceGuide = {
       h2: "What to send in the first message",
       paragraphs: [
         "Lead with the facts a dispatcher needs to say yes or no. Pickup and drop-off addresses. Stairs or a reserved elevator at either stop. How packed you will be when the crew arrives. Whether you need the truck or only labor on a rental or container you already have. Photos of bulky pieces help size the crew. Gate codes, HOA rules, and any loading-zone limit should be in that first message.",
-        "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. If you are still deciding whether today is realistic, read the same-day guide first, then request the quote with the addresses in hand.",
+        "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text " + PHONE_LINES + ". If you are still deciding whether today is realistic, read the same-day guide first, then request the quote with the addresses in hand.",
       ],
     },
   ],
@@ -350,7 +350,7 @@ export const sameDayMoversPage: ServiceGuide = {
   faqs: [
     {
       q: "Can I book same-day movers in Orlando?",
-      a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Call or text (689) 600-2720 or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Call or text " + PHONE_LINES + " or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
     {
       q: "What should I send for a same-day quote?",
@@ -385,7 +385,7 @@ export const smallMovesPage: ServiceGuide = {
   metadata: {
     title: "Small movers in Orlando | Single item & delivery",
     description:
-      "Small movers in Orlando for one piece, a few items, or furniture pickup and delivery. Up-front hourly rates. Call (689) 600-2720.",
+      "Small movers in Orlando for one piece, a few items, or furniture pickup and delivery. Up-front hourly rates. Call " + PHONE_LINES + ".",
     ogTitle: "Small movers in Orlando",
     ogDescription:
       "Single-item movers and local furniture pickup in Orlando and Central Florida, with up-front hourly rates.",
@@ -472,7 +472,7 @@ export const smallMovesPage: ServiceGuide = {
     },
     {
       q: "How is this different from POD loading or labor-only?",
-      a: "This page is one piece or a short furniture list, often with our truck. POD loading help is a container, a U-Haul, or a storage unit you already have. Labor-only is a household load on your truck. Loading and unloading is a short lift that is not a planned delivery. Call or text (689) 600-2720 if you are unsure which fits.",
+      a: "This page is one piece or a short furniture list, often with our truck. POD loading help is a container, a U-Haul, or a storage unit you already have. Labor-only is a household load on your truck. Loading and unloading is a short lift that is not a planned delivery. Call or text " + PHONE_LINES + " if you are unsure which fits.",
     },
   ],
   closing: {
@@ -498,7 +498,7 @@ export const podLoadingPage: ServiceGuide = {
   metadata: {
     title: "POD loading help in Orlando | U-Haul & storage",
     description:
-      "POD loading help in Orlando for a container, U-Haul, or storage unit. You keep the truck. Up-front hourly rates. Call (689) 600-2720.",
+      "POD loading help in Orlando for a container, U-Haul, or storage unit. You keep the truck. Up-front hourly rates. Call " + PHONE_LINES + ".",
     ogTitle: "POD loading help in Orlando",
     ogDescription:
       "Load or unload a POD, U-Haul, or storage unit in Orlando. Labor by the hour, with the vehicle staying yours.",
@@ -556,7 +556,7 @@ export const podLoadingPage: ServiceGuide = {
       h2: "Where we load containers and rental trucks",
       paragraphs: [
         "Toro Movers is based in Orlando and does this work across Central Florida, including Winter Springs, Deltona, Horizon West, Lake Nona, Dr. Phillips, Winter Park, and Winter Garden. Drive time between two local stops is on the clock and quoted honestly. If the drop-off leaves Central Florida, that route is a trip quote rather than this local hourly load. You would still drive a rental. The quote follows the route.",
-        "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Call or text (689) 600-2720, or email hello@toromovers.com. Lead with the vehicle: POD, U-Haul or other rental, or storage unit. Add the size, one end or both, the addresses or the facility name, and stairs or an elevator.",
+        "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Call or text " + PHONE_LINES + ", or email hello@toromovers.com. Lead with the vehicle: POD, U-Haul or other rental, or storage unit. Add the size, one end or both, the addresses or the facility name, and stairs or an elevator.",
       ],
     },
   ],
@@ -585,7 +585,7 @@ export const podLoadingPage: ServiceGuide = {
     },
     {
       q: "How much does POD or U-Haul loading cost?",
-      a: "Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a late gate, and a long carry add time. They are not a separate fee. Call or text (689) 600-2720 or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a late gate, and a long carry add time. They are not a separate fee. Call or text " + PHONE_LINES + " or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ],
   closing: {

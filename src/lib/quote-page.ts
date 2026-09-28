@@ -11,8 +11,9 @@ import {
   BUSINESS_NAME,
   EMAIL,
   HOURS_LABEL,
-  PHONE_DISPLAY,
   PHONE_E164,
+  PHONE_LINES,
+  PHONE_SECONDARY_E164,
   QUOTE_PATH,
   SERVICE_BASE_LOCALITY,
   SERVICE_REGION,
@@ -31,7 +32,7 @@ export const quotePage = {
   metadata: {
     title: { absolute: "Moving quote in Orlando from $75/hour | Toro Movers" },
     description:
-      "Toro Movers quotes local, long-distance, and interstate moves. Local jobs from $75/mover/hour, 2-hour min, no fuel or stair fees. Call (689) 600-2720.",
+      "Toro Movers quotes local, long-distance, and interstate moves. Local jobs from $75/mover/hour, 2-hour min, no fuel or stair fees. Call " + PHONE_LINES + ".",
     ogTitle: "Moving quote in Orlando from $75/hour | Toro Movers",
     ogDescription:
       "Up-front moving quote for local, long-distance, and interstate. Local jobs from $75/mover/hour, 2-hour minimum, no fuel surcharge, no stair fees.",
@@ -57,7 +58,7 @@ export const quotePage = {
     },
     {
       q: "How do I get a free moving quote?",
-      a: `Submit your name and mobile, or call ${PHONE_DISPLAY}. Email is optional.`,
+      a: `Submit your name and mobile, or call ${PHONE_LINES}. Email is optional.`,
     },
     {
       q: "How fast do you call back?",
@@ -69,7 +70,7 @@ export const quotePage = {
     },
   ] as const,
   footer: {
-    nap: `${BUSINESS_NAME} · Orlando, FL · ${PHONE_DISPLAY}`,
+    nap: `${BUSINESS_NAME} · Orlando, FL · ${PHONE_LINES}`,
     hours: HOURS_LABEL,
   },
 } as const;
@@ -176,6 +177,11 @@ export function quotePageGraph() {
         name: BUSINESS_NAME,
         url: SITE_URL,
         telephone: PHONE_E164,
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: PHONE_SECONDARY_E164,
+          contactType: "customer service",
+        },
         email: EMAIL,
       },
     ],

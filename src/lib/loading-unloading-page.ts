@@ -1,14 +1,14 @@
 /** Copy for /loading-unloading — single-item / short loading help. FAQ = schema. */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { SITE_URL } from "./site.ts";
+import { SITE_URL, PHONE_LINES} from "./site.ts";
 
 export const loadingUnloadingPage = {
   path: "/loading-unloading",
   metadata: {
     title: "Loading & unloading help | Orlando movers",
     description:
-      "Loading and unloading help in Orlando for a short truck lift or curb unload. Hourly rates. Call (689) 600-2720.",
+      "Loading and unloading help in Orlando for a short truck lift or curb unload. Hourly rates. Call " + PHONE_LINES + ".",
     ogTitle: "Loading & unloading help in Orlando",
     ogDescription:
       "Short loading and unloading help from a local Central Florida crew—with up-front hourly rates. Not a POD pack or a furniture delivery.",
@@ -104,11 +104,11 @@ export const loadingUnloadingPage = {
     },
     {
       q: "How is pricing handled?",
-      a: "Short jobs use up-front hourly rates. Crew size and time depend on the item, stairs, and parking. Call or text (689) 600-2720 with details before move day.",
+      a: "Short jobs use up-front hourly rates. Crew size and time depend on the item, stairs, and parking. Call or text " + PHONE_LINES + " with details before move day.",
     },
     {
       q: "How do I book loading help?",
-      a: "Call or text (689) 600-2720, or request a quote online. Share what you’re moving, access details, and timing. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share what you’re moving, access details, and timing. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ] as const,
   closing: {

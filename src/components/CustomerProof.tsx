@@ -9,8 +9,6 @@ import {
   GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
   MOVES_DONE,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   QUOTE_PATH,
   SERVICE_REGION,
 } from "@/lib/site";
@@ -20,12 +18,9 @@ import {
  */
 export function CustomerProof({
   showRegionLinks = true,
-  showBothPhones = false,
 }: {
   /** Homepage only: secondary CF hub links under the quote/call CTAs. */
   showRegionLinks?: boolean;
-  /** Homepage only: both company lines. Other pages keep the main-line CTA. */
-  showBothPhones?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -101,21 +96,10 @@ export function CustomerProof({
         </ul>
 
         <div className="split-band-actions">
-          {showBothPhones ? (
-            <CompanyPhoneLinks
-              cta="proof-call"
-              linkClassName="btn-primary btn-fluid tap-target inline-flex"
-            />
-          ) : (
-            <a
-              href={PHONE_TEL}
-              data-cta="proof-call"
-              className="btn-primary btn-fluid tap-target inline-flex"
-            >
-              <span className="sm:hidden">Call now</span>
-              <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
-            </a>
-          )}
+          <CompanyPhoneLinks
+            cta="proof-call"
+            linkClassName="btn-primary btn-fluid tap-target inline-flex"
+          />
           <a
             href={QUOTE_PATH}
             data-cta="proof-quote"

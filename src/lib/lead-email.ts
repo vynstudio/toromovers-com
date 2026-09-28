@@ -12,8 +12,8 @@ import {
 import {
   EMAIL,
   GOOGLE_MAPS_REVIEWS_URL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
+  PHONE_SECONDARY_DISPLAY,
+  PHONE_SECONDARY_TEL,
   SITE_URL,
 } from "./site.ts";
 
@@ -116,7 +116,7 @@ export function buildLeadConfirmationEmail(lead: LeadEmailInput): {
 } {
   const n = firstName(lead.name);
   const subject = "We received your quote request — Toro Movers";
-  const phone = PHONE_DISPLAY;
+  const phone = PHONE_SECONDARY_DISPLAY;
   const rows = [
     lead.serviceType ? ["Service", lead.serviceType] : null,
     lead.pickup ? ["Pickup", lead.pickup] : lead.city ? ["From", lead.city] : null,
@@ -224,7 +224,7 @@ export function buildLeadConfirmationEmail(lead: LeadEmailInput): {
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px;">
                 <tr>
                   <td bgcolor="${ACCENT}" style="background-color:${ACCENT};padding:14px 22px;">
-                    <a href="${PHONE_TEL}" style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1;font-weight:bold;color:#ffffff;text-decoration:none;">Call ${escapeHtml(phone)}</a>
+                    <a href="${PHONE_SECONDARY_TEL}" style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1;font-weight:bold;color:#ffffff;text-decoration:none;">Call ${escapeHtml(phone)}</a>
                   </td>
                 </tr>
               </table>

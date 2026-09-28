@@ -1,14 +1,14 @@
 /** Copy for /full-service-moving — FAQ text must match on-page FAQ (schema). */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { SITE_URL } from "./site.ts";
+import { SITE_URL, PHONE_LINES} from "./site.ts";
 
 export const fullServicePage = {
   path: "/full-service-moving",
   metadata: {
     title: "Full-service movers in Orlando | Truck & crew",
     description:
-      "Full-service Orlando movers—truck, crew, load, haul, unload & place. Up-front hourly rates. Call (689) 600-2720.",
+      "Full-service Orlando movers—truck, crew, load, haul, unload & place. Up-front hourly rates. Call " + PHONE_LINES + ".",
     ogTitle: "Full-service movers in Orlando",
     ogDescription:
       "Local crew and truck for Orlando homes and apartments—load, haul, unload, and place with clear hourly pricing before move day.",
@@ -136,7 +136,7 @@ export const fullServicePage = {
     },
     {
       q: "How much do full-service movers cost in Orlando?",
-      a: "Most local moves are quoted with up-front hourly rates. The total depends on crew size, time, access, readiness, and route. Call or text (689) 600-2720 with your details for a clear explanation before move day.",
+      a: "Most local moves are quoted with up-front hourly rates. The total depends on crew size, time, access, readiness, and route. Call or text " + PHONE_LINES + " with your details for a clear explanation before move day.",
     },
     {
       q: "Are your movers bilingual?",
@@ -144,7 +144,7 @@ export const fullServicePage = {
     },
     {
       q: "How do I get a full-service quote?",
-      a: "Call or text (689) 600-2720, or request a quote online. Share pickup and drop-off, home type, access details, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share pickup and drop-off, home type, access details, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ] as const,
   closing: {

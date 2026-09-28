@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import { runtimeEnv, stripePublishableKey } from "@/lib/env";
-import { PHONE_DISPLAY, SITE_URL } from "@/lib/site";
+import { PHONE_LINES, SITE_URL } from "@/lib/site";
 import {
   CUSTOM_TIP_MAX_USD,
   PAYMENT_KIND,
@@ -283,7 +283,7 @@ async function buildBalanceSession(input: CreatePaymentInput): Promise<BuiltSess
     depositCredit = await lookupDepositCreditCents(fields.quote_number, fields.move_reference);
   } catch (err) {
     console.error("[stripe] deposit lookup for balance", err);
-    throw new Error(`Could not verify the deposit on this quote. Call ${PHONE_DISPLAY}.`);
+    throw new Error(`Could not verify the deposit on this quote. Call ${PHONE_LINES}.`);
   }
   const { tipType, customTipCents } = resolveTip(input);
   const summary = balanceSummary({

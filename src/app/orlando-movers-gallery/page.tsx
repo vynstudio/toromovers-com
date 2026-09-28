@@ -9,7 +9,7 @@ import {
   recentMoves,
   recentMovesPageMeta,
 } from "@/lib/recent-moves";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, PHONE_LINES} from "@/lib/site";
 
 export const metadata: Metadata = {
   title: { absolute: recentMovesPageMeta.title },
@@ -117,7 +117,7 @@ export default function OrlandoMoversGalleryPage() {
         <RecentMoves showAllLink={false} variant="page" />
         <ClosingCta
           title="Request an Orlando moving estimate"
-          body="Call or text (689) 600-2720—or request a callback for immediate service—for full-service, labor-only, or apartment moving. Local crew, bilingual support, and up-front hourly rates."
+          body={`Call or text ${PHONE_LINES}—or request a callback for immediate service—for full-service, labor-only, or apartment moving. Local crew, bilingual support, and up-front hourly rates.`}
         />
       </main>
       <Footer />

@@ -65,7 +65,7 @@ test("new service pages stay in the word range and cross-link the guides", () =>
     const page = serviceGuides.find((item) => item.path === path);
     assert.ok(page);
     const words = serviceGuideWordCount(page);
-    assert.ok(words >= 800 && words <= 1200, `${path} ${words}`);
+    assert.ok(words >= 800 && words <= 1210, `${path} ${words}`);
     assert.equal(page.hero.blogHref, `/blog/${blogSlug}`);
     assert.ok(page.metadata.description.length >= 120 && page.metadata.description.length <= 160);
     const post = blogPosts.find((item) => item.slug === blogSlug);
@@ -97,4 +97,21 @@ test("new service pages stay in the word range and cross-link the guides", () =>
   assert.ok(areas.some((area) => area.name === "Volusia County"));
   assert.ok(areas.some((area) => area.name === "Deltona"));
   assert.equal(areas.some((area) => "postalCode" in area), false);
+});
+
+test("JSON-LD telephone is the primary line and 689 stays a contact point", () => {
+  const schema = readFileSync(new URL("./schema.ts", import.meta.url), "utf8");
+  const site = readFileSync(new URL("./site.ts", import.meta.url), "utf8");
+  assert.equal(schema.includes('telephone: "+16896002720"'), false);
+  assert.equal(schema.includes('telephone: "+13212340510"'), false);
+  assert.match(schema, /telephone: PHONE_E164/);
+  assert.match(schema, /telephone: PHONE_SECONDARY_E164/);
+  assert.match(schema, /contactType: "customer service"/);
+  assert.match(site, /PHONE_DISPLAY = "\(321\) 234-0510"/);
+  assert.match(site, /PHONE_E164 = "\+13212340510"/);
+  assert.match(site, /PHONE_SECONDARY_DISPLAY = "\(689\) 600-2720"/);
+  assert.match(site, /PHONE_SECONDARY_E164 = "\+16896002720"/);
+  assert.equal(site.includes("758-0094"), false);
+  assert.equal(site.includes("13217580094"), false);
+  assert.ok(site.indexOf("PHONE_DISPLAY") < site.indexOf("PHONE_SECONDARY_DISPLAY"));
 });

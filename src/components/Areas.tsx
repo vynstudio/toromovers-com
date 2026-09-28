@@ -3,7 +3,6 @@ import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { IconArrow } from "@/components/icons";
 import { SplitBand } from "@/components/SplitBand";
 import { CoverageMap } from "@/components/CoverageMap";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 const AREA_LINKS = [
   { label: "Orlando movers", href: "/orlando-movers" },
@@ -20,12 +19,7 @@ const AREA_LINKS = [
 /**
  * Areas split-band — fits locked section, no scroll.
  */
-export function Areas({
-  showBothPhones = false,
-}: {
-  /** Homepage only: both company lines. Other pages keep the main-line CTA. */
-  showBothPhones?: boolean;
-} = {}) {
+export function Areas() {
   return (
     <SplitBand
       id="areas"
@@ -52,21 +46,10 @@ export function Areas({
       </ul>
 
       <div className="split-band-actions">
-        {showBothPhones ? (
-          <CompanyPhoneLinks
-            cta="areas-phone"
-            linkClassName="btn-primary btn-fluid tap-target inline-flex"
-          />
-        ) : (
-          <a
-            href={PHONE_TEL}
-            data-cta="areas-phone"
-            className="btn-primary btn-fluid tap-target inline-flex"
-          >
-            <span className="sm:hidden">Call now</span>
-            <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
-          </a>
-        )}
+        <CompanyPhoneLinks
+          cta="areas-phone"
+          linkClassName="btn-primary btn-fluid tap-target inline-flex"
+        />
         <a
           href="/central-florida-movers"
           className="btn-outline btn-fluid tap-target inline-flex"
