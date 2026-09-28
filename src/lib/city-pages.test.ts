@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { customerProof, hero } from "./content.ts";
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
 import {
   allCityPages,
   citiesByCounty,
@@ -40,6 +41,16 @@ test("restored city catalog has unique slugs and local copy", () => {
   assert.ok(getCityPage("ocoee-movers"));
   assert.ok(getCityPage("central-florida-movers"));
   assert.ok(getCityPage("orlando-movers"));
+});
+
+test("every city page publishes the same hourly rate sentence", () => {
+  for (const city of allCityPages()) {
+    const blob = [
+      ...city.sections.map((section) => section.body),
+      ...city.faqs.map((item) => item.a),
+    ].join("\n");
+    assert.ok(blob.includes(LOCAL_HOURLY_RATE_SENTENCE), city.slug);
+  }
 });
 
 test("homepage vs central-florida-movers copy does not cannibalize", () => {
