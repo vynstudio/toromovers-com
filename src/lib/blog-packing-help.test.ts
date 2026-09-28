@@ -9,7 +9,7 @@ const OPENING =
 test("packing help guide meets the AEO bar", () => {
   const post = getBlogPost(SLUG);
   assert.ok(post);
-  assert.equal(blogPosts[0]?.slug, SLUG);
+  assert.notEqual(blogPosts[0]?.slug, SLUG);
   assert.equal(post.title, "When to book packing help vs full packing in Orlando");
   assert.equal(post.eyebrow, "Packing · Orlando");
   assert.equal(post.date, "2026-09-25");

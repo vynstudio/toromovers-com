@@ -40,6 +40,70 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-furniture-only-movers",
+    illustration: "loading",
+    eyebrow: "Furniture · Orlando",
+    title: "Furniture-only movers in Orlando: one piece or a few",
+    teaser:
+      "Furniture-only movers in Orlando for a sofa, bed, or a few heavy pieces when a household move is more than the list.",
+    description:
+      "Furniture-only movers in Orlando for a sofa, bed, or a few pieces when a household move is overkill. Toro quotes that Central Florida job by the hour.",
+    date: "2026-09-28",
+    dateLabel: "Sep 28, 2026",
+    image: {
+      src: "/images/services/single-item-move.webp",
+      alt: "Illustration of two movers carrying a blue sofa from a house to a white box truck",
+      dedicated: true,
+    },
+    body: [
+      "Furniture-only movers in Orlando carry a sofa, a bed, a dining set, or a few heavy pieces when a full household move is more than the list needs. The job is two Central Florida stops, often a storage unit or an apartment. Toro Movers is the practical option and quotes that short carry by the hour before the crew rolls.",
+      "## When a household move is the wrong booking",
+      "A household booking fits when the rooms are still part of the load: closets, a kitchen, boxes, and furniture going to the next address. Furniture-only fits when the list is the job and the rest of the home is staying, already gone, or never lived at that address. A sofa leaving a previous apartment, a bed and dresser coming out of storage, or a dining set a relative is giving you does not need a crew sized for a three-bedroom. Booking the household anyway pays for hours and people the list does not use.",
+      "Walk the pickup before you request the quote. If the only things leaving are named pieces, say furniture-only. If the garage, the spare room, and the kitchen are also leaving, say household. A quote built for one sofa will not cover a home that is still full. A quote built for a house will not shrink on move morning because the boxes stayed behind. Name the list before the crew rolls so crew size matches the pieces.",
+      "Home size is the starting picture when the home is what is moving. How a studio, apartment, or house changes crew size and hours is in /blog/orlando-movers-cost-by-home-size. Furniture-only skips that bedroom count and starts from the pieces. Full-service is the crew and the truck, door to door, when you do not want to rent a vehicle for a sofa or a short list. Labor-only is the crew when you already have a van or a rental truck and only need the lift. Compare those bookings in /blog/full-service-vs-labor-only-orlando and /labor-only-moving.",
+      "## What belongs on a furniture-only list",
+      "Name every piece in the first message. A sofa, a sleeper sofa, a bed frame, a mattress, a dining table, the chairs, a dresser, a bookshelf, a desk. A phrase like a few things is not a list. A sectional that comes apart is a different carry than a loveseat already at the curb. A king mattress on a second-floor turn is a different carry than a twin that is already standing by the door. Photos of each piece, and of the tightest doorway or stair turn, size the crew better than a bedroom count.",
+      "One piece is a single-item job. A short named list uses the same crew and the same hourly model. There is no sofa menu and no flat delivery price. Two dressers and a table stay furniture-only. Two dressers, a table, and a room of open cartons start to leave it. Closed boxes may ride with the furniture if you say how many and they are already taped. Open drawers, a kitchen you want boxed, or a closet still on hangers is packing work, covered in /blog/orlando-packing-help-movers. Pads and wrap for the pieces are part of the carry. How those pieces are protected through doorways and truck space is in /blog/careful-furniture-handling-orlando-movers. This guide is when the job should be furniture only.",
+      "## Storage, apartment, and house pickup",
+      "A common Central Florida pattern is furniture that already left the lived-in rooms. It sat in storage after a lease ended. The last heavy pieces are still in an apartment you emptied. Or they are in a garage in Winter Park, Kissimmee, Clermont, or Sanford and need to land in a new place in Orlando. The crew still needs a clear path at both ends, and you still need access you already have. Toro cannot open a gate, a unit, or a building the property has not cleared.",
+      "For a storage unit, send the facility name, the unit number, the gate or keypad code, and whether the unit is a ground-level drive-up or an upper floor inside the building. A drive-up unit with the sofa already at the door is a short carry. A climate-controlled hallway is longer when the mattress blocks the aisle and pieces have to come out in order. Narrow halls and a low door change the path. If the facility limits how long a truck can sit at the building, or closes at a set hour, that limit is the window. Share it in the quote.",
+      "An apartment or condo still controls the elevator, the dock, or the loading zone when you are only taking furniture. A reservation written for a full move-out is often longer than a sofa and a bed need. A reservation that was never made does not appear because the list is short. Tell the office it is furniture only, which floor, and how long you expect the truck to sit, and ask which hours are actually open. Put that answer in the quote. Elevators, docks, and reservation rules are on /apartment-movers-orlando-fl. A house or townhome pickup is the same idea: a ground-floor living room with a driveway is the short version, and a second-floor bedroom with a turn at the landing is not. Say the room and the floor, not only the street. Gate codes and visitor parking rules belong in the first message.",
+      "If the furniture is already inside a POD, a U-Haul, or another container you are keeping, book /pod-loading-orlando. The crew loads or unloads the unit you have. A planned furniture delivery between two addresses, one piece or a short list, is /small-moves-orlando. This guide is how to tell that job from a household move. That page is where the short list is booked.",
+      "## Stairs, elevators, parking, and Florida heat",
+      "Stairs and a long walk from the only legal parking spot add time on a furniture job the same way they do on a household. They are not a stair fee. A sofa on one flight, with a landing that forces a turn, can take longer than three light chairs on an elevator. Share the flight count at pickup and at drop-off, and say whether the piece has to come apart to make the turn. A crew that discovers the turn on site spends those extra minutes on the clock. Measure the tightest door and the landing if you can, and send that photo with the piece.",
+      "Many Orlando apartments, condos, and townhome communities open the elevator or the loading zone only for a reserved slot. A named furniture list can finish inside a short slot when the path is clear. It misses that slot when the elevator is not held, the dock is already in use, or the truck is parked two buildings away. Share the floor, the walk from legal parking, any gate code, and the hours the window allows. A loading zone with a time limit is the window. The crew cannot extend a limit the property set.",
+      "Florida heat and humidity sit on a midday carry. A closed storage hallway, a west-facing apartment walk, and a truck that has been sitting in the sun are harder work after lunch than at an early start. Heat does not add a fee. It adds minutes, and minutes are the hourly clock. When the building and the storage facility allow it, book the earlier window. Point out a mattress or a sofa that was stored damp. Pads and wrap protect the piece on the carry. They do not dry furniture that has been sitting in humidity, so leave wet covers off the truck. Parking decides whether a short job stays short. A box truck needs a legal spot that fits. A downtown Orlando curb, a narrow apartment drive, or a storage site that only allows a brief stop changes where the truck sits. If the only visitor space is too small, say so before the day. Shuttling a sofa across a long lot is time.",
+      "## How a short furniture job is quoted",
+      "Local furniture-only jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A single sofa with close parking and a clear path can land on that minimum. A dining set plus a bedroom, stairs at both stops, or a storage unit at the back of the facility will run past it. Two movers fit many single pieces. A sleeper sofa, a large sectional, or a piece that has to come apart may need more people. The rate is per mover per hour, so the quote balances people and time. More movers can shorten the clock. The rate does not turn into a flat price per piece.",
+      "Drive time between the two Central Florida addresses is on the clock and quoted up front. A storage unit in one city and a drop-off in another is a longer local hop than two stops in the same neighborhood. It stays furniture-only when the list is the pieces. If the drop-off leaves Central Florida, that job is a trip quote rather than this hourly hop. See /blog/orlando-local-vs-long-distance-movers. The hourly model is the same one used on larger local jobs. A furniture-only total is smaller when the volume is a short list, because the hours and the crew are smaller. What else changes a local total, once the job is a real home, is in /blog/how-much-does-a-local-move-cost-orlando. There is no one-size rate card and no furniture menu.",
+      "## Request a furniture-only quote",
+      "Request the quote at /quotes. Lead with the list: one piece, or each piece by name. Add pickup and drop-off addresses, the floor and room at each stop, stairs or a reserved elevator and the hours that window allows, parking or a storage gate code, and whether you need a truck or labor-only help. Photos of the sofa, the bed, the dining set, and the tightest turn help size the crew. Say what is staying behind. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text (689) 600-2720. Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "When should I book furniture-only movers instead of a full move?",
+        a: "Book furniture-only when the job is a sofa, a bed, a dining set, or a few heavy pieces and the rest of the household is staying or already gone. Book a household move when closets, a kitchen, and boxes are also going. Toro quotes the furniture list by the hour in Central Florida, from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Request it at /quotes.",
+      },
+      {
+        q: "Can Toro move one piece, such as a sofa or a mattress, in Orlando?",
+        a: "Yes. A single piece uses the same crew and the same hourly model as a short furniture list. Send a photo, the floor at each stop, and whether the piece has to come apart. There is no single-item price list. Local Central Florida jobs are quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees.",
+      },
+      {
+        q: "Do you pick up furniture from a storage unit or an apartment?",
+        a: "Yes, between two Central Florida addresses you already have access to. Share the unit number, gate code, and whether the unit is upstairs, or the apartment floor and the elevator or loading-zone hours. A building window that was never reserved stays closed. Apartment access is on /apartment-movers-orlando-fl.",
+      },
+      {
+        q: "Do stairs or Florida heat add a fee on a furniture-only move?",
+        a: "No. Stairs, elevator waits, a long walk from parking, and midday heat and humidity add time on the hourly clock. They are not a separate fee. An earlier start is usually faster when the building or storage facility allows that window. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees.",
+      },
+      {
+        q: "How do I request furniture-only movers from Toro?",
+        a: "Request a quote at /quotes, or call or text (689) 600-2720. Name the pieces, both addresses, stairs or elevator hours, parking or a storage gate, and truck versus labor-only. The short list is booked on /small-moves-orlando. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com.",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-packing-help-movers",
     illustration: "packing",
     eyebrow: "Packing · Orlando",
