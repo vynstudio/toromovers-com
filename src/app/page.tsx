@@ -49,7 +49,7 @@ export default function HomePage() {
         <Hero />
         <TrustMarquee />
         <SectionDivider />
-        <CustomerProof />
+        <CustomerProof showBothPhones />
         <SectionDivider />
         <FeatureGrid />
         <SectionDivider />
@@ -59,7 +59,7 @@ export default function HomePage() {
         <SectionDivider />
         <Faq />
         <SectionDivider />
-        <Areas />
+        <Areas showBothPhones />
         <SectionDivider />
         <BlogCards />
       </main>

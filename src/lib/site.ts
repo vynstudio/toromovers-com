@@ -22,6 +22,16 @@ export const PHONE_DISPLAY = "(689) 600-2720";
 export const PHONE_TEL = "tel:+16896002720";
 export const PHONE_E164 = "+16896002720";
 
+/**
+ * Click-to-call company lines. Main line first.
+ * PHONE_DISPLAY / PHONE_TEL / PHONE_E164 stay the main line so schema,
+ * email, and other pages keep a single number.
+ */
+export const COMPANY_PHONES = [
+  { display: PHONE_DISPLAY, tel: PHONE_TEL },
+  { display: "(321) 234-0510", tel: "tel:+13212340510" },
+] as const;
+
 /** Live quote funnel (engine). The multi-step LeadFunnel project was scrapped. */
 export const QUOTE_PATH = "/quotes";
 /** Remote Operations Coordinator hiring page (Honduras). */
