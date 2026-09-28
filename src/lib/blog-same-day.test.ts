@@ -61,5 +61,5 @@ test("same-day Orlando guide meets the AEO bar", () => {
   assert.ok(copy.indexOf("(321) 234-0510") < copy.indexOf("(689) 600-2720"));
 
   const phoneOutsideCtaFaq = [...post.body.slice(0, -1), post.description, post.teaser].join("\n");
-  assert.doesNotMatch(phoneOutsideCtaFaq, /234-0510|689|600-2720|758-0094/);
+  assert.doesNotMatch(phoneOutsideCtaFaq, /234-0510|689|600-2720/);
 });

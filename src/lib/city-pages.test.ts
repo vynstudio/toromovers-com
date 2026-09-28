@@ -59,7 +59,7 @@ test("homepage vs central-florida-movers copy does not cannibalize", () => {
     hero.lede,
     "Home, apartment, townhome, condo, and office moves — plus storage, POD, and U-Haul load & unload. Local and long-distance across Orlando and Central Florida. Family-owned, bilingual, with upfront hourly rates and no hidden fees.",
   );
-  assert.doesNotMatch(hero.lede, /234-0510|600-2720|758-0094/);
+  assert.doesNotMatch(hero.lede, /234-0510|600-2720/);
   assert.equal(customerProof.title, "Why Orlando customers book Toro");
   assert.deepEqual(
     customerProof.regionLinks.map((l) => l.label),

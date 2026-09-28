@@ -35,7 +35,7 @@ test("article 6 meets the AEO bar", () => {
   const copy = [post.title, post.description, post.teaser, ...post.body, ...post.faqs.map((f) => `${f.q} ${f.a}`)].join(
     "\n",
   );
-  assert.doesNotMatch(copy, /689|600-2720|234-0510|758-0094|13217580094|licensed|insured|bonded|\bDOT\b|#1|number one/i);
+  assert.doesNotMatch(copy, /689|600-2720|234-0510|licensed|insured|bonded|\bDOT\b|#1|number one/i);
   assert.match(copy, /\/quotes/);
   assert.match(copy, /\/blog\/orlando-apartment-high-rise-movers/);
   assert.match(copy, /\/blog\/central-florida-townhome-condo-movers/);

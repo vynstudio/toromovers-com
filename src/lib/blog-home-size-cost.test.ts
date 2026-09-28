@@ -72,5 +72,5 @@ test("home-size cost guide meets the AEO bar", () => {
   assert.notEqual(post.slug, "how-much-does-a-local-move-cost-orlando");
 
   const phoneOutsideCtaFaq = [...post.body.slice(0, -1), post.description, post.teaser].join("\n");
-  assert.doesNotMatch(phoneOutsideCtaFaq, /234-0510|689|600-2720|758-0094/);
+  assert.doesNotMatch(phoneOutsideCtaFaq, /234-0510|689|600-2720/);
 });

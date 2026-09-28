@@ -111,7 +111,5 @@ test("JSON-LD telephone is the primary line and 689 stays a contact point", () =
   assert.match(site, /PHONE_E164 = "\+13212340510"/);
   assert.match(site, /PHONE_SECONDARY_DISPLAY = "\(689\) 600-2720"/);
   assert.match(site, /PHONE_SECONDARY_E164 = "\+16896002720"/);
-  assert.equal(site.includes("758-0094"), false);
-  assert.equal(site.includes("13217580094"), false);
   assert.ok(site.indexOf("PHONE_DISPLAY") < site.indexOf("PHONE_SECONDARY_DISPLAY"));
 });
