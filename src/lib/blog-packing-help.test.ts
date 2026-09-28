@@ -68,7 +68,7 @@ test("packing help guide meets the AEO bar", () => {
   assert.match(copy, /\/blog\/orlando-movers-cost-by-home-size/);
   assert.match(copy, /\/blog\/plan-orlando-move-before-first-box/);
   assert.match(copy, /\/apartment-movers-orlando-fl/);
-  assert.match(copy, /\$75/);
+  assert.match(copy, /\$95 per mover per hour/);
   assert.match(copy, /2-hour minimum/);
   assert.match(copy, /no fuel surcharge/);
   assert.match(copy, /no stair fees/);

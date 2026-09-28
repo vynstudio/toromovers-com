@@ -4,6 +4,7 @@
  */
 
 import type { ServiceIllustrationKey } from "@/components/ServiceIllustrations";
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
 
 export type ServiceHubItem = {
   title: string;
@@ -23,7 +24,7 @@ export type ServiceHubItem = {
 export const servicesHub = {
   eyebrow: "Moving services",
   heading: "Orlando movers for full-service, labor-only & apartments",
-  lead: "Three clear ways to hire Toro Movers in Orlando—full-service local moving, labor-only loading, or apartment movers—with up-front hourly rates. Nearby Central Florida coverage is listed below.",
+  lead: `Three clear ways to hire Toro Movers in Orlando—full-service local moving, labor-only loading, or apartment movers. ${LOCAL_HOURLY_RATE_SENTENCE} Nearby Central Florida coverage is listed below.`,
   cta: "Get a quote",
   galleryCta: "See recent moves",
   galleryHref: "/orlando-movers-gallery",

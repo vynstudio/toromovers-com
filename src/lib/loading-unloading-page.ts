@@ -1,6 +1,7 @@
 /** Copy for /loading-unloading — single-item / short loading help. FAQ = schema. */
 
 import { businessAreaServed } from "./business-profile.ts";
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
 import { SITE_URL } from "./site.ts";
 
 export const loadingUnloadingPage = {
@@ -104,7 +105,7 @@ export const loadingUnloadingPage = {
     },
     {
       q: "How is pricing handled?",
-      a: "Short jobs use up-front hourly rates. Crew size and time depend on the item, stairs, and parking. Call or text (689) 600-2720 with details before move day.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Crew size and time depend on the item, stairs, and parking. Call or text (689) 600-2720 with details before move day.`,
     },
     {
       q: "How do I book loading help?",
