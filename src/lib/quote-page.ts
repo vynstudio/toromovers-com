@@ -8,6 +8,10 @@
 
 import { FUNNEL_SLA } from "./funnel-offer.ts";
 import {
+  HOURLY_RATE_PHRASE,
+  LOCAL_HOURLY_RATE_SENTENCE,
+} from "./published-rate.ts";
+import {
   BUSINESS_NAME,
   EMAIL,
   HOURS_LABEL,
@@ -23,19 +27,19 @@ import {
 export const QUOTE_PAGE_PATH = QUOTE_PATH;
 export const QUOTE_PAGE_URL = `${SITE_URL}${QUOTE_PATH}`;
 
-/** Canonical AEO answer — visible one-line lede and JSON-LD must stay in sync. */
-export const QUOTE_AEO_ANSWER =
-  "From $75/mover/hour — 2-hour min, no fuel or stair fees.";
+/** Canonical AEO answer — visible lede and JSON-LD must stay in sync. */
+export const QUOTE_AEO_ANSWER = LOCAL_HOURLY_RATE_SENTENCE;
 
 export const quotePage = {
   path: QUOTE_PATH,
   metadata: {
-    title: { absolute: "Moving quote in Orlando from $75/hour | Toro Movers" },
+    title: {
+      absolute: `Moving quote in Orlando — ${HOURLY_RATE_PHRASE} | Toro Movers`,
+    },
     description:
-      "Toro Movers quotes local, long-distance, and interstate moves. Local jobs from $75/mover/hour, 2-hour min, no fuel or stair fees. Call " + PHONE_LINES + ".",
-    ogTitle: "Moving quote in Orlando from $75/hour | Toro Movers",
-    ogDescription:
-      "Up-front moving quote for local, long-distance, and interstate. Local jobs from $75/mover/hour, 2-hour minimum, no fuel surcharge, no stair fees.",
+      "Quotes for local, long-distance, and interstate moves. Local moves are $95 per mover per hour, with a 2-hour minimum and no fuel or stair fees. Call " + PHONE_LINES + ".",
+    ogTitle: `Moving quote in Orlando — ${HOURLY_RATE_PHRASE} | Toro Movers`,
+    ogDescription: `Up-front moving quote for local, long-distance, and interstate. ${LOCAL_HOURLY_RATE_SENTENCE}`,
     ogImage: "/og/get-my-price.jpg",
     ogImageAlt: "Toro Movers — get a free local moving quote in Orlando",
   },
@@ -44,7 +48,7 @@ export const quotePage = {
     { name: "Free moving quote", href: QUOTE_PATH },
   ] as const,
   hero: {
-    h1: "Moving quote in Orlando from $75/hour.",
+    h1: `Moving quote in Orlando — ${HOURLY_RATE_PHRASE}.`,
     lede: QUOTE_AEO_ANSWER,
   },
   form: {
@@ -66,7 +70,7 @@ export const quotePage = {
     },
     {
       q: "Do you quote long-distance and interstate moves?",
-      a: "Yes. Local jobs are hourly from $75/mover/hour. Long-distance and interstate are quoted from origin, destination, and inventory.",
+      a: `Yes. ${LOCAL_HOURLY_RATE_SENTENCE} Long-distance and interstate are quoted from origin, destination, and inventory.`,
     },
   ] as const,
   footer: {
@@ -138,14 +142,13 @@ export function quotePageGraph() {
           "@type": "Offer",
           url: pageUrl,
           priceCurrency: "USD",
-          price: "75",
+          price: "95",
           priceSpecification: {
             "@type": "UnitPriceSpecification",
-            price: "75",
+            price: "95",
             priceCurrency: "USD",
             unitText: "mover / hour",
-            description:
-              "Local Central Florida floor rate from $75 per mover per hour. 2-hour minimum. No fuel surcharge. No stair fees. Long-distance and interstate quoted separately.",
+            description: `${LOCAL_HOURLY_RATE_SENTENCE} Long-distance and interstate quoted separately.`,
           },
         },
       },

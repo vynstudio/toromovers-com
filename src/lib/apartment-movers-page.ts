@@ -1,7 +1,8 @@
 /** Copy for /apartment-movers-orlando-fl — FAQ text must match on-page FAQ (schema). */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { SITE_URL, PHONE_LINES} from "./site.ts";
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
+import { PHONE_LINES, SITE_URL } from "./site.ts";
 
 export const apartmentMoversPage = {
   path: "/apartment-movers-orlando-fl",
@@ -73,8 +74,7 @@ export const apartmentMoversPage = {
   },
   pricing: {
     h2: "How apartment move pricing works",
-    intro:
-      "Toro Movers quotes apartment moves with up-front hourly rates. The total depends on:",
+    intro: `${LOCAL_HOURLY_RATE_SENTENCE} The total depends on:`,
     factors: [
       { title: "Crew size", body: "Matched to volume and access" },
       { title: "Time on site", body: "Load, transport when included, unload, place" },
@@ -94,7 +94,7 @@ export const apartmentMoversPage = {
     close:
       "We explain the hourly model before move day. Call or text with unit details, floors, and elevator rules—or get a free quote online.",
     marketNote:
-      "Published Orlando apartment-move averages vary by company. Treat third-party ranges as context only. Your Toro quote is based on your building and inventory—not a website rate card.",
+      "Published Orlando apartment-move averages vary by company. Treat third-party ranges as context only. Your Toro quote is based on your building and inventory.",
   },
   areas: {
     h2: "Apartment movers across Central Florida",
@@ -133,7 +133,7 @@ export const apartmentMoversPage = {
     },
     {
       q: "How much do apartment movers cost in Orlando?",
-      a: "Most apartment moves are quoted with up-front hourly rates. The total depends on crew size, access, readiness, and whether you need a truck. Call or text " + PHONE_LINES + " with your details for a clear explanation before move day.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} The total depends on crew size, access, readiness, and whether you need a truck. Call or text ${PHONE_LINES} with your details for a clear explanation before move day.`,
     },
     {
       q: "Are your movers bilingual?",

@@ -1,7 +1,8 @@
 /** Copy for /full-service-moving — FAQ text must match on-page FAQ (schema). */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { SITE_URL, PHONE_LINES} from "./site.ts";
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
+import { PHONE_LINES, SITE_URL } from "./site.ts";
 
 export const fullServicePage = {
   path: "/full-service-moving",
@@ -80,8 +81,7 @@ export const fullServicePage = {
   },
   pricing: {
     h2: "How full-service pricing works",
-    intro:
-      "Toro Movers quotes full-service local moves with up-front hourly rates. The total depends on:",
+    intro: `${LOCAL_HOURLY_RATE_SENTENCE} The total depends on:`,
     factors: [
       { title: "Crew size", body: "Matched to volume and access" },
       { title: "Time on the job", body: "Load, drive, unload, and place" },
@@ -101,7 +101,7 @@ export const fullServicePage = {
     close:
       "We explain the hourly model before move day. Call or text with addresses and access details—or get a free quote online.",
     marketNote:
-      "Published Orlando moving averages vary by company. Treat third-party ranges as context only. Your Toro quote is based on your job—not a website rate card.",
+      "Published Orlando moving averages vary by company. Treat third-party ranges as context only. Your Toro quote is based on your job.",
   },
   areas: {
     h2: "Full-service movers across Central Florida",
@@ -136,7 +136,7 @@ export const fullServicePage = {
     },
     {
       q: "How much do full-service movers cost in Orlando?",
-      a: "Most local moves are quoted with up-front hourly rates. The total depends on crew size, time, access, readiness, and route. Call or text " + PHONE_LINES + " with your details for a clear explanation before move day.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} The total depends on crew size, time, access, readiness, and route. Call or text ${PHONE_LINES} with your details for a clear explanation before move day.`,
     },
     {
       q: "Are your movers bilingual?",

@@ -16,6 +16,24 @@
   NEXT_TELEMETRY_DISABLED = "1"
   NEXT_PUBLIC_SITE_URL = "https://toromovers.com"
 
+# toromovers.net aliases → apex in one hop.
+# http and https are separate rules (Netlify does not combine them).
+# The https counterparts are the next legacy-domain rules. Host is part of
+# `from`, so toromovers.com is not matched. force = true beats the Next.js
+# runtime, which would otherwise serve this app on the alias. `to` has no
+# query string, so Netlify forwards the original query string.
+[[redirects]]
+  from = "http://toromovers.net/*"
+  to = "https://toromovers.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.toromovers.net/*"
+  to = "https://toromovers.com/:splat"
+  status = 301
+  force = true
+
 # www → apex
 [[redirects]]
   from = "https://www.toromovers.com/*"
@@ -45,6 +63,21 @@
 [[redirects]]
   from = "https://www.toromudanzas.com/*"
   to = "https://toromovers.com/?utm_source=toromudanzas&utm_medium=redirect"
+  status = 301
+  force = true
+
+# Stale Next.js font hashes (Search Console 404s). Inter is next/font/google,
+# so /_next/static/media/*.woff2 changes every build and public/ has no font
+# file. Exact 301s to the homepage. Do not wildcard /_next/static/*.
+[[redirects]]
+  from = "/_next/static/media/31a9145ccb84606d-s.p.10_fo~wllb4ek.woff2"
+  to = "https://toromovers.com/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/_next/static/media/c31dbb76e36f1a9a-s.p.0~~5jj-nwn-w8.woff2"
+  to = "https://toromovers.com/"
   status = 301
   force = true
 

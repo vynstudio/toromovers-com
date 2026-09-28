@@ -5,6 +5,7 @@
 
 import type { ServiceIllustrationKey } from "@/components/ServiceIllustrations";
 import { CITIES as ENGINE_CITIES, type CityData } from "./engine-cities.ts";
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
 import { PHONE_LINES, QUOTE_PATH } from "./site.ts";
 
 export type CityFaq = { q: string; a: string };
@@ -76,7 +77,7 @@ export const ORLANDO: CityPageContent = {
     },
     {
       h2: "Up-front hourly moving rates",
-      body: "Toro Movers uses up-front hourly rates for most Orlando local moves. Pricing depends on crew size, truck needs, stairs, elevators, access, distance, and how much you need moved. We explain the rate structure before move day so expectations are clear.",
+      body: `${LOCAL_HOURLY_RATE_SENTENCE} Pricing depends on crew size, truck needs, stairs, elevators, access, distance, and how much you need moved. We explain the rate structure before move day so expectations are clear.`,
     },
   ],
   neighborhoods: [
@@ -96,7 +97,7 @@ export const ORLANDO: CityPageContent = {
   faqs: [
     {
       q: "How much do movers cost in Orlando?",
-      a: "Toro Movers quotes most Orlando moves with up-front hourly rates. The final cost depends on crew size, truck needs, stairs, elevators, distance, access, and how much you need moved. Call or text " + PHONE_LINES + " with your move details and we will explain the hourly pricing model before move day.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} The final cost depends on crew size, truck needs, stairs, elevators, distance, access, and how much you need moved. Call or text ${PHONE_LINES} with your move details and we will explain the hourly pricing model before move day.`,
     },
     {
       q: "Do you offer labor-only movers in Orlando?",
@@ -189,7 +190,7 @@ function defaultSections(city: CityData): CityPageContent["sections"] {
     },
     {
       h2: `Up-front hourly moving rates in ${city.name}`,
-      body: `Most ${city.name} local moves are quoted with up-front hourly rates. Cost depends on crew size, truck needs, stairs, elevators, access, distance, and how much you need moved. We explain the rate before move day.`,
+      body: `${LOCAL_HOURLY_RATE_SENTENCE} Cost depends on crew size, truck needs, stairs, elevators, access, distance, and how much you need moved. We explain the rate before move day.`,
     },
   ];
 }
@@ -282,7 +283,7 @@ function extraCity(opts: {
       },
       {
         h2: `Up-front hourly moving rates in ${opts.name}`,
-        body: `Toro quotes most ${opts.name} local moves with up-front hourly rates. Crew size, access, and inventory drive the time — we explain the rate before the crew is booked.`,
+        body: `${LOCAL_HOURLY_RATE_SENTENCE} Crew size, access, and inventory drive the time — we explain the rate before the crew is booked.`,
       },
     ],
     neighborhoods: opts.neighborhoods,
@@ -376,7 +377,7 @@ const EXTRA_CITIES: CityPageContent[] = [
       },
       {
         q: "How is a Longwood move priced?",
-        a: `Most Longwood moves are quoted with up-front hourly rates. Call ${PHONE_LINES} with addresses, stairs, and inventory and we will explain crew size and the rate.`,
+        a: `${LOCAL_HOURLY_RATE_SENTENCE} Call ${PHONE_LINES} with addresses, stairs, and inventory and we will explain crew size and the rate.`,
       },
       {
         q: "Do you do labor-only in Longwood?",
@@ -504,7 +505,7 @@ const EXTRA_CITIES: CityPageContent[] = [
       },
       {
         q: "How do you price a Poinciana to Orlando move?",
-        a: "Up-front hourly rates. Drive time is on the clock, quoted honestly — no mystery mileage surcharge.",
+        a: `${LOCAL_HOURLY_RATE_SENTENCE} Drive time is on the clock, quoted honestly — no mystery mileage surcharge.`,
       },
       {
         q: "Do you offer labor-only in Poinciana?",
@@ -593,7 +594,7 @@ const EXTRA_CITIES: CityPageContent[] = [
       },
       {
         q: "How is a Mount Dora move priced?",
-        a: `Up-front hourly rates. Call ${PHONE_LINES} with addresses, stairs, and inventory.`,
+        a: `${LOCAL_HOURLY_RATE_SENTENCE} Call ${PHONE_LINES} with addresses, stairs, and inventory.`,
       },
     ],
     lat: 28.8025,
@@ -846,7 +847,7 @@ const EXTRA_CITIES: CityPageContent[] = [
       },
       {
         q: "How do you price a Deltona to Orlando move?",
-        a: "Up-front hourly rates. The drive is longer than a move inside Seminole County, and that time is on the clock and quoted honestly — no separate mileage fee.",
+        a: `${LOCAL_HOURLY_RATE_SENTENCE} The drive is longer than a move inside Seminole County, and that time is on the clock and quoted honestly — no separate mileage fee.`,
       },
       {
         q: "Do you offer labor-only movers in Deltona?",
@@ -926,7 +927,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
     },
     {
       h2: "Up-front hourly moving rates",
-      body: "Most local moves are quoted by the hour. Crew size, access, stairs, elevators, and inventory drive the time. We explain the rate before the crew is booked.",
+      body: `${LOCAL_HOURLY_RATE_SENTENCE} Crew size, access, stairs, elevators, and inventory drive the time. We explain the rate before the crew is booked.`,
     },
   ],
   neighborhoods: [
@@ -956,7 +957,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
     },
     {
       q: "How do you price a Central Florida move?",
-      a: "Up-front hourly pricing with crew size agreed before the day. You pay for the time the move takes.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Crew size is agreed before the day. You pay for the time the move takes.`,
     },
     {
       q: "Do you have a bilingual crew?",

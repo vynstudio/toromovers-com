@@ -52,7 +52,7 @@ test("same-day Orlando guide meets the AEO bar", () => {
   assert.match(copy, /\/blog\/orlando-apartment-high-rise-movers/);
   assert.match(copy, /\/full-service-moving/);
   assert.match(copy, /\/labor-only-moving/);
-  assert.match(copy, /\$75/);
+  assert.match(copy, /\$95 per mover per hour/);
   assert.match(copy, /2-hour minimum/);
   assert.match(copy, /no fuel surcharge/);
   assert.match(copy, /no stair fees/);

@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   keywords: [
     "local moving quote Orlando",
     "up-front hourly movers",
-    "movers from $75 per hour",
+    "$95 per mover per hour",
     "no fuel surcharge movers",
     "bilingual movers Orlando",
     "long-distance movers Orlando",

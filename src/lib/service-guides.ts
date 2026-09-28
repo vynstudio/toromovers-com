@@ -105,7 +105,7 @@ export const packingServicesPage: ServiceGuide = {
     {
       h2: "How packing changes the hourly clock",
       paragraphs: [
-        "Local jobs are quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Packing the crew does is hours on that same rate. A larger pack needs more hours, and sometimes more movers, so the boxes and the furniture both finish. More people can box and carry at the same time, which can shorten the clock. The rate is per mover per hour, so the quote balances people and time.",
+        "Local jobs are quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Packing the crew does is hours on that same rate. A larger pack needs more hours, and sometimes more movers, so the boxes and the furniture both finish. More people can box and carry at the same time, which can shorten the clock. The rate is per mover per hour, so the quote balances people and time.",
         "How packed you will be can change the day more than bedroom count alone. A packed two-bedroom with closed boxes can finish faster than a larger home where the kitchen and closets are still open. Share home size and how packed you will be. Stairs, elevator waits, and a long walk from parking add time. They are not a stair fee. A short fragile pack plus a short carry can land on the 2-hour minimum. A full pack of a house will run past it. We explain crew size and the hourly model before the day.",
       ],
     },
@@ -137,7 +137,7 @@ export const packingServicesPage: ServiceGuide = {
     },
     {
       q: "Is there a separate price for packing?",
-      a: "No. There is no carton rate and no packing price list. Time the crew spends boxing is on the same hourly clock as the carry, from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A larger pack needs more hours, and sometimes more movers.",
+      a: "No. There is no carton rate and no packing price list. Time the crew spends boxing is on the same hourly clock as the carry at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A larger pack needs more hours, and sometimes more movers.",
     },
     {
       q: "Can packing be added to labor-only or full-service?",
@@ -228,7 +228,7 @@ export const officeMoversPage: ServiceGuide = {
     {
       h2: "How an office move is quoted",
       paragraphs: [
-        "Local office and light commercial moves are hourly. Toro quotes local jobs from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Freight-elevator waits and a long carry from the dock add time on that clock. They are not a separate line. Crew size, how packed the suite is, and truck versus labor-only still change the total. There is no one-size rate card.",
+        "Local office and light commercial moves are hourly. Toro quotes local jobs at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Freight-elevator waits and a long carry from the dock add time on that clock. They are not a separate line. Crew size, how packed the suite is, and truck versus labor-only still change the total.",
         "Share both addresses, floors, the date, and whether the suite will be empty. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. We serve Orlando and the other Central Florida cities linked below.",
       ],
     },
@@ -258,7 +258,7 @@ export const officeMoversPage: ServiceGuide = {
     },
     {
       q: "How do I get an office moving quote?",
-      a: "Request a quote at the quote page, or call or text " + PHONE_LINES + ". Share both addresses, floors, dock or freight-elevator rules, after-hours limits, and truck versus labor-only. Local jobs are hourly from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Request a quote at the quote page, or call or text " + PHONE_LINES + ". Share both addresses, floors, dock or freight-elevator rules, after-hours limits, and truck versus labor-only. Local jobs are hourly at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ],
   closing: {
@@ -329,7 +329,7 @@ export const sameDayMoversPage: ServiceGuide = {
     {
       h2: "How a same-day job is quoted",
       paragraphs: [
-        "Local same-day jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Crew size, how packed you are, and truck versus labor-only still change the total. There is no same-day surcharge in the pitch and no one-size rate card. The limit is whether a crew is open, not a different price list.",
+        "Local same-day jobs are hourly. Toro quotes $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Crew size, how packed you are, and truck versus labor-only still change the total. There is no same-day surcharge in the pitch. The limit is whether a crew is open, not a different price list.",
         "That hourly model is for local Central Florida work. A drop-off outside the region is a trip quote. We explain the rate and the start window before the crew rolls. If the only open time is shorter than the job, we will say that.",
       ],
     },
@@ -350,7 +350,7 @@ export const sameDayMoversPage: ServiceGuide = {
   faqs: [
     {
       q: "Can I book same-day movers in Orlando?",
-      a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Call or text " + PHONE_LINES + " or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Call or text " + PHONE_LINES + " or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
     {
       q: "What should I send for a same-day quote?",
@@ -362,7 +362,7 @@ export const sameDayMoversPage: ServiceGuide = {
     },
     {
       q: "Is same-day priced differently from a booked local move?",
-      a: "No. Same-day local jobs inside Central Florida use the same hourly model: from $75 per mover per hour, a 2-hour minimum, no fuel surcharge, and no stair fees. There is no same-day rate card. Availability depends on an open crew.",
+      a: "No. Same-day local jobs inside Central Florida use the same hourly model: $95 per mover per hour, a 2-hour minimum, no fuel surcharge, and no stair fees. Availability depends on an open crew.",
     },
     {
       q: "Do you run same-day long-distance moves?",
@@ -435,7 +435,7 @@ export const smallMovesPage: ServiceGuide = {
     {
       h2: "How a short job is quoted",
       paragraphs: [
-        "Local small jobs are hourly. Toro quotes from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on that minimum. Stairs, an elevator wait, a long walk from parking, and a piece that has to come apart add time on the same clock. They are not a separate fee. Two movers fit many single pieces. A heavier piece may need more people. The rate is per mover per hour, so the quote balances people and time.",
+        "Local small jobs are hourly. Toro quotes $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on that minimum. Stairs, an elevator wait, a long walk from parking, and a piece that has to come apart add time on the same clock. They are not a separate fee. Two movers fit many single pieces. A heavier piece may need more people. The rate is per mover per hour, so the quote balances people and time.",
         "A clear path from the room to the door, and a place to park that is actually legal, keeps the minimum realistic. A building that makes the crew wait for an elevator spends that wait on the clock. Florida heat slows a midday carry. Heat does not add a fee. When the building allows it, an earlier start is the faster job. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
       ],
     },
@@ -468,7 +468,7 @@ export const smallMovesPage: ServiceGuide = {
     },
     {
       q: "How much do small movers cost in Orlando?",
-      a: "Local jobs are quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on the minimum. Stairs, elevator waits, and a long walk from parking add time. They are not a separate fee.",
+      a: "Local jobs are quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on the minimum. Stairs, elevator waits, and a long walk from parking add time. They are not a separate fee.",
     },
     {
       q: "How is this different from POD loading or labor-only?",
@@ -548,7 +548,7 @@ export const podLoadingPage: ServiceGuide = {
     {
       h2: "How the hourly clock works",
       paragraphs: [
-        "Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a long carry, a late gate, and an elevator wait add time on the hourly clock. They are not a separate fee. Crew size, and whether you book one stop or two, still change the total. Many loads start with two movers. A tight stair or a heavier inventory may need more so the pack finishes inside the window you actually have. The rate is per mover per hour, so the quote balances people and time.",
+        "Local labor is quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a long carry, a late gate, and an elevator wait add time on the hourly clock. They are not a separate fee. Crew size, and whether you book one stop or two, still change the total. Many loads start with two movers. A tight stair or a heavier inventory may need more so the pack finishes inside the window you actually have. The rate is per mover per hour, so the quote balances people and time.",
         "Have the truck, the container, or the storage access on site when the crew arrives: keys, gate code, and unit number. Clear a path from the rooms to the door. Closed boxes let the crew stay on furniture. Packing that is still undone adds time on the same clock. Photos of bulky pieces help size the crew. If the building asks for a certificate, send the manager’s contact and the deadline when you book.",
       ],
     },
@@ -585,7 +585,7 @@ export const podLoadingPage: ServiceGuide = {
     },
     {
       q: "How much does POD or U-Haul loading cost?",
-      a: "Local labor is quoted from $75 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a late gate, and a long carry add time. They are not a separate fee. Call or text " + PHONE_LINES + " or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Local labor is quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a late gate, and a long carry add time. They are not a separate fee. Call or text " + PHONE_LINES + " or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
     },
   ],
   closing: {

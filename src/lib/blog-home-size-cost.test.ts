@@ -62,7 +62,7 @@ test("home-size cost guide meets the AEO bar", () => {
   assert.match(copy, /\/blog\/full-service-vs-labor-only-orlando/);
   assert.match(copy, /\/labor-only-moving/);
   assert.match(copy, /\/apartment-movers-orlando-fl/);
-  assert.match(copy, /\$75/);
+  assert.match(copy, /\$95 per mover per hour/);
   assert.match(copy, /2-hour minimum/);
   assert.match(copy, /no fuel surcharge/);
   assert.match(copy, /no stair fees/);

@@ -1,7 +1,8 @@
 /** Copy for /labor-only-moving — keep FAQ text identical to on-page FAQ (schema). */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { SITE_URL, PHONE_LINES} from "./site.ts";
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
+import { PHONE_LINES, SITE_URL } from "./site.ts";
 
 export const laborOnlyPage = {
   path: "/labor-only-moving",
@@ -95,8 +96,7 @@ export const laborOnlyPage = {
   },
   pricing: {
     h2: "How labor-only pricing works (without guesswork)",
-    intro:
-      "Toro Movers quotes labor-only help with up-front hourly rates. The final total depends on:",
+    intro: `${LOCAL_HOURLY_RATE_SENTENCE} The final total depends on:`,
     factors: [
       { title: "Crew size", body: "How many movers the job needs" },
       { title: "Time on site", body: "Load, unload, or both" },
@@ -116,7 +116,7 @@ export const laborOnlyPage = {
     close:
       "We explain the hourly model before move day so you are not guessing on the curb. Call or text with truck size, addresses, and access details—or get a free quote online.",
     marketNote:
-      "Published average labor-only prices in Orlando vary by company and aggregator. Treat third-party averages as context only. Your Toro quote is based on your job, not a website rate card.",
+      "Published average labor-only prices in Orlando vary by company and aggregator. Treat third-party averages as context only. Your Toro quote is based on your job.",
   },
   areas: {
     h2: "Labor-only movers across Central Florida",

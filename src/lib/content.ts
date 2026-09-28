@@ -1,6 +1,7 @@
 // Homepage copy — mobile-first layout adapted for Toro Movers.
 // SEO/AEO answer-first copy. Real business facts only (phone, rating, services, area).
 
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
 import {
   CAREERS_OPS_COORDINATOR_PATH,
   PHONE_LINES,
@@ -303,7 +304,7 @@ export const faq = {
   items: [
     {
       q: "How much do movers cost in Orlando?",
-      a: "Toro Movers quotes most Orlando moves with up-front hourly rates. The final cost depends on crew size, truck needs, stairs, elevators, distance, and how much you need moved. Call or text " + PHONE_LINES + " with your move details—or request a quote online—and we will explain the hourly pricing model before move day.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} The final cost depends on crew size, truck needs, stairs, elevators, distance, and how much you need moved. Call or text ${PHONE_LINES} with your move details—or request a quote online—and we will explain the hourly pricing model before move day.`,
       linkHref: "/blog/how-much-does-a-local-move-cost-orlando",
       linkLabel: "How Orlando moving costs work",
     },

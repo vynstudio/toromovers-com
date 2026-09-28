@@ -1,3 +1,4 @@
+import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
 import { PHONE_LINES } from "./site.ts";
 // Previously published city SEO copy from the engine site.
 // Keep unique local details; do not flatten this into Orlando find-replace.
@@ -88,7 +89,7 @@ export const ORLANDO: CityData = {
   faqs: [
     {
       q: "How much do movers cost in Orlando?",
-      a: `Toro Movers quotes most Orlando moves with up-front hourly rates. The final cost depends on crew size, truck needs, stairs, elevators, distance, access, and how much you need moved. Call or text ${PHONE_LINES} with your move details and we will explain the hourly pricing model before move day.`,
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} The final cost depends on crew size, truck needs, stairs, elevators, distance, access, and how much you need moved. Call or text ${PHONE_LINES} with your move details and we will explain the hourly pricing model before move day.`,
     },
     {
       q: "Do you offer labor-only movers in Orlando?",
@@ -151,7 +152,7 @@ export const LAKE_MARY: CityData = {
   faqs: [
     {
       q: "How much do movers cost in Lake Mary, FL?",
-      a: "Costs depend on crew size, home size, access, and hours. Toro uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Costs depend on crew size, home size, access, and hours. Toro uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.`,
     },
     {
       q: "Do you move homes and townhomes in Lake Mary?",
@@ -200,7 +201,7 @@ export const WINTER_PARK: CityData = {
   faqs: [
     {
       q: "How much do movers cost in Winter Park, FL?",
-      a: "Winter Park moving cost depends on crew size, home or apartment size, access (narrow streets, stairs, elevators, long carries), packing readiness, and how long the job takes. Toro Movers uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Winter Park moving cost depends on crew size, home or apartment size, access (narrow streets, stairs, elevators, long carries), packing readiness, and how long the job takes. Toro Movers uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.`,
     },
     {
       q: "Do you move apartments in Winter Park?",
@@ -326,7 +327,7 @@ export const SANFORD: CityData = {
     },
     {
       q: "How is a Sanford move priced?",
-      a: "By the hour, agreed up front, with no per-mile or fuel charge. Older homes can take a little longer and we tell you that honestly before the day.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} No per-mile charge. Older homes can take a little longer and we tell you that honestly before the day.`,
     },
   ],
   schema: { lat: 28.8117, lng: -81.2731 },
@@ -521,7 +522,7 @@ export const ALTAMONTE_SPRINGS: CityData = {
   faqs: [
     {
       q: "How much do movers cost in Altamonte Springs, FL?",
-      a: "Costs depend on crew size, home size, access, and hours. Toro uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Costs depend on crew size, home size, access, and hours. Toro uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.`,
     },
     {
       q: "Do you move apartments in Altamonte Springs?",
@@ -637,7 +638,7 @@ export const ST_CLOUD: CityData = {
   faqs: [
     {
       q: "How much do movers cost in St. Cloud, FL?",
-      a: "Costs depend on crew size, home size, access, and hours. Toro uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Costs depend on crew size, home size, access, and hours. Toro uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.`,
     },
     {
       q: "Do you move apartments and family homes in St. Cloud?",
@@ -763,7 +764,7 @@ export const MAITLAND: CityData = {
     },
     {
       q: "How is a Maitland move priced?",
-      a: "By the hour, with the rate and crew size agreed up front — no hidden fees and no per-mile charge. You only pay for the time the move actually takes.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Crew size is agreed up front — no hidden fees and no per-mile charge. You only pay for the time the move actually takes.`,
     },
   ],
   schema: { lat: 28.6276, lng: -81.3631 },
@@ -857,7 +858,7 @@ export const LAKELAND: CityData = {
     },
     {
       q: "How is a Lakeland move priced?",
-      a: "By the hour, with the crew size and rate agreed before the day — no per-mile charge, no fuel surcharge, no hidden fees. You only pay for the time the move actually takes.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Crew size is agreed before the day — no per-mile charge, no fuel surcharge, no hidden fees. You only pay for the time the move actually takes.`,
     },
     {
       q: "Can you do labor-only — load or unload my U-Haul or POD?",
@@ -904,7 +905,7 @@ export const WINTER_HAVEN: CityData = {
   faqs: [
     {
       q: "How much do movers cost in Winter Haven, FL?",
-      a: "Costs depend on crew size, home size, access, and hours. Toro uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Costs depend on crew size, home size, access, and hours. Toro uses upfront hourly pricing with no fuel surcharges, stair fees, or material fees.`,
     },
     {
       q: "Do you move apartments and family homes in Winter Haven?",
@@ -956,7 +957,7 @@ export const FERN_PARK: CityData = {
     },
     {
       q: "How is a Fern Park move priced?",
-      a: "By the hour, with crew size and rate agreed up front — no per-mile charge, no fuel surcharge, no hidden fees. You only pay for the time the move actually takes.",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Crew size is agreed up front — no per-mile charge, no fuel surcharge, no hidden fees. You only pay for the time the move actually takes.`,
     },
     {
       q: "Can you do labor-only — load or unload my U-Haul or POD?",
