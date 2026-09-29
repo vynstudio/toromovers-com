@@ -2,10 +2,13 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   DEFAULT_QUO_FROM,
+  DEFAULT_QUO_FROM_PHONE_NUMBER_ID,
   QUO_API_VERSION,
   QUO_MESSAGES_URL,
   QUO_USER_AGENT,
   notifyLead,
+  quoFromNumber,
+  quoFromPhoneNumberId,
   sendEmail,
   sendQuoMessage,
   type LeadNotifyInput,
@@ -87,6 +90,9 @@ test("notifyLead does not SMS LEAD_SMS_TO; team is Telegram only", async () => {
     const results = await notifyLead(sampleLead);
     const quo = calls.filter((call) => call.url === QUO_MESSAGES_URL);
     assert.equal(quo.length, 1);
+    assert.equal(quo[0]?.body.from, "+13212340510");
+    assert.match(String(quo[0]?.body.content), /\(321\) 234-0510/);
+    assert.doesNotMatch(String(quo[0]?.body.content), /689|600-2720/);
     assert.deepEqual(quo[0]?.body.to, ["+13215550100"]);
     assert.equal(quo[0]?.headers["user-agent"], QUO_USER_AGENT);
     assert.equal(quo[0]?.headers["quo-api-version"], QUO_API_VERSION);
@@ -104,6 +110,11 @@ test("notifyLead does not SMS LEAD_SMS_TO; team is Telegram only", async () => {
     assert.equal(email.body.from, "Toro Movers <hello@toromovers.net>");
     assert.deepEqual(email.body.to, ["ada@example.com"]);
     assert.equal(email.body.reply_to, "hello@toromovers.net");
+    assert.match(String(email.body.html), /tel:\+13212340510/);
+    assert.match(String(email.body.html), /\(321\) 234-0510/);
+    assert.match(String(email.body.text), /\(321\) 234-0510/);
+    assert.doesNotMatch(String(email.body.html), /689|600-2720|\+16896002720/);
+    assert.doesNotMatch(String(email.body.text), /689|600-2720|\+16896002720/);
     assert.match(String(email.body.html), /#E20613/);
     assert.doesNotMatch(String(email.body.html), /#E10600/i);
     assert.match(String(email.body.html), /15 minutes/);
@@ -237,6 +248,51 @@ test("sendEmail does not guess a from-domain when RESEND_FROM_EMAIL is unset", a
     assert.equal(fetched, false);
   } finally {
     globalThis.fetch = originalFetch;
+    restore();
+  }
+});
+
+test("customer SMS defaults to the Primary inbox when Quo from env is unset", async () => {
+  const restore = stubEnv({ QUO_API_KEY: "test-quo-key" });
+  const calls: FetchCall[] = [];
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = (async (url, init) => {
+    calls.push({
+      url: String(url),
+      headers: headerMap(init),
+      body: JSON.parse(String(init?.body || "{}")),
+    });
+    return new Response("{}", { status: calls.length === 1 ? 400 : 200 });
+  }) as typeof fetch;
+
+  try {
+    assert.equal(DEFAULT_QUO_FROM, "+13212340510");
+    assert.equal(DEFAULT_QUO_FROM_PHONE_NUMBER_ID, "PNXRx6xZ3W");
+    assert.equal(quoFromNumber(), "+13212340510");
+    assert.equal(quoFromPhoneNumberId(), "PNXRx6xZ3W");
+    const result = await sendQuoMessage({
+      to: "3215550100",
+      content: "hello",
+    });
+    assert.equal(result.ok, true);
+    assert.equal(calls.length, 2);
+    assert.equal(calls[0]?.body.from, "+13212340510");
+    assert.equal(calls[1]?.body.from, "PNXRx6xZ3W");
+  } finally {
+    globalThis.fetch = originalFetch;
+    restore();
+  }
+});
+
+test("QUO_FROM_NUMBER and QUO_FROM_PHONE_NUMBER_ID override the Primary defaults", () => {
+  const restore = stubEnv({
+    QUO_FROM_NUMBER: "+15555550100",
+    QUO_FROM_PHONE_NUMBER_ID: "PNoverride",
+  });
+  try {
+    assert.equal(quoFromNumber(), "+15555550100");
+    assert.equal(quoFromPhoneNumberId(), "PNoverride");
+  } finally {
     restore();
   }
 });

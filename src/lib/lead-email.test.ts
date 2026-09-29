@@ -128,7 +128,12 @@ test("confirmation email is branded and does not claim licensed or insured", () 
   assert.match(copy.html, /Sun–Fri/);
   assert.match(copy.html, /7am–7pm/);
   assert.match(copy.html, /9am–5pm/);
-  assert.match(copy.html, /689/);
+  assert.match(copy.html, /\(321\) 234-0510/);
+  assert.match(copy.html, /tel:\+13212340510/);
+  assert.match(copy.text, /\(321\) 234-0510/);
+  assert.doesNotMatch(copy.html, /689|600-2720|\+16896002720/);
+  assert.doesNotMatch(copy.text, /689|600-2720|\+16896002720/);
+  assert.doesNotMatch(`${copy.html}\n${copy.text}`, /sms:\+16896002720/);
   assert.match(copy.html, new RegExp(FUNNEL_ESPANOL));
   assert.match(copy.html, /Bilingual/);
   assert.match(copy.html, /Full-Service Move/);
