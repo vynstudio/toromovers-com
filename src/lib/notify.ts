@@ -6,7 +6,7 @@
  */
 
 import { FUNNEL_BILINGUAL, FUNNEL_SLA } from "./funnel-offer.ts";
-import { PHONE_SECONDARY_DISPLAY } from "./site.ts";
+import { PHONE_DISPLAY, PHONE_E164 } from "./site.ts";
 import {
   buildLeadConfirmationEmail,
   formatResendError,
@@ -20,10 +20,13 @@ import {
  */
 export const QUO_MESSAGES_URL = "https://api.quo.com/v1/messages";
 export const QUO_API_VERSION = "2026-03-30";
-/** Quo workspace / sending number (689-600-2720). Client SMS FROM only. */
-export const DEFAULT_QUO_FROM = "+16896002720";
-/** Same 689 workspace sender as a Quo phoneNumberId. Used if E.164 `from` is rejected. */
-export const DEFAULT_QUO_FROM_PHONE_NUMBER_ID = "PN3sKfvpYp";
+/**
+ * Quo inbox "Primary" (+1 321-234-0510). Client SMS FROM only.
+ * Production still prefers QUO_FROM_NUMBER, then OPENPHONE_FROM_NUMBER.
+ */
+export const DEFAULT_QUO_FROM = PHONE_E164;
+/** Same Primary inbox as a Quo phoneNumberId. Used if E.164 `from` is rejected. */
+export const DEFAULT_QUO_FROM_PHONE_NUMBER_ID = "PNXRx6xZ3W";
 export const QUO_USER_AGENT =
   "Mozilla/5.0 (compatible; ToroMoversLead/1.0; +https://toromovers.com) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
 
@@ -290,7 +293,7 @@ function teamMessage(lead: LeadNotifyInput): string {
 
 function clientSms(lead: LeadNotifyInput): string {
   const n = firstName(lead.name);
-  return `Hi ${n} — Toro Movers! We got your quote request. ${FUNNEL_SLA}. Questions? ${PHONE_SECONDARY_DISPLAY}. ${FUNNEL_BILINGUAL}. Reply STOP to opt out.`;
+  return `Hi ${n} — Toro Movers! We got your quote request. ${FUNNEL_SLA}. Questions? ${PHONE_DISPLAY}. ${FUNNEL_BILINGUAL}. Reply STOP to opt out.`;
 }
 
 /**

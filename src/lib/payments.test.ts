@@ -260,7 +260,19 @@ test("checkout button copy matches deposit vs remaining balance", () => {
   );
   assert.match(
     stripeCheckoutCustomText("deposit").after_submit.message,
-    /\(321\) 234-0510 or \(689\) 600-2720/,
+    /\(321\) 234-0510/,
+  );
+  assert.doesNotMatch(
+    stripeCheckoutCustomText("deposit").after_submit.message,
+    /689|600-2720/,
+  );
+  assert.equal(
+    stripeCheckoutCustomText("balance").after_submit.message,
+    "Questions? Call Toro Movers at (321) 234-0510.",
+  );
+  assert.equal(
+    stripeCheckoutCustomText("tip").after_submit.message,
+    "Questions? Call Toro Movers at (321) 234-0510.",
   );
 });
 
