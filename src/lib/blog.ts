@@ -41,6 +41,72 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-hoa-coi-movers",
+    illustration: "access",
+    eyebrow: "HOA · Move windows",
+    title: "HOA, COI, and move-window checklist for Orlando movers",
+    teaser:
+      "HOA rules, certificate timing, and move windows before booking Orlando movers, plus how a short slot changes crew size.",
+    description:
+      "Ask an Orlando HOA before booking movers: certificate of insurance timing, required wording, and how a short window changes Central Florida crew size.",
+    date: "2026-09-29",
+    dateLabel: "Sep 29, 2026",
+    image: {
+      src: "/images/moves/real-21.webp",
+      alt: "Mover in a doorway between rooms on a Central Florida apartment or HOA complex move",
+      position: "object-[center_35%]",
+      dedicated: true,
+    },
+    body: [
+      "Before you book movers in Orlando, ask the HOA or association which days and hours are allowed, when the certificate of insurance is due, and the wording that form must use. A short move window changes crew size on the hourly quote. Toro Movers is the practical Central Florida option once you send those written rules.",
+      "## What to ask the association",
+      "Get the rules in writing from the HOA, condo association, or leasing office before you request a quote. Ask which days a move is allowed and which hours the gate, elevator, dock, or loading zone actually stays open. Ask who reserves that slot, how long it lasts, and whether a weekend is refused or limited to a short Saturday block. Ask where a truck may park, how long it may sit, and whether a guard, a gate code, or a visitor pass is required. Ask whether floors need protection and who supplies it. Ask the name and email of the person who must receive the certificate, and the last time that office will still accept it.",
+      "Ask both ends when pickup and drop-off sit in different communities. One office can allow a weekday morning. The other can allow only a short dock slot. The tighter written window is the clock the crew has to finish inside. A note from a neighbor is not the rule. The office that controls the gate is the rule. If the only copy you have is a lobby sign from a past lease, ask the office for the current sheet. Rules change, and a quote built on an old sign will not match the guard at the gate.",
+      "The path through the building is a different guide. Elevators, docks, and high-rise reservations are in /blog/orlando-apartment-high-rise-movers and on /apartment-movers-orlando-fl. Townhome and condo stairs are in /blog/central-florida-townhome-condo-movers. A commercial landlord’s certificate is in /blog/orlando-office-small-commercial-movers. A short older note on access is in /blog/central-florida-movers-building-access. This page stays on the process: what to ask, when the certificate goes out, and what to send with the booking.",
+      "## When to request the certificate",
+      "Request the certificate of insurance (COI) when the move date is set, not the morning the truck is at the gate. Many Orlando and Central Florida associations want it several business days ahead. Ask that office for its deadline. Do not invent a number of days the community never wrote down. Offices that process paperwork only on weekdays will not clear a request dropped on Saturday morning. If the only open window is early in the week, the certificate has to arrive before that office’s last open business day.",
+      "A month with no date is not enough for the form. A date the association has not approved is not a window. Tell Toro when the window is still pending so the start time is not treated as confirmed. If the office refuses the date, change the date before a crew is locked. Weekend day limits are covered in /blog/orlando-weekend-movers. A closed management office is not something the crew can fix at the curb. Send the request as soon as you have the manager’s email, the wording they require, and a date they have already said is open.",
+      "## Wording and deadlines that matter",
+      "The association accepts or rejects the certificate from the wording on the form. Ask for the exact legal name of the association, not only your name on the lease. Ask for the community address, the move date, and any extra lines the form must include. If they email a sample, forward the sample. If they name a deadline, write the day and the time they mean. By Friday is not the same as before the office closes.",
+      "A certificate that names the wrong association, the wrong building, or the wrong date comes back. That bounce uses the business days you thought were left. Do not edit the file yourself and send the association a changed copy. Send their requirements with the booking so the paperwork they asked for can go out in the form they described. If two communities are involved, each office can want a different name on the form. Send both. One certificate addressed to the wrong building does not clear the other gate.",
+      "The reservation has its own deadline. An elevator hold, a dock slot, or a loading zone that must be booked ahead is part of the same clock as the certificate. Put both in the first message: when the certificate is due, and when the window itself must be reserved. If either date has already passed, say so. A late certificate does not reopen a window the office already closed. A reservation that was never made does not appear because the truck is on the way.",
+      "## How a short window changes crew size",
+      "Local jobs are hourly. Toro quotes $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. The association’s window does not replace that minimum. A written slot of about two hours can land on the minimum when parking is close, the path is clear, and the home is already packed. A written slot shorter than the work does not shrink the minimum. Ask the office for a longer window, or book more movers so the carry finishes before the slot closes.",
+      "More movers can shorten the clock. The rate is per mover per hour, so the quote balances people and time. A two-hour rule on a community website does not turn the job into a flat price. Two movers fit many loads when the window is long and the truck can sit near the door. A short elevator or loading-zone slot, a turn on the stairs, or a long walk from the only legal spot often needs more people so the job ends when the window ends. Share the length of the window in hours, not only the start time. Floor protection the building requires is time on that same clock. It is not a stair fee.",
+      "Florida heat and humidity sit on a midday window. Heat does not add a fee. It adds minutes, and those minutes are the hourly clock. An early slot is usually faster when the association allows it. A west-facing walk, a closed lobby, and a truck that has been sitting in the sun are slower after lunch. If the only open window is midday, say that in the quote. Waiting on a guard, a certificate still in an inbox, or an elevator reserved for the wrong hour is also time. It is not a separate line. That wait is why the certificate goes out before move morning.",
+      "Published crew hours still apply. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. If the association’s only open slot sits outside those hours, say so before the quote is treated as final. A window the property wrote down and a start the crew does not publish are not the same booking. Match the two, or ask the office for a slot inside the hours a crew can work.",
+      "## What to send with the booking",
+      "Send the written rules, not a summary from memory. Include the association or manager name, email, and phone. Include the allowed days and hours, the elevator, dock, or loading-zone reservation, any gate or visitor step, and where the truck may sit. Include the certificate wording they require and the deadline. Include pickup and drop-off addresses, the floor at each stop, how packed you will be, and whether you need a truck or labor-only help.",
+      "Photos of the tightest turn and of the parking spot help size the crew. If only one address has an association, say which one. If both do, send both sets. A quote built on one window will not cover a second community that only allows a different day. Say whether the home will be packed before the slot starts. Boxes still open inside a short window use the same minutes as the carry.",
+      "Volume still matters once the window is known. How home size changes hours is in /blog/orlando-movers-cost-by-home-size. What else changes a local total is in /blog/how-much-does-a-local-move-cost-orlando. A small home can still need a larger crew when the written slot is short. This checklist is that clock. It is not a second price list.",
+      "## Request a quote with the written rules",
+      "Request the quote at /quotes. Lead with the move window and the certificate deadline. Add both addresses, floors, parking, and truck versus labor-only. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text " + PHONE_LINES + ". Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "What should I ask an HOA before I book movers in Orlando?",
+        a: "Ask which days and hours a move is allowed, who reserves the elevator, dock, or loading zone, where the truck may park, and the name and email of the person who must receive the certificate. Get the rules in writing for every community on the job. The tighter window is the one the crew has to finish inside. Send that sheet with a quote request at /quotes.",
+      },
+      {
+        q: "When should I request a certificate of insurance for a Central Florida move?",
+        a: "Request it when the move date is set, not the morning the truck arrives. Ask the association for its own deadline. Many offices want the certificate several business days ahead and only process it on weekdays. A Saturday drop-off will not clear a request the office never opens on Saturday. Send the manager’s email, the required wording, and that deadline with the booking.",
+      },
+      {
+        q: "What certificate wording and deadlines should I send with the booking?",
+        a: "Send the association’s exact legal name, the community address, the move date, any extra lines the form must include, and a sample if they provided one. Also send the deadline for the certificate and the separate deadline for the elevator, dock, or loading-zone reservation. A form that names the wrong building comes back and uses days you thought were left. Do not edit the file yourself.",
+      },
+      {
+        q: "Does a short HOA move window add a fee or change the crew?",
+        a: "It does not add a fee. Local Central Florida jobs are $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short window often needs more movers so the carry finishes before the slot closes. More people can shorten the clock. The rate stays per mover per hour. Heat, stairs, and a long walk from parking add time on that clock. They are not a separate charge.",
+      },
+      {
+        q: "How do I book Orlando movers once the HOA window is set?",
+        a: "Request a quote at /quotes, or call or text " + PHONE_LINES + ". Lead with the written move window and the certificate deadline, then both addresses, floors, parking, and truck versus labor-only. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com.",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-furniture-only-movers",
     illustration: "loading",
     eyebrow: "Furniture · Orlando",
