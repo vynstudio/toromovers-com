@@ -8,7 +8,8 @@ import {
   loadingUnloadingPage,
   loadingUnloadingPageGraph,
 } from "@/lib/loading-unloading-page";
-import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH, SITE_URL } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { QUOTE_PATH, SITE_URL } from "@/lib/site";
 
 const page = loadingUnloadingPage;
 const pageUrl = `${SITE_URL}${page.path}`;
@@ -48,7 +49,7 @@ export default function LoadingUnloadingPage() {
                   ))}
                 </ul>
                 <div className="about-page-actions">
-                  <a href={PHONE_TEL} data-cta="loading-call" className="btn-primary tap-target">Call {PHONE_DISPLAY}</a>
+                  <CompanyPhoneLinks cta="loading-call" prefix="Call " linkClassName="btn-primary tap-target" />
                   <a href={QUOTE_PATH} data-cta="loading-quote" className="btn-outline tap-target">Get a free quote</a>
                   <a href="/labor-only-moving" className="about-reviews-link">Full labor-only jobs →</a>
                 </div>
@@ -108,7 +109,7 @@ export default function LoadingUnloadingPage() {
             </ol>
             <p className="text-muted" style={{ marginTop: "1rem" }}>
               {page.pricing.close}{" "}
-              <a href={PHONE_TEL}>{PHONE_DISPLAY}</a>
+              <CompanyPhoneLinks cta="loading-inline" linkClassName="underline" />
               {" · "}
               <a href={QUOTE_PATH}>Get a free quote</a>.
             </p>
@@ -137,7 +138,12 @@ export default function LoadingUnloadingPage() {
               <h2 style={{ fontSize: "1.35rem", fontWeight: 900 }}>{page.closing.h2}</h2>
               <p style={{ marginTop: "0.75rem", opacity: 0.9 }}>{page.closing.body}</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.25rem" }}>
-                <a href={PHONE_TEL} data-cta="loading-close-call" className="btn-primary tap-target" style={{ background: "#fff", color: "#000" }}>Call {PHONE_DISPLAY}</a>
+                <CompanyPhoneLinks
+                  cta="loading-close-call"
+                  prefix="Call "
+                  linkClassName="btn-primary tap-target"
+                  style={{ background: "#fff", color: "#000" }}
+                />
                 <a href={QUOTE_PATH} data-cta="loading-close-quote" className="btn-outline tap-target" style={{ borderColor: "#fff", color: "#fff" }}>Get a free quote</a>
                 <a href="/services" style={{ color: "#fff", textDecoration: "underline" }}>All services</a>
               </div>

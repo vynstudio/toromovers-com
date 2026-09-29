@@ -1,10 +1,9 @@
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import {
   GOOGLE_RATING,
   GOOGLE_MAPS_REVIEWS_URL,
   HOURS_LABEL,
   MOVES_DONE,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   SERVICE_REGION,
 } from "@/lib/site";
 
@@ -34,13 +33,10 @@ export function TrustBar() {
           </span>
         </div>
         <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 sm:justify-end">
-          <a
-            href={PHONE_TEL}
-            data-cta="trust-phone"
-            className="tap-target font-semibold text-foreground underline underline-offset-2"
-          >
-            {PHONE_DISPLAY}
-          </a>
+          <CompanyPhoneLinks
+            cta="trust-phone"
+            linkClassName="tap-target font-semibold text-foreground underline underline-offset-2"
+          />
           <span className="text-xs text-muted sm:text-sm">{HOURS_LABEL}</span>
         </div>
       </div>

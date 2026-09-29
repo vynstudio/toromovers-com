@@ -1,12 +1,11 @@
 import { SafeImage } from "@/components/SafeImage";
 import { footer } from "@/lib/content";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import {
   BUSINESS_NAME,
   EMAIL,
   EMAIL_HREF,
   HOURS_LABEL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   SERVICE_BASE_CITY,
   SERVICE_REGION,
   SOCIAL,
@@ -89,13 +88,11 @@ export function Footer() {
         </nav>
 
         <div className="footer-nap" aria-label="Contact details">
-          <a
-            href={PHONE_TEL}
-            data-cta="footer-phone"
-            className="tap-target min-h-0 py-1"
-          >
-            {PHONE_DISPLAY}
-          </a>
+          <CompanyPhoneLinks
+            cta="footer-phone"
+            groupClassName="footer-phones"
+            linkClassName="tap-target min-h-0 py-1"
+          />
           <a href={EMAIL_HREF} className="tap-target min-h-0 py-1">
             {EMAIL}
           </a>

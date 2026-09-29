@@ -42,7 +42,8 @@ test("tipping guide stays inside the content rules", () => {
   assert.match(copy, /optional/);
   assert.doesNotMatch(copy, /tipping is required|must tip|tip policy requires/i);
   assert.match(copy, /hello@toromovers\.com/);
-  assert.match(copy, /\(689\) 600-2720/);
+  assert.match(copy, /\(321\) 234-0510 or \(689\) 600-2720/);
+  assert.ok(copy.indexOf("(321) 234-0510") < copy.indexOf("(689) 600-2720"));
   assert.match(copy, /\/quotes/);
   assert.match(copy, /\/blog\/how-much-does-a-local-move-cost-orlando/);
   assert.match(copy, /\/blog\/full-service-vs-labor-only-orlando/);
@@ -54,5 +55,5 @@ test("tipping guide stays inside the content rules", () => {
     .join(" ")
     .split(/\s+/)
     .filter(Boolean);
-  assert.ok(words.length >= 800 && words.length <= 1410, String(words.length));
+  assert.ok(words.length >= 800 && words.length <= 1420, String(words.length));
 });

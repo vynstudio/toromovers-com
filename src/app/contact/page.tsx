@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
 import { CallbackForm } from "@/components/CallbackForm";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import {
   BUSINESS_NAME,
   EMAIL,
@@ -12,8 +13,7 @@ import {
   HOURS_LABEL,
   HOURS_SAT_LABEL,
   HOURS_SUN_FRI_LABEL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
+  PHONE_LINES,
   QUOTE_PATH,
   SERVICE_BASE_CITY,
   SERVICE_REGION,
@@ -22,11 +22,11 @@ import {
 
 export const metadata: Metadata = {
   title: "Contact · Get a free quote",
-  description: `Contact ${BUSINESS_NAME} for an Orlando & Central Florida moving quote. Call ${PHONE_DISPLAY} or get a free quote online. ${HOURS_LABEL}.`,
+  description: `Contact ${BUSINESS_NAME} for an Orlando & Central Florida moving quote. Call ${PHONE_LINES} or get a free quote online. ${HOURS_LABEL}.`,
   alternates: { canonical: "/contact" },
   openGraph: {
     title: `Contact ${BUSINESS_NAME}`,
-    description: `Call ${PHONE_DISPLAY} or get a free moving quote in ${SERVICE_REGION}.`,
+    description: `Call ${PHONE_LINES} or get a free moving quote in ${SERVICE_REGION}.`,
     url: `${SITE_URL}/contact`,
   },
 };
@@ -50,18 +50,15 @@ export default function ContactPage() {
                 Get your Orlando moving quote
               </h1>
               <p className="aeo-answer contact-page-lede text-muted">
-                Call {PHONE_DISPLAY} or get a free quote online — share what
+                Call {PHONE_LINES} or get a free quote online — share what
                 you&apos;re moving and when. Prefer we call you? Use the
                 callback form below for immediate service.
               </p>
               <div className="contact-page-primary-actions">
-                <a
-                  href={PHONE_TEL}
-                  data-cta="contact-primary-call"
-                  className="btn-primary tap-target"
-                >
-                  Call {PHONE_DISPLAY}
-                </a>
+                <CompanyPhoneLinks
+                  cta="contact-primary-call"
+                  linkClassName="btn-primary tap-target"
+                />
                 <a
                   href={QUOTE_PATH}
                   data-cta="contact-page-quote"
@@ -76,13 +73,11 @@ export default function ContactPage() {
               <aside className="contact-page-info" aria-label="How to reach us">
                 <div className="contact-info-card">
                   <h2 className="contact-info-title">Call or text</h2>
-                  <a
-                    href={PHONE_TEL}
-                    data-cta="contact-page-phone"
-                    className="contact-info-phone"
-                  >
-                    {PHONE_DISPLAY}
-                  </a>
+                  <CompanyPhoneLinks
+                    cta="contact-page-phone"
+                    groupClassName="contact-info-phones"
+                    linkClassName="contact-info-phone"
+                  />
                   <p className="contact-info-meta text-muted">
                     {HOURS_SUN_FRI_LABEL}
                     <br />

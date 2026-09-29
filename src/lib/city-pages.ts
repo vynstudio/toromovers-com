@@ -6,7 +6,7 @@
 import type { ServiceIllustrationKey } from "@/components/ServiceIllustrations";
 import { CITIES as ENGINE_CITIES, type CityData } from "./engine-cities.ts";
 import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
-import { PHONE_DISPLAY, QUOTE_PATH } from "./site.ts";
+import { PHONE_LINES, QUOTE_PATH } from "./site.ts";
 
 export type CityFaq = { q: string; a: string };
 
@@ -54,7 +54,7 @@ export const ORLANDO: CityPageContent = {
     title: "Orlando Movers | Local Moving Company FL",
     // 120–160 chars
     description:
-      "Need Orlando movers? Family-owned Toro Movers offers full-service, labor-only & apartment moves with up-front hourly rates. Call (689) 600-2720.",
+      "Need Orlando movers? Family-owned Toro Movers offers full-service, labor-only & apartment moves with up-front hourly rates. Call " + PHONE_LINES + ".",
   },
   h1: "#1 Trusted Movers in\nOrlando & Central Florida",
   lede: "Toro Movers is your local Orlando moving company—full-service, labor-only loading, apartment moves, and up-front hourly rates for Central Florida.",
@@ -97,7 +97,7 @@ export const ORLANDO: CityPageContent = {
   faqs: [
     {
       q: "How much do movers cost in Orlando?",
-      a: `${LOCAL_HOURLY_RATE_SENTENCE} The final cost depends on crew size, truck needs, stairs, elevators, distance, access, and how much you need moved. Call or text (689) 600-2720 with your move details and we will explain the hourly pricing model before move day.`,
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} The final cost depends on crew size, truck needs, stairs, elevators, distance, access, and how much you need moved. Call or text ${PHONE_LINES} with your move details and we will explain the hourly pricing model before move day.`,
     },
     {
       q: "Do you offer labor-only movers in Orlando?",
@@ -117,7 +117,7 @@ export const ORLANDO: CityPageContent = {
     },
     {
       q: "How do I get a moving quote in Orlando?",
-      a: "To get a moving quote in Orlando, call or text Toro Movers at (689) 600-2720. Share your move date, pickup and drop-off locations, home or apartment type, stairs or elevators, and whether you need full-service movers or labor-only help.",
+      a: "To get a moving quote in Orlando, call or text Toro Movers at " + PHONE_LINES + ". Share your move date, pickup and drop-off locations, home or apartment type, stairs or elevators, and whether you need full-service movers or labor-only help.",
     },
   ],
   services: [
@@ -142,7 +142,7 @@ export const ORLANDO: CityPageContent = {
   ],
   closing: {
     title: "Request an Orlando moving estimate before move day",
-    body: "To get a moving estimate from Toro Movers in Orlando, call or text (689) 600-2720—or request a quote online. Share what you are moving, your Orlando addresses, and access details. We match crew size, explain up-front hourly rates, and help plan your local move.",
+    body: "To get a moving estimate from Toro Movers in Orlando, call or text " + PHONE_LINES + "—or request a quote online. Share what you are moving, your Orlando addresses, and access details. We match crew size, explain up-front hourly rates, and help plan your local move.",
   },
   schema: { lat: 28.5384, lng: -81.3789 },
 };
@@ -236,7 +236,7 @@ function fromEngine(city: CityData): CityPageContent {
     services: cityServices(city.name),
     closing: {
       title: `Request a ${city.name} moving estimate before move day`,
-      body: `Call or text Toro Movers at ${PHONE_DISPLAY}, or request a quote at ${QUOTE_PATH}. Share what you are moving, your ${city.name} addresses, and access details. We match crew size, explain up-front hourly rates, and help plan the local move.`,
+      body: `Call or text Toro Movers at ${PHONE_LINES}, or request a quote at ${QUOTE_PATH}. Share what you are moving, your ${city.name} addresses, and access details. We match crew size, explain up-front hourly rates, and help plan the local move.`,
     },
     schema: city.schema,
   };
@@ -292,7 +292,7 @@ function extraCity(opts: {
     services: cityServices(opts.name),
     closing: {
       title: `Request a ${opts.name} moving estimate before move day`,
-      body: `Call or text Toro Movers at ${PHONE_DISPLAY}. Share your ${opts.name} addresses, access, and whether you need full-service or labor-only help.`,
+      body: `Call or text Toro Movers at ${PHONE_LINES}. Share your ${opts.name} addresses, access, and whether you need full-service or labor-only help.`,
     },
     schema: { lat: opts.lat, lng: opts.lng },
   };
@@ -305,7 +305,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Orange County",
     title: "Ocoee Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Ocoee, FL? Toro Movers handles local moves, apartments, and labor-only loading with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Ocoee, FL? Toro Movers handles local moves, apartments, and labor-only loading with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Ocoee Movers for West Orange Local Moves",
     lede:
       "Toro Movers is a family-owned crew serving Ocoee and west Orange County with full-service moves, labor-only loading, and up-front hourly pricing.",
@@ -349,7 +349,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Seminole County",
     title: "Longwood Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Longwood, FL? Toro Movers handles local moves, historic homes, and labor-only loading with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Longwood, FL? Toro Movers handles local moves, historic homes, and labor-only loading with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Longwood Movers for Seminole County Local Moves",
     lede:
       "Toro Movers serves Longwood with full-service household moves, apartment help, and labor-only loading — up-front hourly pricing, local crew.",
@@ -377,7 +377,7 @@ const EXTRA_CITIES: CityPageContent[] = [
       },
       {
         q: "How is a Longwood move priced?",
-        a: `${LOCAL_HOURLY_RATE_SENTENCE} Call ${PHONE_DISPLAY} with addresses, stairs, and inventory and we will explain crew size and the rate.`,
+        a: `${LOCAL_HOURLY_RATE_SENTENCE} Call ${PHONE_LINES} with addresses, stairs, and inventory and we will explain crew size and the rate.`,
       },
       {
         q: "Do you do labor-only in Longwood?",
@@ -393,7 +393,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Seminole County",
     title: "Casselberry Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Casselberry, FL? Toro Movers handles local moves, condos, and labor-only loading with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Casselberry, FL? Toro Movers handles local moves, condos, and labor-only loading with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Casselberry Movers for Seminole County Local Moves",
     lede:
       "Toro Movers handles Casselberry household, condo, and labor-only moves with a local crew and up-front hourly pricing.",
@@ -436,7 +436,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Osceola County",
     title: "Celebration Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Celebration, FL? Toro Movers handles HOA and planned-community moves with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Celebration, FL? Toro Movers handles HOA and planned-community moves with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Celebration Movers for Planned-Community Local Moves",
     lede:
       "Toro Movers serves Celebration with full-service and labor-only moves, including HOA windows, tight streets, and up-front hourly pricing.",
@@ -479,7 +479,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Osceola County",
     title: "Poinciana Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Poinciana, FL? Toro Movers handles HOA and Solivita-area moves with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Poinciana, FL? Toro Movers handles HOA and Solivita-area moves with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Poinciana Movers for Osceola and Polk Local Moves",
     lede:
       "Toro Movers serves Poinciana and Solivita-area homes with full-service moving, labor-only help, and up-front hourly pricing.",
@@ -521,7 +521,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Lake County",
     title: "Minneola Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Minneola, FL? Toro Movers handles Lake County local moves and new-construction move-ins with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Minneola, FL? Toro Movers handles Lake County local moves and new-construction move-ins with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Minneola Movers for Lake County Local Moves",
     lede:
       "Toro Movers serves Minneola and the US-27 growth corridor with full-service, labor-only, and up-front hourly moving help.",
@@ -563,7 +563,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Lake County",
     title: "Mount Dora Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Mount Dora, FL? Toro Movers handles historic downtown and hillside homes with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Mount Dora, FL? Toro Movers handles historic downtown and hillside homes with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Mount Dora Movers for Historic and Lakeside Local Moves",
     lede:
       "Toro Movers serves Mount Dora with careful household moving — hillside streets, older homes, and up-front hourly pricing.",
@@ -594,7 +594,7 @@ const EXTRA_CITIES: CityPageContent[] = [
       },
       {
         q: "How is a Mount Dora move priced?",
-        a: `${LOCAL_HOURLY_RATE_SENTENCE} Call ${PHONE_DISPLAY} with addresses, stairs, and inventory.`,
+        a: `${LOCAL_HOURLY_RATE_SENTENCE} Call ${PHONE_LINES} with addresses, stairs, and inventory.`,
       },
     ],
     lat: 28.8025,
@@ -606,7 +606,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Lake County",
     title: "Leesburg Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Leesburg, FL? Toro Movers handles Lake County local moves with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Leesburg, FL? Toro Movers handles Lake County local moves with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Leesburg Movers for Lake County Local Moves",
     lede:
       "Toro Movers serves Leesburg with full-service household moving, labor-only loading, and up-front hourly pricing.",
@@ -637,7 +637,7 @@ const EXTRA_CITIES: CityPageContent[] = [
       },
       {
         q: "How do I get a Leesburg moving quote?",
-        a: `Call or text ${PHONE_DISPLAY} with pickup, drop-off, access, and whether you need the truck or labor only.`,
+        a: `Call or text ${PHONE_LINES} with pickup, drop-off, access, and whether you need the truck or labor only.`,
       },
     ],
     lat: 28.8108,
@@ -649,7 +649,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Lake County",
     title: "Tavares Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Tavares, FL? Toro Movers handles Lake County waterfront and household moves with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Tavares, FL? Toro Movers handles Lake County waterfront and household moves with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Tavares Movers for Lake County Local Moves",
     lede:
       "Toro Movers serves Tavares with household, waterfront, and labor-only moving help — up-front hourly rates, local crew.",
@@ -691,7 +691,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Orange County",
     title: "Lake Nona Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Lake Nona? Toro Movers handles southeast Orlando homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Lake Nona? Toro Movers handles southeast Orlando homes, townhomes, and labor-only loads with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Lake Nona Movers for Southeast Orlando Local Moves",
     lede:
       "Toro Movers serves Lake Nona with full-service household moves, townhome and apartment help, and labor-only loading — up-front hourly pricing from a local crew.",
@@ -734,7 +734,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Orange County",
     title: "Dr. Phillips Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Dr. Phillips? Toro Movers handles southwest Orlando homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Dr. Phillips? Toro Movers handles southwest Orlando homes, townhomes, and labor-only loads with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Dr. Phillips Movers for Southwest Orlando Local Moves",
     lede:
       "Toro Movers serves Dr. Phillips with full-service household moves, townhome help, and labor-only loading — up-front hourly pricing, local crew.",
@@ -777,7 +777,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Seminole County",
     title: "Winter Springs Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Winter Springs? Toro Movers handles Seminole County homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Winter Springs? Toro Movers handles Seminole County homes, townhomes, and labor-only loads with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Winter Springs Movers for Seminole County Local Moves",
     lede:
       "Toro Movers serves Winter Springs with full-service household moves, townhome help, and labor-only loading — up-front hourly pricing from a local crew.",
@@ -820,7 +820,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Volusia County",
     title: "Deltona Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Deltona? Toro Movers handles Volusia County homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Deltona? Toro Movers handles Volusia County homes, townhomes, and labor-only loads with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Deltona Movers for Volusia County Local Moves",
     lede:
       "Toro Movers serves Deltona with full-service household moves, townhome help, and labor-only loading — up-front hourly pricing, local crew.",
@@ -863,7 +863,7 @@ const EXTRA_CITIES: CityPageContent[] = [
     county: "Orange County",
     title: "Horizon West Movers | Local Moving Company | Toro Movers",
     description:
-      "Need movers in Horizon West? Toro Movers handles west Orange new homes, townhomes, and labor-only loads with up-front hourly rates. Call (689) 600-2720.",
+      "Need movers in Horizon West? Toro Movers handles west Orange new homes, townhomes, and labor-only loads with up-front hourly rates. Call " + PHONE_LINES + ".",
     h1: "Horizon West Movers for West Orange Local Moves",
     lede:
       "Toro Movers serves Horizon West with full-service household moves, new-home move-ins, and labor-only loading — up-front hourly pricing from a local crew.",
@@ -911,11 +911,11 @@ const CENTRAL_FLORIDA: CityPageContent = {
   metadata: {
     title: "Central Florida Movers | Local Moves Across the Region",
     description:
-      "Central Florida movers for local jobs in Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, and nearby cities. Up-front hourly rates. Call (689) 600-2720.",
+      "Central Florida movers for local jobs in Winter Park, Kissimmee, Clermont, Sanford, Winter Garden, and nearby cities. Up-front hourly rates. Call " + PHONE_LINES + ".",
   },
   h1: "Central Florida Movers for Local Home & Apartment Moves",
   lede:
-    "Toro Movers handles local home and apartment moves across Central Florida — full-service, labor-only, and up-front hourly rates. Call or text (689) 600-2720.",
+    "Toro Movers handles local home and apartment moves across Central Florida — full-service, labor-only, and up-front hourly rates. Call or text " + PHONE_LINES + ".",
   about: {
     h2: "Cities we serve in Central Florida",
     body: "Orlando is our home base. Dedicated local pages cover the other Central Florida cities we serve, grouped by county on this page — including Winter Park, Kissimmee, Clermont, Sanford, Winter Springs, Deltona, Winter Garden, Horizon West, Lake Nona, and Dr. Phillips.",
@@ -967,7 +967,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
   services: cityServices("Central Florida"),
   closing: {
     title: "Request a Central Florida moving estimate",
-    body: `Call or text ${PHONE_DISPLAY} with your cities, access, and whether you need full-service or labor-only help.`,
+    body: `Call or text ${PHONE_LINES} with your cities, access, and whether you need full-service or labor-only help.`,
   },
   schema: { lat: 28.5384, lng: -81.3789 },
 };

@@ -5,7 +5,8 @@ import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
 import { serviceGuideGraph, type ServiceGuide } from "@/lib/service-guides";
-import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH, SITE_URL } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { QUOTE_PATH, SITE_URL } from "@/lib/site";
 
 export function serviceGuideMetadata(page: ServiceGuide): Metadata {
   const pageUrl = `${SITE_URL}${page.path}`;
@@ -72,9 +73,11 @@ export function ServiceGuidePage({ page }: { page: ServiceGuide }) {
                   ))}
                 </ul>
                 <div className="about-page-actions">
-                  <a href={PHONE_TEL} data-cta={`${cta}-call`} className="btn-primary tap-target">
-                    Call {PHONE_DISPLAY}
-                  </a>
+                  <CompanyPhoneLinks
+                    cta={`${cta}-call`}
+                    prefix="Call "
+                    linkClassName="btn-primary tap-target"
+                  />
                   <a href={QUOTE_PATH} data-cta={`${cta}-quote`} className="btn-outline tap-target">
                     Get a free quote
                   </a>
@@ -174,14 +177,12 @@ export function ServiceGuidePage({ page }: { page: ServiceGuide }) {
               <h2 style={{ fontSize: "1.35rem", fontWeight: 900 }}>{page.closing.h2}</h2>
               <p style={{ marginTop: "0.75rem", opacity: 0.9 }}>{page.closing.body}</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.25rem" }}>
-                <a
-                  href={PHONE_TEL}
-                  data-cta={`${cta}-close-call`}
-                  className="btn-primary tap-target"
+                <CompanyPhoneLinks
+                  cta={`${cta}-close-call`}
+                  prefix="Call "
+                  linkClassName="btn-primary tap-target"
                   style={{ background: "#fff", color: "#000" }}
-                >
-                  Call {PHONE_DISPLAY}
-                </a>
+                />
                 <a
                   href={QUOTE_PATH}
                   data-cta={`${cta}-close-quote`}

@@ -8,7 +8,8 @@ import {
   fullServicePage,
   fullServicePageGraph,
 } from "@/lib/full-service-page";
-import { PHONE_DISPLAY, PHONE_TEL, QUOTE_PATH, SITE_URL } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { QUOTE_PATH, SITE_URL } from "@/lib/site";
 
 const page = fullServicePage;
 const pageUrl = `${SITE_URL}${page.path}`;
@@ -67,9 +68,11 @@ export default function FullServiceMovingPage() {
                   ))}
                 </ul>
                 <div className="about-page-actions">
-                  <a href={PHONE_TEL} data-cta="full-service-call" className="btn-primary tap-target">
-                    Call {PHONE_DISPLAY}
-                  </a>
+                  <CompanyPhoneLinks
+                    cta="full-service-call"
+                    prefix="Call "
+                    linkClassName="btn-primary tap-target"
+                  />
                   <a href={QUOTE_PATH} data-cta="full-service-quote" className="btn-outline tap-target">
                     Get a free quote
                   </a>
@@ -151,7 +154,8 @@ export default function FullServiceMovingPage() {
               ))}
             </ol>
             <p className="text-muted" style={{ marginTop: "1rem" }}>
-              {page.pricing.close} Call or text <a href={PHONE_TEL}>{PHONE_DISPLAY}</a> or{" "}
+              {page.pricing.close} Call or text{" "}
+              <CompanyPhoneLinks cta="full-service-inline" linkClassName="underline" /> or{" "}
               <a href={QUOTE_PATH}>get a free quote online</a>. Also see{" "}
               <a href="/blog/how-much-does-a-local-move-cost-orlando">how much movers cost in Orlando</a>.
             </p>
@@ -181,9 +185,12 @@ export default function FullServiceMovingPage() {
               <h2 style={{ fontSize: "1.35rem", fontWeight: 900 }}>{page.closing.h2}</h2>
               <p style={{ marginTop: "0.75rem", opacity: 0.9 }}>{page.closing.body}</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.25rem" }}>
-                <a href={PHONE_TEL} data-cta="full-service-close-call" className="btn-primary tap-target" style={{ background: "#fff", color: "#000" }}>
-                  Call {PHONE_DISPLAY}
-                </a>
+                <CompanyPhoneLinks
+                  cta="full-service-close-call"
+                  prefix="Call "
+                  linkClassName="btn-primary tap-target"
+                  style={{ background: "#fff", color: "#000" }}
+                />
                 <a href={QUOTE_PATH} data-cta="full-service-close-quote" className="btn-outline tap-target" style={{ borderColor: "#fff", color: "#fff" }}>
                   Get a free quote
                 </a>

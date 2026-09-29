@@ -2550,6 +2550,15 @@ a.trust-chip {
   color: #fff;
 }
 
+.footer-phones {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem 0.85rem;
+  max-width: 100%;
+}
+
 .footer-nap-text {
   color: rgba(255, 255, 255, 0.45);
 }
@@ -3329,6 +3338,13 @@ a.nbhd-tag:focus-visible {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: color-mix(in srgb, var(--foreground) 50%, transparent);
+}
+
+.contact-info-phones {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
 }
 
 .contact-info-phone {

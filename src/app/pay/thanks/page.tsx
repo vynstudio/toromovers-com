@@ -4,7 +4,8 @@ import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { PayShell } from "@/components/pay/PayShell";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { PHONE_LINES } from "@/lib/site";
 
 function ThanksBody() {
   const params = useSearchParams();
@@ -77,7 +78,7 @@ function ThanksBody() {
       body += " Your move date is held now that this deposit succeeded.";
     }
   } else if (status === "error") {
-    body = `If you were charged, we still have it. Call ${PHONE_DISPLAY} and we will confirm.`;
+    body = `If you were charged, we still have it. Call ${PHONE_LINES} and we will confirm.`;
   }
 
   return (
@@ -92,9 +93,12 @@ function ThanksBody() {
         <h1>{heading}</h1>
         <p className="pay-lede">{body}</p>
         <div className="pay-actions">
-          <a href={PHONE_TEL} className="pay-call" style={{ minHeight: "3.15rem" }}>
-            Call {PHONE_DISPLAY}
-          </a>
+          <CompanyPhoneLinks
+            cta="pay-thanks-call"
+            prefix="Call "
+            linkClassName="pay-call"
+            style={{ minHeight: "3.15rem" }}
+          />
           <Link href="/" className="pay-secondary">
             Back to Toro Movers
           </Link>

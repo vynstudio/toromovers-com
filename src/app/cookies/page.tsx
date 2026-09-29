@@ -8,6 +8,7 @@ import {
   LEGAL_NAME,
   SITE_URL,
 } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { CookiePreferences } from "@/components/CookiePreferences";
 
 export const metadata: Metadata = {
@@ -202,6 +203,11 @@ export default function CookiesPage() {
             <a className="text-foreground underline" href={EMAIL_HREF}>
               {EMAIL}
             </a>
+            {" or "}
+            <CompanyPhoneLinks
+              cta="cookies-phone"
+              linkClassName="text-foreground underline"
+            />
             .
           </p>
         </div>

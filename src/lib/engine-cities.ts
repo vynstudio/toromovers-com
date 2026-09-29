@@ -1,5 +1,5 @@
 import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
-import { PHONE_DISPLAY } from "./site.ts";
+import { PHONE_LINES } from "./site.ts";
 // Previously published city SEO copy from the engine site.
 // Keep unique local details; do not flatten this into Orlando find-replace.
 
@@ -89,7 +89,7 @@ export const ORLANDO: CityData = {
   faqs: [
     {
       q: "How much do movers cost in Orlando?",
-      a: `${LOCAL_HOURLY_RATE_SENTENCE} The final cost depends on crew size, truck needs, stairs, elevators, distance, access, and how much you need moved. Call or text ${PHONE_DISPLAY} with your move details and we will explain the hourly pricing model before move day.`,
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} The final cost depends on crew size, truck needs, stairs, elevators, distance, access, and how much you need moved. Call or text ${PHONE_LINES} with your move details and we will explain the hourly pricing model before move day.`,
     },
     {
       q: "Do you offer labor-only movers in Orlando?",
@@ -109,7 +109,7 @@ export const ORLANDO: CityData = {
     },
     {
       q: "How do I get a moving quote in Orlando?",
-      a: `To get a moving quote in Orlando, call or text Toro Movers at ${PHONE_DISPLAY}. Share your move date, pickup and drop-off locations, home or apartment type, stairs or elevators, and whether you need full-service movers or labor-only help.`,
+      a: `To get a moving quote in Orlando, call or text Toro Movers at ${PHONE_LINES}. Share your move date, pickup and drop-off locations, home or apartment type, stairs or elevators, and whether you need full-service movers or labor-only help.`,
     },
   ],
   schema: { lat: 28.5384, lng: -81.3789 },
@@ -160,7 +160,7 @@ export const LAKE_MARY: CityData = {
     },
     {
       q: "How far in advance should I book a Lake Mary move?",
-      a: `Book one to two weeks ahead when you can, especially for weekends and HOA or gated windows. Same-week is often available — call ${PHONE_DISPLAY}.`,
+      a: `Book one to two weeks ahead when you can, especially for weekends and HOA or gated windows. Same-week is often available — call ${PHONE_LINES}.`,
     },
   ],
   schema: { lat: 28.7589, lng: -81.3178 },
@@ -542,7 +542,7 @@ export const ALTAMONTE_SPRINGS: CityData = {
     },
     {
       q: "How far in advance should I book movers in Altamonte Springs?",
-      a: `One to two weeks is ideal; same-week dates are often available. Call ${PHONE_DISPLAY} or request an estimate online.`,
+      a: `One to two weeks is ideal; same-week dates are often available. Call ${PHONE_LINES} or request an estimate online.`,
     },
     {
       q: "What makes Toro Movers different from franchise moving companies?",
@@ -658,7 +658,7 @@ export const ST_CLOUD: CityData = {
     },
     {
       q: "How far in advance should I book movers in St. Cloud?",
-      a: `One to two weeks is ideal; same-week dates are often available. Call ${PHONE_DISPLAY} or request an estimate online.`,
+      a: `One to two weeks is ideal; same-week dates are often available. Call ${PHONE_LINES} or request an estimate online.`,
     },
     {
       q: "What makes Toro Movers different from franchise moving companies?",

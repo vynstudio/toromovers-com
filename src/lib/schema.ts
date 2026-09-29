@@ -4,6 +4,7 @@ import {
   GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
   PHONE_E164,
+  PHONE_SECONDARY_E164,
   QUOTE_PATH,
   REVIEW_COUNT,
   SERVICE_REGION,
@@ -48,6 +49,11 @@ export function organizationGraph() {
         description: organizationDescription,
         slogan: SLOGAN,
         telephone: PHONE_E164,
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: PHONE_SECONDARY_E164,
+          contactType: "customer service",
+        },
         email: EMAIL,
         priceRange: "$$",
         currenciesAccepted: "USD",
@@ -252,6 +258,11 @@ export function cityPageGraph(city: CityPageContent) {
         name: `${BUSINESS_NAME} — ${city.name} Movers`,
         url: pageUrl,
         telephone: PHONE_E164,
+        contactPoint: {
+          "@type": "ContactPoint",
+          telephone: PHONE_SECONDARY_E164,
+          contactType: "customer service",
+        },
         email: EMAIL,
         description: city.metadata.description,
         areaServed: [

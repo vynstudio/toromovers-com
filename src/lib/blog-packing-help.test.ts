@@ -73,8 +73,9 @@ test("packing help guide meets the AEO bar", () => {
   assert.match(copy, /no fuel surcharge/);
   assert.match(copy, /no stair fees/);
   assert.match(copy, /Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM/);
-  assert.match(copy, /\(689\) 600-2720/);
+  assert.match(copy, /\(321\) 234-0510 or \(689\) 600-2720/);
+  assert.ok(copy.indexOf("(321) 234-0510") < copy.indexOf("(689) 600-2720"));
 
   const phoneOutsideCtaFaq = [...post.body.slice(0, -1), post.description, post.teaser].join("\n");
-  assert.doesNotMatch(phoneOutsideCtaFaq, /689|600-2720/);
+  assert.doesNotMatch(phoneOutsideCtaFaq, /234-0510|689|600-2720/);
 });

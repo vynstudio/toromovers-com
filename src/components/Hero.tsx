@@ -1,12 +1,8 @@
 import { hero } from "@/lib/content";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { HeroSkyline } from "@/components/HeroSkyline";
 import { IconArrow } from "@/components/icons";
-import {
-  GOOGLE_RATING,
-  PHONE_DISPLAY,
-  PHONE_TEL,
-  QUOTE_PATH,
-} from "@/lib/site";
+import { GOOGLE_RATING, QUOTE_PATH } from "@/lib/site";
 
 /**
  * Mobile-first conversion hero — copy + CTAs only.
@@ -43,14 +39,10 @@ export function Hero() {
             </p>
 
             <div className="tap-stack mx-auto mt-7 max-w-sm sm:mt-8 sm:max-w-md">
-              <a
-                href={PHONE_TEL}
-                data-cta="hero-call"
-                className="btn-primary btn-fluid tap-target inline-flex w-full"
-              >
-                <span className="sm:hidden">Call now</span>
-                <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
-              </a>
+              <CompanyPhoneLinks
+                cta="hero-call"
+                linkClassName="btn-primary btn-fluid tap-target inline-flex w-full"
+              />
               <a
                 href={QUOTE_PATH}
                 data-cta="hero-quote"

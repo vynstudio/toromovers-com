@@ -19,7 +19,7 @@ import { fireAdsLeadOnce, mintEventId } from "@/lib/meta-pixel";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
 import { quotePage } from "@/lib/quote-page";
 import { haversineMiles, type SelectedPlace } from "@/lib/selected-place";
-import { PHONE_DISPLAY } from "@/lib/site";
+import { PHONE_DISPLAY, PHONE_LINES } from "@/lib/site";
 
 const primaryBtn =
   "gmp-submit disabled:cursor-not-allowed disabled:opacity-40";
@@ -73,7 +73,7 @@ export default function AdsShortForm() {
     }
     if (searchDown && (!origin || !destination)) {
       setError(
-        `Address search is unavailable. Call ${PHONE_DISPLAY} and we will quote the move.`,
+        `Address search is unavailable. Call ${PHONE_LINES} and we will quote the move.`,
       );
       return;
     }
@@ -173,7 +173,7 @@ export default function AdsShortForm() {
       window.location.assign("/thank-you");
     } catch {
       setError(
-        `We could not submit your request. Please call ${PHONE_DISPLAY} and our team will help right away.`,
+        `We could not submit your request. Please call ${PHONE_LINES} and our team will help right away.`,
       );
       setSubmitting(false);
     }

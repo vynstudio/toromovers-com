@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import Link from "next/link";
 import { ToroLockup } from "@/components/funnel/ToroLockup";
 import { FUNNEL_SLA } from "@/lib/funnel-offer";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Quote request received",
@@ -40,12 +40,11 @@ export default function ThankYouPage() {
           If you need help now, call us directly.
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <a
-            href={PHONE_TEL}
-            className="rounded-xl bg-[#E20613] px-6 py-4 font-extrabold text-white transition hover:bg-[#B80510]"
-          >
-            Call {PHONE_DISPLAY}
-          </a>
+          <CompanyPhoneLinks
+            cta="thanks-call"
+            prefix="Call "
+            linkClassName="rounded-xl bg-[#E20613] px-6 py-4 font-extrabold text-white transition hover:bg-[#B80510]"
+          />
           <Link
             href="/"
             className="rounded-xl border border-zinc-300 px-6 py-4 font-extrabold"

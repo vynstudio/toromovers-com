@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { IconArrow } from "@/components/icons";
 import { SplitBand } from "@/components/SplitBand";
 import { customerProof } from "@/lib/content";
@@ -8,8 +9,6 @@ import {
   GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
   MOVES_DONE,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   QUOTE_PATH,
   SERVICE_REGION,
 } from "@/lib/site";
@@ -97,14 +96,10 @@ export function CustomerProof({
         </ul>
 
         <div className="split-band-actions">
-          <a
-            href={PHONE_TEL}
-            data-cta="proof-call"
-            className="btn-primary btn-fluid tap-target inline-flex"
-          >
-            <span className="sm:hidden">Call now</span>
-            <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
-          </a>
+          <CompanyPhoneLinks
+            cta="proof-call"
+            linkClassName="btn-primary btn-fluid tap-target inline-flex"
+          />
           <a
             href={QUOTE_PATH}
             data-cta="proof-quote"

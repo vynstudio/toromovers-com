@@ -6,7 +6,7 @@
  */
 
 import { FUNNEL_BILINGUAL, FUNNEL_SLA } from "./funnel-offer.ts";
-import { PHONE_DISPLAY } from "./site.ts";
+import { PHONE_SECONDARY_DISPLAY } from "./site.ts";
 import {
   buildLeadConfirmationEmail,
   formatResendError,
@@ -290,7 +290,7 @@ function teamMessage(lead: LeadNotifyInput): string {
 
 function clientSms(lead: LeadNotifyInput): string {
   const n = firstName(lead.name);
-  return `Hi ${n} — Toro Movers! We got your quote request. ${FUNNEL_SLA}. Questions? ${PHONE_DISPLAY}. ${FUNNEL_BILINGUAL}. Reply STOP to opt out.`;
+  return `Hi ${n} — Toro Movers! We got your quote request. ${FUNNEL_SLA}. Questions? ${PHONE_SECONDARY_DISPLAY}. ${FUNNEL_BILINGUAL}. Reply STOP to opt out.`;
 }
 
 /**

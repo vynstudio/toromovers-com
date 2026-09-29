@@ -1,11 +1,10 @@
 import { closing } from "@/lib/content";
 import { IconArrow } from "@/components/icons";
 import { SplitBand } from "@/components/SplitBand";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import {
   GOOGLE_RATING,
   HOURS_LABEL,
-  PHONE_DISPLAY,
-  PHONE_TEL,
   QUOTE_PATH,
   SERVICE_REGION,
 } from "@/lib/site";
@@ -59,16 +58,11 @@ export function ClosingCta({ title, body }: ClosingCtaProps = {}) {
       </ul>
 
       <div className="split-band-actions">
-        <a
-          href={PHONE_TEL}
-          data-cta="closing-phone"
-          className="btn-primary btn-fluid tap-target inline-flex"
-        >
-          <span className="sm:hidden">Call now</span>
-          <span className="hidden sm:inline">
-            {closing.ctaPhone} {PHONE_DISPLAY}
-          </span>
-        </a>
+        <CompanyPhoneLinks
+          cta="closing-phone"
+          prefix={`${closing.ctaPhone} `}
+          linkClassName="btn-primary btn-fluid tap-target inline-flex"
+        />
         <a
           href={QUOTE_PATH}
           data-cta="closing-form"

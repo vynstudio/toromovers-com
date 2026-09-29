@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { isFullStreetAddress } from "@/lib/address-format";
-import { PHONE_DISPLAY } from "@/lib/site";
+import { PHONE_LINES } from "@/lib/site";
 import type { SelectedPlace } from "@/lib/selected-place";
 
 export { isFullStreetAddress };
@@ -217,7 +217,7 @@ export function AddressAutocomplete({
 
   const hint =
     status === "down"
-      ? `Address search is unavailable. Call ${PHONE_DISPLAY}.`
+      ? `Address search is unavailable. Call ${PHONE_LINES}.`
       : status === "empty"
         ? "No matching addresses. Keep the street number and name, then choose a suggestion."
         : status === "results" &&

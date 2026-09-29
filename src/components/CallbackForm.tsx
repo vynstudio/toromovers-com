@@ -3,7 +3,8 @@
 import { useId, useRef, useState, type FormEvent } from "react";
 import { closing } from "@/lib/content";
 import { digits, formatPhone } from "@/lib/lead";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { PHONE_DISPLAY, PHONE_LINES } from "@/lib/site";
 
 const URGENCY = [
   { id: "asap", label: "ASAP" },
@@ -111,7 +112,7 @@ export function CallbackForm({
       });
       setDone(true);
     } catch {
-      setError(`Couldn't send. Please call ${PHONE_DISPLAY}.`);
+      setError(`Couldn't send. Please call ${PHONE_LINES}.`);
     } finally {
       setSending(false);
     }
@@ -139,13 +140,11 @@ export function CallbackForm({
           Prefer not to wait? Call us now.
         </p>
         <div className="callback-done-actions">
-          <a
-            href={PHONE_TEL}
-            className="btn-primary tap-target"
-            data-cta="callback-done-phone"
-          >
-            Call {PHONE_DISPLAY}
-          </a>
+          <CompanyPhoneLinks
+            cta="callback-done-phone"
+            prefix="Call "
+            linkClassName="btn-primary tap-target"
+          />
           <button type="button" className="callback-reset" onClick={reset}>
             Submit another request
           </button>
@@ -231,7 +230,7 @@ export function CallbackForm({
           onChange={(e) => setSmsConsent(e.target.checked)}
         />
         <span>
-          I agree to calls and texts from Toro Movers at {PHONE_DISPLAY}. Reply
+          I agree to calls and texts from Toro Movers at {PHONE_LINES}. Reply
           STOP to opt out of SMS.
         </span>
       </label>

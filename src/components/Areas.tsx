@@ -1,8 +1,8 @@
 import { areasSnippet } from "@/lib/content";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { IconArrow } from "@/components/icons";
 import { SplitBand } from "@/components/SplitBand";
 import { CoverageMap } from "@/components/CoverageMap";
-import { PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 const AREA_LINKS = [
   { label: "Orlando movers", href: "/orlando-movers" },
@@ -46,14 +46,10 @@ export function Areas() {
       </ul>
 
       <div className="split-band-actions">
-        <a
-          href={PHONE_TEL}
-          data-cta="areas-phone"
-          className="btn-primary btn-fluid tap-target inline-flex"
-        >
-          <span className="sm:hidden">Call now</span>
-          <span className="hidden sm:inline">Call {PHONE_DISPLAY}</span>
-        </a>
+        <CompanyPhoneLinks
+          cta="areas-phone"
+          linkClassName="btn-primary btn-fluid tap-target inline-flex"
+        />
         <a
           href="/central-florida-movers"
           className="btn-outline btn-fluid tap-target inline-flex"

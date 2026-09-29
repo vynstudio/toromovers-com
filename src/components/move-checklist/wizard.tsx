@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import Link from "next/link";
 import { AddressAutocomplete } from "@/components/address-autocomplete";
 import { addressWithUnit, isFullStreetAddress } from "@/lib/address-format";
@@ -226,7 +227,7 @@ export function MoveChecklistWizard() {
           Your move is not confirmed until we send the booking confirmation.
         </p>
         <p className="mdc-phone">
-          <a href="tel:+16896002720">(689) 600-2720</a>
+          <CompanyPhoneLinks cta="checklist-phone" linkClassName="underline" />
         </p>
         <p className="mdc-lede">
           Call or text that number, or email{" "}

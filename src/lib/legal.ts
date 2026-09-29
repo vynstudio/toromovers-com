@@ -2,7 +2,7 @@ import {
   BUSINESS_NAME,
   EMAIL,
   LEGAL_NAME,
-  PHONE_DISPLAY,
+  PHONE_LINES,
   SERVICE_BASE_CITY,
   SITE_URL,
 } from "@/lib/site";
@@ -14,7 +14,7 @@ export const LEGAL = {
   company: LEGAL_NAME,
   brand: BUSINESS_NAME,
   email: EMAIL,
-  phone: PHONE_DISPLAY,
+  phone: PHONE_LINES,
   site: SITE_URL,
   city: SERVICE_BASE_CITY,
   supportSubjectPrivacy: "Privacy Rights Request",

@@ -7,10 +7,6 @@ export const BUSINESS_NAME = "Toro Movers";
 export const LEGAL_NAME = "Toro Movers LLC";
 export const SLOGAN = "Moving People Forward";
 
-/** Site-wide SEO description — 120–160 chars for SERP (audit target). */
-export const SITE_DESCRIPTION =
-  "Toro Movers is a family-owned, bilingual Orlando moving company with upfront hourly rates and no hidden fees. Call or text (689) 600-2720.";
-
 /**
  * Homepage document / Open Graph / Twitter title.
  * The homepage sets this as an absolute title so the root `%s · Toro Movers`
@@ -18,9 +14,27 @@ export const SITE_DESCRIPTION =
  */
 export const SITE_TITLE = "Trusted Orlando & Central Florida movers";
 
-export const PHONE_DISPLAY = "(689) 600-2720";
-export const PHONE_TEL = "tel:+16896002720";
-export const PHONE_E164 = "+16896002720";
+/** Primary company line. Single-number CTAs use these. */
+export const PHONE_DISPLAY = "(321) 234-0510";
+export const PHONE_TEL = "tel:+13212340510";
+export const PHONE_E164 = "+13212340510";
+
+/** Secondary company line. Shown after the primary number. */
+export const PHONE_SECONDARY_DISPLAY = "(689) 600-2720";
+export const PHONE_SECONDARY_TEL = "tel:+16896002720";
+export const PHONE_SECONDARY_E164 = "+16896002720";
+
+/** Prose form: primary, then secondary. */
+export const PHONE_LINES = `${PHONE_DISPLAY} or ${PHONE_SECONDARY_DISPLAY}`;
+
+/** Site-wide SEO description — 120–160 chars for SERP (audit target). */
+export const SITE_DESCRIPTION = `Toro Movers is a family-owned, bilingual Orlando moving company with upfront hourly rates and no hidden fees. Call or text ${PHONE_LINES}.`;
+
+/** Click-to-call company lines. Primary first. */
+export const COMPANY_PHONES = [
+  { display: PHONE_DISPLAY, tel: PHONE_TEL },
+  { display: PHONE_SECONDARY_DISPLAY, tel: PHONE_SECONDARY_TEL },
+] as const;
 
 /** Live quote funnel (engine). The multi-step LeadFunnel project was scrapped. */
 export const QUOTE_PATH = "/quotes";

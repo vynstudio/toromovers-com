@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
+import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import AdsShortForm from "@/components/funnel/AdsShortForm";
 import { ToroLockup } from "@/components/funnel/ToroLockup";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
 import {
   EMAIL,
   EMAIL_HREF,
-  PHONE_DISPLAY,
   PHONE_TEL,
 } from "@/lib/site";
 
@@ -73,9 +73,11 @@ export default function QuotesPage() {
       />
       <header className="gmp-head">
         <ToroLockup className="gmp-head-lockup" />
-        <a className="gmp-call" href={PHONE_TEL}>
-          Call {PHONE_DISPLAY}
-        </a>
+        <CompanyPhoneLinks
+          cta="quotes-call"
+          prefix="Call "
+          linkClassName="gmp-call"
+        />
       </header>
 
       <section className="gmp-land-body">
