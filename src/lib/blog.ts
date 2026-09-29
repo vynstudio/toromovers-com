@@ -53,7 +53,7 @@ export const blogPosts: readonly BlogPost[] = [
     dateLabel: "Sep 29, 2026",
     image: {
       src: "/images/moves/real-21.webp",
-      alt: "Mover in a doorway between rooms on a Central Florida apartment or HOA complex move",
+      alt: "Two movers carrying a padded piece on the stairs of a Central Florida apartment or HOA complex",
       position: "object-[center_35%]",
       dedicated: true,
     },
