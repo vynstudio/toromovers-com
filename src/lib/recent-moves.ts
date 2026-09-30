@@ -234,17 +234,6 @@ export const recentMoves: readonly MoveShot[] = [
     href: "/services",
   },
   {
-    id: "real-21",
-    src: "/images/moves/real-21.webp",
-    alt: "Toro Movers real job photo 21 — local moving work in Orlando metro",
-    title: "Residential home move — Orlando metro",
-    description: "Real Toro Movers work on a local job in Orlando metro. Family-owned Orlando and Central Florida movers for full-service, labor-only, apartment, and residential moves.",
-    service: "residential",
-    serviceLabel: "Residential moving",
-    area: "Orlando metro",
-    href: "/services",
-  },
-  {
     id: "real-22",
     src: "/images/moves/real-22.webp",
     alt: "Toro Movers real job photo 22 — local moving work in Orlando, FL",

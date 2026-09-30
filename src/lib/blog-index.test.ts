@@ -37,6 +37,20 @@ const POST_HREFS = [
   "/blog/central-florida-movers-building-access",
 ] as const;
 
+test("the removed lawn photo is not used on a guide", () => {
+  assert.equal(
+    blogPosts.some((post) => post.image.src.includes("real-21")),
+    false,
+  );
+  const hoa = blogPosts.find((post) => post.slug === "orlando-hoa-coi-movers");
+  assert.equal(hoa?.image.src, "/images/stock/movers-carrying-sofa.webp");
+  assert.equal(hoa?.image.dedicated, true);
+  const access = blogPosts.find(
+    (post) => post.slug === "central-florida-movers-building-access",
+  );
+  assert.equal(access?.image.src, "/images/moves/real-14.webp");
+});
+
 test("existing post URLs stay on /blog/[slug]", () => {
   assert.deepEqual(existingBlogPostHrefs(), POST_HREFS);
   assert.equal(blogPosts.some((post) => post.slug === "page"), false);

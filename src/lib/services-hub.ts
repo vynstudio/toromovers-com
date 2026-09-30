@@ -74,9 +74,9 @@ export const servicesHub = {
       title: "Apartment movers",
       body: "Stairs, elevators, loading zones, and move-in windows planned before the crew arrives.",
       href: "/apartment-movers-orlando-fl",
-      image: "/images/moves/real-21.webp",
+      image: "/images/moves/real-35.webp",
       imageAlt:
-        "Toro Movers crew carrying furniture up stairs on a real Orlando-area apartment move",
+        "Two movers carrying a wrapped dresser on an apartment stairwell",
       badge: "Apartments",
       linkLabel: "View service",
       illustration: "apartment",
@@ -149,8 +149,9 @@ export const servicesHub = {
       title: "Small moves",
       body: "One piece, a few pieces, or a furniture pickup and delivery inside Central Florida—quoted by the hour.",
       href: "/small-moves-orlando",
-      image: "/images/moves/real-21.webp",
-      imageAlt: "Crew carrying furniture on stairs during a small Central Florida move",
+      image: "/images/services/single-item-move.webp",
+      imageAlt:
+        "Illustration of two movers carrying a blue sofa from a house to a white box truck",
       linkLabel: "View service",
       illustration: "crew",
     },

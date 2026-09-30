@@ -20,8 +20,8 @@ export const apartmentMoversPage = {
     lede:
       "Toro Movers handles apartment moves across Orlando and Central Florida—walk-ups, elevators, loading zones, parking rules, and timed move-in windows. You get a local bilingual crew and up-front hourly rates explained before move day.",
     image: {
-      src: "/images/moves/real-21.webp",
-      alt: "Toro Movers crew carrying furniture up stairs on a real Orlando-area apartment move",
+      src: "/images/moves/real-35.webp",
+      alt: "Two movers carrying a wrapped dresser on an apartment stairwell",
     },
     chips: [
       "Stairs & elevators",
