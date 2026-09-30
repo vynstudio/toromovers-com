@@ -26,8 +26,12 @@ const organizationDescription =
 /** Homepage WebPage description — keep aligned with meta (SERP + AEO). */
 const homepageDescription = SITE_DESCRIPTION;
 
-/** Freshness for WebPage / GEO audits */
-const DATE_MODIFIED = new Date().toISOString().slice(0, 10);
+/**
+ * Freshness for WebPage / GEO audits.
+ * Pinned to the live production build day so the Astro preview's JSON-LD
+ * matches https://toromovers.com instead of drifting on each preview build.
+ */
+const DATE_MODIFIED = "2026-09-29";
 
 export { businessAreaServed, businessPostalAddress };
 

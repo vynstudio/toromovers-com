@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
 import { ClientChrome } from "@/components/ClientChrome";
 import { blogHref, blogPosts, blogShowsOwnPhoto } from "@/lib/blog";
+import { postsForBlogIndex } from "@/lib/blog-listing";
 import { BUSINESS_NAME, SITE_URL } from "@/lib/site";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { VectorSlot } from "@/components/ServiceIllustrations";
@@ -39,7 +40,7 @@ export default function BlogIndexPage() {
           </p>
 
           <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-            {blogPosts.map((post) => (
+            {postsForBlogIndex(blogPosts).map((post) => (
               <li key={post.slug}>
                 <Link
                   href={blogHref(post.slug)}

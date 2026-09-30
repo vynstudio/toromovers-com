@@ -1,0 +1,100 @@
+---
+import type { HeadTag } from "../lib/seo-head";
+import { organizationGraph } from "../lib/schema";
+
+interface Props {
+  title: string;
+  tags: HeadTag[];
+  preloads?: string[];
+  /** Emitted before the primary title. Used by the Next-style 404 head. */
+  leadingTitle?: string;
+  leadingRobots?: string;
+}
+
+const { title, tags, preloads = [], leadingTitle, leadingRobots } = Astro.props;
+const searchable =
+  process.env.NEXT_PUBLIC_SEARCHABLE_SITE_TOKEN || "pst_18bcf81295a1c8185e489122";
+const pixel = process.env.NEXT_PUBLIC_META_PIXEL_ID || "985575491098437";
+const orgJson = JSON.stringify(organizationGraph());
+const scrollHome = `(function(){try{var p=location.pathname.replace(/\\/$/,"")||"/";if(p!=="/")return;if("scrollRestoration"in history)history.scrollRestoration="manual";var n=performance.getEntriesByType("navigation")[0];if(n&&n.type==="reload"){scrollTo(0,0)}else if(location.hash){history.replaceState(null,"","/");scrollTo(0,0)}}catch(e){}})();`;
+---
+
+<!doctype html>
+<html lang="en" class="h-full antialiased">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover, interactive-widget=resizes-content"
+    />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    {
+      leadingTitle ? (
+        <>
+          <title>{leadingTitle}</title>
+          {leadingRobots && <meta name="robots" content={leadingRobots} />}
+        </>
+      ) : null
+    }
+    <title>{title}</title>
+    <link rel="author" href="https://toromovers.com" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    {
+      tags.map((tag) =>
+        tag.kind === "meta" ? (
+          tag.property ? (
+            <meta property={tag.property} content={tag.content} />
+          ) : (
+            <meta name={tag.name} content={tag.content} />
+          )
+        ) : (
+          <link rel={tag.rel} href={tag.href} />
+        ),
+      )
+    }
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-192.png" sizes="192x192" type="image/png" />
+    <link rel="icon" href="/icon-512.png" sizes="512x512" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" type="image/png" />
+    <Fragment set:html={preloads.join("")} />
+    <script is:inline set:html={scrollHome}></script>
+  </head>
+  <body class="flex min-h-full w-full min-w-0 flex-col font-sans">
+    <script type="application/ld+json" is:inline set:html={orgJson}></script>
+    <slot />
+    <script is:inline>
+      window.sa=window.sa||function(){(sa.q=sa.q||[]).push(arguments)}
+    </script>
+    <script
+      is:inline
+      src="https://searchable-tracker.searchable.workers.dev/s.js"
+      data-domain="toromovers.com"
+      data-site-token={searchable}
+      defer
+    ></script>
+    {
+      pixel ? (
+        <script
+          is:inline
+          set:html={`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixel}');fbq('track','PageView');`}
+        />
+      ) : null
+    }
+    {
+      pixel ? (
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style="display:none"
+            alt=""
+            src={`https://www.facebook.com/tr?id=${pixel}&ev=PageView&noscript=1`}
+          />
+        </noscript>
+      ) : null
+    }
+  </body>
+</html>

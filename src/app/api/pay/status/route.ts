@@ -6,16 +6,16 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
+  const sessionId = new URL(req.url).searchParams.get("session_id") || "";
+  if (!sessionId.startsWith("cs_")) {
+    return NextResponse.json({ error: "Missing session." }, { status: 400 });
+  }
+
   if (!runtimeEnv("STRIPE_SECRET_KEY")) {
     return NextResponse.json(
       { error: "Stripe is not configured yet." },
       { status: 503 },
     );
-  }
-
-  const sessionId = new URL(req.url).searchParams.get("session_id") || "";
-  if (!sessionId.startsWith("cs_")) {
-    return NextResponse.json({ error: "Missing session." }, { status: 400 });
   }
 
   try {

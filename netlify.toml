@@ -6,14 +6,13 @@
 
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = "dist"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# Astro + @astrojs/netlify. Do not install @netlify/plugin-nextjs: it would
+# serve the old Next runtime over this site.
 
 [build.environment]
   NODE_VERSION = "20"
-  NEXT_TELEMETRY_DISABLED = "1"
   NEXT_PUBLIC_SITE_URL = "https://toromovers.com"
 
 # toromovers.net aliases → apex in one hop.
@@ -506,3 +505,22 @@
   force = true
 
 # NOTE: deliberately NO /manifest.webmanifest proxy — public/manifest.webmanifest must win.
+
+# /tip and /tip/thanks are Astro endpoints (307), not edge redirects.
+# An edge rule would also swallow /tip/ and skip the 308 trailing-slash hop
+# that live Next.js returns. See src/pages/tip/.
+
+# Next.js trailingSlash:false. /path/ → /path (308) and the query string is kept
+# because `to` has none. Specific rules above win first (/free-quote/ → /quotes).
+# The bare root / is not matched.
+[[redirects]]
+  from = "/*/"
+  to = "/:splat"
+  status = 308
+  force = true
+
+# Live Next responses send this. Netlify adds HSTS on HTTPS itself.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"

@@ -1,0 +1,24 @@
+---
+export const prerender = false;
+
+import PageView from "../components/render/PageView.astro";
+import { stripePublishableKey } from "../lib/env";
+
+const publishableKey = stripePublishableKey();
+// Initial HTML matches live: the card form is in the document. /api/pay/config
+// is still the source of truth, so a preview without STRIPE_SECRET_KEY hides
+// checkout after hydration and cannot create a session.
+const checkoutReady = Boolean(publishableKey);
+const searchParams: Record<string, string | string[]> = {};
+for (const key of new Set(Astro.url.searchParams.keys())) {
+  const all = Astro.url.searchParams.getAll(key);
+  searchParams[key] = all.length > 1 ? all : all[0];
+}
+---
+
+<PageView
+  path="pay"
+  searchParams={searchParams}
+  publishableKey={publishableKey}
+  checkoutReady={checkoutReady}
+/>
