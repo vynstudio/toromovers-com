@@ -1,7 +1,8 @@
 import { PHONE_LINES } from "./site.ts";
 /**
  * Design-owned blog posts (former homepage feature + integration bands).
- * Homepage shows these as 3 cards → each links to full /blog/[slug] guide.
+ * Homepage shows the six newest as cards → each links to full /blog/[slug] guide.
+ * The /blog index paginates the full list, newest first.
  */
 
 import type { ServiceIllustrationKey } from "@/components/ServiceIllustrations";

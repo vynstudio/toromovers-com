@@ -1,13 +1,17 @@
 import Image from "next/image";
-import { blogPosts, blogHref, blogShowsOwnPhoto } from "@/lib/blog";
+import { blogHref, blogShowsOwnPhoto } from "@/lib/blog";
+import { recentBlogPosts } from "@/lib/blog-index";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { VectorSlot } from "@/components/ServiceIllustrations";
+import { IconArrow } from "@/components/icons";
 
 /**
- * Homepage — 3 blog cards (compacted former feature + integration sections).
+ * Homepage — six newest blog cards.
  * Same band height language as services; cards only, no section headline.
  */
 export function BlogCards() {
+  const posts = recentBlogPosts();
+
   return (
     <section
       id="discover"
@@ -16,7 +20,7 @@ export function BlogCards() {
     >
       <div className="site-container-wide svc-band-inner">
         <ul className="svc-cards" aria-label="Blog guides">
-          {blogPosts.map((post) => (
+          {posts.map((post) => (
             <li key={post.slug} className="svc-cards-item">
               <a
                 href={blogHref(post.slug)}
@@ -52,6 +56,16 @@ export function BlogCards() {
             </li>
           ))}
         </ul>
+        <div className="mt-6 flex justify-center pb-2 sm:mt-8">
+          <a
+            href="/blog"
+            className="btn-outline btn-fluid tap-target inline-flex"
+            data-cta="blog-see-all"
+          >
+            See all articles
+            <IconArrow />
+          </a>
+        </div>
       </div>
     </section>
   );
