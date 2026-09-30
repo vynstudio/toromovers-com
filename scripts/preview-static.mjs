@@ -106,7 +106,13 @@ function fileFor(pathname) {
   const rel = pathname.replace(/^\/+/, "");
   const direct = join(root, rel);
   if (rel && existsSync(direct) && statSync(direct).isFile()) return direct;
-  const index = pathname === "/" ? join(root, "index.html") : join(root, rel, "index.html");
+  if (pathname === "/") {
+    const index = join(root, "index.html");
+    return existsSync(index) ? index : null;
+  }
+  const html = join(root, `${rel}.html`);
+  if (existsSync(html)) return html;
+  const index = join(root, rel, "index.html");
   if (existsSync(index)) return index;
   return null;
 }

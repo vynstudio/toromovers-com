@@ -13,6 +13,9 @@ export default defineConfig({
   adapter: netlify(),
   integrations: [react()],
   trailingSlash: "never",
+  // Netlify pretty-URLs redirect directory/index.html back to a slash.
+  // File output (/quotes.html) lets /quotes/ 308 to /quotes without a loop.
+  build: { format: "file" },
   vite: {
     plugins: [tailwindcss()],
     resolve: {
