@@ -8,25 +8,25 @@ import { routeFor } from "../../lib/route-table";
 import { resolveHead, type MetaIn } from "../../lib/seo-head";
 import { metadata as thanksMetadata } from "../../app/pay/thanks/layout";
 
+import Hydrate from "./Hydrate.astro";
+import checklistCss from "../../app/move-day-checklist/checklist.css?url";
+import payCss from "../../app/pay/pay.css?url";
+
 interface Props {
   path: string;
   searchParams?: Record<string, string | string[] | undefined>;
   publishableKey?: string;
   checkoutReady?: boolean;
+  /** Homepage renders static HTML. Other routes still hydrate the page. */
+  hydrate?: boolean;
 }
 
-const { path, searchParams, publishableKey, checkoutReady } = Astro.props as Props;
+const { path, searchParams, publishableKey, checkoutReady, hydrate = true } =
+  Astro.props as Props;
 const spec = routeFor(path);
 
 if (!spec) {
   Astro.response.status = 404;
-}
-
-if (spec && (spec.path === "pay" || spec.path === "pay/thanks")) {
-  await import("../../app/pay/pay.css");
-}
-if (spec?.path === "move-day-checklist") {
-  await import("../../app/move-day-checklist/checklist.css");
 }
 
 const load = spec ? pageLoaders[spec.key] : undefined;
@@ -53,38 +53,51 @@ let inner = "";
 if (Component) {
   inner = renderToString(React.createElement(Component as never, pageProps));
 }
-const preloads = [...inner.matchAll(/<link\b[^>]*rel="preload"[^>]*>/gi)].map((match) => match[0]);
+const HERO_SRCSET =
+  "/images/hero-video-poster-640.webp 640w, /images/hero-video-poster-960.webp 960w, /images/hero-video-poster.webp 1280w";
+
+function normalizePreload(tag: string) {
+  let out = tag.replace(/\bfetchPriority=/g, "fetchpriority=");
+  if (out.includes("/images/hero-video-poster.webp") && !out.includes("imagesrcset=")) {
+    out = out.replace(
+      /^<link\s+/i,
+      `<link imagesrcset="${HERO_SRCSET}" imagesizes="100vw" `,
+    );
+  }
+  if (out.includes("hero-video-poster") && !/fetchpriority=/i.test(out)) {
+    out = out.replace(/^<link\s+/i, '<link fetchpriority="high" ');
+  }
+  return out;
+}
+
+const seenPreload = new Set<string>();
+const preloads = [...inner.matchAll(/<link\b[^>]*rel="preload"[^>]*>/gi)]
+  .map((match) => normalizePreload(match[0]))
+  .filter((tag) => {
+    const href = (tag.match(/\bhref="([^"]+)"/i) || [])[1] || tag;
+    if (seenPreload.has(href)) return false;
+    seenPreload.add(href);
+    return true;
+  });
+inner = inner.replace(/<link\b[^>]*rel="preload"[^>]*>/gi, "");
 const pageKey = spec?.key || "";
 ---
 
-<Base title={head.title} tags={head.tags} preloads={preloads}>
+<Base
+  title={head.title}
+  tags={head.tags}
+  preloads={preloads}
+  deferTrackers={!hydrate}
+  extraCss={
+    spec?.path === "move-day-checklist"
+      ? [checklistCss]
+      : spec?.path === "pay" || spec?.path === "pay/thanks"
+        ? [payCss]
+        : []
+  }
+>
   <div id="app" class="contents">
     <Fragment set:html={inner} />
   </div>
-  {
-    pageKey ? (
-      <>
-        <script is:inline define:vars={{ pageKey, pageProps }}>
-          window.__TORO_PAGE__ = { pageKey, pageProps };
-        </script>
-        <script>
-          import { hydratePage } from "../../lib/hydrate-client";
-          const boot = () => {
-            const data = window.__TORO_PAGE__;
-            if (!data?.pageKey) return;
-            hydratePage(data.pageKey, data.pageProps || {});
-          };
-          const start = () => {
-            if ("requestIdleCallback" in window) {
-              window.requestIdleCallback(() => boot(), { timeout: 1800 });
-            } else {
-              boot();
-            }
-          };
-          if (document.readyState === "complete") start();
-          else window.addEventListener("load", start, { once: true });
-        </script>
-      </>
-    ) : null
-  }
+  {hydrate && pageKey ? <Hydrate pageKey={pageKey} pageProps={pageProps} /> : null}
 </Base>

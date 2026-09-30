@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChecklistClient } from "@/components/move-checklist/checklist-client";
 import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
-import "./checklist.css";
 
 export const metadata: Metadata = {
   title: "Confirm your move",
