@@ -509,15 +509,8 @@
 # /tip and /tip/thanks are Astro endpoints (307), not edge redirects.
 # An edge rule would also swallow /tip/ and skip the 308 trailing-slash hop
 # that live Next.js returns. See src/pages/tip/.
-
-# Next.js trailingSlash:false. /path/ → /path (308) and the query string is kept
-# because `to` has none. Specific rules above win first (/free-quote/ → /quotes).
-# The bare root / is not matched.
-[[redirects]]
-  from = "/*/"
-  to = "/:splat"
-  status = 308
-  force = true
+# Trailing-slash 308s live in netlify/edge-functions/searchable.ts.
+# A toml rule from "/*/" to "/:splat" is rejected as a redirect loop.
 
 # Live Next responses send this. Netlify adds HSTS on HTTPS itself.
 [[headers]]

@@ -4,6 +4,23 @@ const ENDPOINT = "https://tracker.searchableanalytics.com/v1/netlify-edge";
 const TOKEN = Netlify.env.get("SEARCHABLE_TOKEN");
 
 export default async function (request: Request, context: Context) {
+  const url = new URL(request.url);
+  if (url.pathname.length > 1 && url.pathname.endsWith("/")) {
+    // Exact Netlify redirects such as /recent-moves/ are 301s in netlify.toml
+    // and match the slashed path before this function. Everything else matches
+    // live Next.js: 308 from /path/ to /path, query string included.
+    if (url.pathname === "/recent-moves/") {
+      return new Response(null, {
+        status: 301,
+        headers: { location: "/orlando-movers-gallery" },
+      });
+    }
+    const bare = url.pathname.replace(/\/+$/, "");
+    return new Response(null, {
+      status: 308,
+      headers: { location: `${bare}${url.search}` },
+    });
+  }
   const response = await context.next();
   context.waitUntil(forward(request, response, context));
   return response;
