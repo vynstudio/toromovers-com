@@ -7,9 +7,15 @@ import SiteNav from "../components/chrome/SiteNav.astro";
 import Icon from "../components/home/Icon.astro";
 import Photo from "../components/home/Photo.astro";
 import Base from "../layouts/Base.astro";
+import boxes from "../assets/home/family-boxes-2.jpg";
+import carrying from "../assets/home/family-carrying-boxes-5.jpg";
+import newHouse from "../assets/home/family-new-house-3.jpg";
+import smiles from "../assets/home/family-smiles-4.jpg";
+import together from "../assets/home/family-together-6.jpg";
 import family from "../assets/home/family-with-boxes.jpg";
 import aerial from "../assets/home/florida-suburb-aerial.jpg";
 import happyFamily from "../assets/home/happy-family.jpg";
+import keys from "../assets/home/couple-keys-7.jpg";
 import parentChild from "../assets/home/parent-and-child.jpg";
 import taping from "../assets/home/woman-taping-boxes.jpg";
 import {
@@ -34,28 +40,36 @@ import {
 import { SITE_URL } from "../lib/site.ts";
 import "../styles/preview-home.css";
 
+const keysAlt = "A couple holding keys outside their new home";
+const togetherAlt = "A family standing with moving boxes in a new home";
+const carryingAlt = "A family carrying boxes on moving day";
+const newHouseAlt = "Parents and a child at the door of a new home";
+const tapingAlt = "A woman taping boxes on moving day";
+const boxesAlt = "A couple with moving boxes in a living room";
+const parentAlt = "A parent and child moving into a new home";
+const smilesAlt = "A family smiling together in a new kitchen";
 const familyAlt = "A family carrying boxes into a new home";
 const happyAlt = "A family moving into a new home together";
-const parentAlt = "A parent and child moving into a new home";
-const tapingAlt = "A woman taping boxes on moving day";
 
 const servicePhotos = {
-  family: { src: family, alt: familyAlt },
-  happy: { src: happyFamily, alt: happyAlt },
-  parent: { src: parentChild, alt: parentAlt },
+  together: { src: together, alt: togetherAlt },
+  carrying: { src: carrying, alt: carryingAlt },
+  "new-house": { src: newHouse, alt: newHouseAlt },
   taping: { src: taping, alt: tapingAlt },
+  boxes: { src: boxes, alt: boxesAlt },
+  parent: { src: parentChild, alt: parentAlt },
 } as const;
 
 const guidePhotos: Record<string, { src: ImageMetadata; alt: string }> = {
-  "orlando-hoa-coi-movers": { src: parentChild, alt: parentAlt },
+  "orlando-hoa-coi-movers": { src: smiles, alt: smilesAlt },
   "orlando-furniture-only-movers": { src: family, alt: familyAlt },
-  "orlando-packing-help-movers": { src: taping, alt: tapingAlt },
+  "orlando-packing-help-movers": { src: happyFamily, alt: happyAlt },
 };
 
 const guides = homeGuides();
 const cities = homeCities();
 const heroOg = await getImage({
-  src: happyFamily,
+  src: keys,
   width: 1200,
   height: 800,
   format: "webp",
@@ -82,8 +96,8 @@ const tags = [
 function guideArt(slug: string) {
   return (
     guidePhotos[slug] ?? {
-      src: happyFamily,
-      alt: happyAlt,
+      src: smiles,
+      alt: smilesAlt,
     }
   );
 }
@@ -110,8 +124,8 @@ function guideArt(slug: string) {
           </div>
           <Photo
             class="hero-photo"
-            src={happyFamily}
-            alt={happyAlt}
+            src={keys}
+            alt={keysAlt}
             widths={[480, 768, 1024]}
             sizes="(min-width: 960px) 520px, 100vw"
             priority
@@ -190,15 +204,7 @@ function guideArt(slug: string) {
       <div class="wrap">
         <p class="eyebrow">Booking</p>
         <h2 id="how-heading">{howItWorks.heading}</h2>
-        <div class="how-grid">
-          <Photo
-            class="how-photo"
-            src={family}
-            alt={familyAlt}
-            widths={[360, 560, 720]}
-            sizes="(min-width: 800px) 340px, 100vw"
-          />
-          <ol class="steps">
+        <ol class="steps">
             {
               howItWorks.steps.map((step) => (
                 <li>
@@ -208,8 +214,7 @@ function guideArt(slug: string) {
                 </li>
               ))
             }
-          </ol>
-        </div>
+        </ol>
       </div>
     </section>
 

@@ -545,7 +545,6 @@ summary {
 .guide-card picture,
 .guide-feature picture,
 .hero-photo,
-.how-photo,
 .areas-photo {
   display: block;
   width: 100%;
@@ -555,7 +554,6 @@ summary {
 .guide-card img,
 .guide-feature img,
 .hero-photo,
-.how-photo,
 .areas-photo {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -568,20 +566,13 @@ summary {
   border-radius: 16px;
   aspect-ratio: 3 / 2;
   max-height: 280px;
-  object-position: center 22%;
+  object-position: center 32%;
 }
 
 .svc-card img,
 .guide-card img,
-.guide-feature img,
-.how-photo {
-  object-position: center 18%;
-}
-
-.how-photo {
-  border-radius: 16px;
-  aspect-ratio: 3 / 4;
-  max-height: 460px;
+.guide-feature img {
+  object-position: center 22%;
 }
 
 .areas-photo {
@@ -645,16 +636,10 @@ summary {
 }
 
 /* Process */
-.how-grid {
-  display: grid;
-  gap: 1rem;
-  margin-top: 1.2rem;
-}
-
 .steps {
   display: grid;
   gap: 0.8rem;
-  margin-top: 0;
+  margin-top: 1.2rem;
   counter-reset: step;
 }
 
@@ -672,13 +657,8 @@ summary {
 }
 
 @media (min-width: 800px) {
-  .how-grid {
-    grid-template-columns: minmax(220px, 300px) 1fr;
-    align-items: stretch;
-  }
-
   .steps {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

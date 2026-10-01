@@ -63,21 +63,21 @@ export const services = [
     body: "Crew and truck for homes, townhomes, and apartments — loading, transport, unloading, and room-by-room placement.",
     href: SERVICE_LINKS[0].href,
     icon: "truck",
-    photo: "family",
+    photo: "together",
   },
   {
     title: "Labor-only moving",
     body: "You have the U-Haul, POD, or rental truck. The crew loads or unloads it by the hour.",
     href: SERVICE_LINKS[1].href,
     icon: "trolley",
-    photo: "parent",
+    photo: "carrying",
   },
   {
     title: "Apartment movers",
     body: "Stairs, elevators, loading zones, and move-in windows planned before the crew arrives.",
     href: SERVICE_LINKS[2].href,
     icon: "moving-home",
-    photo: "happy",
+    photo: "new-house",
   },
   {
     title: "Packing",
@@ -91,7 +91,7 @@ export const services = [
     body: "Small offices and light commercial suites, including after-hours windows when the building allows.",
     href: SERVICE_LINKS[4].href,
     icon: "pickup",
-    photo: "family",
+    photo: "boxes",
   },
   {
     title: "POD & U-Haul loading",
