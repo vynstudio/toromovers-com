@@ -117,14 +117,23 @@ export async function POST(req: Request) {
   const phone = flat.phone;
   const email = flat.email;
 
-  if (!name || name.length < 2 || phone.length < 10) {
-    return NextResponse.json(
-      { error: "name + phone required" },
-      { status: 400 },
+  const softRequested = isSoft(body, flat.serviceType, flat.note);
+  const missingContact = !name || name.length < 2 || phone.length < 10;
+  if (missingContact) {
+    const hasAddress = Boolean(
+      str(details?.origin) || str(details?.destination),
     );
+    if (!softRequested || !hasAddress || !flat.serviceType) {
+      return NextResponse.json(
+        { error: "name + phone required" },
+        { status: 400 },
+      );
+    }
   }
 
-  const soft = isSoft(body, flat.serviceType, flat.note);
+  const soft = softRequested;
+  const notifyName = name.length >= 2 ? name : "Quote started";
+  const notifyPhone = phone.length >= 10 ? phone : "";
   const consentSms = flat.consentSms;
   const funnel =
     typeof body.funnel === "string" && body.funnel
@@ -139,8 +148,8 @@ export async function POST(req: Request) {
   try {
     channels = await notifyLead({
       kind: soft ? "soft" : "full",
-      name,
-      phone,
+      name: notifyName,
+      phone: notifyPhone,
       email: email || undefined,
       serviceType: flat.serviceType || undefined,
       note: flat.note || undefined,
@@ -166,7 +175,9 @@ export async function POST(req: Request) {
 
   const attr = asRecord(body.attribution);
   const eventId = str(attr?.event_id) || str(body.eventId);
-  if (eventId && !soft && flat.source === "ads_short_form") {
+  const capiSource =
+    flat.source === "ads_short_form" || flat.source === "homepage_quote";
+  if (eventId && !soft && capiSource && phone.length >= 10) {
     try {
       const capi = await sendCapiLead({
         eventId,
@@ -174,7 +185,10 @@ export async function POST(req: Request) {
         phone,
         email: email || undefined,
         sourceUrl: landingPage || headerSourceUrl,
-        contentName: "ads_short_callback",
+        contentName:
+          flat.source === "homepage_quote"
+            ? "homepage_quote"
+            : "ads_short_callback",
         fbp: str(attr?.fbp),
         fbc: str(attr?.fbc),
         clientIp,
@@ -191,7 +205,9 @@ export async function POST(req: Request) {
   let forwardStatus = 0;
   const forwardUrl = process.env.LEAD_FORWARD_URL || "";
   const skipForward =
-    !forwardUrl || /live-toro-site\.netlify\.app/i.test(forwardUrl);
+    !forwardUrl ||
+    /live-toro-site\.netlify\.app/i.test(forwardUrl) ||
+    phone.length < 10;
   if (!skipForward) {
     try {
       const headers: Record<string, string> = {

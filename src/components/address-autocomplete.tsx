@@ -226,7 +226,7 @@ export function AddressAutocomplete({
         : status === "results" &&
             !open &&
             value !== pickedLine
-          ? "Choose a suggestion — street, city, state, and ZIP."
+          ? "Choose a suggestion with the street, city, state, and ZIP."
           : "";
 
   return (
