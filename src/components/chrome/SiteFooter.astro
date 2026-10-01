@@ -1,0 +1,105 @@
+---
+import {
+  GUIDE_COUNT,
+  HOME_PHONE_DISPLAY,
+  HOME_PHONE_TEL,
+  NATIONWIDE_HREF,
+  SERVICE_LINKS,
+  chromeCities,
+  chromeGuides,
+} from "../../lib/site-chrome.ts";
+import { EMAIL, HOURS_LABEL } from "../../lib/site.ts";
+
+interface Props {
+  phoneDisplay?: string;
+  phoneTel?: string;
+}
+
+const {
+  phoneDisplay = HOME_PHONE_DISPLAY,
+  phoneTel = HOME_PHONE_TEL,
+} = Astro.props;
+
+const cities = chromeCities();
+const guides = chromeGuides(4);
+const year = 2026;
+---
+
+<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div>
+      <a class="logo" href="/" aria-label="Toro Movers home">
+        <span class="logo-3d" aria-hidden="true">
+          <img src="/logos/toro-bull-white.svg" alt="" width="40" height="32" />
+        </span>
+        <span class="logo-word">TORO<span class="logo-dot">·</span>MOVERS</span>
+      </a>
+      <p class="foot-lede">
+        Family-owned movers for Orlando, Central Florida, and long-distance moves.
+      </p>
+      <p class="foot-phone">
+        <a href={phoneTel}>{phoneDisplay}</a>
+      </p>
+      <p class="foot-meta">{HOURS_LABEL}</p>
+      <p class="foot-meta">
+        <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+      </p>
+    </div>
+
+    <div>
+      <h2>Services</h2>
+      <ul>
+        {
+          SERVICE_LINKS.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+        <li>
+          <a href="/services">All services</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Guides</h2>
+      <ul>
+        {
+          guides.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+        <li>
+          <a href="/blog">All {GUIDE_COUNT} guides</a>
+        </li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>Areas</h2>
+      <ul class="foot-areas">
+        {
+          cities.map((city) => (
+            <li>
+              <a href={city.href}>{city.label}</a>
+            </li>
+          ))
+        }
+        <li>
+          <a href={NATIONWIDE_HREF}>Nationwide</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap foot-legal">
+    <p>© {year} Toro Movers LLC</p>
+    <nav aria-label="Legal">
+      <a href="/privacy">Privacy</a>
+      <a href="/cookies">Cookies</a>
+      <a href="/terms">Terms</a>
+    </nav>
+  </div>
+</footer>

@@ -10,7 +10,9 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   site: "https://toromovers.com",
   output: "static",
-  adapter: netlify(),
+  // Static AVIF/WebP from the build. The Netlify image CDN would otherwise
+  // rewrite homepage photos to /.netlify/images at request time.
+  adapter: netlify({ imageCDN: false }),
   integrations: [react()],
   trailingSlash: "never",
   // Netlify pretty-URLs redirect directory/index.html back to a slash.

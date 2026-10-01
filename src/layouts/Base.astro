@@ -12,6 +12,13 @@ interface Props {
   /** Homepage: load Searchable and the Meta pixel after window load. */
   deferTrackers?: boolean;
   extraCss?: string[];
+  /**
+   * Homepage-only telephone override for the shared MovingCompany graph.
+   * Omit it and every other page keeps the existing company line.
+   */
+  businessTelephone?: string;
+  /** Homepage-only image for the shared MovingCompany graph. */
+  businessImage?: string;
 }
 
 const {
@@ -22,11 +29,19 @@ const {
   leadingRobots,
   deferTrackers = false,
   extraCss = [],
+  businessTelephone,
+  businessImage,
 } = Astro.props;
 const searchable =
   process.env.NEXT_PUBLIC_SEARCHABLE_SITE_TOKEN || "pst_18bcf81295a1c8185e489122";
 const pixel = process.env.NEXT_PUBLIC_META_PIXEL_ID || "985575491098437";
-const orgJson = JSON.stringify(organizationGraph());
+const orgJson = JSON.stringify(
+  organizationGraph(
+    businessTelephone || businessImage
+      ? { telephone: businessTelephone, image: businessImage }
+      : undefined,
+  ),
+);
 const scrollHome = `(function(){try{var p=location.pathname.replace(/\\/$/,"")||"/";if(p!=="/")return;if("scrollRestoration"in history)history.scrollRestoration="manual";var n=performance.getEntriesByType("navigation")[0];if(n&&n.type==="reload"){scrollTo(0,0)}else if(location.hash){history.replaceState(null,"","/");scrollTo(0,0)}}catch(e){}})();`;
 ---
 

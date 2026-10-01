@@ -1,8 +1,402 @@
 ---
-import PageView from "../components/render/PageView.astro";
+import type { ImageMetadata } from "astro";
+import { getImage } from "astro:assets";
+import AdsShortForm from "../components/funnel/AdsShortForm";
+import SiteFooter from "../components/chrome/SiteFooter.astro";
+import SiteNav from "../components/chrome/SiteNav.astro";
+import Icon from "../components/home/Icon.astro";
+import Photo from "../components/home/Photo.astro";
+import Base from "../layouts/Base.astro";
+import family from "../assets/home/family-with-boxes.jpg";
+import aerial from "../assets/home/florida-suburb-aerial.jpg";
+import happyFamily from "../assets/home/happy-family.jpg";
+import parentChild from "../assets/home/parent-and-child.jpg";
+import taping from "../assets/home/woman-taping-boxes.jpg";
+import {
+  HOME_DESCRIPTION,
+  HOME_H1,
+  HOME_LEDE,
+  HOME_PHONE_DISPLAY,
+  HOME_PHONE_E164,
+  HOME_PHONE_TEL,
+  HOME_TITLE,
+  NATIONWIDE_HREF,
+  homeCities,
+  homeFaqs,
+  homeGuides,
+  homeStructuredData,
+  howItWorks,
+  pricing,
+  reviewBlock,
+  services,
+  trustItems,
+} from "../lib/home-page.ts";
+import { SITE_URL } from "../lib/site.ts";
+import "../styles/preview-home.css";
+
+const familyAlt = "A family carrying boxes into a new home";
+const happyAlt = "A family moving into a new home together";
+const parentAlt = "A parent and child moving into a new home";
+const tapingAlt = "A woman taping boxes on moving day";
+
+const servicePhotos = {
+  family: { src: family, alt: familyAlt },
+  happy: { src: happyFamily, alt: happyAlt },
+  parent: { src: parentChild, alt: parentAlt },
+  taping: { src: taping, alt: tapingAlt },
+} as const;
+
+const guidePhotos: Record<string, { src: ImageMetadata; alt: string }> = {
+  "orlando-hoa-coi-movers": { src: parentChild, alt: parentAlt },
+  "orlando-furniture-only-movers": { src: family, alt: familyAlt },
+  "orlando-packing-help-movers": { src: taping, alt: tapingAlt },
+};
+
+const guides = homeGuides();
+const cities = homeCities();
+const heroOg = await getImage({
+  src: happyFamily,
+  width: 1200,
+  height: 800,
+  format: "webp",
+  quality: 62,
+});
+const heroImageUrl = new URL(heroOg.src, SITE_URL).href;
+const jsonLd = JSON.stringify(homeStructuredData(heroImageUrl));
+const canonical = `${SITE_URL}/`;
+const tags = [
+  { kind: "meta" as const, name: "description", content: HOME_DESCRIPTION },
+  { kind: "link" as const, rel: "canonical", href: canonical },
+  { kind: "meta" as const, property: "og:title", content: HOME_TITLE },
+  { kind: "meta" as const, property: "og:description", content: HOME_DESCRIPTION },
+  { kind: "meta" as const, property: "og:url", content: canonical },
+  { kind: "meta" as const, property: "og:type", content: "website" },
+  { kind: "meta" as const, property: "og:image", content: heroImageUrl },
+  { kind: "meta" as const, name: "twitter:card", content: "summary_large_image" },
+  { kind: "meta" as const, name: "twitter:title", content: HOME_TITLE },
+  { kind: "meta" as const, name: "twitter:description", content: HOME_DESCRIPTION },
+  { kind: "meta" as const, name: "twitter:image", content: heroImageUrl },
+  { kind: "meta" as const, name: "robots", content: "index, follow" },
+];
+
+function guideArt(slug: string) {
+  return (
+    guidePhotos[slug] ?? {
+      src: happyFamily,
+      alt: happyAlt,
+    }
+  );
+}
 ---
 
-<PageView path="" hydrate={false} />
-<script>
-  import "../scripts/home-chrome";
-</script>
+<Base
+  title={HOME_TITLE}
+  tags={tags}
+  deferTrackers={true}
+  businessTelephone={HOME_PHONE_E164}
+  businessImage={heroImageUrl}
+>
+  <SiteNav quoteHref="#quote-form" />
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="eyebrow">Toro Movers</p>
+          <h1 id="hero-heading">{HOME_H1}</h1>
+          <p class="lede">{HOME_LEDE}</p>
+          <div class="hero-actions">
+            <a class="btn btn-red" href={HOME_PHONE_TEL}>Call {HOME_PHONE_DISPLAY}</a>
+            <a class="btn btn-ghost" href="#quote-form">Get a Quote</a>
+          </div>
+          <Photo
+            class="hero-photo"
+            src={happyFamily}
+            alt={happyAlt}
+            widths={[480, 768, 1024]}
+            sizes="(min-width: 960px) 520px, 100vw"
+            priority
+          />
+        </div>
+        <div class="hero-form">
+          <AdsShortForm
+            client:load
+            phoneDisplay={HOME_PHONE_DISPLAY}
+            phoneLines={HOME_PHONE_DISPLAY}
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" aria-label="Why customers book Toro">
+      <ul class="wrap trust-list">
+        {
+          trustItems.map((item) => (
+            <li>
+              <Icon name={item.icon} />
+              <strong>{item.title}</strong>
+              <span>{item.body}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="section" id="pricing" aria-labelledby="pricing-heading">
+      <div class="wrap">
+        <p class="eyebrow">{pricing.eyebrow}</p>
+        <h2 id="pricing-heading">{pricing.price}</h2>
+        <article class="price-card">
+          <p class="price">{pricing.price}</p>
+          <p class="sentence">{pricing.sentence}</p>
+          <p class="note">{pricing.note}</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="services" aria-labelledby="services-heading">
+      <div class="wrap">
+        <p class="eyebrow">Services</p>
+        <h2 id="services-heading">Six ways to hire the crew</h2>
+        <ul class="card-grid services">
+          {
+            services.map((service) => {
+              const photo = servicePhotos[service.photo];
+              return (
+                <li>
+                  <a class="svc-card" href={service.href}>
+                    <Photo
+                      src={photo.src}
+                      alt={photo.alt}
+                      widths={[320, 480, 720]}
+                      sizes="(min-width: 1020px) 340px, (min-width: 720px) 46vw, 100vw"
+                    />
+                    <div>
+                      <h3>
+                        <Icon name={service.icon} size={22} />
+                        {service.title}
+                      </h3>
+                      <p>{service.body}</p>
+                    </div>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="how" aria-labelledby="how-heading">
+      <div class="wrap">
+        <p class="eyebrow">Booking</p>
+        <h2 id="how-heading">{howItWorks.heading}</h2>
+        <div class="how-grid">
+          <Photo
+            class="how-photo"
+            src={family}
+            alt={familyAlt}
+            widths={[360, 560, 720]}
+            sizes="(min-width: 800px) 340px, 100vw"
+          />
+          <ol class="steps">
+            {
+              howItWorks.steps.map((step) => (
+                <li>
+                  <Icon name={step.icon} />
+                  <h3>{step.name}</h3>
+                  <p>{step.text}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="reviews" aria-labelledby="reviews-heading">
+      <div class="wrap">
+        <p class="eyebrow">Google reviews</p>
+        <h2 id="reviews-heading">{reviewBlock.heading}</h2>
+        <p class="sub">{reviewBlock.sub}</p>
+        <ul class="card-grid reviews">
+          {
+            reviewBlock.items.map((review) => (
+              <li class="review-card">
+                <p class="stars" aria-label="5 out of 5 stars">
+                  ★★★★★
+                </p>
+                <blockquote>{review.text}</blockquote>
+                <div class="who">
+                  <span class="avatar" aria-hidden="true">
+                    {review.initial}
+                  </span>
+                  <div>
+                    <h3>{review.name}</h3>
+                    {review.context ? <p class="context">{review.context}</p> : null}
+                  </div>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="text-link" href={reviewBlock.mapsUrl}>Read them on Google</a>
+      </div>
+    </section>
+
+    <section class="section" id="areas" aria-labelledby="areas-heading">
+      <div class="wrap">
+        <p class="eyebrow">Service areas</p>
+        <h2 id="areas-heading">Orlando, Central Florida, and nationwide</h2>
+        <p class="sub">
+          Local crews cover Orlando and each Central Florida city below. Long-distance
+          and interstate moves are quoted separately.
+        </p>
+        <Photo
+          class="areas-photo"
+          src={aerial}
+          alt="Aerial view of a residential neighborhood in Florida"
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 1120px) 1120px, 100vw"
+        />
+        <div class="area-grid">
+          {
+            cities.map((city) => (
+              <a class="area-card" href={city.href}>
+                <strong>{city.label}</strong>
+                <span>Local moves</span>
+              </a>
+            ))
+          }
+          <a class="area-card wide" href={NATIONWIDE_HREF}>
+            <strong>Nationwide</strong>
+            <span>Long-distance and interstate. Trip quote from origin, destination, and inventory.</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="guides" aria-labelledby="guides-heading">
+      <div class="wrap">
+        <p class="eyebrow">Moving guides</p>
+        <h2 id="guides-heading">Notes from the crew</h2>
+        <a class="guide-feature" href={guides.featured.href}>
+          <Photo
+            src={guideArt(guides.featured.slug).src}
+            alt={guideArt(guides.featured.slug).alt}
+            widths={[480, 800, 1100]}
+            sizes="(min-width: 860px) 58vw, 100vw"
+          />
+          <div>
+            <p class="eyebrow">{guides.featured.eyebrow}</p>
+            <h3>{guides.featured.title}</h3>
+            <p>{guides.featured.teaser}</p>
+          </div>
+        </a>
+        <ul class="card-grid guide-row">
+          {
+            guides.cards.map((post) => {
+              const art = guideArt(post.slug);
+              return (
+                <li>
+                  <a class="guide-card" href={post.href}>
+                    <Photo
+                      src={art.src}
+                      alt={art.alt}
+                      widths={[320, 480, 720]}
+                      sizes="(min-width: 860px) 40vw, 100vw"
+                    />
+                    <div>
+                      <p class="eyebrow">{post.eyebrow}</p>
+                      <h3>{post.title}</h3>
+                      <p>{post.teaser}</p>
+                    </div>
+                  </a>
+                </li>
+              );
+            })
+          }
+        </ul>
+        <a class="btn btn-navy guides-all" href="/blog">All {guides.total} guides</a>
+      </div>
+    </section>
+
+    <section class="section" id="faq" aria-labelledby="faq-heading">
+      <div class="wrap">
+        <p class="eyebrow">FAQ</p>
+        <h2 id="faq-heading">Common questions</h2>
+        <div class="faq-list">
+          {
+            homeFaqs.map((item, index) => (
+              <details open={index === 0}>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band" aria-labelledby="cta-heading">
+      <div class="wrap">
+        <p class="eyebrow">Ready when you are</p>
+        <h2 id="cta-heading">Get your moving estimate</h2>
+        <p class="sub">
+          Call {HOME_PHONE_DISPLAY} or send the short form. Share what you are moving,
+          pickup and drop-off, and access details such as stairs, an elevator, and parking.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-red" href={HOME_PHONE_TEL}>Call {HOME_PHONE_DISPLAY}</a>
+          <a class="btn btn-ghost" href="#quote-form">Get a Quote</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+  <script type="application/ld+json" is:inline set:html={jsonLd}></script>
+  <script is:inline>
+    (function () {
+      var key = "toro_cookie_prefs";
+      try {
+        if (localStorage.getItem(key)) return;
+      } catch (e) {
+        return;
+      }
+      var show = function () {
+        if (document.querySelector(".cookie-banner")) return;
+        var banner = document.createElement("div");
+        banner.className = "cookie-banner";
+        banner.setAttribute("role", "dialog");
+        banner.setAttribute("aria-label", "Cookie notice");
+        banner.innerHTML =
+          '<p>We use cookies to run the site and, with your OK, measure traffic. See our <a href="/cookies">Cookie Policy</a> and <a href="/privacy">Privacy Policy</a>.</p><div class="cookie-actions"><button type="button" data-cookie="all" class="btn btn-red">Accept</button><button type="button" data-cookie="essential" class="btn btn-navy">Essential only</button><a href="/cookies">Preferences</a></div>';
+        var save = function (all) {
+          try {
+            localStorage.setItem(
+              key,
+              JSON.stringify({
+                analytics: all,
+                marketing: all,
+                updatedAt: new Date().toISOString(),
+              }),
+            );
+          } catch (err) {}
+          banner.remove();
+        };
+        banner.querySelector('[data-cookie="all"]').addEventListener("click", function () {
+          save(true);
+        });
+        banner.querySelector('[data-cookie="essential"]').addEventListener("click", function () {
+          save(false);
+        });
+        document.body.appendChild(banner);
+      };
+      var start = function () {
+        if (window.requestIdleCallback) window.requestIdleCallback(show, { timeout: 2500 });
+        else setTimeout(show, 1200);
+      };
+      if (document.readyState === "complete") start();
+      else window.addEventListener("load", start, { once: true });
+    })();
+  </script>
+</Base>

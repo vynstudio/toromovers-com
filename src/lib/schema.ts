@@ -35,7 +35,10 @@ const DATE_MODIFIED = "2026-09-29";
 
 export { businessAreaServed, businessPostalAddress };
 
-export function organizationGraph() {
+export function organizationGraph(options?: { telephone?: string; image?: string }) {
+  const telephone = options?.telephone ?? PHONE_E164;
+  const contactTelephone = options?.telephone ?? PHONE_SECONDARY_E164;
+  const image = options?.image ?? `${SITE_URL}/images/moves/real-23.webp`;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -49,13 +52,13 @@ export function organizationGraph() {
           "@type": "ImageObject",
           url: `${SITE_URL}/logos/toro-lockup-navy.svg`,
         },
-        image: `${SITE_URL}/images/moves/real-23.webp`,
+        image,
         description: organizationDescription,
         slogan: SLOGAN,
-        telephone: PHONE_E164,
+        telephone,
         contactPoint: {
           "@type": "ContactPoint",
-          telephone: PHONE_SECONDARY_E164,
+          telephone: contactTelephone,
           contactType: "customer service",
         },
         email: EMAIL,

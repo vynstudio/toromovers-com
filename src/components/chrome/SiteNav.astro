@@ -1,0 +1,112 @@
+---
+import {
+  HOME_PHONE_DISPLAY,
+  HOME_PHONE_TEL,
+  NATIONWIDE_HREF,
+  NAV_QUOTE_HREF,
+  chromeCities,
+} from "../../lib/site-chrome.ts";
+
+interface Props {
+  quoteHref?: string;
+  phoneDisplay?: string;
+  phoneTel?: string;
+}
+
+const {
+  quoteHref = NAV_QUOTE_HREF,
+  phoneDisplay = HOME_PHONE_DISPLAY,
+  phoneTel = HOME_PHONE_TEL,
+} = Astro.props;
+
+const cities = chromeCities();
+---
+
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-nav" data-site-nav>
+  <div class="nav-bar">
+    <a class="logo" href="/" aria-label="Toro Movers home">
+      <span class="logo-3d" aria-hidden="true">
+        <img
+          src="/logos/toro-bull-black.svg"
+          alt=""
+          width="40"
+          height="32"
+        />
+      </span>
+      <span class="logo-word">TORO<span class="logo-dot">·</span>MOVERS</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label="Primary">
+      <a href="/services">Services</a>
+      <details class="nav-drop">
+        <summary>Service Areas</summary>
+        <div class="nav-panel">
+          <ul>
+            {
+              cities.map((city) => (
+                <li>
+                  <a href={city.href}>{city.label}</a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </details>
+      <a href={NATIONWIDE_HREF}>Nationwide</a>
+      <a href="/blog">Guides</a>
+      <a class="btn btn-red" href={quoteHref}>Get a Quote</a>
+    </nav>
+
+    <div class="nav-mobile">
+      <a class="btn btn-red btn-compact" href={quoteHref}>Get a Quote</a>
+      <a class="btn btn-navy btn-compact" href={phoneTel}>Call</a>
+      <details class="nav-menu">
+        <summary aria-label="Open menu">
+          <span class="menu-icon" aria-hidden="true"></span>
+        </summary>
+        <div class="nav-drawer">
+          <nav aria-label="Mobile">
+            <a href="/services">Services</a>
+            <details class="nav-sub">
+              <summary>Service Areas</summary>
+              <ul>
+                {
+                  cities.map((city) => (
+                    <li>
+                      <a href={city.href}>{city.label}</a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </details>
+            <a href={NATIONWIDE_HREF}>Nationwide</a>
+            <a href="/blog">Guides</a>
+            <a href={quoteHref}>Get a Quote</a>
+            <a href={phoneTel}>Call {phoneDisplay}</a>
+          </nav>
+        </div>
+      </details>
+    </div>
+  </div>
+</header>
+
+<script>
+  const root = document.querySelector("[data-site-nav]");
+  if (root) {
+    const closeAll = () => {
+      root.querySelectorAll("details[open]").forEach((node) => {
+        node.removeAttribute("open");
+      });
+    };
+    root.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeAll);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeAll();
+    });
+    document.addEventListener("click", (event) => {
+      if (!root.contains(event.target as Node)) closeAll();
+    });
+  }
+</script>

@@ -32,7 +32,16 @@ const WHEN = [
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function AdsShortForm() {
+type Props = {
+  /** Visible fallback number. Defaults keep /quotes on the company lines. */
+  phoneDisplay?: string;
+  phoneLines?: string;
+};
+
+export default function AdsShortForm({
+  phoneDisplay = PHONE_DISPLAY,
+  phoneLines = PHONE_LINES,
+}: Props) {
   const startRef = useRef(
     typeof performance !== "undefined" ? performance.now() : Date.now(),
   );
@@ -73,7 +82,7 @@ export default function AdsShortForm() {
     }
     if (searchDown && (!origin || !destination)) {
       setError(
-        `Address search is unavailable. Call ${PHONE_LINES} and we will quote the move.`,
+        `Address search is unavailable. Call ${phoneLines} and we will quote the move.`,
       );
       return;
     }
@@ -173,7 +182,7 @@ export default function AdsShortForm() {
       window.location.assign("/thank-you");
     } catch {
       setError(
-        `We could not submit your request. Please call ${PHONE_LINES} and our team will help right away.`,
+        `We could not submit your request. Please call ${phoneLines} and our team will help right away.`,
       );
       setSubmitting(false);
     }
@@ -222,7 +231,7 @@ export default function AdsShortForm() {
                 if (error) setError("");
               }}
               className={fieldClass}
-              placeholder={PHONE_DISPLAY}
+              placeholder={phoneDisplay}
               autoComplete="tel"
               enterKeyHint="next"
             />
@@ -269,6 +278,7 @@ export default function AdsShortForm() {
             placeholder="Street number and name"
             ariaLabel="Pickup address"
             autoComplete="off"
+            phoneLines={phoneLines}
           />
         </label>
 
@@ -298,6 +308,7 @@ export default function AdsShortForm() {
             placeholder="Street number and name"
             ariaLabel="Drop-off address"
             autoComplete="off"
+            phoneLines={phoneLines}
           />
         </label>
 

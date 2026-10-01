@@ -37,6 +37,8 @@ type Props = {
   required?: boolean;
   /** Kept for older call sites. Suggestions are always street addresses. */
   streetOnly?: boolean;
+  /** Fallback number when search is down. Defaults to the company lines. */
+  phoneLines?: string;
 };
 
 export function AddressAutocomplete({
@@ -51,6 +53,7 @@ export function AddressAutocomplete({
   id,
   className,
   required,
+  phoneLines = PHONE_LINES,
 }: Props) {
   const reactId = useId();
   const listId = `${reactId}-list`;
@@ -217,7 +220,7 @@ export function AddressAutocomplete({
 
   const hint =
     status === "down"
-      ? `Address search is unavailable. Call ${PHONE_LINES}.`
+      ? `Address search is unavailable. Call ${phoneLines}.`
       : status === "empty"
         ? "No matching addresses. Keep the street number and name, then choose a suggestion."
         : status === "results" &&
