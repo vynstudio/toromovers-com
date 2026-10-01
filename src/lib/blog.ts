@@ -1,7 +1,8 @@
 import { PHONE_LINES } from "./site.ts";
 /**
  * Design-owned blog posts (former homepage feature + integration bands).
- * Homepage shows these as 3 cards → each links to full /blog/[slug] guide.
+ * Homepage shows the six newest as cards → each links to full /blog/[slug] guide.
+ * The /blog index paginates the full list, newest first.
  */
 
 import type { ServiceIllustrationKey } from "@/components/ServiceIllustrations";
@@ -177,9 +178,10 @@ export const blogPosts: readonly BlogPost[] = [
     date: "2026-09-29",
     dateLabel: "Sep 29, 2026",
     image: {
-      src: "/images/moves/real-21.webp",
-      alt: "Two movers carrying a padded piece on the stairs of a Central Florida apartment or HOA complex",
-      position: "object-[center_35%]",
+      // Pexels 7464266, RDNE Stock project, Pexels License. See public/images/stock/CREDITS.md.
+      src: "/images/stock/movers-carrying-sofa.webp",
+      alt: "Two movers carrying a sofa through a home",
+      position: "object-center",
       dedicated: true,
     },
     body: [
@@ -1073,9 +1075,9 @@ export const blogPosts: readonly BlogPost[] = [
     date: "2026-07-28",
     dateLabel: "Jul 28, 2026",
     image: {
-      src: "/images/moves/real-21.webp",
-      alt: "Toro Movers crew carrying furniture up stairs on a real Orlando-area complex move",
-      position: "object-[center_30%]",
+      src: "/images/moves/real-14.webp",
+      alt: "Movers carrying boxes down an apartment stairwell",
+      position: "object-center",
     },
     body: [
       "Toro Movers works around real apartment and HOA logistics across Central Florida: elevators, stairs, loading zones, storage access, and U-Haul or POD loading. Local crews help you plan the move around the building—not the other way around—with clear up-front hourly rates.",

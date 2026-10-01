@@ -397,8 +397,8 @@ export const smallMovesPage: ServiceGuide = {
     lede:
       "Small movers in Orlando are for a job that is not a whole household: one heavy piece, a short list of furniture, or a furniture pickup and delivery between two Central Florida addresses. Toro Movers sends a local crew sized for that list, with the same up-front hourly rate used on larger local jobs. The crew is family-owned and bilingual in English and Spanish. There is no single-item menu and no flat delivery price.",
     image: {
-      src: "/images/moves/real-21.webp",
-      alt: "Toro Movers crew carrying furniture up stairs on a Central Florida job",
+      src: "/images/services/single-item-move.webp",
+      alt: "Illustration of two movers carrying a blue sofa from a house to a white box truck",
     },
     chips: [
       "One piece or a few",

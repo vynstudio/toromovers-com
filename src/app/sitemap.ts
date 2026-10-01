@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { CAREERS_OPS_COORDINATOR_PATH, SITE_URL } from "@/lib/site";
 import { allCityPages } from "@/lib/city-pages";
 import { blogPosts } from "@/lib/blog";
+import { blogPaginationPaths } from "@/lib/blog-index";
 import { serviceGuides } from "@/lib/service-guides";
 
 /**
@@ -119,6 +120,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const blogPages: MetadataRoute.Sitemap = blogPaginationPaths().map((path) => ({
+    url: `${SITE_URL}${path}`,
+    lastModified: now,
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
   const designCities: MetadataRoute.Sitemap = allCityPages().map((c) => ({
     url: `${SITE_URL}${c.href}`,
     lastModified: now,
@@ -126,5 +134,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: c.slug === "orlando-movers" || c.slug === "central-florida-movers" ? 0.95 : 0.85,
   }));
 
-  return [...core, ...blogs, ...designCities];
+  return [...core, ...blogPages, ...blogs, ...designCities];
 }
