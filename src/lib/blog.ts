@@ -41,6 +41,69 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-storage-unit-movers",
+    illustration: "loading",
+    eyebrow: "Storage unit · Orlando",
+    title: "Orlando storage unit movers: into or out of a unit",
+    teaser:
+      "Moving into or out of an Orlando storage unit: gates, unit size, Florida humidity, and when a truck beats driving.",
+    description:
+      "Moving into or out of a self-storage unit in Orlando and Central Florida: facility gates, unit fit, humidity, and when a truck beats driving.",
+    date: "2026-10-01",
+    dateLabel: "Oct 1, 2026",
+    image: {
+      src: "/images/services/pod-storage-container.webp",
+      alt: "Illustration of a mover loading boxes into a storage container on a Central Florida storage-unit job",
+      dedicated: true,
+    },
+    body: [
+      "Moving into or out of a self-storage unit in Orlando is the trip between a home and the facility. Gate codes, office hours, aisle width, and unit size set the clock. Toro Movers is the practical Central Florida crew for that carry, whether you drive or the truck comes with the crew, quoted by the hour.",
+      "## Moving into the unit from a home",
+      "The destination is a storage facility. You are leaving a house, a townhome, or an apartment, and the last door is a unit you already rented. The crew needs that door unlocked, a lock you will close, and clear floor to set a piece down. Name the facility, the unit number, and whether the door is a ground-level drive-up or an upper-floor hallway.",
+      "The home has its own clock. An apartment still needs the elevator, dock, or loading zone reserved. Share the floor, how long that window lasts, and where a truck may sit. A townhome adds stairs and often an HOA gate or a visitor pass. Apartment rules for the residence are on /apartment-movers-orlando-fl. Rooms that are still unpacked use the same minutes as the sofa, and those minutes have to end before the facility stops truck access. The unit door is often narrower than a bedroom door.",
+      "Stacking a U-Haul or a POD is a different guide. A tight pack for a rental or a container is in /blog/orlando-pod-uhaul-storage-loading and /blog/uhaul-pod-loading-help-orlando.",
+      "## Moving out of a unit into a home",
+      "The pickup is the unit and the drop-off is the apartment or house. Someone who can open the lock has to meet the crew. Pieces come out in the order they were stored, so a mattress across the front has to move before the dresser behind it. Say what is blocking the door and what is heavy.",
+      "The new home still controls the arrival. An apartment in Orlando, Winter Park, Kissimmee, or Lake Nona can require an elevator window, a dock, or a short loading zone. If that window was never reserved, the crew can reach the building and still wait. A house or townhome is the driveway, the stairs, and any community gate. Share the floor where the bed and sofa should land. Both clocks have to overlap: a facility that stops truck access at noon and an elevator that opens later that afternoon cannot share one date. Put both windows in the quote.",
+      "## Gates, office hours, aisles, and elevators",
+      "Office hours and gate hours are often different. A keypad code can let a tenant in after the desk closes and still leave a box truck outside until the office approves it. Ask whether a moving truck may enter, where it may park, and whether the aisle lets that truck sit near the door. A van at a drive-up door is a different arrival than a large truck parked in the lot.",
+      "Send the facility name, street address, unit number, gate or keypad code, and any cart or elevator rule. An upper-floor unit uses the building elevator, and a long interior hallway is carry time. A ground-level drive-up, with the truck able to stop at the door, is the short version. An uncovered lot in Kissimmee, Clermont, Sanford, or east Orlando is a walk in late-morning sun. Florida heat and humidity add minutes. They do not add a fee. Crew hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. If Saturday access at the facility is shorter, that tighter clock wins. A failed code or a truck the office has not cleared is waiting time on the same hourly clock.",
+      "## What fits, and climate versus a standard unit",
+      "Name the unit size you already rented. A small closet-style unit holds boxes and a few small pieces, not a sofa and a bed together. A mid-size unit is where furniture from a studio starts to fit once the bed comes apart and the sofa can go in without blocking the door. A larger unit is closer to furniture from a one-bedroom, or part of a house, when the aisle lets those pieces turn. Photos of the door and the awkward pieces size the crew better than a bedroom count. How a full home changes hours is in /blog/orlando-movers-cost-by-home-size. Storage can be smaller than the home when half the rooms are staying.",
+      "Climate-controlled and non-climate are a Florida humidity question. A non-climate drive-up is often faster because the truck can sit near the door, and that unit sits in summer heat and damp air. Wood furniture, mattresses, and cardboard take that humidity. A climate-controlled unit is the better place for those pieces, usually with a longer walk and a shared elevator. Say which type you have so the quote matches the path.",
+      "## When a truck with the crew beats driving",
+      "Labor-only is the booking when you will drive a rental, a pickup, or a van. The crew loads the home into that vehicle, unloads it into the unit, or does the reverse. You still own the drive and any rental return. Book one end or both, and say so if you will drive between the home and the facility. The service page is /labor-only-moving. When that fit includes a storage stop with your own vehicle, see /blog/orlando-labor-only-movers-guide.",
+      "Full-service is the booking when the truck comes with the crew. Toro loads the home, drives to the facility, and unloads into the unit, or empties the unit and places the goods in the home. Choose it when you do not want to rent, when the gate will not pass the truck you would have picked up, when a rental return would miss a short apartment window, or when the drive is what you wanted to hand off. See /full-service-moving. A container already in the driveway is the loading guide linked above. If nothing is reserved, start with the truck included.",
+      "## Same-day, and what to send for the quote",
+      "Same-day can work when the home and the facility are both in Central Florida, a crew is still open, and both access windows are already real. An elevator hold that was never made, or a facility office that will not clear a truck until the next business day, is not a same-day start. What else decides a same-day local job is in /blog/orlando-same-day-movers.",
+      "Local work is $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a long aisle, a facility elevator, heat on an uncovered lot, and a wait at the gate add time. They do not add a separate line. More movers can shorten a short window because the rate is per mover per hour. The 2-hour minimum still applies to a short list.",
+      "Request the quote at /quotes. Lead with into the unit or out of the unit. Add the facility name, address, unit number, size, climate or non-climate, and drive-up or interior floor. Add the gate code, office hours, and any truck or elevator rule. Add the home address, floor, stairs or elevator window, and parking. Say whether you are driving or you need the truck, and send photos of bulky pieces and the tightest turn. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text " + PHONE_LINES + ". Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "Can movers load or unload a storage unit in Orlando?",
+        a: "Yes. Toro Movers carries household goods between a Central Florida home and a self-storage facility, into the unit or out of it. Share the facility, the unit size, the gate access, and whether you will drive or need the truck. Request a quote at /quotes.",
+      },
+      {
+        q: "What should I know about storage facility gates and hours?",
+        a: "Office hours and gate hours are often different. A code may open the pedestrian or tenant gate after the desk closes and still leave a box truck outside until the office approves it. Send the facility name, unit number, gate code, and any truck, aisle, or elevator rule. Crew hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. The tighter clock is the one the job has to finish inside.",
+      },
+      {
+        q: "Should I choose climate-controlled storage in Florida humidity?",
+        a: "A non-climate drive-up unit is often faster to load and sits in summer heat and humidity. Wood furniture, mattresses, and cardboard take that damp air. A climate-controlled unit is the better place for those pieces, usually with a longer hallway and a shared elevator. Tell the quote which type you rented so the walk matches the booking.",
+      },
+      {
+        q: "When is a full-service truck better than labor-only for storage?",
+        a: "Book labor-only when you will drive a rental, pickup, or van and need a crew for the carry. See /labor-only-moving. Book full-service when you want the truck included, when the facility gate will not pass a rental, or when you do not want to drive between the home and the unit. See /full-service-moving.",
+      },
+      {
+        q: "What do I send for an Orlando storage-unit moving quote?",
+        a: "Send into the unit or out of it, the facility name and unit number, the size, climate or non-climate, the gate code, and the office hours. Add the home address, floor, elevator or stairs, and whether you are driving. Local jobs are $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Request the quote at /quotes, or call or text " + PHONE_LINES + ".",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-labor-only-movers-guide",
     illustration: "labor-only",
     eyebrow: "Labor-only · Orlando",
