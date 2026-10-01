@@ -259,6 +259,7 @@ export const footer = {
         { label: "Service areas", href: "/#areas" },
         { label: "Orlando movers", href: "/orlando-movers" },
         { label: "Winter Park", href: "/winter-park-movers" },
+        { label: "Oviedo", href: "/oviedo-movers" },
         { label: "Kissimmee", href: "/kissimmee-movers" },
         { label: "Clermont", href: "/clermont-movers" },
       ],
@@ -372,7 +373,7 @@ export const trust = {
 export const areasSnippet = {
   eyebrow: "Coverage",
   heading: "Service areas",
-  lead: "Toro Movers serves Orlando and Central Florida with local moving help for homes, apartments, storage units, U-Haul loading, POD loading, and labor-only moves. Pick your city below—or call if you’re nearby.",
+  lead: "Toro Movers serves Orlando and Central Florida, including Winter Park and Oviedo, with local moving help for homes, apartments, storage units, U-Haul loading, POD loading, and labor-only moves. Pick your city below—or call if you’re nearby.",
   reverse: false,
   image: {
     src: "/images/hero-orlando-skyline.webp",

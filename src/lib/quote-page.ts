@@ -6,6 +6,7 @@
  * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
 
+import { cityPlace } from "./business-profile.ts";
 import { FUNNEL_SLA } from "./funnel-offer.ts";
 import {
   HOURLY_RATE_PHRASE,
@@ -132,7 +133,9 @@ export function quotePageGraph() {
         serviceType: "Local moving",
         provider: { "@id": `${SITE_URL}/#movingcompany` },
         areaServed: [
-          { "@type": "City", name: SERVICE_BASE_LOCALITY },
+          cityPlace(SERVICE_BASE_LOCALITY),
+          cityPlace("Winter Park"),
+          cityPlace("Oviedo"),
           { "@type": "AdministrativeArea", name: SERVICE_REGION },
           { "@type": "Country", name: "United States" },
         ],

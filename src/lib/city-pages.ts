@@ -219,6 +219,7 @@ function fromEngine(city: CityData): CityPageContent {
   if (!county) {
     throw new Error(`Add a county for ${city.slug}`);
   }
+  const article = /^[aeiou]/i.test(city.name) ? "an" : "a";
   return {
     slug: city.slug,
     href: city.href,
@@ -235,7 +236,7 @@ function fromEngine(city: CityData): CityPageContent {
     faqs: city.faqs ?? [],
     services: cityServices(city.name),
     closing: {
-      title: `Request a ${city.name} moving estimate before move day`,
+      title: `Request ${article} ${city.name} moving estimate before move day`,
       body: `Call or text Toro Movers at ${PHONE_LINES}, or request a quote at ${QUOTE_PATH}. Share what you are moving, your ${city.name} addresses, and access details. We match crew size, explain up-front hourly rates, and help plan the local move.`,
     },
     schema: city.schema,
@@ -918,7 +919,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
     "Toro Movers handles local home and apartment moves across Central Florida — full-service, labor-only, and up-front hourly rates. Call or text " + PHONE_LINES + ".",
   about: {
     h2: "Cities we serve in Central Florida",
-    body: "Orlando is our home base. Dedicated local pages cover the other Central Florida cities we serve, grouped by county on this page — including Winter Park, Kissimmee, Clermont, Sanford, Winter Springs, Deltona, Winter Garden, Horizon West, Lake Nona, and Dr. Phillips.",
+    body: "Orlando is our home base. Dedicated local pages cover the other Central Florida cities we serve, grouped by county on this page — including Winter Park, Oviedo, Kissimmee, Clermont, Sanford, Winter Springs, Deltona, Winter Garden, Horizon West, Lake Nona, and Dr. Phillips.",
   },
   sections: [
     {
@@ -949,7 +950,7 @@ const CENTRAL_FLORIDA: CityPageContent = {
   faqs: [
     {
       q: "What cities do Central Florida movers from Toro cover?",
-      a: "Orlando is our home base. This page links a local movers page for every Central Florida city we serve, grouped by county — including Winter Park, Kissimmee, Clermont, Sanford, Winter Springs, Deltona, Winter Garden, Horizon West, Lake Nona, and Dr. Phillips.",
+      a: "Orlando is our home base. This page links a local movers page for every Central Florida city we serve, grouped by county — including Winter Park, Oviedo, Kissimmee, Clermont, Sanford, Winter Springs, Deltona, Winter Garden, Horizon West, Lake Nona, and Dr. Phillips.",
     },
     {
       q: "Do you do long-distance or out-of-state moves?",
