@@ -482,6 +482,24 @@ section{position:relative}
 .cookie-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .cookie-banner .btn-navy{background:var(--black);color:#fff}
 .cookie-banner a{font-weight:600;text-decoration:underline;text-underline-offset:3px}
+/* Muted copy on deep teal must stay at least 4.5:1. Large index numbers stay above 3:1. */
+.statement h2 span{color:rgba(255,255,255,.9)}
+.counters-c .counter-desc{color:rgba(255,255,255,.9)}
+.sc-ed p{color:rgba(255,255,255,.9)}
+@media (min-width:761px){
+  .sc-ed .sc-num{color:rgba(255,255,255,.62)}
+}
+.process-c .step p{opacity:1;color:rgba(255,255,255,.9)}
+.faq-c-note,.faq-dark .faq-a p{color:rgba(255,255,255,.9)}
+.bc-go{opacity:.72;color:#0b0b0b}
+.bc-row:hover .bc-go{opacity:1}
+.ft-cols .ft-label{font-size:14px;font-weight:500;opacity:.9;margin-bottom:16px}
+.ft-giant{
+  height:18vw;
+  background:center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 220'%3E%3Ctext x='600' y='190' text-anchor='middle' font-family='Arial Black,Arial,sans-serif' font-size='220' font-weight='700' fill='%23ffffff' fill-opacity='0.05'%3ETORO%3C/text%3E%3C/svg%3E");
+  color:transparent;
+  font-size:0;
+}
 @media (max-width:760px){
   .fc-choices{grid-template-columns:1fr}
   .nav-c.is-open .nav-panel{padding:4px 20px 18px}

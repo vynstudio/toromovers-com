@@ -7,7 +7,8 @@ import { mintEventId } from "@/lib/meta-pixel";
 import { trackHome, trackHomeLead } from "@/lib/home-track";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
 import type { SelectedPlace } from "@/lib/selected-place";
-import { HOME_PHONE_DISPLAY, HOME_PHONE_TEL } from "@/lib/site-chrome";
+const HOME_PHONE_DISPLAY = "888-503-1756";
+const HOME_PHONE_TEL = "tel:+18885031756";
 
 type ServiceId = "full" | "labor" | "packing" | "apartment" | "office" | "pod";
 type LoadMode = "loading" | "unloading" | "both";
@@ -226,14 +227,14 @@ export default function QuoteWizard() {
           Step <b>{done ? 3 : step}</b> of 3
         </span>
       </div>
-      <div className="fc-progress" aria-label={`Step ${step} of 3`}>
+      <div className="fc-progress" role="group" aria-label={`Step ${step} of 3`}>
         <i className={step >= 1 ? "on" : ""} />
         <i className={step >= 2 ? "on" : ""} />
         <i className={step >= 3 ? "on" : ""} />
       </div>
       {done ? (
         <div className="fc-done">
-          <h3 className="fc-q">Quote received.</h3>
+          <p className="fc-q">Quote received.</p>
           <p className="fc-hint" style={{ textAlign: "left" }}>
             We have {service.label.toLowerCase()} and your number. A person will call you at{" "}
             {formatUsPhone(phone)}.
@@ -242,7 +243,7 @@ export default function QuoteWizard() {
       ) : null}
       {!done && step === 1 ? (
         <>
-          <h3 className="fc-q">What do you need?</h3>
+          <p className="fc-q">What do you need?</p>
           <div className="tiles" role="radiogroup" aria-label="What do you need?">
             {SERVICES.map((item) => (
               <button
@@ -267,9 +268,9 @@ export default function QuoteWizard() {
       ) : null}
       {!done && step === 2 ? (
         <>
-          <h3 className="fc-q">
+          <p className="fc-q">
             {service.kind === "one" ? "Where should we pack?" : "Where are we going?"}
-          </h3>
+          </p>
           {service.kind === "load" ? (
             <div className="fc-choices" role="radiogroup" aria-label="Loading, unloading, or both?">
               {(
@@ -338,7 +339,7 @@ export default function QuoteWizard() {
       ) : null}
       {!done && step === 3 ? (
         <>
-          <h3 className="fc-q">When should we call?</h3>
+          <p className="fc-q">When should we call?</p>
           <div className="fc-choices" role="radiogroup" aria-label="Move timing">
             {(
               [

@@ -45,18 +45,18 @@ const services = [
         </p>
       </div>
       <div>
-        <h4>Services</h4>
+        <p class="ft-label">Services</p>
         {services.map((item) => <a href={item.href}>{item.label}</a>)}
       </div>
       <div>
-        <h4>Areas</h4>
+        <p class="ft-label">Areas</p>
         <a href="/orlando-movers">Orlando</a>
         <a href="/winter-park-movers">Winter Park</a>
         <a href="/kissimmee-movers">Kissimmee</a>
         <a href={NATIONWIDE_HREF}>Nationwide</a>
       </div>
       <div>
-        <h4>Talk to us</h4>
+        <p class="ft-label">Talk to us</p>
         <a href={HOME_PHONE_TEL} data-track="phone">{HOME_PHONE_DISPLAY}</a>
         <a href="https://toromovers.com/">toromovers.com</a>
         <a href="#quote" data-track="quote">Get a quote</a>
@@ -67,5 +67,5 @@ const services = [
       <span>$95 per mover per hour · 2-hour minimum · No hidden fees</span>
     </div>
   </div>
-  <div class="ft-giant" aria-hidden="true">TORO</div>
+  <div class="ft-giant" aria-hidden="true"></div>
 </footer>
