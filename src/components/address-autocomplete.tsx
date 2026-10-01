@@ -61,6 +61,8 @@ export function AddressAutocomplete({
   const reactId = useId();
   const listId = `${reactId}-list`;
   const [suggestions, setSuggestions] = useState<SelectedPlace[]>([]);
+  /** The text the current suggestions were fetched for. */
+  const [resultsFor, setResultsFor] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
   const [status, setStatus] = useState<SearchState>("idle");
@@ -125,6 +127,7 @@ export function AddressAutocomplete({
       const data = (await res.json()) as { suggestions?: SelectedPlace[] };
       const items = Array.isArray(data.suggestions) ? data.suggestions : [];
       setSuggestions(items);
+      setResultsFor(query);
       setActive(items.length ? 0 : -1);
       setOpen(items.length > 0);
       setSearch(items.length ? "results" : "empty");
@@ -183,6 +186,11 @@ export function AddressAutocomplete({
   const handleChange = (next: string) => {
     if (pickedLine && next !== pickedLine) setPickedLine("");
     onChangeRef.current(next);
+    // Drop any in-flight answer and hide suggestions for older text, so a
+    // tap or Enter can never pick a result for a different query.
+    fetchSeq.current += 1;
+    setOpen(false);
+    setActive(-1);
     if (debounceRef.current) window.clearTimeout(debounceRef.current);
     debounceRef.current = window.setTimeout(() => {
       void runFetch(next);
@@ -190,6 +198,8 @@ export function AddressAutocomplete({
   };
 
   const select = (place: SelectedPlace) => {
+    fetchSeq.current += 1;
+    if (debounceRef.current) window.clearTimeout(debounceRef.current);
     setPickedLine(place.line);
     onChangeRef.current(place.line);
     onSelectRef.current?.(place);
@@ -259,7 +269,7 @@ export function AddressAutocomplete({
         value={value}
         onChange={(event) => handleChange(event.target.value)}
         onFocus={() => {
-          if (suggestions.length > 0) setOpen(true);
+          if (suggestions.length > 0 && resultsFor === value) setOpen(true);
           else if (value.trim().length >= 3) void runFetch(value);
         }}
         onKeyDown={onKey}
