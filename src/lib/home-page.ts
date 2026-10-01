@@ -173,7 +173,7 @@ export function homeGuides() {
 export const homeFaqs = [
   {
     q: "How much does a move cost?",
-    a: "Our rate is $95 per hour, per mover. We confirm your crew size when we quote. 2-hour minimum. We also offer a single mover at $95 per hour, with a 2-hour minimum.",
+    a: "Our rate is $95 per hour, per mover. We confirm your crew size when we quote. 2-hour minimum.",
   },
   {
     q: "Are there any hidden fees?",
