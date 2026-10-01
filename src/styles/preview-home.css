@@ -290,11 +290,6 @@ section{position:relative}
 .band-dark{background:var(--dark);color:#fff}
 .band-dark .eyebrow{color:#fff}
 .vc .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:600}
-.topbar{background:var(--black);color:rgba(255,255,255,.8);font-size:13px;font-weight:500}
-.topbar-in{display:flex;gap:28px;justify-content:flex-end;height:40px;align-items:center}
-.topbar-in span,.topbar-in a{display:inline-flex;align-items:center;gap:7px}
-.topbar .ic{color:var(--red)}
-.topbar a{color:#fff;margin-left:auto;order:-1;margin-right:auto;margin-left:0}
 .nav-c{background:#fff;border-bottom:1px solid var(--line)}
 .nav-c .nav-in{height:84px}
 .hero-c{display:grid;grid-template-columns:1.22fr 1fr;min-height:max(740px,calc(100vh - 124px));background:#fff}
@@ -373,8 +368,6 @@ section{position:relative}
 .faq-c-note{color:rgba(255,255,255,.65);font-size:18px;max-width:340px}
 .faq-c-note a{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:4px;white-space:nowrap}
 @media (max-width:1100px){
- .topbar-in{gap:16px;font-size:12px}
- .tb-div{margin:0 8px}
  .hero-c{grid-template-columns:1fr}
  .hero-c-photo{height:620px}
  .hero-c{min-height:0}
@@ -387,12 +380,6 @@ section{position:relative}
 }
 @media (max-width:760px){
  .band{padding:80px 0}
- .topbar-in{gap:14px;justify-content:space-between;font-size:12px}
- .topbar a{margin:0}
- .tb-es{display:none}
- .tb-trust{flex:1;min-width:0;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 10px,#000 calc(100% - 10px),transparent)}
- .tb-trust-track{display:flex;width:max-content;animation:tb-marquee 18s linear infinite}
- .tb-copy{display:inline-flex}
  .nav-c .nav-in{height:68px}
  .hero-c{min-height:0}
  .hero-c-photo{height:430px}
@@ -424,8 +411,6 @@ section{position:relative}
 }
 
 /* Palette contrast: white on accent and deep teal. Black on blush and light teal. */
-.topbar{background:var(--color-deep);color:#fff}
-.topbar .ic{color:#fff}
 .band-dark{background:var(--color-deep)}
 .sc-ed{background:var(--color-deep)}
 .reviews-c .rv-info{background:var(--color-deep)}
@@ -478,12 +463,6 @@ section{position:relative}
 .address-suggestion.active,.address-suggestion:hover{background:var(--color-blush)}
 .addr-hint{margin:6px 0 0;font-size:12px;font-weight:600;color:var(--muted)}
 .addr-hint.is-error{color:var(--color-accent)}
-.tb-trust{display:inline-flex;align-items:center;min-width:0}
-.tb-trust-track{display:inline-flex;align-items:center}
-.tb-set{display:inline-flex;align-items:center;flex-wrap:nowrap;white-space:nowrap}
-.topbar .tb-copy{display:none}
-.tb-div{width:1px;height:12px;background:rgba(255,255,255,.45);margin:0 12px;flex-shrink:0}
-.tb-trust .ic{color:#8CC7C4}
 html.has-cookie-banner .hero-c-over{padding-bottom:250px}
 @media (max-width:1100px){
   html.has-cookie-banner .hero-c-photo{height:620px}
@@ -495,7 +474,6 @@ html.has-cookie-banner .hero-c-over{padding-bottom:250px}
   html.has-cookie-banner .hero-c-side{padding-bottom:180px}
   html.has-cookie-banner{scroll-padding-bottom:180px}
 }
-@keyframes tb-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 /* Muted copy on deep teal must stay at least 4.5:1. Large index numbers stay above 3:1. */
 .statement h2 span{color:rgba(255,255,255,.9)}
 .counters-c .counter-desc{color:rgba(255,255,255,.9)}
@@ -517,18 +495,7 @@ html.has-cookie-banner .hero-c-over{padding-bottom:250px}
 @media (max-width:760px){
   .fc-choices{grid-template-columns:1fr}
   .nav-c.is-open .nav-panel{padding:4px 20px 18px}
-  .topbar .tb-es{display:none}
-  .topbar-in > a,.topbar-in > span{flex-shrink:0}
-  .topbar .tb-copy{display:inline-flex}
-  .tb-trust{flex:1 1 auto;min-width:72px;overflow:hidden;flex-shrink:1}
-  .tb-trust-track{display:flex;width:max-content;animation:tb-marquee 18s linear infinite;flex-wrap:nowrap}
 }
 @media (prefers-reduced-motion: reduce){
-  .tb-trust-track{animation:none}
   .hero-c-over{transition:none}
-}
-@media (max-width:760px) and (prefers-reduced-motion: reduce){
-  .tb-trust{mask-image:none}
-  .topbar .tb-copy{display:none}
-  .tb-set span:nth-child(n+2){display:none}
 }
