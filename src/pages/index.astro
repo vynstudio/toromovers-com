@@ -110,6 +110,7 @@ const tags = [
   deferTrackers={true}
   businessTelephone={HOME_PHONE_E164}
   businessImage={heroImageUrl}
+  omitPriceRange={true}
 >
   <div class="vc">
     <SiteNav />
@@ -145,7 +146,7 @@ const tags = [
           </div>
         </div>
         <div class="hero-c-side">
-          <p class="hero-c-lead" set:html={HOME_LEDE.replace("$95 per mover per hour.", "<b>$95 per mover per hour.</b>")} />
+          <p class="hero-c-lead">{HOME_LEDE}</p>
           <QuoteWizard client:idle />
         </div>
       </section>
@@ -155,7 +156,7 @@ const tags = [
           <div class="statement">
             <p><span class="eyebrow">01 / Why Toro</span></p>
             <h2>
-              One fair rate. Real people on the phone.
+              Our team answers the phone.
               <span>Help in English or Spanish, from first call to last box.</span>
             </h2>
           </div>
@@ -225,12 +226,10 @@ const tags = [
 
       <section class="band price-c" id="pricing">
         <div class="container price-c-grid">
-          <div class="price-c-big"><span class="pcb-cur">$</span>95</div>
           <div class="price-c-info">
-            <p class="eyebrow">03 / Pricing</p>
-            <h2 class="h2">Per mover, per hour<span class="dot">.</span> That is the whole price.</h2>
+            <p class="eyebrow">03 / Quote</p>
+            <h2 class="h2">Get your quote<span class="dot">.</span></h2>
             <ul class="pc-list">
-              <li><Icon name="check" size={18} />2-hour minimum</li>
               <li><Icon name="check" size={18} />No hidden fees</li>
               <li><Icon name="check" size={18} />English & Spanish</li>
             </ul>
@@ -502,9 +501,9 @@ const tags = [
       var href = link.getAttribute("href") || "";
       if (link.dataset.track === "phone" || href.indexOf("tel:+18885031756") === 0) {
         window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({ event: "phone_tap", phone: "888-503-1756" });
-        if (window.gtag) window.gtag("event", "phone_tap", { phone: "888-503-1756" });
-        if (window.fbq) window.fbq("trackCustom", "phone_tap", { phone: "888-503-1756" });
+        window.dataLayer.push({ event: "phone_click", phone: "888-503-1756" });
+        if (window.gtag) window.gtag("event", "phone_click", { phone: "888-503-1756" });
+        if (window.fbq) window.fbq("trackCustom", "phone_click", { phone: "888-503-1756" });
       }
       if (link.dataset.track === "quote") {
         window.dataLayer = window.dataLayer || [];
@@ -513,50 +512,5 @@ const tags = [
         if (window.fbq) window.fbq("trackCustom", "quote_cta_click", { href: href });
       }
     });
-  </script>
-  <script is:inline>
-    (function () {
-      var key = "toro_cookie_prefs";
-      try {
-        if (localStorage.getItem(key)) return;
-      } catch (e) {
-        return;
-      }
-      var show = function () {
-        if (document.querySelector(".cookie-banner")) return;
-        var banner = document.createElement("div");
-        banner.className = "cookie-banner";
-        banner.setAttribute("role", "dialog");
-        banner.setAttribute("aria-label", "Cookie notice");
-        banner.innerHTML =
-          '<p>We use cookies to run the site and, with your OK, measure traffic. See our <a href="/cookies">Cookie Policy</a> and <a href="/privacy">Privacy Policy</a>.</p><div class="cookie-actions"><button type="button" data-cookie="all" class="btn btn-red" data-text="Accept"><span>Accept</span></button><button type="button" data-cookie="essential" class="btn btn-navy" data-text="Essential only"><span>Essential only</span></button><a href="/cookies">Preferences</a></div>';
-        var save = function (all) {
-          try {
-            localStorage.setItem(
-              key,
-              JSON.stringify({
-                analytics: all,
-                marketing: all,
-                updatedAt: new Date().toISOString(),
-              }),
-            );
-          } catch (err) {}
-          banner.remove();
-        };
-        banner.querySelector('[data-cookie="all"]').addEventListener("click", function () {
-          save(true);
-        });
-        banner.querySelector('[data-cookie="essential"]').addEventListener("click", function () {
-          save(false);
-        });
-        document.body.appendChild(banner);
-      };
-      var start = function () {
-        if (window.requestIdleCallback) window.requestIdleCallback(show, { timeout: 2500 });
-        else setTimeout(show, 1200);
-      };
-      if (document.readyState === "complete") start();
-      else window.addEventListener("load", start, { once: true });
-    })();
   </script>
 </Base>

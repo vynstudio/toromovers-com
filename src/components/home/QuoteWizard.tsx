@@ -145,7 +145,7 @@ export default function QuoteWizard() {
   function goNext() {
     setError("");
     if (step === 1) {
-      trackHome("Lead started", { service: service.label, event_id: eventId.current });
+      trackHome("lead_started", { service: service.label, event_id: eventId.current });
       setStep(2);
       return;
     }

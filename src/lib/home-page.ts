@@ -27,12 +27,12 @@ export {
 export const HOME_TITLE = "Toro Movers | Central Florida Movers";
 
 export const HOME_DESCRIPTION =
-  "Central Florida movers for homes, apartments and offices. $95 per mover per hour. No hidden fees. Call 888-503-1756.";
+  "Central Florida movers for homes, apartments and offices. No hidden fees. Call 888-503-1756.";
 
 export const HOME_H1 = "Move day, made easy.";
 
 export const HOME_LEDE =
-  "Central Florida movers for homes, apartments and offices. $95 per mover per hour. No hidden fees.";
+  "Central Florida movers for homes, apartments and offices. No hidden fees.";
 
 export const homeServices = [
   {
@@ -99,14 +99,14 @@ export const homeCounters = [
     desc: "Talk to us in the language you like.",
   },
   {
-    icon: "clock",
-    num: "2 hr",
-    label: "Minimum",
-    desc: "Small move? You only pay for 2 hours.",
+    icon: "message",
+    num: "Free",
+    label: "Quotes",
+    desc: "Tell us what you are moving.",
   },
   {
     icon: "receipt",
-    num: "$0",
+    num: "No",
     label: "Hidden fees",
     desc: "The rate you hear is the rate you pay.",
   },
@@ -173,7 +173,7 @@ export function homeGuides() {
 export const homeFaqs = [
   {
     q: "How much does a move cost?",
-    a: "$95 per mover per hour, with a 2-hour minimum. Tell us what you are moving and we will give you a quote.",
+    a: "Our rate is $95 per hour, per mover. We confirm your crew size when we quote. 2-hour minimum. We also offer a single mover at $95 per hour, with a 2-hour minimum.",
   },
   {
     q: "Are there any hidden fees?",

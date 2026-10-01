@@ -1,22 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { ScrollToHero } from "@/components/ScrollToHero";
 
 /**
  * Heavy client-only chrome loaded after first paint.
- * Kept in a client boundary so pages can stay Server Components.
+ * Cookie consent is the shared script in Base.astro.
  */
-const CookieBanner = dynamic(
-  () => import("@/components/CookieBanner").then((m) => m.CookieBanner),
-  { ssr: false },
-);
-
 export function ClientChrome() {
-  return (
-    <>
-      <ScrollToHero />
-      <CookieBanner />
-    </>
-  );
+  return <ScrollToHero />;
 }

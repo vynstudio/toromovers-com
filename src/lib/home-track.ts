@@ -18,6 +18,7 @@ export function trackHome(event: string, data: Record<string, unknown> = {}) {
   } catch {
     /* no GA4 tag */
   }
+  if (!marketingAllowed()) return;
   try {
     window.fbq?.("trackCustom", event, data);
   } catch {
@@ -25,7 +26,17 @@ export function trackHome(event: string, data: Record<string, unknown> = {}) {
   }
 }
 
-/** Standard Lead, once per event id, matching the server CAPI event_id. */
+function marketingAllowed() {
+  try {
+    const raw = localStorage.getItem("toro_cookie_prefs");
+    if (!raw) return false;
+    return !!(JSON.parse(raw) as { marketing?: boolean }).marketing;
+  } catch {
+    return false;
+  }
+}
+
+/** Standard generate_lead, once per event id, matching the server CAPI event_id. */
 export function trackHomeLead(eventId: string, service: string) {
   if (typeof window === "undefined" || !eventId) return;
   const key = `${LEAD_KEY}${eventId}`;
@@ -37,12 +48,13 @@ export function trackHomeLead(eventId: string, service: string) {
   }
   const payload = { content_name: "homepage_quote", service };
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: "Lead", event_id: eventId, ...payload });
+  window.dataLayer.push({ event: "generate_lead", event_id: eventId, ...payload });
   try {
-    window.gtag?.("event", "Lead", { event_id: eventId, ...payload });
+    window.gtag?.("event", "generate_lead", { event_id: eventId, ...payload });
   } catch {
     /* no GA4 tag */
   }
+  if (!marketingAllowed()) return;
   try {
     window.fbq?.("track", "Lead", payload, { eventID: eventId });
   } catch {

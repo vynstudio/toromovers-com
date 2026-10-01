@@ -35,7 +35,11 @@ const DATE_MODIFIED = "2026-09-29";
 
 export { businessAreaServed, businessPostalAddress };
 
-export function organizationGraph(options?: { telephone?: string; image?: string }) {
+export function organizationGraph(options?: {
+  telephone?: string;
+  image?: string;
+  omitPriceRange?: boolean;
+}) {
   const telephone = options?.telephone ?? PHONE_E164;
   const contactTelephone = options?.telephone ?? PHONE_SECONDARY_E164;
   const image = options?.image ?? `${SITE_URL}/images/moves/real-23.webp`;
@@ -62,7 +66,7 @@ export function organizationGraph(options?: { telephone?: string; image?: string
           contactType: "customer service",
         },
         email: EMAIL,
-        priceRange: "$$",
+        ...(options?.omitPriceRange ? {} : { priceRange: "$$" }),
         currenciesAccepted: "USD",
         paymentAccepted: "Cash, Credit Card, Debit Card",
         address: businessPostalAddress(),

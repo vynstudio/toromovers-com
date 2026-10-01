@@ -10,8 +10,25 @@ import {
 <div class="topbar">
   <div class="container topbar-in">
     <span><Icon name="star" size={14} /> 5.0 on Google</span>
-    <span><Icon name="languages" size={14} /> English & Spanish</span>
-    <span class="tb-hide"><Icon name="clock" size={14} /> 2-hour minimum</span>
+    <span class="tb-es"><Icon name="languages" size={14} /> English & Spanish</span>
+    <div class="tb-trust">
+      <div class="tb-trust-track">
+        <span class="tb-set">
+          <span><Icon name="message" size={14} /> Free quotes</span>
+          <span class="tb-div" aria-hidden="true"></span>
+          <span><Icon name="home" size={14} /> Family-owned</span>
+          <span class="tb-div" aria-hidden="true"></span>
+          <span><Icon name="check" size={14} /> No hidden fees</span>
+        </span>
+        <span class="tb-set tb-copy" aria-hidden="true">
+          <span><Icon name="message" size={14} /> Free quotes</span>
+          <span class="tb-div" aria-hidden="true"></span>
+          <span><Icon name="home" size={14} /> Family-owned</span>
+          <span class="tb-div" aria-hidden="true"></span>
+          <span><Icon name="check" size={14} /> No hidden fees</span>
+        </span>
+      </div>
+    </div>
     <a href={HOME_PHONE_TEL} data-track="phone">
       <Icon name="phone" size={14} />
       {HOME_PHONE_DISPLAY}

@@ -1,6 +1,8 @@
 ---
 import type { HeadTag } from "../lib/seo-head";
 import { organizationGraph } from "../lib/schema";
+import consentClient from "../scripts/consent-client.js?raw";
+import "../styles/cookie-consent.css";
 
 interface Props {
   title: string;
@@ -9,7 +11,7 @@ interface Props {
   /** Emitted before the primary title. Used by the Next-style 404 head. */
   leadingTitle?: string;
   leadingRobots?: string;
-  /** Homepage: load Searchable and the Meta pixel after window load. */
+  /** Kept so existing pages can pass it. Tags now load only after cookie consent. */
   deferTrackers?: boolean;
   extraCss?: string[];
   /**
@@ -19,6 +21,8 @@ interface Props {
   businessTelephone?: string;
   /** Homepage-only image for the shared MovingCompany graph. */
   businessImage?: string;
+  /** Homepage omits priceRange from the shared MovingCompany graph. */
+  omitPriceRange?: boolean;
 }
 
 const {
@@ -27,18 +31,21 @@ const {
   preloads = [],
   leadingTitle,
   leadingRobots,
-  deferTrackers = false,
   extraCss = [],
   businessTelephone,
   businessImage,
+  omitPriceRange = false,
 } = Astro.props;
 const searchable =
   process.env.NEXT_PUBLIC_SEARCHABLE_SITE_TOKEN || "pst_18bcf81295a1c8185e489122";
 const pixel = process.env.NEXT_PUBLIC_META_PIXEL_ID || "985575491098437";
+const gaRaw = process.env.NEXT_PUBLIC_GA4_ID || process.env.PUBLIC_GA4_ID || "";
+const gaId = /^G-[A-Z0-9]+$/.test(gaRaw) ? gaRaw : "";
+const trackConfig = JSON.stringify({ gaId, pixel, searchable });
 const orgJson = JSON.stringify(
   organizationGraph(
-    businessTelephone || businessImage
-      ? { telephone: businessTelephone, image: businessImage }
+    businessTelephone || businessImage || omitPriceRange
+      ? { telephone: businessTelephone, image: businessImage, omitPriceRange }
       : undefined,
   ),
 );
@@ -95,44 +102,7 @@ const scrollHome = `(function(){try{var p=location.pathname.replace(/\\/$/,"")||
     <script is:inline>
       window.sa=window.sa||function(){(sa.q=sa.q||[]).push(arguments)}
     </script>
-    {
-      deferTrackers ? (
-        <script
-          is:inline
-          set:html={`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[]}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","${pixel}");window.addEventListener("load",function(){var done=false;var run=function(){if(done)return;done=true;var s=document.createElement("script");s.src="https://searchable-tracker.searchable.workers.dev/s.js";s.async=true;s.setAttribute("data-domain","toromovers.com");s.setAttribute("data-site-token","${searchable}");document.body.appendChild(s);var t=document.createElement("script");t.async=true;t.src="https://connect.facebook.net/en_US/fbevents.js";var x=document.getElementsByTagName("script")[0];x.parentNode.insertBefore(t,x);fbq("track","PageView");};["pointerdown","keydown","scroll"].forEach(function(ev){window.addEventListener(ev,run,{once:true,passive:true});});setTimeout(run,12000);},{once:true});`}
-        />
-      ) : (
-        <>
-          <script
-            is:inline
-            src="https://searchable-tracker.searchable.workers.dev/s.js"
-            data-domain="toromovers.com"
-            data-site-token={searchable}
-            defer
-          ></script>
-          {
-            pixel ? (
-              <script
-                is:inline
-                set:html={`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${pixel}');fbq('track','PageView');`}
-              />
-            ) : null
-          }
-        </>
-      )
-    }
-    {
-      pixel ? (
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style="display:none"
-            alt=""
-            src={`https://www.facebook.com/tr?id=${pixel}&ev=PageView&noscript=1`}
-          />
-        </noscript>
-      ) : null
-    }
+    <script id="toro-track-config" type="application/json" set:html={trackConfig}></script>
+    <script is:inline set:html={consentClient}></script>
   </body>
 </html>
