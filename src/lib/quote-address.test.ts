@@ -30,3 +30,29 @@ test("quote forms require a selected street address and coordinates", () => {
   assert.equal(callback.required, false);
   assert.equal(callback.stops, null);
 });
+
+test("pickup stays strict, drop-off accepts free text", () => {
+  const typedDropoff = quoteStops("ads_short_form", {
+    ...details,
+    destination: "Winter Park, FL 32789",
+    destination_place_id: undefined,
+    destination_lng: undefined,
+    destination_lat: undefined,
+  });
+  assert.equal(typedDropoff.stops?.origin, details.origin);
+  assert.equal(typedDropoff.stops?.destination, "Winter Park, FL 32789");
+  assert.equal(typedDropoff.stops?.distanceMiles, undefined);
+
+  const noDropoff = quoteStops("ads_short_form", {
+    ...details,
+    destination: "",
+    destination_place_id: undefined,
+  });
+  assert.equal(noDropoff.stops?.destination, "");
+
+  const typedPickup = quoteStops("ads_short_form", {
+    ...details,
+    origin: "Orlando, FL 32801",
+  });
+  assert.equal(typedPickup.stops, null);
+});

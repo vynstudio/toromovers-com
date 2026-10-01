@@ -3,7 +3,7 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { isFullStreetAddress } from "@/lib/address-format";
 import { PHONE_LINES } from "@/lib/site";
-import type { SelectedPlace } from "@/lib/selected-place";
+import { isAreaQuery, type SelectedPlace } from "@/lib/selected-place";
 
 export { isFullStreetAddress };
 
@@ -37,6 +37,11 @@ type Props = {
   required?: boolean;
   /** Kept for older call sites. Suggestions are always street addresses. */
   streetOnly?: boolean;
+  /**
+   * Flexible fields also suggest cities and ZIP codes, and their hints are
+   * informational only: typed text is accepted without picking a suggestion.
+   */
+  flexible?: boolean;
 };
 
 export function AddressAutocomplete({
@@ -51,6 +56,7 @@ export function AddressAutocomplete({
   id,
   className,
   required,
+  flexible = false,
 }: Props) {
   const reactId = useId();
   const listId = `${reactId}-list`;
@@ -105,7 +111,9 @@ export function AddressAutocomplete({
     const seq = ++fetchSeq.current;
     try {
       const res = await fetch(
-        `/api/address-suggest?q=${encodeURIComponent(query.trim())}`,
+        `/api/address-suggest?q=${encodeURIComponent(query.trim())}${
+          flexible ? "&areas=1" : ""
+        }`,
       );
       if (seq !== fetchSeq.current) return;
       if (!res.ok) {
@@ -215,15 +223,23 @@ export function AddressAutocomplete({
     }
   };
 
-  const hint =
-    status === "down"
+  const typedArea = isAreaQuery(value);
+  const hint = flexible
+    ? status === "down"
+      ? "Address search is unavailable. You can keep what you typed."
+      : status === "empty"
+        ? "No matching addresses. You can keep what you typed."
+        : ""
+    : status === "down"
       ? `Address search is unavailable. Call ${PHONE_LINES}.`
       : status === "empty"
-        ? "No matching addresses. Keep the street number and name, then choose a suggestion."
+        ? typedArea
+          ? "Start with the street number and name, like 1 E Pine St, then choose a suggestion."
+          : "No matching addresses. Keep the street number and name, then choose a suggestion."
         : status === "results" &&
             !open &&
             value !== pickedLine
-          ? "Choose a suggestion — street, city, state, and ZIP."
+          ? "Choose a suggestion: street, city, state, and ZIP."
           : "";
 
   return (
@@ -254,7 +270,10 @@ export function AddressAutocomplete({
         role="combobox"
       />
       {hint ? (
-        <p className={`addr-hint${status === "down" ? " is-error" : ""}`} role="status">
+        <p
+          className={`addr-hint${status === "down" && !flexible ? " is-error" : ""}`}
+          role="status"
+        >
           {hint}
         </p>
       ) : null}

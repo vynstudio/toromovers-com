@@ -250,15 +250,15 @@ export default function UniversalLeadForm({
 
   function completeStep(next: number, stepName: string) {
     if (stepName === "move_logistics") {
-      if (searchDown && (!origin || !destination)) {
+      if (searchDown && !origin) {
         setError(
           `Address search is unavailable. Call ${PHONE_LINES} and we will quote the move.`,
         );
         return;
       }
-      if (!origin || !destination) {
+      if (!origin) {
         setError(
-          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+          "Choose the pickup address from the suggestions (street, city, state, and ZIP).",
         );
         return;
       }
@@ -275,9 +275,9 @@ export default function UniversalLeadForm({
   async function submit(event: FormEvent) {
     event.preventDefault();
     const phoneE164 = normalizeUsPhone(phone);
-    if (!origin || !destination) {
+    if (!origin) {
       setError(
-        "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+        "Choose the pickup address from the suggestions (street, city, state, and ZIP).",
       );
       return;
     }
@@ -295,12 +295,12 @@ export default function UniversalLeadForm({
       service_details: {
         primary_detail: detail,
         move_date: moveDate,
-        origin: origin?.line || "",
-        destination: destination?.line || "",
-        origin_place_id: origin?.placeId,
+        origin: origin.line,
+        destination: destination?.line || destinationText.trim(),
+        origin_place_id: origin.placeId,
         destination_place_id: destination?.placeId,
-        origin_lng: origin?.lng,
-        origin_lat: origin?.lat,
+        origin_lng: origin.lng,
+        origin_lat: origin.lat,
         destination_lng: destination?.lng,
         destination_lat: destination?.lat,
         access_conditions: access,
@@ -326,7 +326,7 @@ export default function UniversalLeadForm({
       };
       if (failure.error === "full_address_required") {
         setError(
-          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+          "Choose the pickup address from the suggestions (street, city, state, and ZIP).",
         );
         setSubmitting(false);
         return;
@@ -528,11 +528,11 @@ export default function UniversalLeadForm({
                 });
                 if (error) setError("");
               }}
-              onSearchState={(state) => setSearchDown(state === "down")}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Street number and name"
+              placeholder="Street, city, or ZIP"
               ariaLabel="Drop-off address"
               autoComplete="off"
+              flexible
             />
           </label>
           <label className="block text-sm font-bold">

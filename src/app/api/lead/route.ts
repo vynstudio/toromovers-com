@@ -58,7 +58,7 @@ function flattenLead(body: Record<string, unknown>) {
     moveDate && `When: ${moveDate}`,
     str(details?.origin) && `From: ${str(details?.origin)}`,
     str(details?.destination) && `To: ${str(details?.destination)}`,
-    stops
+    stops?.distanceMiles != null
       ? `Distance: ${stops.distanceMiles.toFixed(1)} mi between addresses`
       : "",
     str(details?.access_conditions) &&
@@ -147,7 +147,7 @@ export async function POST(req: Request) {
       moveDate: flat.moveDate || undefined,
       city: flat.city || undefined,
       pickup: quoted.stops?.origin,
-      dropoff: quoted.stops?.destination,
+      dropoff: quoted.stops?.destination || undefined,
       distanceMiles: quoted.stops?.distanceMiles,
       funnel,
       source: flat.source,
@@ -213,7 +213,7 @@ export async function POST(req: Request) {
           moveDate: flat.moveDate || undefined,
           city: flat.city || undefined,
           pickupAddress: quoted.stops?.origin,
-          dropoffAddress: quoted.stops?.destination,
+          dropoffAddress: quoted.stops?.destination || undefined,
           originPlaceId: quoted.stops?.originPlaceId,
           destinationPlaceId: quoted.stops?.destinationPlaceId,
           originLng: quoted.stops?.originLng,

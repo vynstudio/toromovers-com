@@ -71,15 +71,15 @@ export default function AdsShortForm() {
       setError("Enter a valid email, or leave it blank.");
       return;
     }
-    if (searchDown && (!origin || !destination)) {
+    if (searchDown && !origin) {
       setError(
         `Address search is unavailable. Call ${PHONE_LINES} and we will quote the move.`,
       );
       return;
     }
-    if (!origin || !destination) {
+    if (!origin) {
       setError(
-        "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+        "Choose the pickup address from the suggestions (street, city, state, and ZIP).",
       );
       return;
     }
@@ -105,15 +105,15 @@ export default function AdsShortForm() {
         primary_detail: "",
         move_date: when,
         origin: origin.line,
-        destination: destination.line,
+        destination: destination?.line || destinationText.trim(),
         origin_place_id: origin.placeId,
-        destination_place_id: destination.placeId,
+        destination_place_id: destination?.placeId,
         origin_lng: origin.lng,
         origin_lat: origin.lat,
-        destination_lng: destination.lng,
-        destination_lat: destination.lat,
+        destination_lng: destination?.lng,
+        destination_lat: destination?.lat,
         access_conditions: "",
-        notes: "Meta ads quote form (name, phone, full pickup and drop-off).",
+        notes: "Meta ads quote form (name, phone, full pickup, drop-off as typed).",
       },
       contact: {
         full_name: name.trim(),
@@ -150,7 +150,7 @@ export default function AdsShortForm() {
       };
       if (result.error === "full_address_required") {
         setError(
-          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
+          "Choose the pickup address from the suggestions (street, city, state, and ZIP).",
         );
         setSubmitting(false);
         return;
@@ -164,10 +164,10 @@ export default function AdsShortForm() {
           service_type: service,
           form_location: "ads_short_form",
           pickup_selected: true,
-          dropoff_selected: true,
-          distance_miles: Math.round(
-            haversineMiles(origin, destination),
-          ),
+          dropoff_selected: Boolean(destination),
+          distance_miles: destination
+            ? Math.round(haversineMiles(origin, destination))
+            : undefined,
         });
       }
       window.location.assign("/thank-you");
@@ -293,11 +293,11 @@ export default function AdsShortForm() {
               });
               if (error) setError("");
             }}
-            onSearchState={(state) => setSearchDown(state === "down")}
             className={fieldClass}
-            placeholder="Street number and name"
+            placeholder="Street, city, or ZIP"
             ariaLabel="Drop-off address"
             autoComplete="off"
+            flexible
           />
         </label>
 

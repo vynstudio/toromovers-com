@@ -4,7 +4,10 @@ import { mapboxToken, suggestMapboxAddresses } from "@/lib/mapbox-suggest";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-  const query = new URL(req.url).searchParams.get("q")?.trim().slice(0, 80) || "";
+  const params = new URL(req.url).searchParams;
+  const query = params.get("q")?.trim().slice(0, 80) || "";
+  // areas=1 also returns city and ZIP matches (used by flexible fields).
+  const areas = params.get("areas") === "1";
   if (query.length < 3) {
     return NextResponse.json({ suggestions: [] });
   }
@@ -15,7 +18,7 @@ export async function GET(req: Request) {
     );
   }
   try {
-    const suggestions = await suggestMapboxAddresses(query);
+    const suggestions = await suggestMapboxAddresses(query, { areas });
     return NextResponse.json({ suggestions });
   } catch (err) {
     console.error("[address-suggest]", err);
