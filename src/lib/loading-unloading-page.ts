@@ -80,6 +80,7 @@ export const loadingUnloadingPage = {
     links: [
       { label: "Orlando", href: "/orlando-movers" },
       { label: "Winter Park", href: "/winter-park-movers" },
+      { label: "Oviedo", href: "/oviedo-movers" },
       { label: "Kissimmee", href: "/kissimmee-movers" },
       { label: "Clermont", href: "/clermont-movers" },
       { label: "Sanford", href: "/sanford-movers" },

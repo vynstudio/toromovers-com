@@ -185,6 +185,7 @@ export const WINTER_PARK: CityData = {
   },
   neighborhoods: [
     "Park Avenue",
+    "Rollins College",
     "Aloma",
     "Hannibal Square",
     "Olde Winter Park",
@@ -206,6 +207,10 @@ export const WINTER_PARK: CityData = {
     {
       q: "Do you move apartments in Winter Park?",
       a: "Yes. Apartment and condo moves are common near Rollins College, along Aloma, and in newer mixed-use pockets. We plan around elevator windows, loading zones, and property-manager rules.",
+    },
+    {
+      q: "Do you have movers near Rollins College in Winter Park?",
+      a: `Yes. Apartments and houses near Rollins College are a regular Winter Park job: short loading zones, elevator windows, and narrow streets around Park Avenue. Toro plans that access before move day. ${LOCAL_HOURLY_RATE_SENTENCE}`,
     },
     {
       q: "Do you charge extra for stairs or elevators?",
@@ -390,9 +395,9 @@ export const OVIEDO: CityData = {
   name: "Oviedo",
   navLabel: "Oviedo movers",
   metadata: {
-    title: "Oviedo, FL Movers — Moving Company",
+    title: "Oviedo Movers | Local Moving Company | Toro Movers",
     description:
-      "Family-owned Oviedo movers — Alafaya Woods, Twin Rivers, Live Oak Reserve & Seminole County. Bilingual, up-front hourly pricing. Free estimate.",
+      "Need movers in Oviedo, FL? Toro Movers handles family homes, apartments, and labor-only loading in Seminole County. Up-front hourly rates.",
   },
   h1: "Oviedo Movers — Toro Movers",
   subline:
@@ -417,6 +422,10 @@ export const OVIEDO: CityData = {
     body: "Oviedo is one of Central Florida's top family-and-schools destinations, so most moves here are families upsizing into single-family homes — often timed around the school calendar. Toro Movers books realistic family-move windows, handles the bulky stuff (beds, sectionals, garage gear) carefully, and keeps the day predictable: phone estimate, scheduled crew, no surprises.",
   },
   faqs: [
+    {
+      q: "Do you have movers in Oviedo, FL?",
+      a: `${LOCAL_HOURLY_RATE_SENTENCE} Toro Movers handles homes, townhomes, and apartments in Oviedo, FL, including Alafaya Woods, Twin Rivers, Live Oak Reserve, and Oviedo on the Park.`,
+    },
     {
       q: "Can you schedule an Oviedo move around the school calendar?",
       a: "Yes. Most Oviedo moves are families timing a move around school, so we book realistic family-move windows and keep the day predictable.",

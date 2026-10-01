@@ -17,7 +17,11 @@ import {
 import { faq, process } from "@/lib/content";
 import type { CityPageContent } from "@/lib/city-pages";
 import { googleReviews } from "@/lib/reviews";
-import { businessAreaServed, businessPostalAddress } from "./business-profile.ts";
+import {
+  businessAreaServed,
+  businessPostalAddress,
+  cityPlace,
+} from "./business-profile.ts";
 
 /** Organization / LocalBusiness description — visible-facts only. */
 const organizationDescription =
@@ -266,8 +270,11 @@ export function cityPageGraph(city: CityPageContent) {
         email: EMAIL,
         description: city.metadata.description,
         areaServed: [
-          { "@type": "City", name: city.name },
-          { "@type": "AdministrativeArea", name: SERVICE_REGION },
+          cityPlace(city.name),
+          ...(city.county
+            ? [{ "@type": "AdministrativeArea" as const, name: city.county }]
+            : []),
+          { "@type": "AdministrativeArea" as const, name: SERVICE_REGION },
         ],
         address: businessPostalAddress(),
         parentOrganization: {

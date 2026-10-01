@@ -47,6 +47,7 @@ const AREA_LINKS = [
   { label: "Lake Nona", href: "/lake-nona-movers" },
   { label: "Dr. Phillips", href: "/dr-phillips-movers" },
   { label: "Winter Park", href: "/winter-park-movers" },
+  { label: "Oviedo", href: "/oviedo-movers" },
   { label: "Kissimmee", href: "/kissimmee-movers" },
   { label: "Winter Garden", href: "/winter-garden-movers" },
   { label: "Lake Mary", href: "/lake-mary-movers" },
