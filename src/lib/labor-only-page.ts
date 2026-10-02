@@ -1,27 +1,28 @@
-/** Copy for /labor-only-moving — keep FAQ text identical to on-page FAQ (schema). */
+/** Copy for /labor-only-moving. FAQ text must match the on-page FAQ schema. */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
-import { PHONE_LINES, SITE_URL } from "./site.ts";
+import { QUOTE_RATE_ANSWER } from "./quote-faqs.ts";
+import { SITE_URL } from "./site.ts";
+
+export const LABOR_ONLY_PATH = "/labor-only-moving";
+export const LABOR_ONLY_PHONE = "321-234-0510";
+export const LABOR_ONLY_PHONE_TEL = "tel:+13212340510";
 
 export const laborOnlyPage = {
-  path: "/labor-only-moving",
+  path: LABOR_ONLY_PATH,
   metadata: {
     title: "Labor-only Orlando movers | Load & unload",
     description:
-      "Labor-only loading & unloading in Orlando—U-Haul, POD, storage & rental trucks. Up-front hourly rates. Call " + PHONE_LINES + ".",
+      "Labor-only loading and unloading in Orlando for U-Haul, POD, storage, and rental trucks. Call 321-234-0510.",
     ogTitle: "Labor-only movers in Orlando",
     ogDescription:
-      "Your truck or container. Our crew. Load, unload, or both—with clear hourly pricing before move day.",
+      "Your truck or container. Our crew. Load, unload, or both, with the hourly model explained before move day.",
   },
   hero: {
     eyebrow: "Labor-only moving help",
     h1: "Labor-only movers in Orlando",
-    lede: "Toro Movers provides labor-only movers in Orlando and Central Florida when you already have the U-Haul, POD, trailer, or rental truck. You get a local crew for loading, unloading, or both—quoted with up-front hourly rates so you know how the pricing works before move day.",
-    image: {
-      src: "/images/moves/svc-labor.webp",
-      alt: "Toro Movers stretch-wrapping furniture on a real labor-only job",
-    },
+    lede:
+      "Toro Movers provides labor-only movers in Orlando and Central Florida when you already have the U-Haul, POD, trailer, or rental truck. You get a local crew for loading, unloading, or both. The hourly model is explained before move day.",
     chips: [
       "Your truck, our crew",
       "Load, unload, or both",
@@ -60,12 +61,12 @@ export const laborOnlyPage = {
       "Building rules, elevator windows, and parking details when you book",
       "Gate codes, dock instructions, and any time limits the property requires",
     ] as const,
-    note: "Before move day we explain crew size, the hourly model, and what can change the clock—stairs, long carries, elevators, and how packed you are when we arrive.",
+    note: "Before move day we explain crew size, the hourly model, and what can change the clock: stairs, long carries, elevators, and how packed you are when we arrive.",
   },
   vehicles: {
     h2: "U-Haul loading, POD packing, and storage help",
     intro:
-      "Orlando DIY moves often fail at the truck door—not at the highway. Labor-only movers exist so the load is fast, tight, and safer for furniture.",
+      "Orlando DIY moves often fail at the truck door, not at the highway. Labor-only movers exist so the load is fast, tight, and safer for furniture.",
     blocks: [
       {
         title: "U-Haul and rental trucks",
@@ -96,7 +97,7 @@ export const laborOnlyPage = {
   },
   pricing: {
     h2: "How labor-only pricing works (without guesswork)",
-    intro: `${LOCAL_HOURLY_RATE_SENTENCE} The final total depends on:`,
+    intro: "The total depends on:",
     factors: [
       { title: "Crew size", body: "How many movers the job needs" },
       { title: "Time on site", body: "Load, unload, or both" },
@@ -114,7 +115,7 @@ export const laborOnlyPage = {
       },
     ] as const,
     close:
-      "We explain the hourly model before move day so you are not guessing on the curb. Call or text with truck size, addresses, and access details—or get a free quote online.",
+      "We explain the hourly model before move day so you are not guessing on the curb. Call or text with truck size, addresses, and access details, or get a free quote online.",
     marketNote:
       "Published average labor-only prices in Orlando vary by company and aggregator. Treat third-party averages as context only. Your Toro quote is based on your job.",
   },
@@ -188,17 +189,21 @@ export const laborOnlyPage = {
       a: "Time depends on how packed you are, access, and whether we are loading, unloading, or both. Ready boxes and clear pathways shorten the clock; last-minute packing and long stair carries lengthen it.",
     },
     {
+      q: "How much do labor-only movers cost in Orlando?",
+      a: QUOTE_RATE_ANSWER,
+    },
+    {
       q: "Are your movers bilingual?",
       a: "Yes. Toro Movers has an English- and Spanish-speaking crew so timing, access instructions, and placement stay clear.",
     },
     {
       q: "How do I get a labor-only quote?",
-      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share pickup and drop-off (if any), truck or container type, stairs/elevator details, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: `Call or text ${LABOR_ONLY_PHONE}, or request a quote online. Share pickup and drop-off (if any), truck or container type, stairs or elevator details, and preferred date. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.`,
     },
   ] as const,
   closing: {
     h2: "Ready for labor-only movers in Orlando?",
-    body: "Tell us what you are loading, which truck or container you have, and how access works at each stop. We will match crew size, explain up-front hourly rates, and help you plan the job.",
+    body: "Tell us what you are loading, which truck or container you have, and how access works at each stop. We will match crew size, explain the hourly model, and help you plan the job.",
   },
 } as const;
 
