@@ -95,7 +95,8 @@ const preloads = [...inner.matchAll(/<link\b[^>]*rel="preload"[^>]*>/gi)]
 inner = inner.replace(/<link\b[^>]*rel="preload"[^>]*>/gi, "").trim();
 const isFullService = spec?.path === "full-service-moving";
 const isLaborOnly = spec?.path === "labor-only-moving";
-if (isFullService || isLaborOnly) {
+const isApartment = spec?.path === "apartment-movers-orlando-fl";
+if (isFullService || isLaborOnly || isApartment) {
   for (const href of [grotesk400, grotesk600]) {
     if (seenPreload.has(href)) continue;
     seenPreload.add(href);
@@ -110,7 +111,8 @@ const isContact = spec?.path === "contact";
 const isLpLocal = spec?.path === "lp/local-movers";
 const isThankYou = spec?.path === "thank-you";
 const isServices = spec?.path === "services";
-const isRebrandChrome = isQuotes || isContact || isServices || isFullService || isLaborOnly;
+const isRebrandChrome =
+  isQuotes || isContact || isServices || isFullService || isLaborOnly || isApartment;
 const LOCAL_PHONE = "321-234-0510";
 ---
 
@@ -121,11 +123,11 @@ const LOCAL_PHONE = "321-234-0510";
   deferTrackers={!hydrate}
   businessTelephone={isRebrandChrome || isLpLocal || isThankYou ? PHONE_E164 : undefined}
   businessImage={
-    isThankYou || isServices || isFullService || isLaborOnly
+    isThankYou || isServices || isFullService || isLaborOnly || isApartment
       ? `${SITE_URL}/images/pay-confirm-family.webp`
       : undefined
   }
-  omitPriceRange={isThankYou || isServices || isFullService || isLaborOnly}
+  omitPriceRange={isThankYou || isServices || isFullService || isLaborOnly || isApartment}
   extraCss={
     spec?.path === "move-day-checklist"
       ? [checklistCss]
@@ -141,7 +143,7 @@ const LOCAL_PHONE = "321-234-0510";
                 ? [thanksCss]
                 : isServices
                   ? [servicesCss]
-                  : isFullService || isLaborOnly
+                  : isFullService || isLaborOnly || isApartment
                     ? [fullServiceCss]
                     : []
   }
