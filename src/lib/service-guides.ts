@@ -5,6 +5,7 @@
  */
 
 import { businessAreaServed } from "./business-profile.ts";
+import { QUOTE_RATE_ANSWER } from "./quote-faqs.ts";
 import { SITE_URL, PHONE_LINES} from "./site.ts";
 
 export type ServiceGuide = {
@@ -63,7 +64,7 @@ export const packingServicesPage: ServiceGuide = {
   metadata: {
     title: "Packing services in Orlando | Help by the hour",
     description:
-      "Packing services in Orlando for kitchens, closets, or a full household pack. Same up-front hourly rate as the move. Call " + PHONE_LINES + ".",
+      "Packing services in Orlando for kitchens, closets, or a full household pack. The hourly model matches the move. Call 321-234-0510.",
     ogTitle: "Packing services in Orlando",
     ogDescription:
       "Hire Toro to box named rooms or the whole home before the carry. Up-front hourly rates across Central Florida.",
@@ -106,8 +107,8 @@ export const packingServicesPage: ServiceGuide = {
     {
       h2: "How packing changes the hourly clock",
       paragraphs: [
-        "Local jobs are quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Packing the crew does is hours on that same rate. A larger pack needs more hours, and sometimes more movers, so the boxes and the furniture both finish. More people can box and carry at the same time, which can shorten the clock. The rate is per mover per hour, so the quote balances people and time.",
-        "How packed you will be can change the day more than bedroom count alone. A packed two-bedroom with closed boxes can finish faster than a larger home where the kitchen and closets are still open. Share home size and how packed you will be. Stairs, elevator waits, and a long walk from parking add time. They are not a stair fee. A short fragile pack plus a short carry can land on the 2-hour minimum. A full pack of a house will run past it. We explain crew size and the hourly model before the day.",
+        "Packing the crew does is hours on the same clock as the carry. A larger pack needs more hours, and sometimes more movers, so the boxes and the furniture both finish. More people can box and carry at the same time, which can shorten the clock. The quote balances people and time.",
+        "How packed you will be can change the day more than bedroom count alone. A packed two-bedroom with closed boxes can finish faster than a larger home where the kitchen and closets are still open. Share home size and how packed you will be. Stairs, elevator waits, and a long walk from parking add time. A short fragile pack plus a short carry can land on the minimum. A full pack of a house will run past it. We explain crew size and the hourly model before the day.",
       ],
     },
     {
@@ -121,7 +122,7 @@ export const packingServicesPage: ServiceGuide = {
       h2: "Where we pack in Central Florida",
       paragraphs: [
         "Toro Movers is based in Orlando and packs on local jobs across Central Florida, including Lake Nona, Dr. Phillips, Winter Park, Kissimmee, Winter Garden, and Lake Mary. The hourly model is the same on a short metro hop. Drive time between those cities is on the clock and quoted honestly.",
-        "If the drop-off leaves Central Florida, that job is a trip quote rather than this local hourly pack. Say so when you call so we do not plan a same-metro crew for a longer route. For local work, hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+        "If the drop-off leaves Central Florida, that job is a trip quote rather than this local hourly pack. Say so when you call so we do not plan a same-metro crew for a longer route. For local work, hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
       ],
     },
   ],
@@ -138,7 +139,7 @@ export const packingServicesPage: ServiceGuide = {
     },
     {
       q: "Is there a separate price for packing?",
-      a: "No. There is no carton rate and no packing price list. Time the crew spends boxing is on the same hourly clock as the carry at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A larger pack needs more hours, and sometimes more movers.",
+      a: QUOTE_RATE_ANSWER,
     },
     {
       q: "Can packing be added to labor-only or full-service?",
@@ -150,7 +151,7 @@ export const packingServicesPage: ServiceGuide = {
     },
     {
       q: "How do I book packing services in Orlando?",
-      a: "Call or text " + PHONE_LINES + ", or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text 321-234-0510, or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
     },
   ],
   closing: {

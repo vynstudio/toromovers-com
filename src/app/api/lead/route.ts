@@ -184,6 +184,7 @@ export async function POST(req: Request) {
     service_labor_only: "service_labor_only",
     service_apartment: "service_apartment",
     service_loading_unloading: "service_loading_unloading",
+    service_packing: "service_packing",
     ads_short_form: "ads_short_callback",
     local_movers_ads_landing: "local_movers_ads_landing",
     "contact-page": "contact-page",
