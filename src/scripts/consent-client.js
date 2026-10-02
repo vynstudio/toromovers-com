@@ -9,22 +9,15 @@
   var gaId = /^G-[A-Z0-9]+$/.test(config.gaId || "") ? config.gaId : "";
   var pixel = /^[0-9]+$/.test(config.pixel || "") ? config.pixel : "";
   var searchable = /^[A-Za-z0-9_]+$/.test(config.searchable || "") ? config.searchable : "";
+  var mode = config.mode === "opt-in" ? "opt-in" : "notice";
   var storageKey = "toro_cookie_prefs";
   var analyticsLoaded = false;
   var marketingLoaded = false;
+  var stopped = false;
+  var drained = false;
+  var idleId = 0;
+  var timerId = 0;
   var untrap = null;
-
-  window.dataLayer = window.dataLayer || [];
-  window.gtag = function () {
-    window.dataLayer.push(arguments);
-  };
-  window.gtag("consent", "default", {
-    ad_storage: "denied",
-    ad_user_data: "denied",
-    ad_personalization: "denied",
-    analytics_storage: "denied",
-    wait_for_update: 500,
-  });
 
   function readPrefs() {
     try {
@@ -34,8 +27,37 @@
     }
   }
 
+  var stored = readPrefs();
+  var allowAnalytics = stored ? !!stored.analytics : mode === "notice";
+  var allowMarketing = stored ? !!stored.marketing : mode === "notice";
+  if (stored && !stored.analytics && !stored.marketing) stopped = true;
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag("consent", "default", {
+    ad_storage: allowMarketing ? "granted" : "denied",
+    ad_user_data: allowMarketing ? "granted" : "denied",
+    ad_personalization: allowMarketing ? "granted" : "denied",
+    analytics_storage: allowAnalytics ? "granted" : "denied",
+    wait_for_update: 500,
+  });
+
+  if (pixel && !window.fbq) {
+    var fbStub = function () {
+      fbStub.callMethod ? fbStub.callMethod.apply(fbStub, arguments) : fbStub.queue.push(arguments);
+    };
+    window.fbq = fbStub;
+    if (!window._fbq) window._fbq = fbStub;
+    fbStub.push = fbStub;
+    fbStub.loaded = true;
+    fbStub.version = "2.0";
+    fbStub.queue = [];
+  }
+
   function loadAnalytics() {
-    if (analyticsLoaded || !gaId) return;
+    if (analyticsLoaded || stopped || !gaId) return;
     analyticsLoaded = true;
     window.gtag("js", new Date());
     window.gtag("config", gaId, { send_page_view: true });
@@ -55,8 +77,16 @@
   }
 
   function loadMarketing() {
-    if (marketingLoaded || !pixel) return;
+    if (marketingLoaded || stopped || !pixel) return;
     marketingLoaded = true;
+    var prior = window.fbq && window.fbq.queue ? window.fbq.queue.slice() : [];
+    try {
+      delete window.fbq;
+      delete window._fbq;
+    } catch (e) {
+      window.fbq = undefined;
+      window._fbq = undefined;
+    }
     !(function (f, b, e, v, n, t, s) {
       if (f.fbq) return;
       n = f.fbq = function () {
@@ -73,8 +103,24 @@
       s = b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t, s);
     })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    window.fbq("consent", "grant");
     window.fbq("init", pixel);
     window.fbq("track", "PageView");
+    prior.forEach(function (args) {
+      if (!args || !args.length) return;
+      if (args[0] === "init" || args[0] === "consent") return;
+      if (args[0] === "track" && args[1] === "PageView") return;
+      window.fbq.apply(window.fbq, args);
+    });
+  }
+
+  function revokeLoaded() {
+    if (gaId) window["ga-disable-" + gaId] = true;
+    try {
+      if (typeof window.fbq === "function") window.fbq("consent", "revoke");
+    } catch (e) {
+      /* pixel never queued */
+    }
   }
 
   function apply(prefs) {
@@ -87,21 +133,87 @@
       ad_user_data: marketing ? "granted" : "denied",
       ad_personalization: marketing ? "granted" : "denied",
     });
+    if (!analytics && !marketing) {
+      stopped = true;
+      disarm();
+      revokeLoaded();
+      return;
+    }
+    if (analytics && gaId) window["ga-disable-" + gaId] = false;
     if (analytics) loadAnalytics();
     if (marketing) loadMarketing();
+    else {
+      try {
+        if (typeof window.fbq === "function") window.fbq("consent", "revoke");
+      } catch (e) {
+        /* no pixel */
+      }
+    }
   }
 
   window.addEventListener("toro-cookie-prefs", function (event) {
     apply(event.detail);
   });
 
+  function onInteract(event) {
+    var target = event && event.target;
+    if (target && target.closest && target.closest(".ck-card, .ck-modal")) return;
+    drain();
+  }
+
+  function disarm() {
+    window.removeEventListener("scroll", onInteract, true);
+    window.removeEventListener("touchstart", onInteract, true);
+    window.removeEventListener("click", onInteract, true);
+    window.removeEventListener("keydown", onInteract, true);
+    if (idleId && window.cancelIdleCallback) window.cancelIdleCallback(idleId);
+    if (timerId) window.clearTimeout(timerId);
+    idleId = 0;
+    timerId = 0;
+  }
+
+  function drain() {
+    if (drained || stopped) return;
+    var prefs = readPrefs();
+    if (prefs && !prefs.analytics && !prefs.marketing) {
+      stopped = true;
+      disarm();
+      return;
+    }
+    drained = true;
+    disarm();
+    if (prefs) {
+      apply(prefs);
+      return;
+    }
+    if (mode === "opt-in") return;
+    loadAnalytics();
+    loadMarketing();
+  }
+
+  function armDeferred() {
+    window.addEventListener("scroll", onInteract, { capture: true, passive: true });
+    window.addEventListener("touchstart", onInteract, { capture: true, passive: true });
+    window.addEventListener("click", onInteract, true);
+    window.addEventListener("keydown", onInteract, true);
+    var kick = function () {
+      drain();
+    };
+    if (window.requestIdleCallback) idleId = window.requestIdleCallback(kick, { timeout: 3000 });
+    else timerId = window.setTimeout(kick, 3000);
+  }
+
   function whenIdle(fn) {
     if (window.requestIdleCallback) window.requestIdleCallback(fn, { timeout: 4000 });
     else window.setTimeout(fn, 1500);
   }
 
-  if (document.readyState === "complete") whenIdle(function () { apply(readPrefs()); });
-  else window.addEventListener("load", function () { whenIdle(function () { apply(readPrefs()); }); }, { once: true });
+  if (stored && !stopped) {
+    if (document.readyState === "complete") whenIdle(function () { apply(readPrefs()); });
+    else window.addEventListener("load", function () { whenIdle(function () { apply(readPrefs()); }); }, { once: true });
+  } else if (!stored && mode === "notice") {
+    armDeferred();
+  }
 
   function closeModal() {
     var modal = document.querySelector(".ck-modal");
@@ -127,6 +239,10 @@
       marketing: !!marketing,
       updatedAt: new Date().toISOString(),
     };
+    if (!detail.analytics && !detail.marketing) {
+      stopped = true;
+      disarm();
+    }
     try {
       localStorage.setItem(storageKey, JSON.stringify(detail));
     } catch (e) {

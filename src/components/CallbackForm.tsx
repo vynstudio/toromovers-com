@@ -4,6 +4,7 @@ import { useId, useRef, useState, type FormEvent } from "react";
 import { closing } from "@/lib/content";
 import { digits, formatPhone } from "@/lib/lead";
 import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import { fireBrowserLead } from "@/lib/meta-pixel";
 import { PHONE_DISPLAY, PHONE_LINES } from "@/lib/site";
 
 const URGENCY = [
@@ -88,6 +89,10 @@ export function CallbackForm({
           ? "🔥 PRIORITY — callback for immediate service"
           : "Callback request — this week";
 
+      const eventId =
+        typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : `cb-${Date.now()}`;
       await postLead({
         name: name.trim(),
         phone: digits(phone),
@@ -105,11 +110,9 @@ export function CallbackForm({
             : "https://toromovers.com/",
         hp: "",
         elapsedMs: Math.max(Date.now() - startRef.current, 800),
-        eventId:
-          typeof crypto !== "undefined" && crypto.randomUUID
-            ? crypto.randomUUID()
-            : `cb-${Date.now()}`,
+        eventId,
       });
+      fireBrowserLead(eventId, source, { form_location: source });
       setDone(true);
     } catch {
       setError(`Couldn't send. Please call ${PHONE_LINES}.`);

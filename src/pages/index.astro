@@ -7,6 +7,8 @@ import Icon from "../components/home/Icon.astro";
 import Photo from "../components/home/Photo.astro";
 import QuoteWizard from "../components/home/QuoteWizard";
 import Base from "../layouts/Base.astro";
+import grotesk500 from "@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff2?url";
+import grotesk700 from "@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff2?url";
 import boxes from "../assets/home/family-boxes-2.jpg";
 import newHouse from "../assets/home/family-new-house-3.jpg";
 import together from "../assets/home/family-together-6.jpg";
@@ -107,6 +109,10 @@ const tags = [
 <Base
   title={HOME_TITLE}
   tags={tags}
+  preloads={[
+    `<link rel="preload" href="${grotesk700}" as="font" type="font/woff2" crossorigin="anonymous" />`,
+    `<link rel="preload" href="${grotesk500}" as="font" type="font/woff2" crossorigin="anonymous" />`,
+  ]}
   deferTrackers={true}
   businessTelephone={HOME_PHONE_E164}
   businessImage={heroImageUrl}
@@ -121,7 +127,7 @@ const tags = [
             src={photos.hero.src}
             alt={photos.hero.alt}
             sizes="(max-width: 1100px) 100vw, 58vw"
-            widths={[640, 960, 1280, 1600]}
+            widths={[480, 640, 800, 960]}
             priority={true}
           />
           <div class="hero-c-rate">
@@ -147,7 +153,7 @@ const tags = [
         </div>
         <div class="hero-c-side">
           <p class="hero-c-lead">{HOME_LEDE}</p>
-          <QuoteWizard client:idle />
+          <QuoteWizard client:visible />
         </div>
       </section>
 
@@ -208,7 +214,7 @@ const tags = [
                           src={photo.src}
                           alt={photo.alt}
                           sizes="(max-width: 760px) 100vw, 220px"
-                          widths={[320, 480, 640]}
+                          widths={[320, 480]}
                         />
                       </div>
                       <a href="#quote" class="line-link ll-white" data-track="quote">

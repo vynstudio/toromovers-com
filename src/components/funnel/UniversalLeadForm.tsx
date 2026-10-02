@@ -5,6 +5,7 @@ import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
+import { fireBrowserLead, mintEventId } from "@/lib/meta-pixel";
 import {
   resolveServiceParam,
   type ServiceType,
@@ -283,6 +284,7 @@ export default function UniversalLeadForm({
     }
     setSubmitting(true);
     setError("");
+    const eventId = mintEventId();
     const payload = {
       service_type: service,
       service_label: selectedService?.title || "",
@@ -300,7 +302,7 @@ export default function UniversalLeadForm({
         phone_e164: phoneE164,
         sms_call_consent: consent,
       },
-      attribution: getAttribution(),
+      attribution: { ...getAttribution(), event_id: eventId },
       form_location: source,
     };
     try {
@@ -319,7 +321,7 @@ export default function UniversalLeadForm({
       }
       if (!response.ok) throw new Error("Lead submission failed");
       const result = await response.json().catch(() => ({}));
-      trackFunnelEvent("generate_lead", {
+      fireBrowserLead(eventId, source, {
         service_type: service,
         form_location: source,
         lead_id: result.lead_id || result.id || undefined,

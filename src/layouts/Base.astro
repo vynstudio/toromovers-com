@@ -1,6 +1,7 @@
 ---
 import type { HeadTag } from "../lib/seo-head";
 import { organizationGraph } from "../lib/schema";
+import { TRACKING_CONSENT_MODE } from "../lib/tracking-consent";
 import consentClient from "../scripts/consent-client.js?raw";
 import "../styles/cookie-consent.css";
 
@@ -11,7 +12,7 @@ interface Props {
   /** Emitted before the primary title. Used by the Next-style 404 head. */
   leadingTitle?: string;
   leadingRobots?: string;
-  /** Kept so existing pages can pass it. Tags now load only after cookie consent. */
+  /** Kept so existing pages can pass it. Load timing follows TRACKING_CONSENT_MODE. */
   deferTrackers?: boolean;
   extraCss?: string[];
   /**
@@ -39,9 +40,14 @@ const {
 const searchable =
   process.env.NEXT_PUBLIC_SEARCHABLE_SITE_TOKEN || "pst_18bcf81295a1c8185e489122";
 const pixel = process.env.NEXT_PUBLIC_META_PIXEL_ID || "985575491098437";
-const gaRaw = process.env.NEXT_PUBLIC_GA4_ID || process.env.PUBLIC_GA4_ID || "";
-const gaId = /^G-[A-Z0-9]+$/.test(gaRaw) ? gaRaw : "";
-const trackConfig = JSON.stringify({ gaId, pixel, searchable });
+const gaRaw = process.env.NEXT_PUBLIC_GA4_ID || process.env.PUBLIC_GA4_ID || "G-1L9NR2HTRT";
+const gaId = /^G-[A-Z0-9]+$/.test(gaRaw) ? gaRaw : "G-1L9NR2HTRT";
+const trackConfig = JSON.stringify({
+  gaId,
+  pixel,
+  searchable,
+  mode: TRACKING_CONSENT_MODE,
+});
 const orgJson = JSON.stringify(
   organizationGraph(
     businessTelephone || businessImage || omitPriceRange

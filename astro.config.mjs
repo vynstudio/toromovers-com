@@ -17,7 +17,7 @@ export default defineConfig({
   trailingSlash: "never",
   // Netlify pretty-URLs redirect directory/index.html back to a slash.
   // File output (/quotes.html) lets /quotes/ 308 to /quotes without a loop.
-  build: { format: "file" },
+  build: { format: "file", inlineStylesheets: "always" },
   vite: {
     plugins: [tailwindcss()],
     resolve: {

@@ -160,6 +160,7 @@ export default function AdsShortForm({
         trackFunnelEvent("generate_lead", {
           service_type: service,
           form_location: "ads_short_form",
+          event_id: eventId,
           pickup_selected: Boolean(origin),
           dropoff_selected: Boolean(destination),
           distance_miles: milesBetween(origin, destination),

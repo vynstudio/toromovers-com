@@ -175,9 +175,14 @@ export async function POST(req: Request) {
 
   const attr = asRecord(body.attribution);
   const eventId = str(attr?.event_id) || str(body.eventId);
-  const capiSource =
-    flat.source === "ads_short_form" || flat.source === "homepage_quote";
-  if (eventId && !soft && capiSource && phone.length >= 10) {
+  const capiContent: Record<string, string> = {
+    homepage_quote: "homepage_quote",
+    ads_short_form: "ads_short_callback",
+    local_movers_ads_landing: "local_movers_ads_landing",
+    "contact-page": "contact-page",
+  };
+  const contentName = capiContent[flat.source] || "";
+  if (eventId && !soft && contentName && phone.length >= 10) {
     try {
       const capi = await sendCapiLead({
         eventId,
@@ -185,10 +190,7 @@ export async function POST(req: Request) {
         phone,
         email: email || undefined,
         sourceUrl: landingPage || headerSourceUrl,
-        contentName:
-          flat.source === "homepage_quote"
-            ? "homepage_quote"
-            : "ads_short_callback",
+        contentName,
         fbp: str(attr?.fbp),
         fbc: str(attr?.fbc),
         clientIp,

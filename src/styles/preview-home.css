@@ -1,7 +1,16 @@
-@import "@fontsource/space-grotesk/400.css";
-@import "@fontsource/space-grotesk/500.css";
-@import "@fontsource/space-grotesk/600.css";
-@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/space-grotesk/latin-400.css";
+@import "@fontsource/space-grotesk/latin-500.css";
+@import "@fontsource/space-grotesk/latin-600.css";
+@import "@fontsource/space-grotesk/latin-700.css";
+
+@font-face {
+  font-family: "Space Grotesk Fallback";
+  src: local("Arial");
+  size-adjust: 106.46%;
+  ascent-override: 93.45%;
+  descent-override: 26.16%;
+  line-gap-override: 0%;
+}
 
 :root{
   --color-accent:#DB1A1A;
@@ -22,7 +31,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Space Grotesk',system-ui,sans-serif;font-size:16px;line-height:1.6;color:var(--black);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'Space Grotesk','Space Grotesk Fallback',system-ui,sans-serif;font-size:16px;line-height:1.6;color:var(--black);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
@@ -463,17 +472,6 @@ section{position:relative}
 .address-suggestion.active,.address-suggestion:hover{background:var(--color-blush)}
 .addr-hint{margin:6px 0 0;font-size:12px;font-weight:600;color:var(--muted)}
 .addr-hint.is-error{color:var(--color-accent)}
-html.has-cookie-banner .hero-c-over{padding-bottom:250px}
-@media (max-width:1100px){
-  html.has-cookie-banner .hero-c-photo{height:620px}
-  html.has-cookie-banner .hero-c-over{padding-bottom:220px}
-}
-@media (max-width:760px){
-  html.has-cookie-banner .hero-c-photo{height:calc(100svh - 108px);min-height:520px}
-  html.has-cookie-banner .hero-c-over{padding-bottom:188px}
-  html.has-cookie-banner .hero-c-side{padding-bottom:180px}
-  html.has-cookie-banner{scroll-padding-bottom:180px}
-}
 /* Muted copy on deep teal must stay at least 4.5:1. Large index numbers stay above 3:1. */
 .statement h2 span{color:rgba(255,255,255,.9)}
 .counters-c .counter-desc{color:rgba(255,255,255,.9)}

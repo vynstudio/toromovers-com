@@ -1,3 +1,5 @@
+import { consentGranted } from "@/lib/tracking-consent";
+
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
@@ -13,26 +15,18 @@ export function trackHome(event: string, data: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event, ...data });
-  try {
-    window.gtag?.("event", event, data);
-  } catch {
-    /* no GA4 tag */
+  if (consentGranted("analytics")) {
+    try {
+      window.gtag?.("event", event, data);
+    } catch {
+      /* no GA4 tag */
+    }
   }
-  if (!marketingAllowed()) return;
+  if (!consentGranted("marketing")) return;
   try {
     window.fbq?.("trackCustom", event, data);
   } catch {
     /* pixel stub missing */
-  }
-}
-
-function marketingAllowed() {
-  try {
-    const raw = localStorage.getItem("toro_cookie_prefs");
-    if (!raw) return false;
-    return !!(JSON.parse(raw) as { marketing?: boolean }).marketing;
-  } catch {
-    return false;
   }
 }
 
@@ -49,12 +43,14 @@ export function trackHomeLead(eventId: string, service: string) {
   const payload = { content_name: "homepage_quote", service };
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: "generate_lead", event_id: eventId, ...payload });
-  try {
-    window.gtag?.("event", "generate_lead", { event_id: eventId, ...payload });
-  } catch {
-    /* no GA4 tag */
+  if (consentGranted("analytics")) {
+    try {
+      window.gtag?.("event", "generate_lead", { event_id: eventId, ...payload });
+    } catch {
+      /* no GA4 tag */
+    }
   }
-  if (!marketingAllowed()) return;
+  if (!consentGranted("marketing")) return;
   try {
     window.fbq?.("track", "Lead", payload, { eventID: eventId });
   } catch {

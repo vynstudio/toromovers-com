@@ -1,6 +1,10 @@
+import { consentGranted } from "@/lib/tracking-consent";
+
 declare global {
   interface Window {
     fbq?: (...args: unknown[]) => void;
+    gtag?: (...args: unknown[]) => void;
+    dataLayer?: Array<Record<string, unknown>>;
   }
 }
 
@@ -34,6 +38,7 @@ export function fireAdsLeadOnce(eventId: string): boolean {
   } catch {
     /* private mode — still fire once this page lifetime */
   }
+  if (!consentGranted("marketing")) return true;
   try {
     window.fbq?.(
       "track",
@@ -45,4 +50,41 @@ export function fireAdsLeadOnce(eventId: string): boolean {
     /* pixel not loaded */
   }
   return true;
+}
+
+/** Pixel Lead plus GA4 generate_lead, once, with the same id sent to CAPI. */
+export function fireBrowserLead(
+  eventId: string,
+  contentName: string,
+  extra: Record<string, unknown> = {},
+): void {
+  if (typeof window === "undefined" || !eventId) return;
+  const key = `tm_browser_lead_${eventId}`;
+  try {
+    if (window.sessionStorage.getItem(key) === "1") return;
+    window.sessionStorage.setItem(key, "1");
+  } catch {
+    /* private mode */
+  }
+  const payload = { content_name: contentName, event_id: eventId, ...extra };
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: "generate_lead", ...payload });
+  if (consentGranted("analytics")) {
+    try {
+      window.gtag?.("event", "generate_lead", payload);
+    } catch {
+      /* tag not ready */
+    }
+  }
+  if (!consentGranted("marketing")) return;
+  try {
+    window.fbq?.(
+      "track",
+      "Lead",
+      { content_name: contentName, ...extra },
+      { eventID: eventId },
+    );
+  } catch {
+    /* pixel not loaded */
+  }
 }
