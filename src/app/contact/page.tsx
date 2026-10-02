@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
-import { StickyCta } from "@/components/StickyCta";
-import { ClientChrome } from "@/components/ClientChrome";
 import { CallbackForm } from "@/components/CallbackForm";
-import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
+import QuotesFaq from "@/components/funnel/QuotesFaq";
 import {
-  BUSINESS_NAME,
+  CONTACT_DESCRIPTION,
+  CONTACT_DONE_HEADLINE,
+  CONTACT_FORM_LEDE,
+  CONTACT_H1,
+  CONTACT_LEDE,
+  CONTACT_OG_TITLE,
+  CONTACT_PATH,
+  CONTACT_PHONE,
+  CONTACT_PHONE_TEL,
+  CONTACT_TITLE,
+  contactFaqGraph,
+} from "@/lib/contact-page";
+import {
   EMAIL,
   EMAIL_HREF,
   GOOGLE_MAPS_REVIEWS_URL,
-  HOURS_LABEL,
   HOURS_SAT_LABEL,
   HOURS_SUN_FRI_LABEL,
-  PHONE_LINES,
   QUOTE_PATH,
   SERVICE_BASE_CITY,
   SERVICE_REGION,
@@ -21,112 +27,117 @@ import {
 } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact · Get a free quote",
-  description: `Contact ${BUSINESS_NAME} for an Orlando & Central Florida moving quote. Call ${PHONE_LINES} or get a free quote online. ${HOURS_LABEL}.`,
-  alternates: { canonical: "/contact" },
+  title: CONTACT_TITLE,
+  description: CONTACT_DESCRIPTION,
+  alternates: { canonical: CONTACT_PATH },
   openGraph: {
-    title: `Contact ${BUSINESS_NAME}`,
-    description: `Call ${PHONE_LINES} or get a free moving quote in ${SERVICE_REGION}.`,
-    url: `${SITE_URL}/contact`,
+    title: CONTACT_OG_TITLE,
+    description: CONTACT_DESCRIPTION,
+    url: `${SITE_URL}${CONTACT_PATH}`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: CONTACT_OG_TITLE,
+    description: CONTACT_DESCRIPTION,
   },
 };
 
 /**
  * Dedicated contact page — NAP + hours + shared callback form.
+ * Form payload and Lead/generate_lead tracking stay in CallbackForm.
  */
 export default function ContactPage() {
   return (
-    <>
-      <Nav />
-      <main id="main" className="w-full min-w-0 flex-1">
-        <section
-          className="contact-page full-bleed w-full"
-          aria-labelledby="contact-heading"
-        >
-          <div className="site-container contact-page-inner">
-            <header className="contact-page-head">
-              <p className="split-band-eyebrow">Contact</p>
-              <h1 id="contact-heading" className="contact-page-title">
-                Get your Orlando moving quote
-              </h1>
-              <p className="aeo-answer contact-page-lede text-muted">
-                Call {PHONE_LINES} or get a free quote online — share what
-                you&apos;re moving and when. Prefer we call you? Use the
-                callback form below for immediate service.
-              </p>
-              <div className="contact-page-primary-actions">
-                <CompanyPhoneLinks
-                  cta="contact-primary-call"
-                  linkClassName="btn-primary tap-target"
-                />
-                <a
-                  href={QUOTE_PATH}
-                  data-cta="contact-page-quote"
-                  className="btn-outline tap-target"
-                >
-                  Get a free quote
-                </a>
-              </div>
-            </header>
-
-            <div className="contact-page-grid">
-              <aside className="contact-page-info" aria-label="How to reach us">
-                <div className="contact-info-card">
-                  <h2 className="contact-info-title">Call or text</h2>
-                  <CompanyPhoneLinks
-                    cta="contact-page-phone"
-                    groupClassName="contact-info-phones"
-                    linkClassName="contact-info-phone"
-                  />
-                  <p className="contact-info-meta text-muted">
-                    {HOURS_SUN_FRI_LABEL}
-                    <br />
-                    {HOURS_SAT_LABEL}
-                  </p>
-                </div>
-
-                <div className="contact-info-card">
-                  <h2 className="contact-info-title">Email</h2>
-                  <a href={EMAIL_HREF} className="contact-info-link">
-                    {EMAIL}
-                  </a>
-                </div>
-
-                <div className="contact-info-card">
-                  <h2 className="contact-info-title">Service area</h2>
-                  <p className="contact-info-meta">
-                    {SERVICE_BASE_CITY} · {SERVICE_REGION}
-                  </p>
-                  <a
-                    href={GOOGLE_MAPS_REVIEWS_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-info-link"
-                    data-cta="contact-google"
-                  >
-                    Google reviews →
-                  </a>
-                </div>
-              </aside>
-
-              <div className="contact-page-form-card" id="quote">
-                <h2 className="contact-form-title">Prefer a callback?</h2>
-                <p className="contact-form-lede text-muted">
-                  Leave your name and number — we call you back ASAP, today, or
-                  this week. For a full estimate, use Get a free quote above.
-                </p>
-                <CallbackForm
-                  source="contact-page"
-                  notePrefix="Contact page callback · toromovers.com"
-                />
-              </div>
-            </div>
+    <main id="main" className="contact-rebrand">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(contactFaqGraph()),
+        }}
+      />
+      <section className="contact-hero" aria-labelledby="contact-heading">
+        <header className="contact-copy">
+          <p className="eyebrow">Contact</p>
+          <h1 id="contact-heading">{CONTACT_H1}</h1>
+          <p className="aeo-answer">{CONTACT_LEDE}</p>
+          <div className="contact-actions">
+            <a
+              className="btn btn-red"
+              href={CONTACT_PHONE_TEL}
+              data-cta="contact-primary-call"
+              data-track="phone"
+            >
+              <span>Call {CONTACT_PHONE}</span>
+            </a>
+            <a
+              href={QUOTE_PATH}
+              data-cta="contact-page-quote"
+              data-track="quote"
+              className="btn btn-red"
+            >
+              <span>Get a free quote</span>
+            </a>
           </div>
-        </section>
-      </main>
-      <Footer />
-      <StickyCta />
-      <ClientChrome />
-    </>
+        </header>
+
+        <div className="contact-grid">
+          <aside className="contact-info" aria-label="How to reach us">
+            <div className="contact-info-card">
+              <h2>Call or text</h2>
+              <a
+                href={CONTACT_PHONE_TEL}
+                className="contact-phone"
+                data-cta="contact-page-phone"
+                data-track="phone"
+              >
+                {CONTACT_PHONE}
+              </a>
+              <p>
+                {HOURS_SUN_FRI_LABEL}
+                <br />
+                {HOURS_SAT_LABEL}
+              </p>
+            </div>
+
+            <div className="contact-info-card">
+              <h2>Email</h2>
+              <a href={EMAIL_HREF} className="contact-mail">
+                {EMAIL}
+              </a>
+            </div>
+
+            <div className="contact-info-card">
+              <h2>Service area</h2>
+              <p>
+                {SERVICE_BASE_CITY} · {SERVICE_REGION}
+              </p>
+              <a
+                href={GOOGLE_MAPS_REVIEWS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-mail"
+                data-cta="contact-google"
+              >
+                Google reviews
+              </a>
+            </div>
+          </aside>
+
+          <div className="contact-card" id="quote">
+            <h2>Prefer a callback?</h2>
+            <p className="contact-form-lede">{CONTACT_FORM_LEDE}</p>
+            <CallbackForm
+              source="contact-page"
+              notePrefix="Contact page callback · toromovers.com"
+              phoneLines={CONTACT_PHONE}
+              phonePlaceholder="(407) 555-0123"
+              donePhone={{ display: CONTACT_PHONE, tel: CONTACT_PHONE_TEL }}
+              doneHeadline={CONTACT_DONE_HEADLINE}
+            />
+          </div>
+        </div>
+      </section>
+      <QuotesFaq />
+    </main>
   );
 }
