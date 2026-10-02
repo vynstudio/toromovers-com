@@ -91,7 +91,15 @@ export default function FullServiceMovingPage() {
 
       <section className="fs-photos" aria-label="Families on moving day">
         {PHOTOS.map((photo) => (
-          <img key={photo.src} src={photo.src} alt={photo.alt} width={960} height={720} />
+          <img
+            key={photo.src}
+            src={photo.src}
+            alt={photo.alt}
+            width={960}
+            height={720}
+            loading="lazy"
+            decoding="async"
+          />
         ))}
       </section>
 
