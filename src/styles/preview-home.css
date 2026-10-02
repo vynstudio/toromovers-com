@@ -499,3 +499,8 @@ html.has-cookie-banner .hero-c-over{padding-bottom:250px}
 @media (prefers-reduced-motion: reduce){
   .hero-c-over{transition:none}
 }
+
+.logo-img{display:inline-flex;align-items:center;line-height:0}
+.logo-img img{height:46px;width:auto;display:block}
+.logo-ft.logo-img img{height:52px}
+@media(max-width:640px){.logo-img img{height:38px}}
