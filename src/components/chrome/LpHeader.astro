@@ -1,0 +1,30 @@
+---
+import Icon from "../home/Icon.astro";
+
+interface Props {
+  phoneDisplay?: string;
+  phoneTel?: string;
+  /** Stays on this landing page. */
+  logoHref?: string;
+}
+
+const {
+  phoneDisplay = "321-234-0510",
+  phoneTel = "tel:+13212340510",
+  logoHref = "#quote-form",
+} = Astro.props;
+---
+
+<header class="nav nav-c lp-nav">
+  <div class="container nav-in">
+    <a href={logoHref} class="logo logo-img" aria-label="Toro Movers quote form">
+      <img src="/logos/toro-lockup-navy.svg" alt="Toro Movers" width="200" height="50" />
+    </a>
+    <div class="nav-cta">
+      <a class="nav-phone" href={phoneTel} data-track="phone" aria-label={`Call ${phoneDisplay}`}>
+        <Icon name="phone" size={18} />
+        <span>{phoneDisplay}</span>
+      </a>
+    </div>
+  </div>
+</header>
