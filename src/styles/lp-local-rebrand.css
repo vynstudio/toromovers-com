@@ -8,7 +8,13 @@ header.nav.nav-c,
 }
 .lp-rebrand{
   background:#fff;
-  color:var(--black,#0B0B0B);
+  color:#0B0B0B;
+  /* globals.css sets --gray to #6b6b6b on :root. Pin the rebrand tokens here. */
+  --gray:#FFF6F6;
+  --gray2:#F0DEDE;
+  --black:#0B0B0B;
+  --muted:#5C656C;
+  --line:rgba(11,11,11,.12);
 }
 
 @media (max-width:1100px){
@@ -93,7 +99,9 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
   list-style:none;
   margin:0;
   padding:28px;
-  background:var(--gray,#FFF6F6);
+  background:#FFF6F6;
+  color:#0B0B0B;
+  border:1px solid rgba(11,11,11,.12);
   border-radius:28px;
   display:grid;
   gap:14px;
@@ -166,12 +174,14 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
 .lp-why{padding-bottom:72px}
 .lp-why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
 .lp-why article{
-  background:var(--gray,#FFF6F6);
+  background:#FFF6F6;
+  color:#0B0B0B;
+  border:1px solid rgba(11,11,11,.12);
   border-radius:18px;
   padding:22px;
 }
-.lp-why h3{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em}
-.lp-why article p{font-size:16px}
+.lp-why h3{margin:0;font-size:18px;font-weight:600;letter-spacing:-.02em;color:#0B0B0B}
+.lp-why article p{font-size:16px;color:#0B0B0B}
 
 @media (max-width:900px){
   .lp-hero,.lp-form-band,.lp-why{padding-left:20px;padding-right:20px}
