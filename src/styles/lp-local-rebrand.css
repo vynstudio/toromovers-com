@@ -26,9 +26,24 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
     border-radius:4px;justify-content:center;align-items:center
   }
   header.nav.nav-c .nav-cta{flex:0 0 auto}
-  header.nav.nav-c .nav-cta .btn{display:none !important}
-  header.nav.nav-c .nav-burger{display:inline-flex}
 }
+.lp-foot{
+  background:#0B0B0B;
+  color:#fff;
+  font-family:"Space Grotesk","Space Grotesk Fallback",system-ui,sans-serif;
+}
+.lp-foot-in{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px 28px;
+  padding:28px 32px;
+}
+.lp-foot a{color:#fff;font-weight:600}
+.lp-foot p{margin:0;color:rgba(255,255,255,.72)}
+.lp-foot nav{display:flex;flex-wrap:wrap;gap:8px 18px}
+.lp-foot nav a{font-weight:500;text-decoration:underline;text-underline-offset:3px}
 
 .lp-hero,
 .lp-form-band,

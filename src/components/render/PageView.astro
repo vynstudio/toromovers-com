@@ -9,6 +9,8 @@ import { resolveHead, type MetaIn } from "../../lib/seo-head";
 import { metadata as thanksMetadata } from "../../app/pay/thanks/layout";
 
 import Hydrate from "./Hydrate.astro";
+import LpFooter from "../chrome/LpFooter.astro";
+import LpHeader from "../chrome/LpHeader.astro";
 import SiteFooter from "../chrome/SiteFooter.astro";
 import SiteNav from "../chrome/SiteNav.astro";
 import checklistCss from "../../app/move-day-checklist/checklist.css?url";
@@ -90,7 +92,7 @@ const pageKey = spec?.key || "";
 const isQuotes = spec?.path === "quotes";
 const isContact = spec?.path === "contact";
 const isLpLocal = spec?.path === "lp/local-movers";
-const isRebrandChrome = isQuotes || isContact || isLpLocal;
+const isRebrandChrome = isQuotes || isContact;
 const LOCAL_PHONE = "321-234-0510";
 ---
 
@@ -99,7 +101,7 @@ const LOCAL_PHONE = "321-234-0510";
   tags={head.tags}
   preloads={preloads}
   deferTrackers={!hydrate}
-  businessTelephone={isRebrandChrome ? PHONE_E164 : undefined}
+  businessTelephone={isRebrandChrome || isLpLocal ? PHONE_E164 : undefined}
   extraCss={
     spec?.path === "move-day-checklist"
       ? [checklistCss]
@@ -122,6 +124,8 @@ const LOCAL_PHONE = "321-234-0510";
         quoteHref={isContact ? "#quote" : "#quote-form"}
         sectionPrefix="/"
       />
+    ) : isLpLocal ? (
+      <LpHeader phoneDisplay={LOCAL_PHONE} phoneTel={PHONE_TEL} logoHref="#quote-form" />
     ) : null
   }
   <div id="app" class="contents" set:html={inner} />
@@ -131,6 +135,8 @@ const LOCAL_PHONE = "321-234-0510";
       phoneTel={PHONE_TEL}
       quoteHref={isContact ? "#quote" : "#quote-form"}
     />
+  ) : isLpLocal ? (
+    <LpFooter phoneDisplay={LOCAL_PHONE} phoneTel={PHONE_TEL} />
   ) : null}
   {hydrate && pageKey ? <Hydrate pageKey={pageKey} pageProps={pageProps} /> : null}
 </Base>

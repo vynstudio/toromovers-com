@@ -40,7 +40,7 @@ const steps = [
 
 /**
  * Ads landing. Form payload, attribution, and Lead tracking stay in UniversalLeadForm.
- * Header and footer are the homepage chrome mounted in PageView.
+ * Header and footer are the nav-free LP chrome mounted in PageView.
  */
 export default function LocalMoversLandingPage() {
   return (
