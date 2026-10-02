@@ -1,21 +1,31 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
-import { StickyCta } from "@/components/StickyCta";
-import { ClientChrome } from "@/components/ClientChrome";
+import QuoteWizard from "@/components/home/QuoteWizard";
+import boxes from "../../assets/home/family-boxes-2.jpg";
+import newHouse from "../../assets/home/family-new-house-3.jpg";
+import together from "../../assets/home/family-together-6.jpg";
+import happyFamily from "../../assets/home/happy-family.jpg";
 import {
+  APARTMENT_PHONE,
+  APARTMENT_PHONE_TEL,
   apartmentMoversPage,
   apartmentMoversPageGraph,
 } from "@/lib/apartment-movers-page";
-import {
-  QUOTE_PATH,
-  SITE_URL,
-} from "@/lib/site";
+import { QUOTE_PATH, SITE_URL } from "@/lib/site";
 
 const page = apartmentMoversPage;
 const pageUrl = `${SITE_URL}${page.path}`;
+const heroPhoto = assetSrc(happyFamily);
+
+const PHOTOS = [
+  { src: heroPhoto, alt: "Kids running into their new home on moving day" },
+  { src: assetSrc(newHouse), alt: "Parents and a child at the door of a new home" },
+  { src: assetSrc(boxes), alt: "A couple with moving boxes in a living room" },
+  { src: assetSrc(together), alt: "A family standing with moving boxes in a new home" },
+];
+
+function assetSrc(asset: string | { src: string }) {
+  return typeof asset === "string" ? asset : asset.src;
+}
 
 export const metadata: Metadata = {
   title: "Apartment movers in Orlando | Stairs, elevators & condos",
@@ -26,266 +36,174 @@ export const metadata: Metadata = {
     title: page.metadata.ogTitle,
     description: page.metadata.ogDescription,
     url: pageUrl,
-    images: [
-      {
-        url: page.hero.image.src,
-        width: 1200,
-        height: 900,
-        alt: page.hero.image.alt,
-      },
-    ],
+    images: [{ url: heroPhoto, alt: PHOTOS[0].alt }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: page.metadata.ogTitle,
+    description: page.metadata.ogDescription,
+    images: [heroPhoto],
   },
 };
 
+/**
+ * Apartment movers page. Homepage header and footer come from the page shell.
+ * Leads from the quote wizard are tagged service_apartment.
+ * Layout classes are shared with the full-service stylesheet.
+ */
 export default function ApartmentMoversOrlandoPage() {
   return (
-    <>
+    <main id="main" className="fs-rebrand">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(apartmentMoversPageGraph()),
         }}
       />
-      <Nav />
-      <main id="main" className="w-full min-w-0 flex-1">
-        <section
-          className="about-page full-bleed w-full"
-          aria-labelledby="apartment-movers-heading"
-        >
-          <div className="site-container about-page-inner">
-            <div className="about-page-grid">
-              <div className="about-page-copy">
-                <p className="split-band-eyebrow">{page.hero.eyebrow}</p>
-                <h1 id="apartment-movers-heading" className="about-page-title">
-                  {page.hero.h1}
-                </h1>
-                <p className="aeo-answer about-page-lede text-muted">
-                  {page.hero.lede}
-                </p>
-                <ul className="about-stats" aria-label="Apartment move highlights">
-                  {page.hero.chips.map((chip) => (
-                    <li key={chip}>
-                      <strong>✓</strong>
-                      <span>{chip}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="about-page-actions">
-                  <CompanyPhoneLinks
-                    cta="apartment-movers-call"
-                    prefix="Call "
-                    linkClassName="btn-primary tap-target"
-                  />
-                  <a
-                    href={QUOTE_PATH}
-                    data-cta="apartment-movers-quote"
-                    className="btn-outline tap-target"
-                  >
-                    Get a free quote
-                  </a>
-                  <a
-                    href="/labor-only-moving"
-                    data-cta="apartment-movers-labor"
-                    className="about-reviews-link"
-                  >
-                    Labor-only option →
-                  </a>
-                </div>
-              </div>
-              <div className="about-page-photo">
-                <div className="about-page-frame">
-                  <Image
-                    src={page.hero.image.src}
-                    alt={page.hero.image.alt}
-                    fill
-                    sizes="(max-width: 899px) 92vw, 42vw"
-                    quality={80}
-                    priority
-                    className="object-cover object-center"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+      <section className="fs-hero" aria-labelledby="apartment-movers-heading">
+        <div className="fs-copy">
+          <p className="eyebrow">{page.hero.eyebrow}</p>
+          <h1 id="apartment-movers-heading">{page.hero.h1}</h1>
+          <p className="aeo-answer">{page.hero.lede}</p>
+          <ul className="fs-chips" aria-label="Apartment move highlights">
+            {page.hero.chips.map((chip) => (
+              <li key={chip}>{chip}</li>
+            ))}
+          </ul>
+          <a className="btn btn-red fs-call" href={APARTMENT_PHONE_TEL} data-cta="apartment-movers-call">
+            <span>Call {APARTMENT_PHONE}</span>
+          </a>
+          <p className="fs-actions">
+            <a href={QUOTE_PATH} data-cta="apartment-movers-quote">
+              Get a free quote
+            </a>
+            <a href="/labor-only-moving" data-cta="apartment-movers-labor">
+              Labor-only option
+            </a>
+          </p>
+        </div>
+        <QuoteWizard
+          source="service_apartment"
+          phoneDisplay={APARTMENT_PHONE}
+          phoneTel={APARTMENT_PHONE_TEL}
+          formId="quote-form"
+        />
+      </section>
+
+      <section className="fs-photos" aria-label="Families on moving day">
+        {PHOTOS.map((photo) => (
+          <img
+            key={photo.src}
+            src={photo.src}
+            alt={photo.alt}
+            width={960}
+            height={720}
+            loading="lazy"
+            decoding="async"
+          />
+        ))}
+      </section>
+
+      <div className="fs-body">
+        <section aria-labelledby="apartment-fit">
+          <h2 id="apartment-fit">{page.forWhom.h2}</h2>
+          <p className="aeo-answer">{page.forWhom.intro}</p>
+          <ul>
+            {page.forWhom.bullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </section>
 
-        <section className="full-bleed w-full" style={{ padding: "3rem 0" }}>
-          <div className="site-container" style={{ maxWidth: "48rem" }}>
-            <h2 className="about-how-title">{page.forWhom.h2}</h2>
-            <p className="aeo-answer text-muted" style={{ marginTop: "0.75rem" }}>
-              {page.forWhom.intro}
-            </p>
-            <ul style={{ marginTop: "1rem", paddingLeft: "1.25rem" }}>
-              {page.forWhom.bullets.map((b) => (
-                <li key={b} className="text-muted" style={{ marginBottom: "0.5rem" }}>
-                  {b}
-                </li>
-              ))}
-            </ul>
+        <section aria-labelledby="apartment-access">
+          <h2 id="apartment-access">{page.access.h2}</h2>
+          <p>{page.access.intro}</p>
+          <ul>
+            {page.access.bullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p>{page.access.note}</p>
+        </section>
 
-            <h2 className="about-how-title" style={{ marginTop: "2.5rem" }}>
-              {page.access.h2}
-            </h2>
-            <p className="aeo-answer text-muted" style={{ marginTop: "0.75rem" }}>
-              {page.access.intro}
-            </p>
-            <ul style={{ marginTop: "1rem", paddingLeft: "1.25rem" }}>
-              {page.access.bullets.map((b) => (
-                <li key={b} className="text-muted" style={{ marginBottom: "0.4rem" }}>
-                  {b}
-                </li>
-              ))}
-            </ul>
-            <p className="text-muted" style={{ marginTop: "1rem" }}>
-              {page.access.note}
-            </p>
+        <section aria-labelledby="apartment-options">
+          <h2 id="apartment-options">{page.options.h2}</h2>
+          <p>{page.options.intro}</p>
+          {page.options.blocks.map((block) => (
+            <div key={block.title}>
+              <h3>{block.title}</h3>
+              <p>
+                {block.body}{" "}
+                {block.title.includes("Labor-only") ? (
+                  <a href="/labor-only-moving">Labor-only movers</a>
+                ) : (
+                  <a href="/services">All services</a>
+                )}
+                .
+              </p>
+            </div>
+          ))}
+        </section>
 
-            <h2 className="about-how-title" style={{ marginTop: "2.5rem" }}>
-              {page.options.h2}
-            </h2>
-            <p className="text-muted" style={{ marginTop: "0.75rem" }}>
-              {page.options.intro}
-            </p>
-            {page.options.blocks.map((block) => (
-              <div key={block.title} style={{ marginTop: "1.25rem" }}>
-                <h3 style={{ fontSize: "1.1rem", fontWeight: 800 }}>
-                  {block.title}
-                </h3>
-                <p className="text-muted" style={{ marginTop: "0.35rem" }}>
-                  {block.body}{" "}
-                  {block.title.includes("Labor-only") ? (
-                    <a href="/labor-only-moving">Labor-only movers</a>
-                  ) : (
-                    <a href="/services">All services</a>
-                  )}
-                  .
-                </p>
+        <section aria-labelledby="apartment-pricing">
+          <h2 id="apartment-pricing">{page.pricing.h2}</h2>
+          <p className="aeo-answer">{page.pricing.intro}</p>
+          <ul className="fs-factors">
+            {page.pricing.factors.map((factor) => (
+              <li key={factor.title}>
+                <strong>{factor.title}.</strong> {factor.body}
+              </li>
+            ))}
+          </ul>
+          <p>
+            {page.pricing.close} Call or text{" "}
+            <a href={APARTMENT_PHONE_TEL} data-cta="apartment-inline">
+              {APARTMENT_PHONE}
+            </a>{" "}
+            or <a href={QUOTE_PATH}>get a free quote online</a>. Read our guide:{" "}
+            <a href="/blog/how-much-does-a-local-move-cost-orlando">how much movers cost in Orlando</a>.
+          </p>
+          <p className="fs-note">{page.pricing.marketNote}</p>
+        </section>
+
+        <section aria-labelledby="apartment-areas">
+          <h2 id="apartment-areas">{page.areas.h2}</h2>
+          <p>{page.areas.intro}</p>
+          <ul className="fs-cities">
+            {page.areas.links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section id="faq" aria-labelledby="apartment-faq">
+          <h2 id="apartment-faq">Common questions</h2>
+          <dl>
+            {page.faqs.map((item) => (
+              <div key={item.q}>
+                <dt>{item.q}</dt>
+                <dd>{item.a}</dd>
               </div>
             ))}
-
-            <h2 className="about-how-title" style={{ marginTop: "2.5rem" }}>
-              {page.pricing.h2}
-            </h2>
-            <p className="aeo-answer text-muted" style={{ marginTop: "0.75rem" }}>
-              {page.pricing.intro}
-            </p>
-            <ol style={{ marginTop: "1rem", paddingLeft: "1.25rem" }}>
-              {page.pricing.factors.map((f) => (
-                <li key={f.title} className="text-muted" style={{ marginBottom: "0.5rem" }}>
-                  <strong>{f.title}</strong> — {f.body}
-                </li>
-              ))}
-            </ol>
-            <p className="text-muted" style={{ marginTop: "1rem" }}>
-              {page.pricing.close} Call or text{" "}
-              <CompanyPhoneLinks
-                cta="apartment-inline"
-                linkClassName="underline"
-              />{" "}
-              or{" "}
-              <a href={QUOTE_PATH}>get a free quote online</a>. Read our guide:{" "}
-              <a href="/blog/how-much-does-a-local-move-cost-orlando">
-                how much movers cost in Orlando
-              </a>
-              .
-            </p>
-            <p className="text-muted" style={{ marginTop: "0.75rem", fontSize: "0.95rem" }}>
-              {page.pricing.marketNote}
-            </p>
-
-            <h2 className="about-how-title" style={{ marginTop: "2.5rem" }}>
-              {page.areas.h2}
-            </h2>
-            <p className="text-muted" style={{ marginTop: "0.75rem" }}>
-              {page.areas.intro}
-            </p>
-            <ul
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "0.5rem 1rem",
-                listStyle: "none",
-                padding: 0,
-                marginTop: "1rem",
-              }}
-            >
-              {page.areas.links.map((l) => (
-                <li key={l.href}>
-                  <a href={l.href}>{l.label}</a>
-                </li>
-              ))}
-            </ul>
-
-            <section id="faq" style={{ marginTop: "2.5rem" }}>
-              <h2 className="about-how-title">
-                Apartment movers — common questions
-              </h2>
-              <dl style={{ marginTop: "1rem" }}>
-                {page.faqs.map((item) => (
-                  <div key={item.q} style={{ marginBottom: "1.25rem" }}>
-                    <dt style={{ fontWeight: 800 }}>{item.q}</dt>
-                    <dd
-                      className="text-muted"
-                      style={{ marginTop: "0.35rem", marginLeft: 0 }}
-                    >
-                      {item.a}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
-            <div
-              style={{
-                marginTop: "2.5rem",
-                padding: "1.5rem",
-                borderRadius: "1rem",
-                background: "#0a0a0a",
-                color: "#fff",
-              }}
-            >
-              <h2 style={{ fontSize: "1.35rem", fontWeight: 900 }}>
-                {page.closing.h2}
-              </h2>
-              <p style={{ marginTop: "0.75rem", opacity: 0.9 }}>
-                {page.closing.body}
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "0.75rem",
-                  marginTop: "1.25rem",
-                }}
-              >
-                <CompanyPhoneLinks
-                  cta="apartment-movers-close-call"
-                  prefix="Call "
-                  linkClassName="btn-primary tap-target"
-                  style={{ background: "#fff", color: "#000" }}
-                />
-                <a
-                  href={QUOTE_PATH}
-                  data-cta="apartment-movers-close-quote"
-                  className="btn-outline tap-target"
-                  style={{ borderColor: "#fff", color: "#fff" }}
-                >
-                  Get a free quote
-                </a>
-                <a
-                  href="/services"
-                  style={{ color: "#fff", textDecoration: "underline" }}
-                >
-                  All services
-                </a>
-              </div>
-            </div>
-          </div>
+          </dl>
         </section>
-      </main>
-      <Footer />
-      <StickyCta />
-      <ClientChrome />
-    </>
+
+        <section className="fs-close" aria-labelledby="apartment-close">
+          <h2 id="apartment-close">{page.closing.h2}</h2>
+          <p>{page.closing.body}</p>
+          <a className="btn btn-red fs-call" href={APARTMENT_PHONE_TEL} data-cta="apartment-movers-close-call">
+            <span>Call {APARTMENT_PHONE}</span>
+          </a>
+          <p className="fs-actions">
+            <a href={QUOTE_PATH} data-cta="apartment-movers-close-quote">
+              Get a free quote
+            </a>
+            <a href="/services">All services</a>
+          </p>
+        </section>
+      </div>
+    </main>
   );
 }

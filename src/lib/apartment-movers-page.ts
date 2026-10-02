@@ -1,28 +1,28 @@
-/** Copy for /apartment-movers-orlando-fl — FAQ text must match on-page FAQ (schema). */
+/** Copy for /apartment-movers-orlando-fl. FAQ text must match the on-page FAQ schema. */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
-import { PHONE_LINES, SITE_URL } from "./site.ts";
+import { QUOTE_RATE_ANSWER } from "./quote-faqs.ts";
+import { SITE_URL } from "./site.ts";
+
+export const APARTMENT_PATH = "/apartment-movers-orlando-fl";
+export const APARTMENT_PHONE = "321-234-0510";
+export const APARTMENT_PHONE_TEL = "tel:+13212340510";
 
 export const apartmentMoversPage = {
-  path: "/apartment-movers-orlando-fl",
+  path: APARTMENT_PATH,
   metadata: {
     title: "Apartment movers Orlando | Stairs & elevators",
     description:
-      "Orlando apartment movers for walk-ups, elevators & loading zones—planned before move day. Up-front hourly rates. Call " + PHONE_LINES + ".",
+      "Orlando apartment movers for walk-ups, elevators, and loading zones, planned before move day. Call 321-234-0510.",
     ogTitle: "Apartment movers in Orlando",
     ogDescription:
-      "Local crews for Orlando apartments and condos—stairs, elevators, and building rules planned with up-front hourly rates.",
+      "Local crews for Orlando apartments and condos. Stairs, elevators, and building rules planned, with the hourly model explained before move day.",
   },
   hero: {
     eyebrow: "Apartment & condo moving",
     h1: "Apartment movers in Orlando",
     lede:
-      "Toro Movers handles apartment moves across Orlando and Central Florida—walk-ups, elevators, loading zones, parking rules, and timed move-in windows. You get a local bilingual crew and up-front hourly rates explained before move day.",
-    image: {
-      src: "/images/moves/real-21.webp",
-      alt: "Toro Movers crew carrying furniture up stairs on a real Orlando-area apartment move",
-    },
+      "Toro Movers handles apartment moves across Orlando and Central Florida: walk-ups, elevators, loading zones, parking rules, and timed move-in windows. You get a local bilingual crew, and the hourly model is explained before move day.",
     chips: [
       "Stairs & elevators",
       "Loading zones planned",
@@ -53,14 +53,13 @@ export const apartmentMoversPage = {
       "Loading dock, service entrance, or street parking only",
       "Long carry from unit to truck",
       "HOA or building move-in / move-out hours",
-      "Certificate or paperwork your property asks for (we discuss what’s needed—without inventing coverage claims)",
+      "Certificate or paperwork your property asks for. Tell us what the leasing office requires when you book.",
     ] as const,
     note: "Planning access up front keeps surprises off move day. Tell us what the leasing office requires when you call or request a quote.",
   },
   options: {
     h2: "Full-service vs labor-only for apartments",
-    intro:
-      "Pick the option that matches how much of the move you want to own.",
+    intro: "Pick the option that matches how much of the move you want handled.",
     blocks: [
       {
         title: "Full-service apartment move",
@@ -68,13 +67,13 @@ export const apartmentMoversPage = {
       },
       {
         title: "Labor-only for apartments",
-        body: "You have the U-Haul, POD, or rental truck—we load or unload by the hour with the same care for stairs and tight halls. See our labor-only movers page for details.",
+        body: "You have the U-Haul, POD, or rental truck. We load or unload by the hour with the same care for stairs and tight halls.",
       },
     ] as const,
   },
   pricing: {
     h2: "How apartment move pricing works",
-    intro: `${LOCAL_HOURLY_RATE_SENTENCE} The total depends on:`,
+    intro: "The total depends on:",
     factors: [
       { title: "Crew size", body: "Matched to volume and access" },
       { title: "Time on site", body: "Load, transport when included, unload, place" },
@@ -92,7 +91,7 @@ export const apartmentMoversPage = {
       },
     ] as const,
     close:
-      "We explain the hourly model before move day. Call or text with unit details, floors, and elevator rules—or get a free quote online.",
+      "We explain the hourly model before move day. Call or text with unit details, floors, and elevator rules, or get a free quote online.",
     marketNote:
       "Published Orlando apartment-move averages vary by company. Treat third-party ranges as context only. Your Toro quote is based on your building and inventory.",
   },
@@ -133,7 +132,7 @@ export const apartmentMoversPage = {
     },
     {
       q: "How much do apartment movers cost in Orlando?",
-      a: `${LOCAL_HOURLY_RATE_SENTENCE} The total depends on crew size, access, readiness, and whether you need a truck. Call or text ${PHONE_LINES} with your details for a clear explanation before move day.`,
+      a: QUOTE_RATE_ANSWER,
     },
     {
       q: "Are your movers bilingual?",
@@ -141,12 +140,12 @@ export const apartmentMoversPage = {
     },
     {
       q: "How do I get an apartment moving quote?",
-      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share pickup and drop-off, floors, elevator or stairs, parking, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: `Call or text ${APARTMENT_PHONE}, or request a quote online. Share pickup and drop-off, floors, elevator or stairs, parking, and preferred date. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.`,
     },
   ] as const,
   closing: {
     h2: "Ready for apartment movers in Orlando?",
-    body: "Tell us the building access, floors, and what you’re moving. We will match crew size, explain up-front hourly rates, and help plan the window.",
+    body: "Tell us the building access, floors, and what you are moving. We will match crew size, explain the hourly model, and help plan the window.",
   },
 } as const;
 
