@@ -1,28 +1,28 @@
-/** Copy for /loading-unloading — single-item / short loading help. FAQ = schema. */
+/** Copy for /loading-unloading. FAQ text must match the on-page FAQ schema. */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
-import { PHONE_LINES, SITE_URL } from "./site.ts";
+import { QUOTE_RATE_ANSWER } from "./quote-faqs.ts";
+import { SITE_URL } from "./site.ts";
+
+export const LOADING_PATH = "/loading-unloading";
+export const LOADING_PHONE = "321-234-0510";
+export const LOADING_PHONE_TEL = "tel:+13212340510";
 
 export const loadingUnloadingPage = {
-  path: "/loading-unloading",
+  path: LOADING_PATH,
   metadata: {
     title: "Loading & unloading help | Orlando movers",
     description:
-      "Loading and unloading help in Orlando for a short truck lift or curb unload. Hourly rates. Call " + PHONE_LINES + ".",
+      "Loading and unloading help in Orlando for a short truck lift or curb unload. Call 321-234-0510.",
     ogTitle: "Loading & unloading help in Orlando",
     ogDescription:
-      "Short loading and unloading help from a local Central Florida crew—with up-front hourly rates. Not a POD pack or a furniture delivery.",
+      "Short loading and unloading help from a local Central Florida crew, with the hourly model explained before we start. Not a POD pack or a furniture delivery.",
   },
   hero: {
     eyebrow: "Loading and unloading help",
     h1: "Loading and unloading help in Orlando",
     lede:
-      "Toro Movers helps with short loading and unloading jobs in Orlando and Central Florida: a truck that needs a crew for a lift, or a curb unload that is not a full household. A planned single item or furniture delivery has its own page. A POD, U-Haul, or storage unit does too. You get a local bilingual crew and up-front hourly rates explained before we start.",
-    image: {
-      src: "/images/moves/svc-loading.webp",
-      alt: "Toro Movers carefully handling furniture on a real Central Florida loading job",
-    },
+      "Toro Movers helps with short loading and unloading jobs in Orlando and Central Florida: a truck that needs a crew for a lift, or a curb unload that is not a full household. A planned single item or furniture delivery has its own page. A POD, U-Haul, or storage unit does too. You get a local bilingual crew, and the hourly model is explained before we start.",
     chips: [
       "Short hourly jobs",
       "Truck load / unload",
@@ -44,7 +44,7 @@ export const loadingUnloadingPage = {
       "A planned single item or furniture pickup is a small move. A POD, U-Haul, or storage unit is POD loading help. A whole home with our truck is full-service. A household on your truck is labor-only.",
   },
   included: {
-    h2: "What’s included",
+    h2: "What's included",
     intro:
       "On a typical short loading job, Toro Movers brings the crew and protection gear you need for the lift.",
     weBring: [
@@ -54,7 +54,7 @@ export const loadingUnloadingPage = {
       "Clear English and Spanish communication on timing and placement",
     ] as const,
     youShare: [
-      "What you’re moving (photos help)",
+      "What you are moving (photos help)",
       "Stairs, elevator, and parking details",
       "Whether a truck is already on site",
       "Preferred arrival window",
@@ -63,7 +63,7 @@ export const loadingUnloadingPage = {
   pricing: {
     h2: "How short-job pricing works",
     intro:
-      "These jobs are quoted with up-front hourly rates. Totals stay tied to crew size and time on site—access and item weight still matter.",
+      "The total depends on crew size and time on site. Access and item weight still matter.",
     factors: [
       { title: "Crew size", body: "Often two movers; more for awkward or heavy pieces" },
       { title: "Time on site", body: "Short windows; longer if the lift is awkward" },
@@ -71,7 +71,7 @@ export const loadingUnloadingPage = {
       { title: "Scope", body: "A short lift versus a partial truck that is already on site" },
     ] as const,
     close:
-      "Call or text with photos and access notes—or get a free quote online. We explain the hourly model before we arrive.",
+      "Call or text with photos and access notes, or get a free quote online. We explain the hourly model before we arrive.",
   },
   areas: {
     h2: "Central Florida coverage",
@@ -106,16 +106,16 @@ export const loadingUnloadingPage = {
     },
     {
       q: "How is pricing handled?",
-      a: `${LOCAL_HOURLY_RATE_SENTENCE} Crew size and time depend on the item, stairs, and parking. Call or text ${PHONE_LINES} with details before move day.`,
+      a: QUOTE_RATE_ANSWER,
     },
     {
       q: "How do I book loading help?",
-      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share what you’re moving, access details, and timing. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: `Call or text ${LOADING_PHONE}, or request a quote online. Share what you are moving, access details, and timing. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.`,
     },
   ] as const,
   closing: {
     h2: "Need loading or unloading help in Orlando?",
-    body: "Tell us the truck scope, floors, and parking. We will match the crew, explain hourly rates, and confirm whether this short lift—or a small move, a POD load, or labor-only—fits better.",
+    body: "Tell us the truck scope, floors, and parking. We will match the crew, explain the hourly model, and confirm whether this short lift, a small move, a POD load, or labor-only fits better.",
   },
 } as const;
 

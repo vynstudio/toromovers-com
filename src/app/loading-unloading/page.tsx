@@ -1,18 +1,31 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Nav } from "@/components/Nav";
-import { Footer } from "@/components/Footer";
-import { StickyCta } from "@/components/StickyCta";
-import { ClientChrome } from "@/components/ClientChrome";
+import QuoteWizard from "@/components/home/QuoteWizard";
+import boxes from "../../assets/home/family-boxes-2.jpg";
+import newHouse from "../../assets/home/family-new-house-3.jpg";
+import together from "../../assets/home/family-together-6.jpg";
+import happyFamily from "../../assets/home/happy-family.jpg";
 import {
+  LOADING_PHONE,
+  LOADING_PHONE_TEL,
   loadingUnloadingPage,
   loadingUnloadingPageGraph,
 } from "@/lib/loading-unloading-page";
-import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { QUOTE_PATH, SITE_URL } from "@/lib/site";
 
 const page = loadingUnloadingPage;
 const pageUrl = `${SITE_URL}${page.path}`;
+const heroPhoto = assetSrc(happyFamily);
+
+const PHOTOS = [
+  { src: heroPhoto, alt: "Kids running into their new home on moving day" },
+  { src: assetSrc(newHouse), alt: "Parents and a child at the door of a new home" },
+  { src: assetSrc(boxes), alt: "A couple with moving boxes in a living room" },
+  { src: assetSrc(together), alt: "A family standing with moving boxes in a new home" },
+];
+
+function assetSrc(asset: string | { src: string }) {
+  return typeof asset === "string" ? asset : asset.src;
+}
 
 export const metadata: Metadata = {
   title: "Loading & unloading help in Orlando | Short jobs",
@@ -23,137 +36,167 @@ export const metadata: Metadata = {
     title: page.metadata.ogTitle,
     description: page.metadata.ogDescription,
     url: pageUrl,
-    images: [{ url: page.hero.image.src, width: 1200, height: 900, alt: page.hero.image.alt }],
+    images: [{ url: heroPhoto, alt: PHOTOS[0].alt }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: page.metadata.ogTitle,
+    description: page.metadata.ogDescription,
+    images: [heroPhoto],
   },
 };
 
+/**
+ * Loading and unloading page. Homepage header and footer come from the page shell.
+ * Leads from the quote wizard are tagged service_loading_unloading.
+ * Layout classes are shared with the full-service stylesheet.
+ */
 export default function LoadingUnloadingPage() {
   return (
-    <>
+    <main id="main" className="fs-rebrand">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(loadingUnloadingPageGraph()) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(loadingUnloadingPageGraph()),
+        }}
       />
-      <Nav />
-      <main id="main" className="w-full min-w-0 flex-1">
-        <section className="about-page full-bleed w-full" aria-labelledby="loading-unloading-heading">
-          <div className="site-container about-page-inner">
-            <div className="about-page-grid">
-              <div className="about-page-copy">
-                <p className="split-band-eyebrow">{page.hero.eyebrow}</p>
-                <h1 id="loading-unloading-heading" className="about-page-title">{page.hero.h1}</h1>
-                <p className="aeo-answer about-page-lede text-muted">{page.hero.lede}</p>
-                <ul className="about-stats" aria-label="Loading help highlights">
-                  {page.hero.chips.map((chip) => (
-                    <li key={chip}><strong>✓</strong><span>{chip}</span></li>
-                  ))}
-                </ul>
-                <div className="about-page-actions">
-                  <CompanyPhoneLinks cta="loading-call" prefix="Call " linkClassName="btn-primary tap-target" />
-                  <a href={QUOTE_PATH} data-cta="loading-quote" className="btn-outline tap-target">Get a free quote</a>
-                  <a href="/labor-only-moving" className="about-reviews-link">Full labor-only jobs →</a>
-                </div>
-              </div>
-              <div className="about-page-photo">
-                <div className="about-page-frame">
-                  <Image src={page.hero.image.src} alt={page.hero.image.alt} fill sizes="(max-width: 899px) 92vw, 42vw" quality={80} priority className="object-cover object-center" />
-                </div>
-              </div>
-            </div>
-          </div>
+      <section className="fs-hero" aria-labelledby="loading-unloading-heading">
+        <div className="fs-copy">
+          <p className="eyebrow">{page.hero.eyebrow}</p>
+          <h1 id="loading-unloading-heading">{page.hero.h1}</h1>
+          <p className="aeo-answer">{page.hero.lede}</p>
+          <ul className="fs-chips" aria-label="Loading help highlights">
+            {page.hero.chips.map((chip) => (
+              <li key={chip}>{chip}</li>
+            ))}
+          </ul>
+          <a className="btn btn-red fs-call" href={LOADING_PHONE_TEL} data-cta="loading-call">
+            <span>Call {LOADING_PHONE}</span>
+          </a>
+          <p className="fs-actions">
+            <a href={QUOTE_PATH} data-cta="loading-quote">
+              Get a free quote
+            </a>
+            <a href="/labor-only-moving">Full labor-only jobs</a>
+          </p>
+        </div>
+        <QuoteWizard
+          source="service_loading_unloading"
+          phoneDisplay={LOADING_PHONE}
+          phoneTel={LOADING_PHONE_TEL}
+          formId="quote-form"
+        />
+      </section>
+
+      <section className="fs-photos" aria-label="Families on moving day">
+        {PHOTOS.map((photo) => (
+          <img
+            key={photo.src}
+            src={photo.src}
+            alt={photo.alt}
+            width={960}
+            height={720}
+            loading="lazy"
+            decoding="async"
+          />
+        ))}
+      </section>
+
+      <div className="fs-body">
+        <section aria-labelledby="loading-fit">
+          <h2 id="loading-fit">{page.forWhom.h2}</h2>
+          <p className="aeo-answer">{page.forWhom.intro}</p>
+          <ul>
+            {page.forWhom.bullets.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p>
+            {page.forWhom.aside} <a href="/small-moves-orlando">Small moves</a>
+            {" · "}
+            <a href="/pod-loading-orlando">POD, U-Haul, and storage loading</a>
+            {" · "}
+            <a href="/full-service-moving">Full-service</a>
+            {" · "}
+            <a href="/labor-only-moving">Labor-only</a>.
+          </p>
         </section>
 
-        <section className="full-bleed w-full" style={{ padding: "3rem 0" }}>
-          <div className="site-container" style={{ maxWidth: "48rem" }}>
-            <h2 className="about-how-title">{page.forWhom.h2}</h2>
-            <p className="aeo-answer text-muted" style={{ marginTop: "0.75rem" }}>{page.forWhom.intro}</p>
-            <ul style={{ marginTop: "1rem", paddingLeft: "1.25rem" }}>
-              {page.forWhom.bullets.map((b) => (
-                <li key={b} className="text-muted" style={{ marginBottom: "0.5rem" }}>{b}</li>
-              ))}
-            </ul>
-            <p className="text-muted" style={{ marginTop: "1rem" }}>
-              {page.forWhom.aside}{" "}
-              <a href="/small-moves-orlando">Small moves</a>
-              {" · "}
-              <a href="/pod-loading-orlando">POD, U-Haul, and storage loading</a>
-              {" · "}
-              <a href="/full-service-moving">Full-service</a>
-              {" · "}
-              <a href="/labor-only-moving">Labor-only</a>.
-            </p>
-
-            <h2 className="about-how-title" style={{ marginTop: "2.5rem" }}>{page.included.h2}</h2>
-            <p className="text-muted" style={{ marginTop: "0.75rem" }}>{page.included.intro}</p>
-            <p style={{ marginTop: "1rem", fontWeight: 700 }}>Usually included</p>
-            <ul style={{ paddingLeft: "1.25rem" }}>
-              {page.included.weBring.map((b) => (
-                <li key={b} className="text-muted" style={{ marginBottom: "0.4rem" }}>{b}</li>
-              ))}
-            </ul>
-            <p style={{ marginTop: "1rem", fontWeight: 700 }}>Share when you book</p>
-            <ul style={{ paddingLeft: "1.25rem" }}>
-              {page.included.youShare.map((b) => (
-                <li key={b} className="text-muted" style={{ marginBottom: "0.4rem" }}>{b}</li>
-              ))}
-            </ul>
-
-            <h2 className="about-how-title" style={{ marginTop: "2.5rem" }}>{page.pricing.h2}</h2>
-            <p className="aeo-answer text-muted" style={{ marginTop: "0.75rem" }}>{page.pricing.intro}</p>
-            <ol style={{ marginTop: "1rem", paddingLeft: "1.25rem" }}>
-              {page.pricing.factors.map((f) => (
-                <li key={f.title} className="text-muted" style={{ marginBottom: "0.5rem" }}>
-                  <strong>{f.title}</strong> — {f.body}
-                </li>
-              ))}
-            </ol>
-            <p className="text-muted" style={{ marginTop: "1rem" }}>
-              {page.pricing.close}{" "}
-              <CompanyPhoneLinks cta="loading-inline" linkClassName="underline" />
-              {" · "}
-              <a href={QUOTE_PATH}>Get a free quote</a>.
-            </p>
-
-            <h2 className="about-how-title" style={{ marginTop: "2.5rem" }}>{page.areas.h2}</h2>
-            <p className="text-muted" style={{ marginTop: "0.75rem" }}>{page.areas.intro}</p>
-            <ul style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem 1rem", listStyle: "none", padding: 0, marginTop: "1rem" }}>
-              {page.areas.links.map((l) => (
-                <li key={l.href}><a href={l.href}>{l.label}</a></li>
-              ))}
-            </ul>
-
-            <section id="faq" style={{ marginTop: "2.5rem" }}>
-              <h2 className="about-how-title">Loading help — common questions</h2>
-              <dl style={{ marginTop: "1rem" }}>
-                {page.faqs.map((item) => (
-                  <div key={item.q} style={{ marginBottom: "1.25rem" }}>
-                    <dt style={{ fontWeight: 800 }}>{item.q}</dt>
-                    <dd className="text-muted" style={{ marginTop: "0.35rem", marginLeft: 0 }}>{item.a}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-
-            <div style={{ marginTop: "2.5rem", padding: "1.5rem", borderRadius: "1rem", background: "#0a0a0a", color: "#fff" }}>
-              <h2 style={{ fontSize: "1.35rem", fontWeight: 900 }}>{page.closing.h2}</h2>
-              <p style={{ marginTop: "0.75rem", opacity: 0.9 }}>{page.closing.body}</p>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginTop: "1.25rem" }}>
-                <CompanyPhoneLinks
-                  cta="loading-close-call"
-                  prefix="Call "
-                  linkClassName="btn-primary tap-target"
-                  style={{ background: "#fff", color: "#000" }}
-                />
-                <a href={QUOTE_PATH} data-cta="loading-close-quote" className="btn-outline tap-target" style={{ borderColor: "#fff", color: "#fff" }}>Get a free quote</a>
-                <a href="/services" style={{ color: "#fff", textDecoration: "underline" }}>All services</a>
-              </div>
-            </div>
-          </div>
+        <section aria-labelledby="loading-included">
+          <h2 id="loading-included">{page.included.h2}</h2>
+          <p>{page.included.intro}</p>
+          <h3>Usually included</h3>
+          <ul>
+            {page.included.weBring.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <h3>Share when you book</h3>
+          <ul>
+            {page.included.youShare.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </section>
-      </main>
-      <Footer />
-      <StickyCta />
-      <ClientChrome />
-    </>
+
+        <section aria-labelledby="loading-pricing">
+          <h2 id="loading-pricing">{page.pricing.h2}</h2>
+          <p className="aeo-answer">{page.pricing.intro}</p>
+          <ul className="fs-factors">
+            {page.pricing.factors.map((factor) => (
+              <li key={factor.title}>
+                <strong>{factor.title}.</strong> {factor.body}
+              </li>
+            ))}
+          </ul>
+          <p>
+            {page.pricing.close} Call or text{" "}
+            <a href={LOADING_PHONE_TEL} data-cta="loading-inline">
+              {LOADING_PHONE}
+            </a>
+            {" · "}
+            <a href={QUOTE_PATH}>Get a free quote</a>.
+          </p>
+        </section>
+
+        <section aria-labelledby="loading-areas">
+          <h2 id="loading-areas">{page.areas.h2}</h2>
+          <p>{page.areas.intro}</p>
+          <ul className="fs-cities">
+            {page.areas.links.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section id="faq" aria-labelledby="loading-faq">
+          <h2 id="loading-faq">Common questions</h2>
+          <dl>
+            {page.faqs.map((item) => (
+              <div key={item.q}>
+                <dt>{item.q}</dt>
+                <dd>{item.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+
+        <section className="fs-close" aria-labelledby="loading-close">
+          <h2 id="loading-close">{page.closing.h2}</h2>
+          <p>{page.closing.body}</p>
+          <a className="btn btn-red fs-call" href={LOADING_PHONE_TEL} data-cta="loading-close-call">
+            <span>Call {LOADING_PHONE}</span>
+          </a>
+          <p className="fs-actions">
+            <a href={QUOTE_PATH} data-cta="loading-close-quote">
+              Get a free quote
+            </a>
+            <a href="/services">All services</a>
+          </p>
+        </section>
+      </div>
+    </main>
   );
 }
