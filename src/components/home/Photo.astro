@@ -25,6 +25,6 @@ const { src, alt, sizes, widths, priority = false, class: className } = Astro.pr
   quality={priority ? 60 : 55}
   priority={priority}
   loading={priority ? "eager" : "lazy"}
-  decoding={priority ? "sync" : "async"}
+  decoding="async"
   class={className}
 />

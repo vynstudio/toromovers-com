@@ -15,7 +15,6 @@
   var marketingLoaded = false;
   var stopped = false;
   var drained = false;
-  var idleId = 0;
   var timerId = 0;
   var untrap = null;
 
@@ -166,9 +165,7 @@
     window.removeEventListener("touchstart", onInteract, true);
     window.removeEventListener("click", onInteract, true);
     window.removeEventListener("keydown", onInteract, true);
-    if (idleId && window.cancelIdleCallback) window.cancelIdleCallback(idleId);
     if (timerId) window.clearTimeout(timerId);
-    idleId = 0;
     timerId = 0;
   }
 
@@ -196,11 +193,9 @@
     window.addEventListener("touchstart", onInteract, { capture: true, passive: true });
     window.addEventListener("click", onInteract, true);
     window.addEventListener("keydown", onInteract, true);
-    var kick = function () {
+    timerId = window.setTimeout(function () {
       drain();
-    };
-    if (window.requestIdleCallback) idleId = window.requestIdleCallback(kick, { timeout: 3000 });
-    else timerId = window.setTimeout(kick, 3000);
+    }, 3000);
   }
 
   function whenIdle(fn) {
