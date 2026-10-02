@@ -31,7 +31,11 @@ export function trackHome(event: string, data: Record<string, unknown> = {}) {
 }
 
 /** Standard generate_lead, once per event id, matching the server CAPI event_id. */
-export function trackHomeLead(eventId: string, service: string) {
+export function trackHomeLead(
+  eventId: string,
+  service: string,
+  contentName = "homepage_quote",
+) {
   if (typeof window === "undefined" || !eventId) return;
   const key = `${LEAD_KEY}${eventId}`;
   try {
@@ -40,7 +44,7 @@ export function trackHomeLead(eventId: string, service: string) {
   } catch {
     /* private mode */
   }
-  const payload = { content_name: "homepage_quote", service };
+  const payload = { content_name: contentName, service };
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: "generate_lead", event_id: eventId, ...payload });
   if (consentGranted("analytics")) {

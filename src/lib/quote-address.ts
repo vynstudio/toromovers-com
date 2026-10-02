@@ -1,7 +1,8 @@
 import { isUsableLocation } from "./fl-zip-cities.ts";
 import { haversineMiles } from "./selected-place.ts";
 
-const QUOTE_FORMS = new Set(["ads_short_form", "local_movers_ads_landing"]);
+// The homepage wizard checks its own stops. Only the short ads form still requires a pickup here.
+const QUOTE_FORMS = new Set(["ads_short_form"]);
 
 export type QuoteStops = {
   /** A street address, a city, or a ZIP, as picked or typed. */

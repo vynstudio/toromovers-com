@@ -54,7 +54,22 @@ const ICONS: Record<ServiceId, string> = {
   pod: "M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z M10 21.9V14L2.1 9.1 M10 14l11.9-6.9 M14 19.8v-8.1 M18 17.5V9.4",
 };
 
-export default function QuoteWizard() {
+type QuoteWizardProps = {
+  /** Lead source and form_location. Homepage stays homepage_quote. */
+  source?: string;
+  /** Fallback phone. Homepage stays 888-503-1756. */
+  phoneDisplay?: string;
+  phoneTel?: string;
+  /** Homepage anchor is #quote. */
+  formId?: string;
+};
+
+export default function QuoteWizard({
+  source = "homepage_quote",
+  phoneDisplay = HOME_PHONE_DISPLAY,
+  phoneTel = HOME_PHONE_TEL,
+  formId = "quote",
+}: QuoteWizardProps = {}) {
   const started = useRef(Date.now());
   const eventId = useRef("");
   const partialKey = useRef("");
@@ -135,8 +150,8 @@ export default function QuoteWizard() {
             sms_call_consent: consent,
           },
       attribution: { ...getAttribution(), event_id: eventId.current },
-      form_location: "homepage_quote",
-      source: "homepage_quote",
+      form_location: source,
+      source,
       note: soft ? "soft capture" : "",
       hp,
       elapsedMs: Date.now() - started.current,
@@ -208,10 +223,10 @@ export default function QuoteWizard() {
     setBusy(true);
     try {
       await postLead(false);
-      trackHomeLead(eventId.current, service.label);
+      trackHomeLead(eventId.current, service.label, source);
       setDone(true);
     } catch {
-      setError("We could not send that. Call 888-503-1756 and we will quote you.");
+      setError(`We could not send that. Call ${phoneDisplay} and we will quote you.`);
     } finally {
       setBusy(false);
     }
@@ -228,7 +243,7 @@ export default function QuoteWizard() {
     <form
       ref={formRef}
       className="form-card fc-c"
-      id="quote"
+      id={formId}
       onSubmit={onSubmit}
       noValidate
       style={
@@ -352,7 +367,7 @@ export default function QuoteWizard() {
                 }}
                 ariaLabel={service.kind === "one" ? "Address" : "Pickup address"}
                 placeholder="Street, city, or ZIP"
-                phoneLines={HOME_PHONE_DISPLAY}
+                phoneLines={phoneDisplay}
                 className=""
                 flexible
               />
@@ -374,7 +389,7 @@ export default function QuoteWizard() {
                 }}
                 ariaLabel="Drop-off address"
                 placeholder="Street, city, or ZIP"
-                phoneLines={HOME_PHONE_DISPLAY}
+                phoneLines={phoneDisplay}
                 className=""
                 flexible
               />
@@ -497,8 +512,8 @@ export default function QuoteWizard() {
       ) : null}
       <p className="fc-alt">
         Rather talk?{" "}
-        <a href={HOME_PHONE_TEL} data-track="phone">
-          Call {HOME_PHONE_DISPLAY}
+        <a href={phoneTel} data-track="phone">
+          Call {phoneDisplay}
         </a>
       </p>
     </form>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import UniversalLeadForm from "@/components/funnel/UniversalLeadForm";
+import QuoteWizard from "@/components/home/QuoteWizard";
 import QuotesFaq from "@/components/funnel/QuotesFaq";
 import {
   LP_DESCRIPTION,
@@ -39,7 +39,7 @@ const steps = [
 ] as const;
 
 /**
- * Ads landing. Form payload, attribution, and Lead tracking stay in UniversalLeadForm.
+ * Ads landing. The quote form is the homepage wizard, tagged with this page's source.
  * Header and footer are the nav-free LP chrome mounted in PageView.
  */
 export default function LocalMoversLandingPage() {
@@ -92,7 +92,12 @@ export default function LocalMoversLandingPage() {
             ))}
           </ol>
         </div>
-        <UniversalLeadForm source="local_movers_ads_landing" />
+        <QuoteWizard
+          source="local_movers_ads_landing"
+          phoneDisplay={LP_PHONE}
+          phoneTel={LP_PHONE_TEL}
+          formId="quote-form"
+        />
       </section>
 
       <section className="lp-why">

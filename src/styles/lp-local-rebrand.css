@@ -142,34 +142,7 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
   background:#0B0B0B;color:#fff;font-size:14px;
 }
 
-.lp-rebrand #quote-form{
-  border-radius:28px;
-  background:#fff;
-  padding:30px;
-  box-shadow:0 40px 80px -30px rgba(11,11,11,.35),0 0 0 1px rgba(11,11,11,.05);
-}
-.lp-rebrand #quote-form h2{font-family:inherit;letter-spacing:-.03em}
-.lp-rebrand #quote-form input,
-.lp-rebrand #quote-form textarea,
-.lp-rebrand #quote-form select{
-  border-radius:14px;
-  border:1.5px solid #F0DEDE;
-  min-height:48px;
-  font-size:16px;
-}
-.lp-rebrand .lp-submit{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-height:54px;border:0;border-radius:4px;
-  background:#0B0B0B;color:#fff;
-  font-weight:500;letter-spacing:.02em;
-}
-.lp-rebrand .lp-submit::after{content:" \2192";color:#DB1A1A;font-weight:500}
-.lp-rebrand .lp-submit:hover,
-.lp-rebrand .lp-submit:focus-visible{background:#DB1A1A;color:#fff}
-.lp-rebrand .lp-submit:hover::after,
-.lp-rebrand .lp-submit:focus-visible::after{color:#fff}
-.lp-rebrand #quote-form .is-on{border-color:#DB1A1A;background:#FFF6F6}
-.lp-rebrand #quote-form .h-full{background:#DB1A1A}
+.lp-form-band .form-card{width:100%;max-width:none}
 
 .lp-why{padding-bottom:72px}
 .lp-why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}
@@ -187,7 +160,6 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
   .lp-hero,.lp-form-band,.lp-why{padding-left:20px;padding-right:20px}
   .lp-hero,.lp-form-band,.lp-why-grid{grid-template-columns:1fr}
   .lp-copy h1{font-size:40px}
-  .lp-rebrand #quote-form{padding:22px;border-radius:24px}
 }
 @media (max-width:390px){
   .lp-actions{flex-direction:column}
