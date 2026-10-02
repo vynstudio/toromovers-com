@@ -6,6 +6,7 @@ export const dynamic = "force-static";
 
 const page = quotePage;
 const QUOTES_PHONE = "321-234-0510";
+const PHONE_PLACEHOLDER = "(407) 555-0123";
 
 export const metadata: Metadata = {
   title: page.metadata.title,
@@ -71,7 +72,7 @@ export default function QuotesPage() {
           <p className="aeo-answer">{page.hero.lede}</p>
         </div>
         <div className="form-card quotes-card">
-          <AdsShortForm phoneDisplay={QUOTES_PHONE} phoneLines={QUOTES_PHONE} />
+          <AdsShortForm phoneDisplay={PHONE_PLACEHOLDER} phoneLines={QUOTES_PHONE} />
         </div>
       </section>
     </main>

@@ -7,14 +7,35 @@
   color:var(--black,#0B0B0B);
   font-family:"Space Grotesk","Space Grotesk Fallback",system-ui,sans-serif;
 }
+/* globals.css sets .nav-links { display:flex } at every width. The homepage
+   hides those links under 1100px. Repeat that here with higher specificity. */
+@media (max-width:1100px){
+  header.nav.nav-c .nav-links{display:none !important}
+}
+header.nav.nav-c .logo-img{flex:0 0 auto}
+header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
+@media (max-width:640px){
+  header.nav.nav-c .logo-img img{height:38px}
+}
+@media (max-width:760px){
+  header.nav.nav-c .nav-phone span{display:none !important}
+  header.nav.nav-c .nav-phone{
+    display:inline-flex;width:44px;height:44px;flex:0 0 44px;
+    border-radius:4px;justify-content:center;align-items:center
+  }
+  header.nav.nav-c .nav-cta{flex:0 0 auto}
+  header.nav.nav-c .nav-cta .btn{display:none !important}
+  header.nav.nav-c .nav-burger{display:inline-flex}
+}
+
 .quotes-hero{
   display:grid;
   grid-template-columns:1.05fr .95fr;
   gap:48px;
-  align-items:center;
+  align-items:start;
   max-width:1120px;
   margin:0 auto;
-  padding:48px 32px 88px;
+  padding:36px 32px 88px;
 }
 .quotes-copy h1{
   margin:0;
@@ -34,6 +55,15 @@
   width:100%;
   max-width:480px;
   justify-self:end;
+  align-self:start;
+  background:#fff;
+  color:#0B0B0B;
+  border-radius:28px;
+  padding:30px;
+  box-shadow:0 40px 80px -30px rgba(11,11,11,.35),0 0 0 1px rgba(11,11,11,.05);
+}
+@media (max-width:760px){
+  .quotes-rebrand .quotes-card{padding:22px;border-radius:24px}
 }
 .quotes-rebrand .gmp-form{margin:0;padding:0}
 .quotes-rebrand .gmp-form h2{
@@ -71,6 +101,7 @@
   background:#fff;
   font-weight:600;
   font-size:14px;
+  color:#0B0B0B;
 }
 .quotes-rebrand .gmp-when button.is-on{
   border-color:var(--color-accent,#DB1A1A);

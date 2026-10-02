@@ -34,21 +34,21 @@ export const quotePage = {
   path: QUOTE_PATH,
   metadata: {
     title: {
-      absolute: `Moving quote in Orlando — ${HOURLY_RATE_PHRASE} | Toro Movers`,
+      absolute: `Moving quote in Orlando: ${HOURLY_RATE_PHRASE} | Toro Movers`,
     },
     description:
       "Quotes for local, long-distance, and interstate moves. Local moves are $95 per mover per hour, with a 2-hour minimum and no fuel or stair fees. Call " + PHONE_DISPLAY + ".",
-    ogTitle: `Moving quote in Orlando — ${HOURLY_RATE_PHRASE} | Toro Movers`,
+    ogTitle: `Moving quote in Orlando: ${HOURLY_RATE_PHRASE} | Toro Movers`,
     ogDescription: `Up-front moving quote for local, long-distance, and interstate. ${LOCAL_HOURLY_RATE_SENTENCE}`,
     ogImage: "/og/get-my-price.jpg",
-    ogImageAlt: "Toro Movers — get a free local moving quote in Orlando",
+    ogImageAlt: "Toro Movers: get a free local moving quote in Orlando",
   },
   breadcrumb: [
     { name: "Home", href: "/" },
     { name: "Free moving quote", href: QUOTE_PATH },
   ] as const,
   hero: {
-    h1: `Moving quote in Orlando — ${HOURLY_RATE_PHRASE}.`,
+    h1: `Moving quote in Orlando: ${HOURLY_RATE_PHRASE}.`,
     lede: QUOTE_AEO_ANSWER,
   },
   form: {
