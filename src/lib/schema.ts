@@ -1,7 +1,6 @@
 import {
   BUSINESS_NAME,
   EMAIL,
-  GOOGLE_MAPS_REVIEWS_URL,
   GOOGLE_RATING,
   PHONE_E164,
   PHONE_SECONDARY_E164,
@@ -91,10 +90,7 @@ export function organizationGraph(options?: {
             bestRating: "5",
           },
         })),
-        sameAs: [
-          ...SOCIAL_PROFILES,
-          GOOGLE_MAPS_REVIEWS_URL,
-        ].filter(Boolean),
+        sameAs: [...SOCIAL_PROFILES],
         openingHoursSpecification: [
           {
             "@type": "OpeningHoursSpecification",

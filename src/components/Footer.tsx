@@ -8,44 +8,31 @@ import {
   HOURS_LABEL,
   SERVICE_BASE_CITY,
   SERVICE_REGION,
-  SOCIAL,
+  SOCIAL_FOOTER_LINKS,
 } from "@/lib/site";
-import { IconFacebook } from "@/components/icons";
-
-/** Hide placeholder social profiles until real handles ship. */
-function isLiveSocial(url: string) {
-  try {
-    const u = new URL(url);
-    const path = u.pathname.replace(/\/+$/, "");
-    return path.length > 0 && path !== "/";
-  } catch {
-    return false;
-  }
-}
+import { SOCIAL_ICON_PATHS } from "@/lib/social-icons";
 
 /**
  * Dark footer — brand bar + sitemap columns + NAP / legal.
  * Sitemap mirrors professional local-service IA (findability + crawl paths).
  */
 export function Footer() {
-  const socials = [
-    { href: SOCIAL.facebook, label: "Facebook", Icon: IconFacebook },
-  ].filter((s) => isLiveSocial(s.href));
-
   return (
     <footer className="full-bleed w-full bg-foreground px-[var(--container-pad)] pb-28 text-white md:pb-4">
       <div className="site-container border-t border-white/10">
         <div className="footer-bar" role="group" aria-label="Brand and social">
-          {socials.map(({ href, label, Icon }) => (
+          {SOCIAL_FOOTER_LINKS.map(({ href, label, id }) => (
             <a
-              key={label}
+              key={id}
               href={href}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
               aria-label={label}
               className="footer-social-link"
             >
-              <Icon />
+              <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+                <path fill="currentColor" d={SOCIAL_ICON_PATHS[id]} />
+              </svg>
             </a>
           ))}
 

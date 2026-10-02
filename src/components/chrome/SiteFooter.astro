@@ -1,5 +1,7 @@
 ---
 import Icon from "../home/Icon.astro";
+import { SOCIAL_ICON_PATHS } from "../../lib/social-icons.ts";
+import { SOCIAL_FOOTER_LINKS } from "../../lib/site.ts";
 import {
   HOME_PHONE_DISPLAY,
   HOME_PHONE_TEL,
@@ -72,6 +74,17 @@ const services = [
         <a href="https://toromovers.com/">toromovers.com</a>
         <a href={quoteHref} data-track="quote">Get a quote</a>
       </div>
+    </div>
+    <div class="ft-social">
+      {
+        SOCIAL_FOOTER_LINKS.map((item) => (
+          <a href={item.href} target="_blank" rel="noopener" aria-label={item.label}>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false">
+              <path fill="currentColor" d={SOCIAL_ICON_PATHS[item.id]} />
+            </svg>
+          </a>
+        ))
+      }
     </div>
     <div class="ft-bottom">
       <span>© 2026 Toro Movers</span>
