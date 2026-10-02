@@ -2423,17 +2423,17 @@ a.trust-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  color: rgba(255, 255, 255, 0.75);
+  width: 44px;
+  height: 44px;
+  color: inherit;
   border-radius: 999px;
-  transition: color 0.15s ease, background 0.15s ease;
+  transition: color 0.15s ease;
 }
 
 .footer-social-link:hover,
 .footer-social-link:focus-visible {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
+  color: #db1a1a;
+  background: transparent;
 }
 
 /* Optical gap between last social and lockup */

@@ -78,11 +78,29 @@ export const SERVICE_BASE_COUNTRY = "US";
  * match the hidden-address listing.
  */
 
-export const SOCIAL = {
+/** Public profiles for the footer icons and Organization sameAs. */
+export const SOCIAL_LINKS = {
+  instagram: "https://www.instagram.com/toromovers/",
   facebook: "https://www.facebook.com/722514634274519",
+  google: "https://maps.app.goo.gl/4VLksGpLoVTYXv3k7",
 } as const;
 
+export const SOCIAL = {
+  facebook: SOCIAL_LINKS.facebook,
+} as const;
+
+/** Footer order: Instagram, Facebook, Google. */
+export const SOCIAL_FOOTER_LINKS = (
+  [
+    ["instagram", "Toro Movers on Instagram"],
+    ["facebook", "Toro Movers on Facebook"],
+    ["google", "Toro Movers on Google"],
+  ] as const
+).map(([id, label]) => ({ id, label, href: SOCIAL_LINKS[id] }));
+
+/** Organization sameAs: Facebook, Instagram, then the short Google Maps link. */
 export const SOCIAL_PROFILES = [
-  "https://www.facebook.com/722514634274519",
-  "https://www.google.com/maps/place/Toro+Movers/@27.5242113,-82.9347487,8z/data=!4m10!1m2!2m1!1storo+movers!3m6!1s0xaab4eea8998e0b43:0xef948707b4ba0a80!8m2!3d28.5187116!4d-81.5872639!15sCgt0b3JvIG1vdmVyc1oNIgt0b3JvIG1vdmVyc5IBDm1vdmluZ19jb21wYW554AEA!16s%2Fg%2F11xmqc_lk7",
+  SOCIAL_LINKS.facebook,
+  SOCIAL_LINKS.instagram,
+  SOCIAL_LINKS.google,
 ];
