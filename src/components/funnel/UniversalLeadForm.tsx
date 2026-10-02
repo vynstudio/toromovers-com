@@ -1,7 +1,6 @@
 "use client";
 
 import { AddressAutocomplete } from "@/components/address-autocomplete";
-import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { trackFunnelEvent } from "@/lib/analytics";
@@ -13,7 +12,6 @@ import {
 import {
   FUNNEL_BILINGUAL,
   FUNNEL_CTA,
-  FUNNEL_LOCAL_NOTE,
   FUNNEL_SLA,
 } from "@/lib/funnel-offer";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
@@ -23,92 +21,74 @@ import {
   stopFields,
   type SelectedPlace,
 } from "@/lib/selected-place";
-import { PHONE_DISPLAY, PHONE_LINES } from "@/lib/site";
 
 export type { ServiceType };
 
 const primaryBtn =
-  "rounded-xl bg-[#E20613] px-5 py-3 font-bold text-white transition hover:bg-[#B80510] disabled:cursor-not-allowed disabled:opacity-40";
-const selectedCard =
-  "border-[#E20613] bg-[#FCE6E8]";
-const idleCard = "border-zinc-200 bg-white hover:border-[#E20613] hover:bg-[#FCE6E8]/40";
+  "lp-submit px-5 py-3 font-bold disabled:cursor-not-allowed disabled:opacity-40";
+const selectedCard = "is-on border-[#DB1A1A] bg-[#FFF6F6]";
+const idleCard =
+  "border-[#F0DEDE] bg-white hover:border-[#DB1A1A] hover:bg-[#FFF6F6]";
 
 const services: Array<{
   value: ServiceType;
+  /** Sent as service_label. Do not change. */
   title: string;
+  /** Visible name. Falls back to title. */
+  display?: string;
   description: string;
-  image: string;
-  alt: string;
 }> = [
   {
     value: "house_2plus_move",
     title: "House — 2+ rooms",
+    display: "House, 2+ rooms",
     description: "Full-service house move, 2 rooms or more",
-    image: "/images/services/full-service-move.webp",
-    alt: "Two movers loading a sofa into a moving truck",
   },
   {
     value: "apartment_2plus_move",
     title: "Apartment — 2+ rooms",
+    display: "Apartment, 2+ rooms",
     description: "Apt or condo move, 2 rooms or more",
-    image: "/images/services/apartment-move.webp",
-    alt: "Movers carrying a sofa toward an apartment building",
   },
   {
     value: "long_distance_move",
     title: "Long-distance / interstate",
     description: "Out of area and out of state",
-    image: "/images/services/long-distance.webp",
-    alt: "Moving truck on a route between two map pins",
   },
   {
     value: "full_service_move",
     title: "Full-Service Move",
-    description: "Truck + professional movers included",
-    image: "/images/services/full-service-move.webp",
-    alt: "Two movers loading a sofa into a moving truck",
+    description: "Crew for the whole move, from load to unload",
   },
   {
     value: "labor_only",
     title: "Labor Only",
     description: "Loading, unloading, or moving help",
-    image: "/images/services/labor-only.webp",
-    alt: "Mover stacking boxes in a truck while another pushes a hand truck",
   },
   {
     value: "same_building_move",
     title: "Same-Building Move",
     description: "Moving within one building or complex",
-    image: "/images/services/same-building-move.webp",
-    alt: "Two movers carrying a dresser toward an elevator",
   },
   {
     value: "special_item_move",
     title: "Special Item Move",
     description: "Piano, safe, appliance, or heavy furniture",
-    image: "/images/services/special-item-move.webp",
-    alt: "Two movers rolling a strapped piano on a dolly",
   },
   {
     value: "pod_storage_container",
     title: "POD / Storage Container",
     description: "Load or unload a POD or container",
-    image: "/images/services/pod-storage-container.webp",
-    alt: "Mover loading boxes into a portable storage container",
   },
   {
     value: "rental_truck_labor",
     title: "U-Haul / Rental Truck",
-    description: "You provide the truck; we provide the movers",
-    image: "/images/services/rental-truck-move.webp",
-    alt: "Two movers loading a dresser into a rental truck",
+    description: "You provide the truck. We provide the movers.",
   },
   {
     value: "single_item_move",
     title: "Single-Item Move",
     description: "One item, furniture pickup, or a small move",
-    image: "/images/services/single-item-move.webp",
-    alt: "One mover carrying a couch from a house to the curb",
   },
 ];
 
@@ -160,6 +140,10 @@ const choices: Record<ServiceType, string[]> = {
     "Other",
   ],
 };
+
+function serviceName(item: { title: string; display?: string }) {
+  return item.display || item.title;
+}
 
 function isServiceType(value: string | undefined): value is ServiceType {
   return Boolean(value && services.some((item) => item.value === value));
@@ -332,7 +316,7 @@ export default function UniversalLeadForm({
       window.location.assign("/thank-you");
     } catch {
       setError(
-        `We could not submit your request. Please call ${PHONE_LINES} and our team will help right away.`,
+        "We could not submit your request. Please call 321-234-0510 and our team will help right away.",
       );
       setSubmitting(false);
     }
@@ -342,7 +326,7 @@ export default function UniversalLeadForm({
   const stepTitle =
     step === 1
       ? selectedService
-        ? `Your move: ${selectedService.title}`
+        ? `Your move: ${serviceName(selectedService)}`
         : "What kind of moving help do you need?"
       : step === 2
         ? "Tell us about the move"
@@ -387,17 +371,8 @@ export default function UniversalLeadForm({
                   service === item.value ? selectedCard : idleCard
                 }`}
               >
-                <span className="relative h-16 w-16 shrink-0 overflow-hidden rounded-xl bg-zinc-100 sm:h-[4.5rem] sm:w-[4.5rem]">
-                  <Image
-                    src={item.image}
-                    alt={item.alt}
-                    fill
-                    sizes="72px"
-                    className="object-contain"
-                  />
-                </span>
                 <span>
-                  <span className="block font-extrabold">{item.title}</span>
+                  <span className="block font-extrabold">{serviceName(item)}</span>
                   <span className="mt-0.5 block text-sm text-zinc-600">
                     {item.description}
                   </span>
@@ -411,7 +386,7 @@ export default function UniversalLeadForm({
               onClick={() => completeStep(2, "service_selected")}
               className={`mt-5 w-full ${primaryBtn}`}
             >
-              Continue with {selectedService?.title}
+              Continue with {selectedService ? serviceName(selectedService) : ""}
             </button>
           )}
         </div>
@@ -456,7 +431,10 @@ export default function UniversalLeadForm({
       )}
       {step === 3 && (
         <div className="space-y-4">
-          <p className="text-sm text-zinc-600">{FUNNEL_LOCAL_NOTE}</p>
+          <p className="text-sm text-zinc-600">
+            Local Central Florida, long-distance, and interstate. Request a
+            quote for the job you have.
+          </p>
           <label className="block text-sm font-bold">
             When are you moving?
             <input
@@ -577,7 +555,7 @@ export default function UniversalLeadForm({
               value={phone}
               onChange={(event) => setPhone(formatUsPhone(event.target.value))}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder={PHONE_DISPLAY}
+              placeholder="(407) 555-0123"
               autoComplete="tel"
             />
           </label>

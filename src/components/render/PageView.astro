@@ -15,6 +15,7 @@ import checklistCss from "../../app/move-day-checklist/checklist.css?url";
 import payCss from "../../app/pay/pay.css?url";
 import quotesCss from "../../styles/quotes-rebrand.css?url";
 import contactCss from "../../styles/contact-rebrand.css?url";
+import lpLocalCss from "../../styles/lp-local-rebrand.css?url";
 import { PHONE_E164, PHONE_TEL } from "../../lib/site.ts";
 
 interface Props {
@@ -88,6 +89,8 @@ inner = inner.replace(/<link\b[^>]*rel="preload"[^>]*>/gi, "").trim();
 const pageKey = spec?.key || "";
 const isQuotes = spec?.path === "quotes";
 const isContact = spec?.path === "contact";
+const isLpLocal = spec?.path === "lp/local-movers";
+const isRebrandChrome = isQuotes || isContact || isLpLocal;
 const LOCAL_PHONE = "321-234-0510";
 ---
 
@@ -96,7 +99,7 @@ const LOCAL_PHONE = "321-234-0510";
   tags={head.tags}
   preloads={preloads}
   deferTrackers={!hydrate}
-  businessTelephone={isQuotes || isContact ? PHONE_E164 : undefined}
+  businessTelephone={isRebrandChrome ? PHONE_E164 : undefined}
   extraCss={
     spec?.path === "move-day-checklist"
       ? [checklistCss]
@@ -106,11 +109,13 @@ const LOCAL_PHONE = "321-234-0510";
           ? [quotesCss]
           : isContact
             ? [contactCss]
-            : []
+            : isLpLocal
+              ? [lpLocalCss]
+              : []
   }
 >
   {
-    isQuotes || isContact ? (
+    isRebrandChrome ? (
       <SiteNav
         phoneDisplay={LOCAL_PHONE}
         phoneTel={PHONE_TEL}
@@ -120,7 +125,7 @@ const LOCAL_PHONE = "321-234-0510";
     ) : null
   }
   <div id="app" class="contents" set:html={inner} />
-  {isQuotes || isContact ? (
+  {isRebrandChrome ? (
     <SiteFooter
       phoneDisplay={LOCAL_PHONE}
       phoneTel={PHONE_TEL}
