@@ -91,6 +91,13 @@ export const packingServicesPage: ServiceGuide = {
   },
   sections: [
     {
+      h2: "Who packing services are for",
+      paragraphs: [
+        "Book packing when the carry is already the plan and some rooms are still open. A common Central Florida fit is a house where the bedrooms are boxed and the kitchen, closets, or garage are not. Another fit is a condo with a short elevator reservation: pack the fragile rooms before that slot, and keep the reservation for the carry. A third fit is a labor-only day. You already have the truck, and you want the same crew to close the cartons before they load it.",
+        "Skip a packing booking when every carton is already taped, labeled, and stacked. That day is a move. Use full-service moving if the crew should also bring the truck. Use labor-only moving if the truck is already yours. Skip packing when the only piece is a sofa, a mattress, or one planned furniture delivery. Those hours would sit on a clock you do not need. If you are unsure which rooms are still open, say so on the quote and send photos of those rooms.",
+      ],
+    },
+    {
       h2: "What packing services cover",
       paragraphs: [
         "Packing services in Orlando are the boxes the crew closes, not a separate product from the move. A partial pack is the slice you name: the kitchen, the closets, or fragile pieces, after the rest of the home is already in cartons. A full pack is the crew boxing household goods that are still loose, then moving them. Self-pack means your cartons are already closed, taped, and labeled when the truck arrives. Furniture pads and wrap are part of the move on all three. The difference is whose time closes the cartons.",
@@ -125,6 +132,13 @@ export const packingServicesPage: ServiceGuide = {
         "If the drop-off leaves Central Florida, that job is a trip quote rather than this local hourly pack. Say so when you call so we do not plan a same-metro crew for a longer route. For local work, hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
       ],
     },
+    {
+      h2: "How packing connects to the rest of the move",
+      paragraphs: [
+        "Once the rooms are named, the rest of the booking is which truck shows up. If Toro should bring it, the quote is a full-service move with packing hours on the front of the day. If you already reserved a U-Haul, POD, or rental truck, the quote is labor-only and the packing happens before that vehicle is loaded. When the constraint is a building window rather than the cartons, the apartment movers page is the one to read before you lock the reservation.",
+        "A lift that is only a few pieces already on a truck belongs on loading and unloading help, not on a packing clock. A single sofa or a planned furniture delivery belongs on small moves. The services page is the full list if none of those is quite the job. The blog guide compares self-pack, a named slice, and a full pack so you can choose before you hire. This page is the booking once you know which rooms the crew should close.",
+      ],
+    },
   ],
   areas: {
     h2: "Packing services across Central Florida",
@@ -152,6 +166,10 @@ export const packingServicesPage: ServiceGuide = {
     {
       q: "How do I book packing services in Orlando?",
       a: "Call or text 321-234-0510, or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
+    },
+    {
+      q: "Do I need to buy boxes before the crew arrives?",
+      a: "Bring sturdy cartons you already have. Crushed store boxes slow the pack and fail on a stair carry. If you want the crew to supply cartons, paper, and tape, say that when you request the quote so the start of the day includes stocking the rooms you named. Wardrobe cartons and dish packs take time to stage, and that time is on the same hourly clock as the wrapping. Point out anything that should stay unpacked, including documents, medication, and a bag you will carry yourself.",
     },
   ],
   closing: {

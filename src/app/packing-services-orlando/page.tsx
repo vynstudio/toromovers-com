@@ -15,6 +15,9 @@ const heroPhoto = assetSrc(happyFamily);
 const related = [
   { label: "full-service moving", href: "/full-service-moving" },
   { label: "labor-only moving", href: "/labor-only-moving" },
+  { label: "apartment movers", href: "/apartment-movers-orlando-fl" },
+  { label: "loading and unloading", href: "/loading-unloading" },
+  { label: "small moves", href: "/small-moves-orlando" },
   { label: "all services", href: "/services" },
 ];
 

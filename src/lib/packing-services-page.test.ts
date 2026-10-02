@@ -13,6 +13,7 @@ const QUESTIONS = [
   "Can packing be added to labor-only or full-service?",
   "Will on-site packing use my elevator window?",
   "How do I book packing services in Orlando?",
+  "Do I need to buy boxes before the crew arrives?",
 ];
 
 function strings(value: unknown, out: string[] = []): string[] {
@@ -60,7 +61,7 @@ test("packing page keeps its URL, H1, links, and price-free chrome copy", () => 
   assert.ok(packingServicesPage.metadata.description.length >= 120);
   assert.ok(packingServicesPage.metadata.description.length <= 160);
   const words = serviceGuideWordCount(packingServicesPage);
-  assert.ok(words >= 800 && words <= 1210, String(words));
+  assert.ok(words >= 1000, String(words));
   assert.deepEqual(
     packingServicesPage.faqs.map((item) => item.q),
     QUESTIONS,
@@ -93,7 +94,14 @@ test("packing page shell uses the homepage wizard and family photos", () => {
   assert.equal(page.includes("/images/moves/"), false);
   assert.equal(page.includes("689"), false);
   assert.equal(page.includes("\u2014"), false);
-  for (const href of ["/full-service-moving", "/labor-only-moving", "/services"]) {
+  for (const href of [
+    "/full-service-moving",
+    "/labor-only-moving",
+    "/apartment-movers-orlando-fl",
+    "/loading-unloading",
+    "/small-moves-orlando",
+    "/services",
+  ]) {
     assert.match(page, new RegExp(href.replace(/\//g, "\\/")));
   }
   assert.match(page, /blogHref/);
