@@ -1,0 +1,133 @@
+/* Homepage type and button style B, loaded only with /thank-you. */
+@import "./preview-home.css";
+
+.thanks-rebrand {
+  font-family: "Space Grotesk", "Space Grotesk Fallback", system-ui, sans-serif;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #fff6f6;
+  color: #0b0b0b;
+  padding: 32px 16px 48px;
+  /* globals.css sets --gray to #6b6b6b on :root. */
+  --gray: #fff6f6;
+  --gray2: #f0dede;
+  --black: #0b0b0b;
+  --muted: #5c656c;
+  --color-accent: #db1a1a;
+}
+
+.thanks-card {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  border: 1px solid rgba(11, 11, 11, 0.12);
+  border-radius: 18px;
+  padding: 32px 28px 36px;
+  text-align: center;
+}
+
+.thanks-logo {
+  height: 46px;
+  width: auto;
+  margin: 0 auto;
+}
+
+.thanks-photo {
+  margin: 24px 0 0;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.thanks-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+}
+
+.thanks-card h1 {
+  margin: 22px 0 0;
+  font-size: clamp(32px, 5vw, 44px);
+  line-height: 0.98;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+.thanks-sla,
+.thanks-help {
+  margin: 14px auto 0;
+  max-width: 40ch;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--muted, #5c656c);
+}
+
+.thanks-help {
+  margin-top: 8px;
+  font-size: 15px;
+}
+
+.thanks-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.thanks-rebrand a.btn.btn-red[data-cta="thanks-call"] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 320px;
+  height: 54px;
+  padding: 0 30px;
+  background: #0b0b0b;
+  color: #fff;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.thanks-rebrand a.btn.btn-red[data-cta="thanks-call"] > span {
+  border-bottom: 0;
+  padding: 0;
+}
+
+.thanks-rebrand a.btn.btn-red[data-cta="thanks-call"] > span::after {
+  content: " \2192";
+  color: #db1a1a;
+}
+
+.thanks-rebrand a.btn.btn-red[data-cta="thanks-call"]:hover,
+.thanks-rebrand a.btn.btn-red[data-cta="thanks-call"]:focus-visible {
+  background: #db1a1a;
+  color: #fff;
+}
+
+.thanks-rebrand a.btn.btn-red[data-cta="thanks-call"]:hover > span::after,
+.thanks-rebrand a.btn.btn-red[data-cta="thanks-call"]:focus-visible > span::after {
+  color: #fff;
+}
+
+.thanks-back {
+  color: #0b0b0b;
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: underline;
+  text-decoration-color: #db1a1a;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .thanks-logo {
+    height: 38px;
+  }
+
+  .thanks-card {
+    padding: 28px 18px 32px;
+  }
+}

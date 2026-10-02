@@ -1,11 +1,21 @@
 import type { Metadata } from "next";
-import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
-import Link from "next/link";
-import { ToroLockup } from "@/components/funnel/ToroLockup";
-import { FUNNEL_SLA } from "@/lib/funnel-offer";
+import {
+  THANKS_BACK,
+  THANKS_DESCRIPTION,
+  THANKS_H1,
+  THANKS_HELP,
+  THANKS_OG_TITLE,
+  THANKS_PATH,
+  THANKS_PHONE,
+  THANKS_PHONE_TEL,
+  THANKS_SLA,
+  THANKS_TITLE,
+} from "@/lib/thank-you-page";
+import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Quote request received",
+  title: THANKS_TITLE,
+  description: THANKS_DESCRIPTION,
   robots: {
     index: false,
     follow: false,
@@ -16,41 +26,54 @@ export const metadata: Metadata = {
       noimageindex: true,
     },
   },
-  alternates: { canonical: "/thank-you" },
+  alternates: { canonical: THANKS_PATH },
+  openGraph: {
+    title: THANKS_OG_TITLE,
+    description: THANKS_DESCRIPTION,
+    url: `${SITE_URL}${THANKS_PATH}`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: THANKS_OG_TITLE,
+    description: THANKS_DESCRIPTION,
+  },
 };
 
+/**
+ * Post-quote confirmation. No site nav and no footer: the page is a single
+ * card. Lead and generate_lead fire on the form before this redirect.
+ */
 export default function ThankYouPage() {
   return (
-    <main className="gmp-page grid min-h-screen place-items-center bg-white px-4 text-[#0A0A0A] sm:px-5">
-      <section className="@container w-full min-w-0 max-w-xl rounded-3xl bg-white p-5 text-center shadow-2xl ring-1 ring-black/5 sm:p-12">
-        <div className="flex w-full min-w-0 justify-center">
-          <ToroLockup href={null} />
-        </div>
-        <div
-          className="mx-auto mt-6 grid h-16 w-16 place-items-center rounded-full bg-[#E20613] text-3xl text-white"
-          aria-hidden
-        >
-          ✓
-        </div>
-        <h1 className="mt-6 text-3xl font-black tracking-tight sm:text-4xl">
-          We received your quote request.
-        </h1>
-        <p className="mt-5 leading-7 text-zinc-600">{FUNNEL_SLA}.</p>
-        <p className="mt-2 text-sm font-medium text-zinc-500">
-          If you need help now, call us directly.
-        </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <CompanyPhoneLinks
-            cta="thanks-call"
-            prefix="Call "
-            linkClassName="rounded-xl bg-[#E20613] px-6 py-4 font-extrabold text-white transition hover:bg-[#B80510]"
+    <main className="thanks-rebrand">
+      <section className="thanks-card" aria-labelledby="thanks-heading">
+        <img
+          className="thanks-logo"
+          src="/logos/toro-lockup-navy.svg"
+          alt="Toro Movers"
+          width={184}
+          height={46}
+        />
+        <figure className="thanks-photo">
+          <img
+            src="/images/pay-confirm-family.webp"
+            srcSet="/images/pay-confirm-family-640.webp 640w, /images/pay-confirm-family.webp 1200w"
+            sizes="(max-width: 760px) calc(100vw - 64px), 440px"
+            width={1200}
+            height={1666}
+            alt="A smiling boy runs down the hallway of his family's new home past moving boxes as his sister and parents follow behind"
           />
-          <Link
-            href="/"
-            className="rounded-xl border border-zinc-300 px-6 py-4 font-extrabold"
-          >
-            Back to Toro Movers
-          </Link>
+        </figure>
+        <h1 id="thanks-heading">{THANKS_H1}</h1>
+        <p className="thanks-sla">{THANKS_SLA}</p>
+        <p className="thanks-help">{THANKS_HELP}</p>
+        <div className="thanks-actions">
+          <a className="btn btn-red" href={THANKS_PHONE_TEL} data-cta="thanks-call">
+            <span>Call {THANKS_PHONE}</span>
+          </a>
+          <a className="thanks-back" href="/">
+            {THANKS_BACK}
+          </a>
         </div>
       </section>
     </main>
