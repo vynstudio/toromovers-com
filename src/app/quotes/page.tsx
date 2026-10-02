@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AdsShortForm from "@/components/funnel/AdsShortForm";
+import QuoteWizard from "@/components/home/QuoteWizard";
 import QuotesFaq from "@/components/funnel/QuotesFaq";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
 
@@ -7,7 +7,7 @@ export const dynamic = "force-static";
 
 const page = quotePage;
 const QUOTES_PHONE = "321-234-0510";
-const PHONE_PLACEHOLDER = "(407) 555-0123";
+const QUOTES_PHONE_TEL = "tel:+13212340510";
 
 export const metadata: Metadata = {
   title: page.metadata.title,
@@ -63,9 +63,12 @@ export default function QuotesPage() {
           <h1>{page.hero.h1}</h1>
           <p className="aeo-answer">{page.hero.lede}</p>
         </div>
-        <div className="form-card quotes-card">
-          <AdsShortForm phoneDisplay={PHONE_PLACEHOLDER} phoneLines={QUOTES_PHONE} />
-        </div>
+        <QuoteWizard
+          source="quotes_page"
+          phoneDisplay={QUOTES_PHONE}
+          phoneTel={QUOTES_PHONE_TEL}
+          formId="quote-form"
+        />
       </section>
       <QuotesFaq />
     </main>

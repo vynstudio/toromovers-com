@@ -4,8 +4,13 @@
 /* /quotes uses the homepage chrome. These rules only load on that page. */
 .quotes-rebrand{
   background:#fff;
-  color:var(--black,#0B0B0B);
+  color:#0B0B0B;
   font-family:"Space Grotesk","Space Grotesk Fallback",system-ui,sans-serif;
+  /* globals.css sets --gray to #6b6b6b on :root. */
+  --gray:#FFF6F6;
+  --gray2:#F0DEDE;
+  --black:#0B0B0B;
+  --muted:#5C656C;
 }
 /* globals.css sets .nav-links { display:flex } at every width. The homepage
    hides those links under 1100px. Repeat that here with higher specificity. */
@@ -51,19 +56,10 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
   line-height:1.5;
   color:var(--muted,#5C656C);
 }
-.quotes-rebrand .quotes-card{
+.quotes-rebrand #quote-form{
   width:100%;
   max-width:480px;
   justify-self:end;
-  align-self:start;
-  background:#fff;
-  color:#0B0B0B;
-  border-radius:28px;
-  padding:30px;
-  box-shadow:0 40px 80px -30px rgba(11,11,11,.35),0 0 0 1px rgba(11,11,11,.05);
-}
-@media (max-width:760px){
-  .quotes-rebrand .quotes-card{padding:22px;border-radius:24px}
 }
 .quotes-rebrand .gmp-form{margin:0;padding:0}
 .quotes-rebrand .gmp-form h2{
@@ -154,7 +150,7 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
 .quotes-rebrand.gmp-page{min-height:0}
 @media (max-width:900px){
   .quotes-hero{grid-template-columns:1fr;gap:28px;padding:28px 20px 64px}
-  .quotes-rebrand .quotes-card{justify-self:stretch;max-width:none}
+  .quotes-rebrand #quote-form{justify-self:stretch;max-width:none}
   .quotes-copy h1{font-size:40px}
 }
 @media (max-width:390px){

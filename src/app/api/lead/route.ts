@@ -177,6 +177,8 @@ export async function POST(req: Request) {
   const eventId = str(attr?.event_id) || str(body.eventId);
   const capiContent: Record<string, string> = {
     homepage_quote: "homepage_quote",
+    quotes_page: "quotes_page",
+    contact_page: "contact_page",
     ads_short_form: "ads_short_callback",
     local_movers_ads_landing: "local_movers_ads_landing",
     "contact-page": "contact-page",
