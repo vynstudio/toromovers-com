@@ -179,6 +179,7 @@ export async function POST(req: Request) {
     homepage_quote: "homepage_quote",
     quotes_page: "quotes_page",
     contact_page: "contact_page",
+    services_page: "services_page",
     ads_short_form: "ads_short_callback",
     local_movers_ads_landing: "local_movers_ads_landing",
     "contact-page": "contact-page",
