@@ -19,6 +19,7 @@ import quotesCss from "../../styles/quotes-rebrand.css?url";
 import contactCss from "../../styles/contact-rebrand.css?url";
 import lpLocalCss from "../../styles/lp-local-rebrand.css?url";
 import thanksCss from "../../styles/thank-you-rebrand.css?url";
+import servicesCss from "../../styles/services-rebrand.css?url";
 import { PHONE_E164, PHONE_TEL, SITE_URL } from "../../lib/site.ts";
 
 interface Props {
@@ -94,7 +95,8 @@ const isQuotes = spec?.path === "quotes";
 const isContact = spec?.path === "contact";
 const isLpLocal = spec?.path === "lp/local-movers";
 const isThankYou = spec?.path === "thank-you";
-const isRebrandChrome = isQuotes || isContact;
+const isServices = spec?.path === "services";
+const isRebrandChrome = isQuotes || isContact || isServices;
 const LOCAL_PHONE = "321-234-0510";
 ---
 
@@ -104,8 +106,10 @@ const LOCAL_PHONE = "321-234-0510";
   preloads={preloads}
   deferTrackers={!hydrate}
   businessTelephone={isRebrandChrome || isLpLocal || isThankYou ? PHONE_E164 : undefined}
-  businessImage={isThankYou ? `${SITE_URL}/images/pay-confirm-family.webp` : undefined}
-  omitPriceRange={isThankYou}
+  businessImage={
+    isThankYou || isServices ? `${SITE_URL}/images/pay-confirm-family.webp` : undefined
+  }
+  omitPriceRange={isThankYou || isServices}
   extraCss={
     spec?.path === "move-day-checklist"
       ? [checklistCss]
@@ -119,7 +123,9 @@ const LOCAL_PHONE = "321-234-0510";
               ? [lpLocalCss]
               : isThankYou
                 ? [thanksCss]
-                : []
+                : isServices
+                  ? [servicesCss]
+                  : []
   }
 >
   {

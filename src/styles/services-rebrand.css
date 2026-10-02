@@ -1,0 +1,218 @@
+/* Homepage chrome, loaded only with /services. */
+@import "./preview-home.css";
+
+.services-rebrand,
+header.nav.nav-c,
+.footer {
+  font-family: "Space Grotesk", "Space Grotesk Fallback", system-ui, sans-serif;
+}
+.services-rebrand {
+  background: #fff;
+  color: #0b0b0b;
+  /* globals.css sets --gray to #6b6b6b on :root. */
+  --gray: #fff6f6;
+  --gray2: #f0dede;
+  --black: #0b0b0b;
+  --muted: #5c656c;
+}
+
+@media (max-width: 1100px) {
+  header.nav.nav-c .nav-links {
+    display: none !important;
+  }
+}
+header.nav.nav-c .logo-img {
+  flex: 0 0 auto;
+}
+header.nav.nav-c .logo-img img {
+  height: 46px;
+  width: auto;
+  max-width: none;
+}
+@media (max-width: 640px) {
+  header.nav.nav-c .logo-img img {
+    height: 38px;
+  }
+}
+@media (max-width: 760px) {
+  header.nav.nav-c .nav-phone span {
+    display: none !important;
+  }
+  header.nav.nav-c .nav-phone {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+  }
+  header.nav.nav-c .nav-cta {
+    flex: 0 0 auto;
+  }
+  header.nav.nav-c .nav-cta .btn {
+    display: none !important;
+  }
+  header.nav.nav-c .nav-burger {
+    display: inline-flex;
+  }
+}
+
+.svc-hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: start;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 36px 32px 28px;
+}
+.svc-copy h1 {
+  margin: 0;
+  max-width: 16ch;
+  font-size: clamp(40px, 4.6vw, 64px);
+  line-height: 0.96;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+.svc-copy .aeo-answer {
+  margin: 18px 0 0;
+  max-width: 520px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--muted, #5c656c);
+}
+.services-rebrand a.btn.btn-red[data-cta="services-hub-call"] {
+  display: inline-flex;
+  margin-top: 28px;
+  background: #0b0b0b;
+  color: #fff;
+  height: 54px;
+  padding: 0 30px;
+  border-radius: 4px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.services-rebrand a.btn.btn-red[data-cta="services-hub-call"] > span {
+  border-bottom: 0;
+  padding: 0;
+}
+.services-rebrand a.btn.btn-red[data-cta="services-hub-call"] > span::after {
+  content: " \2192";
+  color: #db1a1a;
+}
+.services-rebrand a.btn.btn-red[data-cta="services-hub-call"]:hover,
+.services-rebrand a.btn.btn-red[data-cta="services-hub-call"]:focus-visible {
+  background: #db1a1a;
+  color: #fff;
+}
+.services-rebrand a.btn.btn-red[data-cta="services-hub-call"]:hover > span::after,
+.services-rebrand a.btn.btn-red[data-cta="services-hub-call"]:focus-visible > span::after {
+  color: #fff;
+}
+.services-rebrand #quote-form {
+  width: 100%;
+  max-width: 480px;
+  justify-self: end;
+}
+
+.svc-list {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 12px 32px 72px;
+}
+.svc-list h2 {
+  margin: 36px 0 16px;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.svc-grid-more {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.svc-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff6f6;
+  border: 1px solid rgba(11, 11, 11, 0.12);
+  border-radius: 18px;
+  overflow: hidden;
+  color: #0b0b0b;
+}
+.svc-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.svc-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 18px 20px;
+}
+.svc-badge {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2c687b;
+}
+.svc-card-title {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+.svc-card-copy {
+  color: #5c656c;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.svc-card-link {
+  margin-top: 4px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.svc-card-link span {
+  color: #db1a1a;
+}
+.svc-foot {
+  margin: 28px 0 0;
+  max-width: 62ch;
+  color: #5c656c;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+  .svc-hero {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 28px 20px 8px;
+  }
+  .services-rebrand #quote-form {
+    justify-self: stretch;
+    max-width: none;
+  }
+  .svc-copy h1 {
+    font-size: 40px;
+  }
+  .svc-list {
+    padding: 8px 20px 56px;
+  }
+  .svc-grid,
+  .svc-grid-more {
+    grid-template-columns: 1fr;
+  }
+}
