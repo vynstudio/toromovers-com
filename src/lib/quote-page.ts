@@ -1,17 +1,12 @@
 /**
  * SEO/AEO copy for /quotes.
- * Visible page is a one-screen ads landing (H1 + one-line lede + form).
- * FAQPage JSON-LD is schema-only — no FAQ / HowTo / service-list UI.
- * Hero lede and JSON-LD description stay on QUOTE_AEO_ANSWER.
+ * The hourly rate appears only in the cost FAQ answer (and its FAQPage JSON-LD).
+ * Title, meta, H1, intro, and other schema stay price-free.
  * Do not claim licensed, insured, bonded, DOT, or name any partner carrier.
  */
 
 import { cityPlace } from "./business-profile.ts";
 import { FUNNEL_SLA } from "./funnel-offer.ts";
-import {
-  HOURLY_RATE_PHRASE,
-  LOCAL_HOURLY_RATE_SENTENCE,
-} from "./published-rate.ts";
 import {
   BUSINESS_NAME,
   EMAIL,
@@ -27,28 +22,46 @@ import {
 export const QUOTE_PAGE_PATH = QUOTE_PATH;
 export const QUOTE_PAGE_URL = `${SITE_URL}${QUOTE_PATH}`;
 
-/** Canonical AEO answer — visible lede and JSON-LD must stay in sync. */
-export const QUOTE_AEO_ANSWER = LOCAL_HOURLY_RATE_SENTENCE;
+/** Visible intro under the H1. No price. */
+export const QUOTE_AEO_ANSWER =
+  "Tell us about your move. A local mover calls you back fast.";
+
+/** The only published rate sentence on this page. Do not paraphrase. */
+export const QUOTE_RATE_ANSWER =
+  "Our rate is $95 per hour, per mover. We confirm your crew size when we quote. 2-hour minimum.";
+
+const QUOTE_DESCRIPTION =
+  "Get a moving quote in Orlando. Tell us about your move and a local mover calls you back fast. Local moves, plus long-distance and interstate. Call " +
+  PHONE_DISPLAY +
+  ".";
 
 export const quotePage = {
   path: QUOTE_PATH,
   metadata: {
     title: {
-      absolute: `Moving quote in Orlando: ${HOURLY_RATE_PHRASE} | Toro Movers`,
+      absolute: "Get your moving quote in Orlando | Toro Movers",
     },
-    description:
-      "Quotes for local, long-distance, and interstate moves. Local moves are $95 per mover per hour, with a 2-hour minimum and no fuel or stair fees. Call " + PHONE_DISPLAY + ".",
-    ogTitle: `Moving quote in Orlando: ${HOURLY_RATE_PHRASE} | Toro Movers`,
-    ogDescription: `Up-front moving quote for local, long-distance, and interstate. ${LOCAL_HOURLY_RATE_SENTENCE}`,
+    description: QUOTE_DESCRIPTION,
+    ogTitle: "Get your moving quote in Orlando | Toro Movers",
+    ogDescription: QUOTE_DESCRIPTION,
     ogImage: "/og/get-my-price.jpg",
     ogImageAlt: "Toro Movers: get a free local moving quote in Orlando",
+    keywords: [
+      "local moving quote Orlando",
+      "moving quote in Orlando",
+      "up-front hourly movers",
+      "bilingual movers Orlando",
+      "long-distance movers Orlando",
+      "interstate movers Florida",
+      "Central Florida moving quote",
+    ],
   },
   breadcrumb: [
     { name: "Home", href: "/" },
     { name: "Free moving quote", href: QUOTE_PATH },
   ] as const,
   hero: {
-    h1: `Moving quote in Orlando: ${HOURLY_RATE_PHRASE}.`,
+    h1: "Get your moving quote in Orlando.",
     lede: QUOTE_AEO_ANSWER,
   },
   form: {
@@ -57,20 +70,20 @@ export const quotePage = {
   },
   faqs: [
     {
-      q: "How much do local movers cost in Orlando?",
-      a: QUOTE_AEO_ANSWER,
-    },
-    {
-      q: "How do I get a free moving quote?",
-      a: `Submit your name and mobile, or call ${PHONE_DISPLAY}. Email is optional.`,
+      q: "How much does it cost?",
+      a: QUOTE_RATE_ANSWER,
     },
     {
       q: "How fast do you call back?",
       a: `${FUNNEL_SLA}. After hours, we call the next business morning.`,
     },
     {
-      q: "Do you quote long-distance and interstate moves?",
-      a: `Yes. ${LOCAL_HOURLY_RATE_SENTENCE} Long-distance and interstate are quoted from origin, destination, and inventory.`,
+      q: "Do you do same-day moves?",
+      a: "Yes, when a crew is open that day. Same-day moves depend on crew availability. There is no extra fee.",
+    },
+    {
+      q: "What areas do you serve?",
+      a: "Orlando and Central Florida, including Winter Park, Kissimmee, Lake Mary, and Oviedo. Long-distance and interstate moves are quoted from the origin and destination.",
     },
   ] as const,
   footer: {
@@ -91,8 +104,8 @@ export function quotePageGraph() {
         url: pageUrl,
         name: metadata.ogTitle,
         headline: quotePage.hero.h1,
-        description: QUOTE_AEO_ANSWER,
-        dateModified: "2026-09-17",
+        description: quotePage.hero.lede,
+        dateModified: "2026-10-02",
         isPartOf: { "@id": `${SITE_URL}/#website` },
         about: { "@id": `${pageUrl}#service` },
         primaryImageOfPage: {
@@ -122,7 +135,8 @@ export function quotePageGraph() {
         "@type": "DefinedTerm",
         "@id": `${pageUrl}#term-local-moving-quote`,
         name: "local moving quote",
-        description: QUOTE_AEO_ANSWER,
+        description:
+          "A quote for a local move in Orlando. Tell us about the job and a mover calls you back.",
         inDefinedTermSet: `${SITE_URL}/#movingcompany`,
       },
       {
@@ -139,20 +153,8 @@ export function quotePageGraph() {
           { "@type": "Country", name: "United States" },
         ],
         url: pageUrl,
-        description: QUOTE_AEO_ANSWER,
-        offers: {
-          "@type": "Offer",
-          url: pageUrl,
-          priceCurrency: "USD",
-          price: "95",
-          priceSpecification: {
-            "@type": "UnitPriceSpecification",
-            price: "95",
-            priceCurrency: "USD",
-            unitText: "mover / hour",
-            description: `${LOCAL_HOURLY_RATE_SENTENCE} Long-distance and interstate quoted separately.`,
-          },
-        },
+        description:
+          "Local moving quotes for Orlando and Central Florida. Long-distance and interstate moves are quoted from origin and destination.",
       },
       {
         "@type": "FAQPage",

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import AdsShortForm from "@/components/funnel/AdsShortForm";
+import QuotesFaq from "@/components/funnel/QuotesFaq";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
 
 export const dynamic = "force-static";
@@ -23,16 +24,7 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  keywords: [
-    "local moving quote Orlando",
-    "up-front hourly movers",
-    "$95 per mover per hour",
-    "no fuel surcharge movers",
-    "bilingual movers Orlando",
-    "long-distance movers Orlando",
-    "interstate movers Florida",
-    "Central Florida moving quote",
-  ],
+  keywords: [...page.metadata.keywords],
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -75,6 +67,7 @@ export default function QuotesPage() {
           <AdsShortForm phoneDisplay={PHONE_PLACEHOLDER} phoneLines={QUOTES_PHONE} />
         </div>
       </section>
+      <QuotesFaq />
     </main>
   );
 }
