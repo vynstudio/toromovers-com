@@ -504,3 +504,26 @@ html.has-cookie-banner .hero-c-over{padding-bottom:250px}
 .logo-img img{height:46px;width:auto;display:block}
 .logo-ft.logo-img img{height:52px}
 @media(max-width:640px){.logo-img img{height:38px}}
+
+/* Quote box: same size on every step; inputs never resize or zoom.
+   --fc-h is step 1's natural height (the tallest step, measured in Chrome at
+   1280, 1024, 760 and 390). QuoteWizard sets the exact value inline. */
+.fc-c{--fc-h:585px;display:flex;flex-direction:column;min-height:var(--fc-h)}
+.fc-c .fc-body{flex:1 1 auto;display:flex;flex-direction:column}
+.fc-field input,.fc-field select,.fc-date{font-size:16px;line-height:1.25;font-weight:500}
+.fc-field input::placeholder{font-size:16px;font-weight:500;opacity:1;color:#767676}
+.fc-c .addr-hint{min-height:16px;line-height:16px}
+.fc-c .fc-hint{min-height:36px;line-height:18px}
+.fc-c .fc-hint.fc-error{margin:12px 0 0;color:var(--color-accent);font-weight:600}
+.fc-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fc-pair .fc-field{min-width:0}
+.fc-choices.has-date{grid-template-columns:1fr 1fr 1.6fr}
+.fc-date{min-width:0;width:100%;color:var(--black);font-family:inherit}
+@media (max-width:1100px){.fc-c{--fc-h:569px}}
+@media (max-width:760px){
+  .fc-c{--fc-h:640px}
+  .fc-c .fc-choices{grid-template-columns:repeat(3,1fr)}
+  .fc-c .fc-choices.has-date{grid-template-columns:1fr 1fr 2fr;gap:6px}
+  .fc-c .fc-choice{font-size:13px;padding:6px 4px}
+  .fc-c .fc-date{font-size:16px;padding:0 6px;letter-spacing:-.02em}
+}

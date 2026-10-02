@@ -3,7 +3,8 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { isFullStreetAddress } from "@/lib/address-format";
 import { PHONE_LINES } from "@/lib/site";
-import type { SelectedPlace } from "@/lib/selected-place";
+import { isZipOnly, zipAreaLine } from "@/lib/fl-zip-cities";
+import { isAreaQuery, type SelectedPlace } from "@/lib/selected-place";
 
 export { isFullStreetAddress };
 
@@ -39,6 +40,12 @@ type Props = {
   streetOnly?: boolean;
   /** Fallback number when search is down. Defaults to the company lines. */
   phoneLines?: string;
+  /**
+   * Flexible fields (quote forms) also suggest cities and ZIP codes, a bare
+   * ZIP fills in its city on blur, and hints are informational only: a typed
+   * street, city, or ZIP is accepted without picking a suggestion.
+   */
+  flexible?: boolean;
 };
 
 export function AddressAutocomplete({
@@ -54,10 +61,13 @@ export function AddressAutocomplete({
   className,
   required,
   phoneLines = PHONE_LINES,
+  flexible = false,
 }: Props) {
   const reactId = useId();
   const listId = `${reactId}-list`;
   const [suggestions, setSuggestions] = useState<SelectedPlace[]>([]);
+  /** The text the current suggestions were fetched for. */
+  const [resultsFor, setResultsFor] = useState("");
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
   const [status, setStatus] = useState<SearchState>("idle");
@@ -108,7 +118,9 @@ export function AddressAutocomplete({
     const seq = ++fetchSeq.current;
     try {
       const res = await fetch(
-        `/api/address-suggest?q=${encodeURIComponent(query.trim())}`,
+        `/api/address-suggest?q=${encodeURIComponent(query.trim())}${
+          flexible ? "&areas=1" : ""
+        }`,
       );
       if (seq !== fetchSeq.current) return;
       if (!res.ok) {
@@ -120,6 +132,7 @@ export function AddressAutocomplete({
       const data = (await res.json()) as { suggestions?: SelectedPlace[] };
       const items = Array.isArray(data.suggestions) ? data.suggestions : [];
       setSuggestions(items);
+      setResultsFor(query);
       setActive(items.length ? 0 : -1);
       setOpen(items.length > 0);
       setSearch(items.length ? "results" : "empty");
@@ -178,6 +191,11 @@ export function AddressAutocomplete({
   const handleChange = (next: string) => {
     if (pickedLine && next !== pickedLine) setPickedLine("");
     onChangeRef.current(next);
+    // Drop any in-flight answer and hide suggestions for older text, so a
+    // tap or Enter can never pick a result for a different query.
+    fetchSeq.current += 1;
+    setOpen(false);
+    setActive(-1);
     if (debounceRef.current) window.clearTimeout(debounceRef.current);
     debounceRef.current = window.setTimeout(() => {
       void runFetch(next);
@@ -185,6 +203,8 @@ export function AddressAutocomplete({
   };
 
   const select = (place: SelectedPlace) => {
+    fetchSeq.current += 1;
+    if (debounceRef.current) window.clearTimeout(debounceRef.current);
     setPickedLine(place.line);
     onChangeRef.current(place.line);
     onSelectRef.current?.(place);
@@ -193,6 +213,31 @@ export function AddressAutocomplete({
     setActive(-1);
     setSearch("idle");
     requestAnimationFrame(() => inputRef.current?.blur());
+  };
+
+  /** A bare ZIP fills in its city: "32789" becomes "Winter Park, FL 32789". */
+  const fillZipCity = () => {
+    if (!flexible) return;
+    const text = value.trim();
+    if (!isZipOnly(text)) return;
+    const zip = text.slice(0, 5);
+    const match =
+      resultsFor.trim() === text
+        ? suggestions.find(
+            (place) => place.kind === "area" && place.line.endsWith(zip),
+          )
+        : undefined;
+    if (match) {
+      select(match);
+      return;
+    }
+    const line = zipAreaLine(zip);
+    if (!line) return;
+    fetchSeq.current += 1;
+    if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    setOpen(false);
+    setSearch("idle");
+    onChangeRef.current(line);
   };
 
   const onKey = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -218,15 +263,23 @@ export function AddressAutocomplete({
     }
   };
 
-  const hint =
-    status === "down"
+  const typedArea = isAreaQuery(value);
+  const hint = flexible
+    ? status === "down"
+      ? "Address search is unavailable. You can keep what you typed."
+      : status === "empty"
+        ? "No suggestions. A street, city, or ZIP is fine as typed."
+        : ""
+    : status === "down"
       ? `Address search is unavailable. Call ${phoneLines}.`
       : status === "empty"
-        ? "No matching addresses. Keep the street number and name, then choose a suggestion."
+        ? typedArea
+          ? "Start with the street number and name, like 1 E Pine St, then choose a suggestion."
+          : "No matching addresses. Keep the street number and name, then choose a suggestion."
         : status === "results" &&
             !open &&
             value !== pickedLine
-          ? "Choose a suggestion with the street, city, state, and ZIP."
+          ? "Choose a suggestion: street, city, state, and ZIP."
           : "";
 
   return (
@@ -246,9 +299,10 @@ export function AddressAutocomplete({
         value={value}
         onChange={(event) => handleChange(event.target.value)}
         onFocus={() => {
-          if (suggestions.length > 0) setOpen(true);
+          if (suggestions.length > 0 && resultsFor === value) setOpen(true);
           else if (value.trim().length >= 3) void runFetch(value);
         }}
+        onBlur={fillZipCity}
         onKeyDown={onKey}
         aria-label={ariaLabel}
         aria-autocomplete="list"
@@ -257,7 +311,10 @@ export function AddressAutocomplete({
         role="combobox"
       />
       {hint ? (
-        <p className={`addr-hint${status === "down" ? " is-error" : ""}`} role="status">
+        <p
+          className={`addr-hint${status === "down" && !flexible ? " is-error" : ""}`}
+          role="status"
+        >
           {hint}
         </p>
       ) : null}

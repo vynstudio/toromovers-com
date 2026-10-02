@@ -18,7 +18,12 @@ import {
 import { fireAdsLeadOnce, mintEventId } from "@/lib/meta-pixel";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
 import { quotePage } from "@/lib/quote-page";
-import { haversineMiles, type SelectedPlace } from "@/lib/selected-place";
+import { isUsableLocation } from "@/lib/fl-zip-cities";
+import {
+  milesBetween,
+  stopFields,
+  type SelectedPlace,
+} from "@/lib/selected-place";
 import { PHONE_DISPLAY, PHONE_LINES } from "@/lib/site";
 
 const primaryBtn =
@@ -53,7 +58,6 @@ export default function AdsShortForm({
   const [destinationText, setDestinationText] = useState("");
   const [origin, setOrigin] = useState<SelectedPlace | null>(null);
   const [destination, setDestination] = useState<SelectedPlace | null>(null);
-  const [searchDown, setSearchDown] = useState(false);
   const [service, setService] = useState<ServiceType>("house_2plus_move");
   const [when, setWhen] = useState<(typeof WHEN)[number]["id"]>("This week");
   const [consent, setConsent] = useState(true);
@@ -80,16 +84,8 @@ export default function AdsShortForm({
       setError("Enter a valid email, or leave it blank.");
       return;
     }
-    if (searchDown && (!origin || !destination)) {
-      setError(
-        `Address search is unavailable. Call ${phoneLines} and we will quote the move.`,
-      );
-      return;
-    }
-    if (!origin || !destination) {
-      setError(
-        "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
-      );
+    if (!isUsableLocation(originText)) {
+      setError("Enter the pickup street address, city, or ZIP code.");
       return;
     }
     if (!name.trim() || name.trim().length < 2 || !phoneE164 || !consent) {
@@ -113,16 +109,10 @@ export default function AdsShortForm({
       service_details: {
         primary_detail: "",
         move_date: when,
-        origin: origin.line,
-        destination: destination.line,
-        origin_place_id: origin.placeId,
-        destination_place_id: destination.placeId,
-        origin_lng: origin.lng,
-        origin_lat: origin.lat,
-        destination_lng: destination.lng,
-        destination_lat: destination.lat,
+        ...stopFields("origin", origin, originText),
+        ...stopFields("destination", destination, destinationText),
         access_conditions: "",
-        notes: "Meta ads quote form (name, phone, full pickup and drop-off).",
+        notes: "Meta ads quote form (name, phone, pickup and drop-off as typed or picked).",
       },
       contact: {
         full_name: name.trim(),
@@ -158,9 +148,7 @@ export default function AdsShortForm({
         error?: string;
       };
       if (result.error === "full_address_required") {
-        setError(
-          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
-        );
+        setError("Enter the pickup street address, city, or ZIP code.");
         setSubmitting(false);
         return;
       }
@@ -172,11 +160,9 @@ export default function AdsShortForm({
         trackFunnelEvent("generate_lead", {
           service_type: service,
           form_location: "ads_short_form",
-          pickup_selected: true,
-          dropoff_selected: true,
-          distance_miles: Math.round(
-            haversineMiles(origin, destination),
-          ),
+          pickup_selected: Boolean(origin),
+          dropoff_selected: Boolean(destination),
+          distance_miles: milesBetween(origin, destination),
         });
       }
       window.location.assign("/thank-you");
@@ -266,18 +252,17 @@ export default function AdsShortForm({
             onSelect={(place) => {
               setOrigin(place);
               setOriginText(place.line);
-              setSearchDown(false);
               trackFunnelEvent("address_selected", {
                 form_location: "ads_short_form",
                 field: "pickup",
               });
               if (error) setError("");
             }}
-            onSearchState={(state) => setSearchDown(state === "down")}
             className={fieldClass}
-            placeholder="Street number and name"
+            placeholder="Street, city, or ZIP"
             ariaLabel="Pickup address"
             autoComplete="off"
+            flexible
             phoneLines={phoneLines}
           />
         </label>
@@ -296,18 +281,17 @@ export default function AdsShortForm({
             onSelect={(place) => {
               setDestination(place);
               setDestinationText(place.line);
-              setSearchDown(false);
               trackFunnelEvent("address_selected", {
                 form_location: "ads_short_form",
                 field: "dropoff",
               });
               if (error) setError("");
             }}
-            onSearchState={(state) => setSearchDown(state === "down")}
             className={fieldClass}
-            placeholder="Street number and name"
+            placeholder="Street, city, or ZIP"
             ariaLabel="Drop-off address"
             autoComplete="off"
+            flexible
             phoneLines={phoneLines}
           />
         </label>

@@ -16,7 +16,12 @@ import {
   FUNNEL_SLA,
 } from "@/lib/funnel-offer";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
-import { haversineMiles, type SelectedPlace } from "@/lib/selected-place";
+import { isUsableLocation } from "@/lib/fl-zip-cities";
+import {
+  milesBetween,
+  stopFields,
+  type SelectedPlace,
+} from "@/lib/selected-place";
 import { PHONE_DISPLAY, PHONE_LINES } from "@/lib/site";
 
 export type { ServiceType };
@@ -206,7 +211,6 @@ export default function UniversalLeadForm({
   const [destinationText, setDestinationText] = useState("");
   const [origin, setOrigin] = useState<SelectedPlace | null>(null);
   const [destination, setDestination] = useState<SelectedPlace | null>(null);
-  const [searchDown, setSearchDown] = useState(false);
   const [access, setAccess] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -250,16 +254,8 @@ export default function UniversalLeadForm({
 
   function completeStep(next: number, stepName: string) {
     if (stepName === "move_logistics") {
-      if (searchDown && (!origin || !destination)) {
-        setError(
-          `Address search is unavailable. Call ${PHONE_LINES} and we will quote the move.`,
-        );
-        return;
-      }
-      if (!origin || !destination) {
-        setError(
-          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
-        );
+      if (!isUsableLocation(originText)) {
+        setError("Enter the pickup street address, city, or ZIP code.");
         return;
       }
     }
@@ -275,10 +271,8 @@ export default function UniversalLeadForm({
   async function submit(event: FormEvent) {
     event.preventDefault();
     const phoneE164 = normalizeUsPhone(phone);
-    if (!origin || !destination) {
-      setError(
-        "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
-      );
+    if (!isUsableLocation(originText)) {
+      setError("Enter the pickup street address, city, or ZIP code.");
       return;
     }
     if (!service || !name.trim() || !email.trim() || !phoneE164 || !consent) {
@@ -295,14 +289,8 @@ export default function UniversalLeadForm({
       service_details: {
         primary_detail: detail,
         move_date: moveDate,
-        origin: origin?.line || "",
-        destination: destination?.line || "",
-        origin_place_id: origin?.placeId,
-        destination_place_id: destination?.placeId,
-        origin_lng: origin?.lng,
-        origin_lat: origin?.lat,
-        destination_lng: destination?.lng,
-        destination_lat: destination?.lat,
+        ...stopFields("origin", origin, originText),
+        ...stopFields("destination", destination, destinationText),
         access_conditions: access,
         notes,
       },
@@ -325,9 +313,7 @@ export default function UniversalLeadForm({
         error?: string;
       };
       if (failure.error === "full_address_required") {
-        setError(
-          "Choose the pickup and drop-off addresses from the suggestions (street, city, state, and ZIP).",
-        );
+        setError("Enter the pickup street address, city, or ZIP code.");
         setSubmitting(false);
         return;
       }
@@ -339,10 +325,7 @@ export default function UniversalLeadForm({
         lead_id: result.lead_id || result.id || undefined,
         pickup_selected: Boolean(origin),
         dropoff_selected: Boolean(destination),
-        distance_miles:
-          origin && destination
-            ? Math.round(haversineMiles(origin, destination))
-            : undefined,
+        distance_miles: milesBetween(origin, destination),
       });
       window.location.assign("/thank-you");
     } catch {
@@ -493,18 +476,17 @@ export default function UniversalLeadForm({
               onSelect={(place) => {
                 setOrigin(place);
                 setOriginText(place.line);
-                setSearchDown(false);
                 trackFunnelEvent("address_selected", {
                   form_location: source,
                   field: "pickup",
                 });
                 if (error) setError("");
               }}
-              onSearchState={(state) => setSearchDown(state === "down")}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Street number and name"
+              placeholder="Street, city, or ZIP"
               ariaLabel="Pickup address"
               autoComplete="off"
+              flexible
             />
           </label>
           <label className="block text-sm font-bold">
@@ -521,18 +503,17 @@ export default function UniversalLeadForm({
               onSelect={(place) => {
                 setDestination(place);
                 setDestinationText(place.line);
-                setSearchDown(false);
                 trackFunnelEvent("address_selected", {
                   form_location: source,
                   field: "dropoff",
                 });
                 if (error) setError("");
               }}
-              onSearchState={(state) => setSearchDown(state === "down")}
               className="mt-2 w-full rounded-xl border border-zinc-300 p-3 font-normal"
-              placeholder="Street number and name"
+              placeholder="Street, city, or ZIP"
               ariaLabel="Drop-off address"
               autoComplete="off"
+              flexible
             />
           </label>
           <label className="block text-sm font-bold">

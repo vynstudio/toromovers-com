@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { AddressAutocomplete } from "@/components/address-autocomplete";
 import { captureAttribution, getAttribution } from "@/lib/attribution";
 import { mintEventId } from "@/lib/meta-pixel";
 import { trackHome, trackHomeLead } from "@/lib/home-track";
 import { formatUsPhone, normalizeUsPhone } from "@/lib/phone";
-import type { SelectedPlace } from "@/lib/selected-place";
+import { isUsableLocation } from "@/lib/fl-zip-cities";
+import { stopFields, type SelectedPlace } from "@/lib/selected-place";
 const HOME_PHONE_DISPLAY = "888-503-1756";
 const HOME_PHONE_TEL = "tel:+18885031756";
 
@@ -53,16 +54,6 @@ const ICONS: Record<ServiceId, string> = {
   pod: "M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z M10 21.9V14L2.1 9.1 M10 14l11.9-6.9 M14 19.8v-8.1 M18 17.5V9.4",
 };
 
-function placeFields(prefix: "origin" | "destination", place: SelectedPlace | null) {
-  if (!place) return {};
-  return {
-    [prefix]: place.line,
-    [`${prefix}_place_id`]: place.placeId,
-    [`${prefix}_lng`]: place.lng,
-    [`${prefix}_lat`]: place.lat,
-  };
-}
-
 export default function QuoteWizard() {
   const started = useRef(Date.now());
   const eventId = useRef("");
@@ -83,6 +74,27 @@ export default function QuoteWizard() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
+
+  // Step 1 (the service cards) is the tallest step at every width. Lock the
+  // box to its natural height so steps 2, 3 and the thank-you keep that size.
+  const formRef = useRef<HTMLFormElement>(null);
+  const [boxHeight, setBoxHeight] = useState(0);
+  useLayoutEffect(() => {
+    if (step !== 1 || done) return;
+    const form = formRef.current;
+    if (!form) return;
+    const measure = () => {
+      const prev = form.style.minHeight;
+      form.style.minHeight = "0px";
+      const next = Math.ceil(form.getBoundingClientRect().height);
+      form.style.minHeight = prev;
+      setBoxHeight((current) => (current === next ? current : next));
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    void document.fonts?.ready.then(measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [step, done]);
 
   useEffect(() => {
     captureAttribution();
@@ -105,8 +117,9 @@ export default function QuoteWizard() {
       primary_detail: service.kind === "load" ? loadMode : "",
       move_date: soft ? "" : moveDate,
       notes: soft ? "soft capture" : "",
-      ...placeFields("origin", needsOrigin ? origin : null),
-      ...placeFields("destination", needsDest ? dest : null),
+      // A street, a city, or a ZIP as typed; picked suggestions add a point.
+      ...(needsOrigin ? stopFields("origin", origin, originText) : {}),
+      ...(needsDest ? stopFields("destination", dest, destText) : {}),
     };
     const phoneE164 = normalizeUsPhone(phone);
     const body = {
@@ -150,15 +163,19 @@ export default function QuoteWizard() {
       return;
     }
     if (step === 2) {
-      if (needsOrigin && (!origin || origin.line !== originText.trim())) {
-        setError("Choose a pickup address from the suggestions.");
+      if (needsOrigin && !isUsableLocation(originText)) {
+        setError(
+          service.kind === "one"
+            ? "Enter the street address, city, or ZIP code."
+            : "Enter the pickup street address, city, or ZIP code.",
+        );
         return;
       }
-      if (needsDest && (!dest || dest.line !== destText.trim())) {
-        setError("Choose a drop-off address from the suggestions.");
+      if (needsDest && !isUsableLocation(destText)) {
+        setError("Enter the drop-off street address, city, or ZIP code.");
         return;
       }
-      const key = `${service.id}|${loadMode}|${origin?.placeId || ""}|${dest?.placeId || ""}`;
+      const key = `${service.id}|${loadMode}|${needsOrigin ? originText.trim() : ""}|${needsDest ? destText.trim() : ""}`;
       setStep(3);
       if (partialKey.current !== key) {
         partialKey.current = key;
@@ -208,7 +225,14 @@ export default function QuoteWizard() {
         : "We will call you back with the quote.";
 
   return (
-    <form className="form-card fc-c" id="quote" onSubmit={onSubmit} noValidate>
+    <form
+      ref={formRef}
+      className="form-card fc-c"
+      id="quote"
+      onSubmit={onSubmit}
+      noValidate
+      style={boxHeight ? { minHeight: `${boxHeight}px` } : undefined}
+    >
       <input
         className="hp"
         tabIndex={-1}
@@ -232,6 +256,7 @@ export default function QuoteWizard() {
         <i className={step >= 2 ? "on" : ""} />
         <i className={step >= 3 ? "on" : ""} />
       </div>
+      <div className="fc-body">
       {done ? (
         <div className="fc-done">
           <p className="fc-q">Quote received.</p>
@@ -308,9 +333,10 @@ export default function QuoteWizard() {
                   setOriginText(place.line);
                 }}
                 ariaLabel={service.kind === "one" ? "Address" : "Pickup address"}
-                placeholder="Street, city, ZIP"
+                placeholder="Street, city, or ZIP"
                 phoneLines={HOME_PHONE_DISPLAY}
                 className=""
+                flexible
               />
             </div>
           ) : null}
@@ -329,9 +355,10 @@ export default function QuoteWizard() {
                   setDestText(place.line);
                 }}
                 ariaLabel="Drop-off address"
-                placeholder="Street, city, ZIP"
+                placeholder="Street, city, or ZIP"
                 phoneLines={HOME_PHONE_DISPLAY}
                 className=""
+                flexible
               />
             </div>
           ) : null}
@@ -340,35 +367,42 @@ export default function QuoteWizard() {
       {!done && step === 3 ? (
         <>
           <p className="fc-q">When should we call?</p>
-          <div className="fc-choices" role="radiogroup" aria-label="Move timing">
+          <div
+            className={when === "date" ? "fc-choices has-date" : "fc-choices"}
+            role="radiogroup"
+            aria-label="Move timing"
+          >
             {(
               [
                 ["this-week", "This week"],
                 ["next-week", "Next week"],
                 ["date", "Pick a date"],
               ] as const
-            ).map(([id, label]) => (
-              <button
-                key={id}
-                type="button"
-                className={when === id ? "fc-choice is-on" : "fc-choice"}
-                onClick={() => setWhen(id)}
-              >
-                {label}
-              </button>
-            ))}
+            ).map(([id, label]) =>
+              id === "date" && when === "date" ? (
+                // The date input takes the button's place so the box keeps its size.
+                <input
+                  key={id}
+                  id="quote-date"
+                  type="date"
+                  aria-label="Move date"
+                  className="fc-choice fc-date is-on"
+                  value={date}
+                  onChange={(event) => setDate(event.target.value)}
+                />
+              ) : (
+                <button
+                  key={id}
+                  type="button"
+                  className={when === id ? "fc-choice is-on" : "fc-choice"}
+                  onClick={() => setWhen(id)}
+                >
+                  {label}
+                </button>
+              ),
+            )}
           </div>
-          {when === "date" ? (
-            <div className="fc-field">
-              <label htmlFor="quote-date">Date</label>
-              <input
-                id="quote-date"
-                type="date"
-                value={date}
-                onChange={(event) => setDate(event.target.value)}
-              />
-            </div>
-          ) : null}
+          <div className="fc-pair">
           <div className="fc-field">
             <label htmlFor="quote-name">Name</label>
             <input
@@ -391,6 +425,7 @@ export default function QuoteWizard() {
               onChange={(event) => setPhone(formatUsPhone(event.target.value))}
             />
           </div>
+          </div>
           <label className="fc-consent">
             <input
               type="checkbox"
@@ -401,11 +436,7 @@ export default function QuoteWizard() {
           </label>
         </>
       ) : null}
-      {error ? (
-        <p className="fc-error" role="alert">
-          {error}
-        </p>
-      ) : null}
+      </div>
       {!done && step < 3 ? (
         <div className="fc-row">
           {step > 1 ? (
@@ -439,7 +470,13 @@ export default function QuoteWizard() {
           </button>
         </div>
       ) : null}
-      {!done ? <p className="fc-hint">{hint}</p> : null}
+      {error ? (
+        <p className="fc-hint fc-error" role="alert">
+          {error}
+        </p>
+      ) : !done ? (
+        <p className="fc-hint">{hint}</p>
+      ) : null}
       <p className="fc-alt">
         Rather talk?{" "}
         <a href={HOME_PHONE_TEL} data-track="phone">

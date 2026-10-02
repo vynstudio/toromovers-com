@@ -51,3 +51,26 @@ test("suggestMapboxAddresses retries with the allowlisted legacy origin", async 
     else process.env.MAPBOX_ACCESS_TOKEN = prev;
   }
 });
+
+test("a ZIP still gets its city when Mapbox is down", async () => {
+  resetMapboxRefererCache();
+  const prev = process.env.MAPBOX_ACCESS_TOKEN;
+  process.env.MAPBOX_ACCESS_TOKEN = "pk.test";
+  const original = globalThis.fetch;
+  globalThis.fetch = (async () => {
+    throw new Error("network");
+  }) as typeof fetch;
+  try {
+    const places = await suggestMapboxAddresses("32789", { areas: true });
+    assert.equal(places[0]?.line, "Winter Park, FL 32789");
+    globalThis.fetch = (async () =>
+      new Response("{}", { status: 500 })) as typeof fetch;
+    const down = await suggestMapboxAddresses("32801", { areas: true });
+    assert.equal(down[0]?.line, "Orlando, FL 32801");
+  } finally {
+    globalThis.fetch = original;
+    resetMapboxRefererCache();
+    if (prev === undefined) delete process.env.MAPBOX_ACCESS_TOKEN;
+    else process.env.MAPBOX_ACCESS_TOKEN = prev;
+  }
+});
