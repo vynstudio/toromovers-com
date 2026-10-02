@@ -8,7 +8,12 @@ header.nav.nav-c,
 }
 .contact-rebrand{
   background:#fff;
-  color:var(--black,#0B0B0B);
+  color:#0B0B0B;
+  /* globals.css sets --gray to #6b6b6b on :root. */
+  --gray:#FFF6F6;
+  --gray2:#F0DEDE;
+  --black:#0B0B0B;
+  --muted:#5C656C;
 }
 
 /* globals.css sets .nav-links { display:flex } at every width. */
@@ -126,25 +131,9 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
   text-decoration-color:#DB1A1A;
 }
 .contact-phone{font-size:22px;letter-spacing:-.02em}
-.contact-rebrand .contact-card{
-  background:#fff;
-  color:#0B0B0B;
-  border-radius:28px;
-  padding:30px;
-  box-shadow:0 40px 80px -30px rgba(11,11,11,.35),0 0 0 1px rgba(11,11,11,.05);
-}
-.contact-card h2{
-  margin:0;
-  font-size:28px;
-  font-weight:600;
-  letter-spacing:-.03em;
-  line-height:1.1;
-}
-.contact-form-lede{
-  margin:12px 0 18px;
-  color:var(--muted,#5C656C);
-  font-size:16px;
-  line-height:1.45;
+.contact-rebrand #quote.form-card{
+  width:100%;
+  max-width:none;
 }
 .contact-rebrand .callback-form{margin:0}
 .contact-rebrand .callback-field span,
@@ -240,7 +229,6 @@ header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
   .contact-hero{padding:28px 20px 64px}
   .contact-grid{grid-template-columns:1fr;gap:20px;margin-top:32px}
   .contact-copy h1{font-size:40px}
-  .contact-rebrand .contact-card{padding:22px;border-radius:24px}
 }
 @media (max-width:390px){
   .contact-actions{flex-direction:column}

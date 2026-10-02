@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { CallbackForm } from "@/components/CallbackForm";
+import QuoteWizard from "@/components/home/QuoteWizard";
 import QuotesFaq from "@/components/funnel/QuotesFaq";
 import {
   CONTACT_DESCRIPTION,
-  CONTACT_DONE_HEADLINE,
-  CONTACT_FORM_LEDE,
   CONTACT_H1,
   CONTACT_LEDE,
   CONTACT_OG_TITLE,
@@ -43,8 +41,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * Dedicated contact page — NAP + hours + shared callback form.
- * Form payload and Lead/generate_lead tracking stay in CallbackForm.
+ * Dedicated contact page — NAP + hours + the homepage quote wizard.
+ * Leads from this page are tagged contact_page.
  */
 export default function ContactPage() {
   return (
@@ -123,18 +121,12 @@ export default function ContactPage() {
             </div>
           </aside>
 
-          <div className="contact-card" id="quote">
-            <h2>Prefer a callback?</h2>
-            <p className="contact-form-lede">{CONTACT_FORM_LEDE}</p>
-            <CallbackForm
-              source="contact-page"
-              notePrefix="Contact page callback · toromovers.com"
-              phoneLines={CONTACT_PHONE}
-              phonePlaceholder="(407) 555-0123"
-              donePhone={{ display: CONTACT_PHONE, tel: CONTACT_PHONE_TEL }}
-              doneHeadline={CONTACT_DONE_HEADLINE}
-            />
-          </div>
+          <QuoteWizard
+            source="contact_page"
+            phoneDisplay={CONTACT_PHONE}
+            phoneTel={CONTACT_PHONE_TEL}
+            formId="quote"
+          />
         </div>
       </section>
       <QuotesFaq />
