@@ -231,7 +231,13 @@ export default function QuoteWizard() {
       id="quote"
       onSubmit={onSubmit}
       noValidate
-      style={boxHeight ? { minHeight: `${boxHeight}px` } : undefined}
+      style={
+        boxHeight
+          ? done
+            ? { minHeight: `${boxHeight}px`, height: `${boxHeight}px` }
+            : { minHeight: `${boxHeight}px` }
+          : undefined
+      }
     >
       <input
         className="hp"
@@ -260,10 +266,22 @@ export default function QuoteWizard() {
       {done ? (
         <div className="fc-done">
           <p className="fc-q">Quote received.</p>
-          <p className="fc-hint" style={{ textAlign: "left" }}>
+          <p className="fc-hint">
             We have {service.label.toLowerCase()} and your number. A person will call you at{" "}
             {formatUsPhone(phone)}.
           </p>
+          <figure className="fc-done-photo">
+            <img
+              src="/images/pay-confirm-family.webp"
+              srcSet="/images/pay-confirm-family-640.webp 640w, /images/pay-confirm-family.webp 1200w"
+              sizes="(max-width: 760px) calc(100vw - 84px), 400px"
+              width={1200}
+              height={1666}
+              alt="A smiling boy runs down the hallway of his family's new home past moving boxes as his sister and parents follow behind"
+              loading="eager"
+              decoding="async"
+            />
+          </figure>
         </div>
       ) : null}
       {!done && step === 1 ? (
