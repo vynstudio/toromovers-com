@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from "react";
 import { isFullStreetAddress } from "@/lib/address-format";
 import { PHONE_LINES } from "@/lib/site";
+import { isZipOnly, zipAreaLine } from "@/lib/fl-zip-cities";
 import { isAreaQuery, type SelectedPlace } from "@/lib/selected-place";
 
 export { isFullStreetAddress };
@@ -38,8 +39,9 @@ type Props = {
   /** Kept for older call sites. Suggestions are always street addresses. */
   streetOnly?: boolean;
   /**
-   * Flexible fields also suggest cities and ZIP codes, and their hints are
-   * informational only: typed text is accepted without picking a suggestion.
+   * Flexible fields (quote forms) also suggest cities and ZIP codes, a bare
+   * ZIP fills in its city on blur, and hints are informational only: a typed
+   * street, city, or ZIP is accepted without picking a suggestion.
    */
   flexible?: boolean;
 };
@@ -210,6 +212,31 @@ export function AddressAutocomplete({
     requestAnimationFrame(() => inputRef.current?.blur());
   };
 
+  /** A bare ZIP fills in its city: "32789" becomes "Winter Park, FL 32789". */
+  const fillZipCity = () => {
+    if (!flexible) return;
+    const text = value.trim();
+    if (!isZipOnly(text)) return;
+    const zip = text.slice(0, 5);
+    const match =
+      resultsFor.trim() === text
+        ? suggestions.find(
+            (place) => place.kind === "area" && place.line.endsWith(zip),
+          )
+        : undefined;
+    if (match) {
+      select(match);
+      return;
+    }
+    const line = zipAreaLine(zip);
+    if (!line) return;
+    fetchSeq.current += 1;
+    if (debounceRef.current) window.clearTimeout(debounceRef.current);
+    setOpen(false);
+    setSearch("idle");
+    onChangeRef.current(line);
+  };
+
   const onKey = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && open && suggestions.length > 0) {
       event.preventDefault();
@@ -238,7 +265,7 @@ export function AddressAutocomplete({
     ? status === "down"
       ? "Address search is unavailable. You can keep what you typed."
       : status === "empty"
-        ? "No matching addresses. You can keep what you typed."
+        ? "No suggestions. A street, city, or ZIP is fine as typed."
         : ""
     : status === "down"
       ? `Address search is unavailable. Call ${PHONE_LINES}.`
@@ -272,6 +299,7 @@ export function AddressAutocomplete({
           if (suggestions.length > 0 && resultsFor === value) setOpen(true);
           else if (value.trim().length >= 3) void runFetch(value);
         }}
+        onBlur={fillZipCity}
         onKeyDown={onKey}
         aria-label={ariaLabel}
         aria-autocomplete="list"

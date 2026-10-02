@@ -49,6 +49,10 @@ async function geocode(
   });
 }
 
+/**
+ * Street suggestions, plus cities and ZIP codes with `areas`. If Mapbox fails,
+ * a typed Central Florida ZIP still gets its city from the backup map.
+ */
 export async function suggestMapboxAddresses(
   query: string,
   options: { areas?: boolean } = {},
@@ -56,17 +60,32 @@ export async function suggestMapboxAddresses(
   const areas = Boolean(options.areas);
   const token = mapboxToken();
   const q = query.trim().slice(0, 80);
-  if (!token || q.length < 3) return [];
+  if (q.length < 3) return [];
+  const fallback = () => placesFromFeatures([], q, { areas });
+  if (!token) return fallback();
+  try {
+    return await fromMapbox(token, q, areas);
+  } catch (err) {
+    console.error("[address-suggest] mapbox", err);
+    return fallback();
+  }
+}
+
+async function fromMapbox(
+  token: string,
+  q: string,
+  areas: boolean,
+): Promise<SelectedPlace[]> {
   const referers = preferredReferer
     ? [preferredReferer, ...REFERERS.filter((item) => item !== preferredReferer)]
     : REFERERS;
   for (const referer of referers) {
     const res = await geocode(token, q, referer, areas);
     if (res.status === 403) continue;
-    if (!res.ok) return [];
+    if (!res.ok) return placesFromFeatures([], q, { areas });
     preferredReferer = referer;
     const data = (await res.json()) as { features?: MapboxFeature[] };
     return placesFromFeatures(data.features || [], q, { areas });
   }
-  return [];
+  return placesFromFeatures([], q, { areas });
 }

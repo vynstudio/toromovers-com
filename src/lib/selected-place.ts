@@ -1,4 +1,5 @@
 import type { MapboxFeature } from "./address-format.ts";
+import { fallbackZipLines, isZipOnly } from "./fl-zip-cities.ts";
 
 export type SelectedPlace = {
   /** Street number, street, city, state, ZIP (or city/ZIP for an area). */
@@ -137,6 +138,8 @@ export function areaFromMapboxFeature(
   const placeId = (feature.id || "").trim();
   const state = stateCode(feature);
   if (!placeId || !/^[A-Z]{2}$/.test(state)) return null;
+  // Central Florida movers: only Florida cities and ZIP codes.
+  if (state !== "FL") return null;
   const text = (feature.text || "").trim();
   let line = "";
   if (isPostcode) {
@@ -162,12 +165,14 @@ export function placesFromFeatures(
   options: { areas?: boolean } = {},
 ): SelectedPlace[] {
   const zips = typedZips(query);
+  const zipOnly = isZipOnly(query);
   const streets = features
     .map((feature) => placeFromMapboxFeature(feature, query))
     .filter((place): place is SelectedPlace & { exact: boolean } => place != null)
     // "Orlando, FL 32801" should not match house number 32801 on some highway.
     .filter((place) => {
       const number = place.line.match(/^(\d+)/)?.[1] || "";
+      if (zipOnly && number === query.trim().slice(0, 5)) return false;
       return !zips.includes(number);
     })
     .map((place) => ({ ...place, kind: "address" as const }));
@@ -178,6 +183,21 @@ export function placesFromFeatures(
           (place): place is SelectedPlace & { exact: boolean } => place != null,
         )
     : [];
+  // Backup ZIP to city lines when Mapbox has no matching ZIP area.
+  if (options.areas) {
+    for (const line of fallbackZipLines(query)) {
+      const zip = line.slice(-5);
+      if (areas.some((place) => place.line.endsWith(zip))) continue;
+      areas.push({
+        line,
+        placeId: `zip.${zip}`,
+        lng: Number.NaN,
+        lat: Number.NaN,
+        kind: "area",
+        exact: false,
+      });
+    }
+  }
   const areaFirst = isAreaQuery(query);
   const ranked = areaFirst ? [...areas, ...streets] : [...streets, ...areas];
   const unique = new Map<string, (typeof ranked)[number]>();
@@ -191,9 +211,9 @@ export function placesFromFeatures(
         return aFirst ? -1 : 1;
       }
       if (a.exact !== b.exact) return a.exact ? -1 : 1;
-      return (
-        haversineMiles(CFL, a) - haversineMiles(CFL, b)
-      );
+      const da = haversineMiles(CFL, a);
+      const db = haversineMiles(CFL, b);
+      return (Number.isFinite(da) ? da : 1e6) - (Number.isFinite(db) ? db : 1e6);
     })
     .slice(0, 6)
     .map(({ line, placeId, lng, lat, kind }) => ({
@@ -203,4 +223,38 @@ export function placesFromFeatures(
       lat,
       kind,
     }));
+}
+
+function hasPoint(place: SelectedPlace | null | undefined): place is SelectedPlace {
+  return Boolean(
+    place && Number.isFinite(place.lng) && Number.isFinite(place.lat),
+  );
+}
+
+/**
+ * Lead fields for one stop: the text as typed (street, city, or ZIP), plus
+ * the place id and coordinates when a suggestion with a point was picked.
+ */
+export function stopFields(
+  prefix: "origin" | "destination",
+  place: SelectedPlace | null | undefined,
+  typed: string,
+): Record<string, string | number | undefined> {
+  const text = typed.trim();
+  const picked = hasPoint(place) && place.line === text ? place : null;
+  return {
+    [prefix]: picked?.line || text,
+    [`${prefix}_place_id`]: picked?.placeId,
+    [`${prefix}_lng`]: picked?.lng,
+    [`${prefix}_lat`]: picked?.lat,
+  };
+}
+
+/** Whole miles between two picked stops, or undefined. */
+export function milesBetween(
+  a: SelectedPlace | null | undefined,
+  b: SelectedPlace | null | undefined,
+): number | undefined {
+  if (!hasPoint(a) || !hasPoint(b)) return undefined;
+  return Math.round(haversineMiles(a, b));
 }
