@@ -82,7 +82,24 @@ function ThanksBody() {
   }
 
   return (
-    <section className="pay-thanks-main">
+    <section
+      className={`pay-thanks-main${status !== "error" ? " pay-thanks-main--photo" : ""}`}
+    >
+      {status !== "error" ? (
+        <figure className="pay-thanks-photo">
+          {/* native img: pay.css sizes the frame; eager because it is above the fold */}
+          <img
+            src="/images/pay-confirm-family.webp"
+            srcSet="/images/pay-confirm-family-640.webp 640w, /images/pay-confirm-family.webp 1200w"
+            sizes="(min-width: 900px) 26rem, calc(100vw - 2.5rem)"
+            width={1200}
+            height={1666}
+            alt="A smiling boy runs down the hallway of his family's new home past moving boxes as his sister and parents follow behind"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+      ) : null}
       <div className="pay-card pay-thanks-card">
         <div className="pay-thanks-mark" aria-hidden>
           {status === "complete" ? "✓" : status === "loading" ? "…" : "!"}
