@@ -1,28 +1,28 @@
-/** Copy for /full-service-moving — FAQ text must match on-page FAQ (schema). */
+/** Copy for /full-service-moving. FAQ text must match the on-page FAQ schema. */
 
 import { businessAreaServed } from "./business-profile.ts";
-import { LOCAL_HOURLY_RATE_SENTENCE } from "./published-rate.ts";
-import { PHONE_LINES, SITE_URL } from "./site.ts";
+import { QUOTE_RATE_ANSWER } from "./quote-faqs.ts";
+import { SITE_URL } from "./site.ts";
+
+export const FULL_SERVICE_PATH = "/full-service-moving";
+export const FULL_SERVICE_PHONE = "321-234-0510";
+export const FULL_SERVICE_PHONE_TEL = "tel:+13212340510";
 
 export const fullServicePage = {
-  path: "/full-service-moving",
+  path: FULL_SERVICE_PATH,
   metadata: {
     title: "Full-service movers in Orlando | Truck & crew",
     description:
-      "Full-service Orlando movers—truck, crew, load, haul, unload & place. Up-front hourly rates. Call " + PHONE_LINES + ".",
+      "Full-service Orlando movers: truck, crew, load, haul, unload, and place. Call 321-234-0510.",
     ogTitle: "Full-service movers in Orlando",
     ogDescription:
-      "Local crew and truck for Orlando homes and apartments—load, haul, unload, and place with clear hourly pricing before move day.",
+      "Local crew and truck for Orlando homes and apartments. Load, haul, unload, and place, with the hourly model explained before move day.",
   },
   hero: {
     eyebrow: "Full-service local moving",
     h1: "Full-service movers in Orlando",
     lede:
-      "Toro Movers provides full-service local moving in Orlando and Central Florida—truck, crew, loading, transport, unloading, and room-by-room placement. You get a family-owned bilingual crew and up-front hourly rates explained before move day.",
-    image: {
-      src: "/images/moves/svc-full-service.webp",
-      alt: "Toro Movers furniture stretch-wrapped and padded for a full-service local move",
-    },
+      "Toro Movers provides full-service local moving in Orlando and Central Florida. The crew brings the truck, then loads, transports, unloads, and places each room. You get a family-owned bilingual crew, and the hourly model is explained before move day.",
     chips: [
       "Truck and crew included",
       "Load to placement",
@@ -33,7 +33,7 @@ export const fullServicePage = {
   forWhom: {
     h2: "When full-service moving is the right fit",
     intro:
-      "Choose full-service when you want one local team to handle the truck and the labor—not just the loading.",
+      "Choose full-service when you want one local team to handle the truck and the labor, not just the loading.",
     bullets: [
       "Homes, townhomes, and apartments across Central Florida",
       "Moves where you do not want to rent or drive a truck",
@@ -45,9 +45,8 @@ export const fullServicePage = {
       "Already have a U-Haul, POD, or rental truck? Labor-only loading and unloading may fit better.",
   },
   included: {
-    h2: "What’s included in a full-service move",
-    intro:
-      "On a typical full-service job, Toro Movers brings the truck and the crew.",
+    h2: "What's included in a full-service move",
+    intro: "On a typical full-service job, Toro Movers brings the truck and the crew.",
     weBring: [
       "Local moving truck sized for the job",
       "Crew matched to volume and access",
@@ -62,12 +61,11 @@ export const fullServicePage = {
       "Stairs, elevator windows, parking, and building rules",
       "Any items that need disassembly or special handling",
     ] as const,
-    note: "Before move day we explain crew size, the hourly model, and what can change the clock—access, readiness, and distance within Central Florida.",
+    note: "Before move day we explain crew size, the hourly model, and what can change the clock: access, readiness, and distance within Central Florida.",
   },
   vsLabor: {
     h2: "Full-service vs labor-only",
-    intro:
-      "Both options use the same careful local crew. The difference is who provides the truck.",
+    intro: "Both options use the same careful local crew. The difference is who provides the truck.",
     blocks: [
       {
         title: "Full-service",
@@ -75,13 +73,13 @@ export const fullServicePage = {
       },
       {
         title: "Labor-only",
-        body: "You provide the U-Haul, POD, or trailer—we load or unload by the hour.",
+        body: "You provide the U-Haul, POD, or trailer. We load or unload by the hour.",
       },
     ] as const,
   },
   pricing: {
     h2: "How full-service pricing works",
-    intro: `${LOCAL_HOURLY_RATE_SENTENCE} The total depends on:`,
+    intro: "The total depends on:",
     factors: [
       { title: "Crew size", body: "Matched to volume and access" },
       { title: "Time on the job", body: "Load, drive, unload, and place" },
@@ -99,7 +97,7 @@ export const fullServicePage = {
       },
     ] as const,
     close:
-      "We explain the hourly model before move day. Call or text with addresses and access details—or get a free quote online.",
+      "We explain the hourly model before move day. Call or text with addresses and access details, or get a free quote online.",
     marketNote:
       "Published Orlando moving averages vary by company. Treat third-party ranges as context only. Your Toro quote is based on your job.",
   },
@@ -136,7 +134,7 @@ export const fullServicePage = {
     },
     {
       q: "How much do full-service movers cost in Orlando?",
-      a: `${LOCAL_HOURLY_RATE_SENTENCE} The total depends on crew size, time, access, readiness, and route. Call or text ${PHONE_LINES} with your details for a clear explanation before move day.`,
+      a: QUOTE_RATE_ANSWER,
     },
     {
       q: "Are your movers bilingual?",
@@ -144,12 +142,12 @@ export const fullServicePage = {
     },
     {
       q: "How do I get a full-service quote?",
-      a: "Call or text " + PHONE_LINES + ", or request a quote online. Share pickup and drop-off, home type, access details, and preferred date. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: `Call or text ${FULL_SERVICE_PHONE}, or request a quote online. Share pickup and drop-off, home type, access details, and preferred date. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.`,
     },
   ] as const,
   closing: {
     h2: "Ready for full-service movers in Orlando?",
-    body: "Tell us what you are moving, both addresses, and how access works. We will match crew size, explain up-front hourly rates, and help plan the day.",
+    body: "Tell us what you are moving, both addresses, and how access works. We will match crew size, explain the hourly model, and help plan the day.",
   },
 } as const;
 

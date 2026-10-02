@@ -180,6 +180,7 @@ export async function POST(req: Request) {
     quotes_page: "quotes_page",
     contact_page: "contact_page",
     services_page: "services_page",
+    service_full_service: "service_full_service",
     ads_short_form: "ads_short_callback",
     local_movers_ads_landing: "local_movers_ads_landing",
     "contact-page": "contact-page",
