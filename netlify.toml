@@ -516,7 +516,9 @@
 # Trailing-slash 308s live in netlify/edge-functions/searchable.ts.
 # A toml rule from "/*/" to "/:splat" is rejected as a redirect loop.
 
-# Security headers on every path.
+# Security headers on every CDN path. Netlify does not copy these onto
+# function responses, so SSR and API routes get the same values from
+# src/middleware.ts (src/lib/security-headers.ts). Keep the two in sync.
 # Enforced CSP is frame-ancestors alone so it does not clash with report-only.
 # script-src 'unsafe-inline' is temporary: consent, JSON-LD, gtag, and the
 # homepage handlers are inline scripts. Astro inlines stylesheets, so
