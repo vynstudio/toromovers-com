@@ -1,10 +1,11 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { businessAreaServed, businessPostalAddress } from "./business-profile.ts";
+import { businessAreaServed, businessPostalAddress, cityPlace } from "./business-profile.ts";
 import { blogPosts } from "./blog.ts";
 import {
   citiesByCounty,
+  getCityPage,
   nearbyCityPages,
   serviceCityPages,
 } from "./city-pages.ts";
@@ -97,6 +98,59 @@ test("new service pages stay in the word range and cross-link the guides", () =>
   assert.ok(areas.some((area) => area.name === "Volusia County"));
   assert.ok(areas.some((area) => area.name === "Deltona"));
   assert.equal(areas.some((area) => "postalCode" in area), false);
+});
+
+test("Winter Park and Oviedo stay in areaServed, links, and the sitemap", () => {
+  for (const name of ["Winter Park", "Oviedo"]) {
+    const city = businessAreaServed().find((area) => area.name === name);
+    assert.ok(city);
+    assert.equal(city["@type"], "City");
+    assert.deepEqual(city, cityPlace(name));
+    assert.equal(city.address.addressRegion, "FL");
+    assert.equal("postalCode" in city.address, false);
+    assert.equal("streetAddress" in city.address, false);
+  }
+
+  const areas = readFileSync(new URL("../components/Areas.tsx", import.meta.url), "utf8");
+  const footer = readFileSync(new URL("./content.ts", import.meta.url), "utf8");
+  const guides = readFileSync(new URL("./service-guides.ts", import.meta.url), "utf8");
+  const loading = readFileSync(new URL("./loading-unloading-page.ts", import.meta.url), "utf8");
+  const sitemap = readFileSync(new URL("../app/sitemap.ts", import.meta.url), "utf8");
+  const llms = readFileSync(new URL("../../public/llms.txt", import.meta.url), "utf8");
+  const cityPage = readFileSync(new URL("../app/(cities)/[slug]/page.tsx", import.meta.url), "utf8");
+  for (const href of ["/winter-park-movers", "/oviedo-movers"]) {
+    for (const source of [areas, footer, guides, loading, llms]) {
+      assert.ok(source.includes(href), href);
+    }
+  }
+  assert.match(sitemap, /allCityPages\(\)/);
+  assert.match(cityPage, /canonical: city\.href/);
+  assert.match(cityPage, /index: true, follow: true/);
+  assert.doesNotMatch(cityPage, /noindex/);
+
+  const winterPark = getCityPage("winter-park-movers");
+  const oviedo = getCityPage("oviedo-movers");
+  assert.ok(winterPark);
+  assert.ok(oviedo);
+  assert.ok(winterPark.neighborhoods.includes("Rollins College"));
+  assert.match(
+    winterPark.faqs.map((item) => `${item.q} ${item.a}`).join("\n"),
+    /movers near Rollins College in Winter Park/,
+  );
+  assert.equal(oviedo.metadata.title, "Oviedo Movers | Local Moving Company | Toro Movers");
+  assert.ok(oviedo.metadata.description.length >= 120 && oviedo.metadata.description.length <= 160);
+  assert.match(oviedo.metadata.description, /movers in Oviedo, FL/);
+  assert.equal(oviedo.closing.title, "Request an Oviedo moving estimate before move day");
+  assert.equal(winterPark.closing.title, "Request a Winter Park moving estimate before move day");
+  const publicCopy = [
+    winterPark.metadata.description,
+    oviedo.metadata.description,
+    ...winterPark.faqs.map((item) => item.a),
+    ...oviedo.faqs.map((item) => item.a),
+    llms,
+  ].join("\n");
+  assert.equal(publicCopy.includes("758-0094"), false);
+  assert.equal(publicCopy.includes("32789"), false);
 });
 
 test("JSON-LD telephone is the primary line and 689 stays a contact point", () => {

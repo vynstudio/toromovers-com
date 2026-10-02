@@ -16,6 +16,24 @@ export function businessPostalAddress() {
   };
 }
 
+/**
+ * City we serve. Locality and state only — no street and no ZIP.
+ * A bare city name is ambiguous (Winter Park and Oviedo exist outside Florida).
+ */
+export function cityPlace(name: string) {
+  return {
+    "@type": "City" as const,
+    name,
+    containedInPlace: { "@type": "State" as const, name: "Florida" },
+    address: {
+      "@type": "PostalAddress" as const,
+      addressLocality: name,
+      addressRegion: "FL",
+      addressCountry: "US",
+    },
+  };
+}
+
 /** Cities with a page, then the counties and the region. Orlando first. */
 export function businessAreaServed() {
   const cities = allCityPages()
@@ -26,7 +44,7 @@ export function businessAreaServed() {
       if (b.slug === "orlando-movers") return 1;
       return a.name.localeCompare(b.name);
     })
-    .map((city) => ({ "@type": "City" as const, name: city.name }));
+    .map((city) => cityPlace(city.name));
 
   const counties = [
     "Orange County",
