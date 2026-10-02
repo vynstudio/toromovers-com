@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { quotePage } from "@/lib/quote-page";
+import { quoteFaqs } from "@/lib/quote-faqs";
 
 const QUOTES_PHONE = "321-234-0510";
 const QUOTES_PHONE_TEL = "tel:+13212340510";
@@ -48,7 +48,7 @@ export default function QuotesFaq() {
           </p>
         </div>
         <div className="faq faq-dark">
-          {quotePage.faqs.map((item, index) => {
+          {quoteFaqs.map((item, index) => {
             const isOpen = open === index;
             return (
               <div

@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useRef, useState, type FormEvent } from "react";
-import { closing } from "@/lib/content";
 import { digits, formatPhone } from "@/lib/lead";
 import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { fireBrowserLead } from "@/lib/meta-pixel";
@@ -31,6 +30,17 @@ export type CallbackFormProps = {
   /** Optional note prefix for ops */
   notePrefix?: string;
   className?: string;
+  /**
+   * Visible line in the consent sentence and the send-error fallback.
+   * Defaults keep the homepage on both company lines. Does not change the payload.
+   */
+  phoneLines?: string;
+  /** Placeholder only. Defaults to the primary display number. */
+  phonePlaceholder?: string;
+  /** When set, the done state shows this one click-to-call link. */
+  donePhone?: { display: string; tel: string };
+  /** Done headline. `{name}` is replaced. Default keeps the existing line. */
+  doneHeadline?: string;
 };
 
 /**
@@ -41,6 +51,10 @@ export function CallbackForm({
   source = "callback-form",
   notePrefix = "Callback form · toromovers.com",
   className = "",
+  phoneLines = PHONE_LINES,
+  phonePlaceholder = PHONE_DISPLAY,
+  donePhone,
+  doneHeadline,
 }: CallbackFormProps) {
   const formId = `callback-form-${useId().replace(/:/g, "")}`;
   const startRef = useRef(Date.now());
@@ -115,7 +129,7 @@ export function CallbackForm({
       fireBrowserLead(eventId, source, { form_location: source });
       setDone(true);
     } catch {
-      setError(`Couldn't send. Please call ${PHONE_LINES}.`);
+      setError(`Couldn't send. Please call ${phoneLines}.`);
     } finally {
       setSending(false);
     }
@@ -137,17 +151,29 @@ export function CallbackForm({
     return (
       <div className={`callback-done ${className}`.trim()} role="status">
         <p className="callback-done-title">
-          Got it, {firstName} — we&apos;ll call you back shortly.
+          {doneHeadline
+            ? doneHeadline.replace("{name}", firstName)
+            : `Got it, ${firstName} — we'll call you back shortly.`}
         </p>
         <p className="callback-done-lede text-muted">
           Prefer not to wait? Call us now.
         </p>
         <div className="callback-done-actions">
-          <CompanyPhoneLinks
-            cta="callback-done-phone"
-            prefix="Call "
-            linkClassName="btn-primary tap-target"
-          />
+          {donePhone ? (
+            <a
+              href={donePhone.tel}
+              data-cta="callback-done-phone"
+              className="btn-primary tap-target"
+            >
+              Call {donePhone.display}
+            </a>
+          ) : (
+            <CompanyPhoneLinks
+              cta="callback-done-phone"
+              prefix="Call "
+              linkClassName="btn-primary tap-target"
+            />
+          )}
           <button type="button" className="callback-reset" onClick={reset}>
             Submit another request
           </button>
@@ -199,7 +225,7 @@ export function CallbackForm({
             enterKeyHint="done"
             value={phone}
             onChange={(e) => setPhone(formatPhone(e.target.value))}
-            placeholder={PHONE_DISPLAY}
+            placeholder={phonePlaceholder}
             required
             aria-invalid={phone.length > 0 && !phoneOk}
           />
@@ -233,7 +259,7 @@ export function CallbackForm({
           onChange={(e) => setSmsConsent(e.target.checked)}
         />
         <span>
-          I agree to calls and texts from Toro Movers at {PHONE_LINES}. Reply
+          I agree to calls and texts from Toro Movers at {phoneLines}. Reply
           STOP to opt out of SMS.
         </span>
       </label>
@@ -245,7 +271,7 @@ export function CallbackForm({
         className="btn-primary callback-submit tap-target"
         disabled={sending || !nameOk || !phoneOk || !smsConsent}
       >
-        {sending ? "Sending…" : closing.formCta}
+        {sending ? "Sending…" : "Request callback"}
       </button>
     </form>
   );
