@@ -1,3 +1,6 @@
+/* Homepage chrome, loaded only with /quotes. */
+@import "./preview-home.css";
+
 /* /quotes uses the homepage chrome. These rules only load on that page. */
 .quotes-rebrand{
   background:#fff;

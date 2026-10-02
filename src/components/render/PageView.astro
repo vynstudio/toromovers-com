@@ -13,7 +13,6 @@ import SiteFooter from "../chrome/SiteFooter.astro";
 import SiteNav from "../chrome/SiteNav.astro";
 import checklistCss from "../../app/move-day-checklist/checklist.css?url";
 import payCss from "../../app/pay/pay.css?url";
-import previewCss from "../../styles/preview-home.css?url";
 import quotesCss from "../../styles/quotes-rebrand.css?url";
 import { PHONE_E164, PHONE_TEL } from "../../lib/site.ts";
 
@@ -102,7 +101,7 @@ const QUOTES_PHONE = "321-234-0510";
       : spec?.path === "pay" || spec?.path === "pay/thanks"
         ? [payCss]
         : isQuotes
-          ? [previewCss, quotesCss]
+          ? [quotesCss]
           : []
   }
 >
