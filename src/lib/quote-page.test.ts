@@ -80,7 +80,7 @@ test("JSON-LD keeps WebPage, Service/Offer, and FAQPage without HowTo", () => {
   assert.equal(company.telephone, "+13212340510");
   assert.deepEqual(company.contactPoint, {
     "@type": "ContactPoint",
-    telephone: "+16896002720",
+    telephone: "+13212340510",
     contactType: "customer service",
   });
 });

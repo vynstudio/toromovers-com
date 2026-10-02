@@ -1,17 +1,11 @@
 import type { Metadata } from "next";
-import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import AdsShortForm from "@/components/funnel/AdsShortForm";
-import { ToroLockup } from "@/components/funnel/ToroLockup";
 import { quotePage, quotePageGraph, QUOTE_PAGE_URL } from "@/lib/quote-page";
-import {
-  EMAIL,
-  EMAIL_HREF,
-  PHONE_TEL,
-} from "@/lib/site";
 
 export const dynamic = "force-static";
 
 const page = quotePage;
+const QUOTES_PHONE = "321-234-0510";
 
 export const metadata: Metadata = {
   title: page.metadata.title,
@@ -64,41 +58,22 @@ export const metadata: Metadata = {
 
 export default function QuotesPage() {
   return (
-    <main id="main" className="gmp-page gmp-land bg-white text-[#0A0A0A]">
+    <main id="main" className="quotes-rebrand gmp-page">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(quotePageGraph()),
         }}
       />
-      <header className="gmp-head">
-        <ToroLockup className="gmp-head-lockup" />
-        <CompanyPhoneLinks
-          cta="quotes-call"
-          prefix="Call "
-          linkClassName="gmp-call"
-        />
-      </header>
-
-      <section className="gmp-land-body">
-        <h1>{page.hero.h1}</h1>
-        <p className="aeo-answer">{page.hero.lede}</p>
-        <AdsShortForm />
+      <section className="quotes-hero">
+        <div className="quotes-copy">
+          <h1>{page.hero.h1}</h1>
+          <p className="aeo-answer">{page.hero.lede}</p>
+        </div>
+        <div className="form-card quotes-card">
+          <AdsShortForm phoneDisplay={QUOTES_PHONE} phoneLines={QUOTES_PHONE} />
+        </div>
       </section>
-
-      <footer className="gmp-nap">
-        <p>
-          {page.footer.nap}
-          {" · "}
-          {page.footer.hours}
-          {" · "}
-          <a href={PHONE_TEL}>Call</a>
-          {" · "}
-          <a href={EMAIL_HREF}>{EMAIL}</a>
-          {" · "}
-          <a href="/privacy">Privacy</a>
-        </p>
-      </footer>
     </main>
   );
 }

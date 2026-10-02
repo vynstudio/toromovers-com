@@ -16,9 +16,8 @@ import {
   BUSINESS_NAME,
   EMAIL,
   HOURS_LABEL,
+  PHONE_DISPLAY,
   PHONE_E164,
-  PHONE_LINES,
-  PHONE_SECONDARY_E164,
   QUOTE_PATH,
   SERVICE_BASE_LOCALITY,
   SERVICE_REGION,
@@ -38,7 +37,7 @@ export const quotePage = {
       absolute: `Moving quote in Orlando — ${HOURLY_RATE_PHRASE} | Toro Movers`,
     },
     description:
-      "Quotes for local, long-distance, and interstate moves. Local moves are $95 per mover per hour, with a 2-hour minimum and no fuel or stair fees. Call " + PHONE_LINES + ".",
+      "Quotes for local, long-distance, and interstate moves. Local moves are $95 per mover per hour, with a 2-hour minimum and no fuel or stair fees. Call " + PHONE_DISPLAY + ".",
     ogTitle: `Moving quote in Orlando — ${HOURLY_RATE_PHRASE} | Toro Movers`,
     ogDescription: `Up-front moving quote for local, long-distance, and interstate. ${LOCAL_HOURLY_RATE_SENTENCE}`,
     ogImage: "/og/get-my-price.jpg",
@@ -63,7 +62,7 @@ export const quotePage = {
     },
     {
       q: "How do I get a free moving quote?",
-      a: `Submit your name and mobile, or call ${PHONE_LINES}. Email is optional.`,
+      a: `Submit your name and mobile, or call ${PHONE_DISPLAY}. Email is optional.`,
     },
     {
       q: "How fast do you call back?",
@@ -75,7 +74,7 @@ export const quotePage = {
     },
   ] as const,
   footer: {
-    nap: `${BUSINESS_NAME} · Orlando, FL · ${PHONE_LINES}`,
+    nap: `${BUSINESS_NAME} · Orlando, FL · ${PHONE_DISPLAY}`,
     hours: HOURS_LABEL,
   },
 } as const;
@@ -185,7 +184,7 @@ export function quotePageGraph() {
         telephone: PHONE_E164,
         contactPoint: {
           "@type": "ContactPoint",
-          telephone: PHONE_SECONDARY_E164,
+          telephone: PHONE_E164,
           contactType: "customer service",
         },
         email: EMAIL,
