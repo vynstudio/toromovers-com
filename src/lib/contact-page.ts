@@ -11,7 +11,7 @@ export const CONTACT_PHONE = "321-234-0510";
 export const CONTACT_PHONE_TEL = "tel:+13212340510";
 export const CONTACT_H1 = "Get your Orlando moving quote";
 export const CONTACT_LEDE =
-  "Call 321-234-0510 or get a free quote online. Share what you're moving and when. Prefer we call you? Use the callback form below.";
+  "Call 321-234-0510 or get a free quote below. Tell us what you're moving and when, and a local mover calls you back.";
 export const CONTACT_TITLE = "Contact · Get a free quote";
 export const CONTACT_DESCRIPTION =
   "Contact Toro Movers for an Orlando and Central Florida moving quote. Call 321-234-0510 or request a callback. " +
