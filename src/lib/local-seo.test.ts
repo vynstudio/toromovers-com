@@ -115,7 +115,8 @@ test("Winter Park and Oviedo stay in areaServed, links, and the sitemap", () => 
   const footer = readFileSync(new URL("./content.ts", import.meta.url), "utf8");
   const guides = readFileSync(new URL("./service-guides.ts", import.meta.url), "utf8");
   const loading = readFileSync(new URL("./loading-unloading-page.ts", import.meta.url), "utf8");
-  const sitemap = readFileSync(new URL("../app/sitemap.ts", import.meta.url), "utf8");
+  const sitemap = readFileSync(new URL("./sitemap-xml.ts", import.meta.url), "utf8");
+  const sitemapRoute = readFileSync(new URL("../app/sitemap.ts", import.meta.url), "utf8");
   const llms = readFileSync(new URL("../../public/llms.txt", import.meta.url), "utf8");
   const cityPage = readFileSync(new URL("../app/(cities)/[slug]/page.tsx", import.meta.url), "utf8");
   for (const href of ["/winter-park-movers", "/oviedo-movers"]) {
@@ -124,6 +125,7 @@ test("Winter Park and Oviedo stay in areaServed, links, and the sitemap", () => 
     }
   }
   assert.match(sitemap, /allCityPages\(\)/);
+  assert.match(sitemapRoute, /sitemapXml\(\)/);
   assert.match(cityPage, /canonical: city\.href/);
   assert.match(cityPage, /index: true, follow: true/);
   assert.doesNotMatch(cityPage, /noindex/);
