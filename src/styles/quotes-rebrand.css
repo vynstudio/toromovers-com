@@ -1,0 +1,162 @@
+/* Homepage chrome, loaded only with /quotes. */
+@import "./preview-home.css";
+
+/* /quotes uses the homepage chrome. These rules only load on that page. */
+.quotes-rebrand{
+  background:#fff;
+  color:var(--black,#0B0B0B);
+  font-family:"Space Grotesk","Space Grotesk Fallback",system-ui,sans-serif;
+}
+/* globals.css sets .nav-links { display:flex } at every width. The homepage
+   hides those links under 1100px. Repeat that here with higher specificity. */
+@media (max-width:1100px){
+  header.nav.nav-c .nav-links{display:none !important}
+}
+header.nav.nav-c .logo-img{flex:0 0 auto}
+header.nav.nav-c .logo-img img{height:46px;width:auto;max-width:none}
+@media (max-width:640px){
+  header.nav.nav-c .logo-img img{height:38px}
+}
+@media (max-width:760px){
+  header.nav.nav-c .nav-phone span{display:none !important}
+  header.nav.nav-c .nav-phone{
+    display:inline-flex;width:44px;height:44px;flex:0 0 44px;
+    border-radius:4px;justify-content:center;align-items:center
+  }
+  header.nav.nav-c .nav-cta{flex:0 0 auto}
+  header.nav.nav-c .nav-cta .btn{display:none !important}
+  header.nav.nav-c .nav-burger{display:inline-flex}
+}
+
+.quotes-hero{
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  gap:48px;
+  align-items:start;
+  max-width:1120px;
+  margin:0 auto;
+  padding:36px 32px 88px;
+}
+.quotes-copy h1{
+  margin:0;
+  font-size:clamp(40px,4.6vw,64px);
+  line-height:.96;
+  font-weight:600;
+  letter-spacing:-.045em;
+}
+.quotes-copy .aeo-answer{
+  margin:18px 0 0;
+  max-width:460px;
+  font-size:18px;
+  line-height:1.5;
+  color:var(--muted,#5C656C);
+}
+.quotes-rebrand .quotes-card{
+  width:100%;
+  max-width:480px;
+  justify-self:end;
+  align-self:start;
+  background:#fff;
+  color:#0B0B0B;
+  border-radius:28px;
+  padding:30px;
+  box-shadow:0 40px 80px -30px rgba(11,11,11,.35),0 0 0 1px rgba(11,11,11,.05);
+}
+@media (max-width:760px){
+  .quotes-rebrand .quotes-card{padding:22px;border-radius:24px}
+}
+.quotes-rebrand .gmp-form{margin:0;padding:0}
+.quotes-rebrand .gmp-form h2{
+  margin:0 0 16px;
+  font-size:28px;
+  font-weight:600;
+  letter-spacing:-.03em;
+  line-height:1.1;
+}
+.quotes-rebrand .gmp-form form{display:grid;gap:14px}
+.quotes-rebrand .gmp-form label,
+.quotes-rebrand .gmp-form legend{
+  font-size:13px;
+  font-weight:600;
+  color:var(--black,#0B0B0B);
+}
+.quotes-rebrand .gmp-field{
+  margin-top:6px;
+  height:48px;
+  min-height:48px;
+  border-radius:14px;
+  border:1.5px solid var(--gray2,#F0DEDE);
+  padding:0 14px;
+  font-size:16px;
+  font-weight:500;
+  background:#fff;
+  color:var(--black,#0B0B0B);
+}
+.quotes-rebrand select.gmp-field{padding-right:28px}
+.quotes-rebrand .gmp-when{gap:8px;margin-top:6px}
+.quotes-rebrand .gmp-when button{
+  min-height:48px;
+  border-radius:4px;
+  border:1.5px solid var(--gray2,#F0DEDE);
+  background:#fff;
+  font-weight:600;
+  font-size:14px;
+  color:#0B0B0B;
+}
+.quotes-rebrand .gmp-when button.is-on{
+  border-color:var(--color-accent,#DB1A1A);
+  background:#fff;
+  color:var(--black,#0B0B0B);
+  box-shadow:0 0 0 3px rgba(219,26,26,.12);
+}
+.quotes-rebrand .gmp-consent{
+  font-size:13px;
+  line-height:1.4;
+  color:var(--muted,#5C656C);
+}
+.quotes-rebrand .gmp-consent input{accent-color:var(--color-accent,#DB1A1A)}
+.quotes-rebrand .gmp-optional{font-weight:500;color:var(--muted,#5C656C)}
+.quotes-rebrand .gmp-form-sla{
+  margin:0;
+  text-align:center;
+  font-size:13px;
+  color:var(--muted,#5C656C);
+}
+.quotes-rebrand .gmp-form-error{
+  margin:0;
+  color:var(--color-accent,#DB1A1A);
+  font-size:13px;
+  font-weight:600;
+}
+.quotes-rebrand .gmp-submit{
+  width:100%;
+  min-height:54px;
+  border:0;
+  border-radius:4px;
+  background:#0B0B0B;
+  color:#fff;
+  font-size:15px;
+  font-weight:500;
+  letter-spacing:.02em;
+}
+.quotes-rebrand .gmp-submit::after{
+  content:" \2192";
+  color:#DB1A1A;
+  font-weight:500;
+}
+.quotes-rebrand .gmp-submit:hover,
+.quotes-rebrand .gmp-submit:focus-visible{
+  background:#DB1A1A;
+}
+.quotes-rebrand .gmp-submit:hover::after,
+.quotes-rebrand .gmp-submit:focus-visible::after{color:#fff}
+.quotes-rebrand .gmp-land,
+.quotes-rebrand.gmp-page{min-height:0}
+@media (max-width:900px){
+  .quotes-hero{grid-template-columns:1fr;gap:28px;padding:28px 20px 64px}
+  .quotes-rebrand .quotes-card{justify-self:stretch;max-width:none}
+  .quotes-copy h1{font-size:40px}
+}
+@media (max-width:390px){
+  .quotes-rebrand .gmp-form-row{grid-template-columns:1fr}
+}

@@ -63,8 +63,8 @@ export const SERVICE_ALIASES: Record<string, ServiceType> = {
 };
 
 export const SERVICE_LABELS: Record<ServiceType, string> = {
-  house_2plus_move: "House — 2+ rooms",
-  apartment_2plus_move: "Apartment — 2+ rooms",
+  house_2plus_move: "House, 2+ rooms",
+  apartment_2plus_move: "Apartment, 2+ rooms",
   full_service_move: "Full-service move",
   labor_only: "Labor only",
   same_building_move: "Same-building move",

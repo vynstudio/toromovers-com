@@ -7,6 +7,18 @@ import {
   SERVICE_LINKS,
 } from "../../lib/site-chrome.ts";
 
+interface Props {
+  phoneDisplay?: string;
+  phoneTel?: string;
+  quoteHref?: string;
+}
+
+const {
+  phoneDisplay = HOME_PHONE_DISPLAY,
+  phoneTel = HOME_PHONE_TEL,
+  quoteHref = "#quote",
+} = Astro.props;
+
 const services = [
   SERVICE_LINKS[0],
   SERVICE_LINKS[1],
@@ -21,15 +33,15 @@ const services = [
       <p class="eyebrow">Let us carry it</p>
       <h2 class="ft-big">
         Ready to move?<br />
-        <a href={HOME_PHONE_TEL} data-track="phone">
-          Call {HOME_PHONE_DISPLAY}<span class="dot">.</span>
+        <a href={phoneTel} data-track="phone">
+          Call {phoneDisplay}<span class="dot">.</span>
         </a>
       </h2>
       <div class="ft-btns">
-        <a href="#quote" class="btn btn-red" data-text="Get a Quote" data-track="quote">
+        <a href={quoteHref} class="btn btn-red" data-text="Get a Quote" data-track="quote">
           <span>Get a Quote</span>
         </a>
-        <a href={HOME_PHONE_TEL} class="line-link ll-white" data-track="phone">
+        <a href={phoneTel} class="line-link ll-white" data-track="phone">
           Call now<Icon name="arrow" size={18} class="ic ll-ic" />
         </a>
       </div>
@@ -56,9 +68,9 @@ const services = [
       </div>
       <div>
         <p class="ft-label">Talk to us</p>
-        <a href={HOME_PHONE_TEL} data-track="phone">{HOME_PHONE_DISPLAY}</a>
+        <a href={phoneTel} data-track="phone">{phoneDisplay}</a>
         <a href="https://toromovers.com/">toromovers.com</a>
-        <a href="#quote" data-track="quote">Get a quote</a>
+        <a href={quoteHref} data-track="quote">Get a quote</a>
       </div>
     </div>
     <div class="ft-bottom">

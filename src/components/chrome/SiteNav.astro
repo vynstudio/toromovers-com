@@ -5,23 +5,38 @@ import {
   HOME_PHONE_TEL,
   NATIONWIDE_HREF,
 } from "../../lib/site-chrome.ts";
+
+interface Props {
+  phoneDisplay?: string;
+  phoneTel?: string;
+  quoteHref?: string;
+  /** "" on the homepage. "/" so section links leave this page for the homepage. */
+  sectionPrefix?: string;
+}
+
+const {
+  phoneDisplay = HOME_PHONE_DISPLAY,
+  phoneTel = HOME_PHONE_TEL,
+  quoteHref = "#quote",
+  sectionPrefix = "",
+} = Astro.props;
 ---
 
 <header class="nav nav-c">
   <div class="container nav-in">
     <a href="/" class="logo logo-img" aria-label="Toro Movers home"><img src="/logos/toro-lockup-navy.svg" alt="Toro Movers" width="200" height="50" /></a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#services">Services</a>
-      <a href="#areas">Service Areas</a>
+      <a href={`${sectionPrefix}#services`}>Services</a>
+      <a href={`${sectionPrefix}#areas`}>Service Areas</a>
       <a href={NATIONWIDE_HREF}>Nationwide</a>
-      <a href="#guides">Guides</a>
+      <a href={`${sectionPrefix}#guides`}>Guides</a>
     </nav>
     <div class="nav-cta">
-      <a class="nav-phone" href={HOME_PHONE_TEL} data-track="phone" aria-label={`Call ${HOME_PHONE_DISPLAY}`}>
+      <a class="nav-phone" href={phoneTel} data-track="phone" aria-label={`Call ${phoneDisplay}`}>
         <Icon name="phone" size={18} />
-        <span>{HOME_PHONE_DISPLAY}</span>
+        <span>{phoneDisplay}</span>
       </a>
-      <a href="#quote" class="btn btn-red btn-sm" data-text="Get a Quote" data-track="quote">
+      <a href={quoteHref} class="btn btn-red btn-sm" data-text="Get a Quote" data-track="quote">
         <span>Get a Quote</span>
       </a>
       <button class="nav-burger" type="button" aria-expanded="false" aria-controls="nav-panel" aria-label="Menu">
@@ -30,11 +45,11 @@ import {
     </div>
   </div>
   <nav id="nav-panel" class="nav-panel" aria-label="Mobile">
-    <a href="#services">Services</a>
-    <a href="#areas">Service Areas</a>
+    <a href={`${sectionPrefix}#services`}>Services</a>
+    <a href={`${sectionPrefix}#areas`}>Service Areas</a>
     <a href={NATIONWIDE_HREF}>Nationwide</a>
-    <a href="#guides">Guides</a>
-    <a href="#quote" data-track="quote">Get a Quote</a>
+    <a href={`${sectionPrefix}#guides`}>Guides</a>
+    <a href={quoteHref} data-track="quote">Get a Quote</a>
   </nav>
 </header>
 <script>

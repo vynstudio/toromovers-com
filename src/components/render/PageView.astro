@@ -9,8 +9,12 @@ import { resolveHead, type MetaIn } from "../../lib/seo-head";
 import { metadata as thanksMetadata } from "../../app/pay/thanks/layout";
 
 import Hydrate from "./Hydrate.astro";
+import SiteFooter from "../chrome/SiteFooter.astro";
+import SiteNav from "../chrome/SiteNav.astro";
 import checklistCss from "../../app/move-day-checklist/checklist.css?url";
 import payCss from "../../app/pay/pay.css?url";
+import quotesCss from "../../styles/quotes-rebrand.css?url";
+import { PHONE_E164, PHONE_TEL } from "../../lib/site.ts";
 
 interface Props {
   path: string;
@@ -81,6 +85,8 @@ const preloads = [...inner.matchAll(/<link\b[^>]*rel="preload"[^>]*>/gi)]
   });
 inner = inner.replace(/<link\b[^>]*rel="preload"[^>]*>/gi, "").trim();
 const pageKey = spec?.key || "";
+const isQuotes = spec?.path === "quotes";
+const QUOTES_PHONE = "321-234-0510";
 ---
 
 <Base
@@ -88,14 +94,28 @@ const pageKey = spec?.key || "";
   tags={head.tags}
   preloads={preloads}
   deferTrackers={!hydrate}
+  businessTelephone={isQuotes ? PHONE_E164 : undefined}
   extraCss={
     spec?.path === "move-day-checklist"
       ? [checklistCss]
       : spec?.path === "pay" || spec?.path === "pay/thanks"
         ? [payCss]
-        : []
+        : isQuotes
+          ? [quotesCss]
+          : []
   }
 >
+  {
+    isQuotes ? (
+      <SiteNav
+        phoneDisplay={QUOTES_PHONE}
+        phoneTel={PHONE_TEL}
+        quoteHref="#quote-form"
+        sectionPrefix="/"
+      />
+    ) : null
+  }
   <div id="app" class="contents" set:html={inner} />
+  {isQuotes ? <SiteFooter phoneDisplay={QUOTES_PHONE} phoneTel={PHONE_TEL} quoteHref="#quote-form" /> : null}
   {hydrate && pageKey ? <Hydrate pageKey={pageKey} pageProps={pageProps} /> : null}
 </Base>

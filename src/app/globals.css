@@ -868,12 +868,12 @@ iframe {
 html:has(.gmp-page) {
   scroll-behavior: auto;
 }
-html:has(.gmp-page),
-html:has(.gmp-page) body,
-.gmp-page,
-.gmp-page button,
-.gmp-page input,
-.gmp-page select {
+html:has(.gmp-page):not(:has(.quotes-rebrand)),
+html:has(.gmp-page):not(:has(.quotes-rebrand)) body,
+.gmp-page:not(.quotes-rebrand),
+.gmp-page:not(.quotes-rebrand) button,
+.gmp-page:not(.quotes-rebrand) input,
+.gmp-page:not(.quotes-rebrand) select {
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
 }
