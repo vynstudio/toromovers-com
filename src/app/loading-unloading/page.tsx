@@ -171,6 +171,31 @@ export default function LoadingUnloadingPage() {
           </ul>
         </section>
 
+        {page.sections.map((section) => (
+          <section key={section.h2}>
+            <h2>{section.h2}</h2>
+            {section.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+            ))}
+          </section>
+        ))}
+
+        <p>
+          Related: <a href="/small-moves-orlando">small moves</a>
+          {" · "}
+          <a href="/pod-loading-orlando">POD and U-Haul loading</a>
+          {" · "}
+          <a href="/labor-only-moving">labor-only movers</a>
+          {" · "}
+          <a href="/full-service-moving">full-service moving</a>
+          {" · "}
+          <a href="/apartment-movers-orlando-fl">apartment movers</a>
+          {" · "}
+          <a href="/packing-services-orlando">packing services</a>
+          {" · "}
+          <a href="/services">all services</a>.
+        </p>
+
         <section id="faq" aria-labelledby="loading-faq">
           <h2 id="loading-faq">Common questions</h2>
           <dl>

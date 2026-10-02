@@ -18,6 +18,7 @@ const QUESTIONS = [
   "Is this the same as full-service moving?",
   "How is pricing handled?",
   "How do I book loading help?",
+  "What should be ready before the crew arrives?",
 ];
 
 function strings(value: unknown, out: string[] = []): string[] {
@@ -66,7 +67,19 @@ test("loading page keeps its URL, H1, links, and price-free chrome copy", () => 
     loadingUnloadingPage.faqs.map((item) => item.q),
     QUESTIONS,
   );
+  assert.ok(loadingUnloadingPage.faqs.length >= 6);
+  assert.ok(bodyWordCount(loadingUnloadingPage) >= 1000, String(bodyWordCount(loadingUnloadingPage)));
 });
+
+function bodyWordCount(value: unknown, key?: string): number {
+  if (key === "metadata" || key === "path" || key === "href" || key === "src") return 0;
+  if (typeof value === "string") return value.split(/\s+/).filter(Boolean).length;
+  if (Array.isArray(value)) return value.reduce((sum, item) => sum + bodyWordCount(item), 0);
+  if (value && typeof value === "object") {
+    return Object.entries(value).reduce((sum, [childKey, child]) => sum + bodyWordCount(child, childKey), 0);
+  }
+  return 0;
+}
 
 test("loading JSON-LD keeps the service graph and one rate sentence", () => {
   const graph = loadingUnloadingPageGraph();
