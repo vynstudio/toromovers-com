@@ -37,7 +37,16 @@ const WHEN = [
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function AdsShortForm() {
+type Props = {
+  /** Visible fallback number. Defaults keep /quotes on the company lines. */
+  phoneDisplay?: string;
+  phoneLines?: string;
+};
+
+export default function AdsShortForm({
+  phoneDisplay = PHONE_DISPLAY,
+  phoneLines = PHONE_LINES,
+}: Props) {
   const startRef = useRef(
     typeof performance !== "undefined" ? performance.now() : Date.now(),
   );
@@ -151,6 +160,7 @@ export default function AdsShortForm() {
         trackFunnelEvent("generate_lead", {
           service_type: service,
           form_location: "ads_short_form",
+          event_id: eventId,
           pickup_selected: Boolean(origin),
           dropoff_selected: Boolean(destination),
           distance_miles: milesBetween(origin, destination),
@@ -159,7 +169,7 @@ export default function AdsShortForm() {
       window.location.assign("/thank-you");
     } catch {
       setError(
-        `We could not submit your request. Please call ${PHONE_LINES} and our team will help right away.`,
+        `We could not submit your request. Please call ${phoneLines} and our team will help right away.`,
       );
       setSubmitting(false);
     }
@@ -208,7 +218,7 @@ export default function AdsShortForm() {
                 if (error) setError("");
               }}
               className={fieldClass}
-              placeholder={PHONE_DISPLAY}
+              placeholder={phoneDisplay}
               autoComplete="tel"
               enterKeyHint="next"
             />
@@ -254,6 +264,7 @@ export default function AdsShortForm() {
             ariaLabel="Pickup address"
             autoComplete="off"
             flexible
+            phoneLines={phoneLines}
           />
         </label>
 
@@ -282,6 +293,7 @@ export default function AdsShortForm() {
             ariaLabel="Drop-off address"
             autoComplete="off"
             flexible
+            phoneLines={phoneLines}
           />
         </label>
 

@@ -1,0 +1,13 @@
+---
+import PageView from "../components/render/PageView.astro";
+import { staticContentPaths } from "../lib/route-table";
+
+export function getStaticPaths() {
+  return staticContentPaths().map((path) => ({ params: { path } }));
+}
+
+const pathParam = Astro.params.path;
+const path = Array.isArray(pathParam) ? pathParam.join("/") : String(pathParam || "");
+---
+
+<PageView path={path} />

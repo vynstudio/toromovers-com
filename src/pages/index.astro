@@ -1,0 +1,522 @@
+---
+import type { ImageMetadata } from "astro";
+import { getImage } from "astro:assets";
+import SiteFooter from "../components/chrome/SiteFooter.astro";
+import SiteNav from "../components/chrome/SiteNav.astro";
+import Icon from "../components/home/Icon.astro";
+import Photo from "../components/home/Photo.astro";
+import QuoteWizard from "../components/home/QuoteWizard";
+import Base from "../layouts/Base.astro";
+import grotesk500 from "@fontsource/space-grotesk/files/space-grotesk-latin-500-normal.woff2?url";
+import grotesk700 from "@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff2?url";
+import boxes from "../assets/home/family-boxes-2.jpg";
+import newHouse from "../assets/home/family-new-house-3.jpg";
+import together from "../assets/home/family-together-6.jpg";
+import family from "../assets/home/family-with-boxes.jpg";
+import happyFamily from "../assets/home/happy-family.jpg";
+import keys from "../assets/home/couple-keys-7.jpg";
+import parentChild from "../assets/home/parent-and-child.jpg";
+import taping from "../assets/home/woman-taping-boxes.jpg";
+import {
+  GOOGLE_MAPS_REVIEWS_URL,
+  GOOGLE_RATING,
+  HOME_DESCRIPTION,
+  HOME_LEDE,
+  HOME_PHONE_DISPLAY,
+  HOME_PHONE_E164,
+  HOME_PHONE_TEL,
+  HOME_TITLE,
+  homeCities,
+  homeCounters,
+  homeFaqs,
+  homeGuides,
+  homeServices,
+  homeStructuredData,
+  howItWorks,
+} from "../lib/home-page.ts";
+import { googleReviews } from "../lib/reviews.ts";
+import { SITE_URL } from "../lib/site.ts";
+import "../styles/preview-home.css";
+
+const photos = {
+  hero: {
+    src: happyFamily,
+    alt: "Kids running into their new home on moving day",
+  },
+  "new-house": {
+    src: newHouse,
+    alt: "Parents and a child at the door of a new home",
+  },
+  boxes: {
+    src: boxes,
+    alt: "A couple with moving boxes in a living room",
+  },
+  taping: {
+    src: taping,
+    alt: "A woman taping boxes on moving day",
+  },
+  parent: {
+    src: parentChild,
+    alt: "A parent and child moving into a new home",
+  },
+  family: {
+    src: family,
+    alt: "A family carrying boxes into a new home",
+  },
+  together: {
+    src: together,
+    alt: "A family standing with moving boxes in a new home",
+  },
+  keys: {
+    src: keys,
+    alt: "Couple holding keys to a new home",
+  },
+} as const;
+
+const guideArt: Record<string, { src: ImageMetadata; alt: string }> = {
+  "orlando-hoa-coi-movers": photos.boxes,
+  "orlando-furniture-only-movers": photos.taping,
+  "orlando-packing-help-movers": photos.keys,
+};
+
+const guides = homeGuides();
+const heroOg = await getImage({
+  src: happyFamily,
+  width: 1200,
+  height: 800,
+  format: "webp",
+  quality: 62,
+});
+const heroImageUrl = new URL(heroOg.src, SITE_URL).href;
+const jsonLd = JSON.stringify(homeStructuredData(heroImageUrl));
+const canonical = `${SITE_URL}/`;
+const tags = [
+  { kind: "meta" as const, name: "description", content: HOME_DESCRIPTION },
+  { kind: "link" as const, rel: "canonical", href: canonical },
+  { kind: "meta" as const, property: "og:title", content: HOME_TITLE },
+  { kind: "meta" as const, property: "og:description", content: HOME_DESCRIPTION },
+  { kind: "meta" as const, property: "og:url", content: canonical },
+  { kind: "meta" as const, property: "og:type", content: "website" },
+  { kind: "meta" as const, property: "og:image", content: heroImageUrl },
+  { kind: "meta" as const, name: "twitter:card", content: "summary_large_image" },
+  { kind: "meta" as const, name: "twitter:title", content: HOME_TITLE },
+  { kind: "meta" as const, name: "twitter:description", content: HOME_DESCRIPTION },
+  { kind: "meta" as const, name: "twitter:image", content: heroImageUrl },
+  { kind: "meta" as const, name: "robots", content: "index, follow" },
+];
+---
+
+<Base
+  title={HOME_TITLE}
+  tags={tags}
+  preloads={[
+    `<link rel="preload" href="${grotesk700}" as="font" type="font/woff2" crossorigin="anonymous" />`,
+    `<link rel="preload" href="${grotesk500}" as="font" type="font/woff2" crossorigin="anonymous" />`,
+  ]}
+  deferTrackers={true}
+  businessTelephone={HOME_PHONE_E164}
+  businessImage={heroImageUrl}
+  omitPriceRange={true}
+>
+  <div class="vc">
+    <SiteNav />
+    <main id="main">
+      <section class="hero-c">
+        <div class="hero-c-photo">
+          <Photo
+            src={photos.hero.src}
+            alt={photos.hero.alt}
+            sizes="(max-width: 1100px) 100vw, 58vw"
+            widths={[480, 640, 800, 960]}
+            priority={true}
+          />
+          <div class="hero-c-rate">
+            <div class="rating rating-c">
+              <span class="rating-g"><Icon name="google" size={20} class="g" /></span>
+              <div>
+                <div class="rating-row">
+                  <b>{GOOGLE_RATING}.0</b>
+                  <span class="stars" aria-hidden="true">
+                    {Array.from({ length: 5 }).map(() => <Icon name="star" size={16} />)}
+                  </span>
+                </div>
+                <span class="rating-sub">Google rating</span>
+              </div>
+            </div>
+          </div>
+          <div class="hero-c-over">
+            <p class="hero-c-kick">
+              <Icon name="pin" size={16} /> Orlando · Winter Park · Kissimmee · Lake Mary
+            </p>
+            <h1 class="hero-c-h">Move day,<br />made easy<span class="dot">.</span></h1>
+          </div>
+        </div>
+        <div class="hero-c-side">
+          <p class="hero-c-lead">{HOME_LEDE}</p>
+          <QuoteWizard client:visible />
+        </div>
+      </section>
+
+      <section class="band band-dark counters-c">
+        <div class="container">
+          <div class="statement">
+            <p><span class="eyebrow">01 / Why Toro</span></p>
+            <h2>
+              Our team answers the phone.
+              <span>Help in English or Spanish, from first call to last box.</span>
+            </h2>
+          </div>
+          <div class="counters">
+            {
+              homeCounters.map((item) => (
+                <div class="counter">
+                  <span class="counter-ic">
+                    <Icon name={item.icon} size={22} />
+                  </span>
+                  <p class="counter-num">{item.num}</p>
+                  <p class="counter-label">{item.label}</p>
+                  <p class="counter-desc">{item.desc}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="band services-c" id="services">
+        <div class="container">
+          <div class="sec-head">
+            <div class="sec-title">
+              <p class="eyebrow">02 / Services</p>
+              <h2 class="h2">What we carry for you<span class="dot">.</span></h2>
+            </div>
+            <a href="#quote" class="btn btn-red" data-text="Get a Quote" data-track="quote">
+              <span>Get a Quote</span>
+            </a>
+          </div>
+          <div class="stack">
+            {
+              homeServices.map((service, index) => {
+                const photo = photos[service.photo];
+                return (
+                  <div class="stack-card" style={`--i:${index}`}>
+                    <article class="sc-ed">
+                      <span class="sc-num">{service.n}</span>
+                      <div class="sc-ed-main">
+                        <span class="sc-ic">
+                          <Icon name={service.icon} size={30} />
+                        </span>
+                        <h3>{service.title}</h3>
+                      </div>
+                      <p>{service.body}</p>
+                      <div class="sc-ed-img">
+                        <Photo
+                          src={photo.src}
+                          alt={photo.alt}
+                          sizes="(max-width: 760px) 100vw, 220px"
+                          widths={[320, 480]}
+                        />
+                      </div>
+                      <a href="#quote" class="line-link ll-white" data-track="quote">
+                        Get a quote
+                        <Icon name="arrow" size={18} class="ic ll-ic" />
+                      </a>
+                    </article>
+                  </div>
+                );
+              })
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="band price-c" id="pricing">
+        <div class="container price-c-grid">
+          <div class="price-c-info">
+            <p class="eyebrow">03 / Quote</p>
+            <h2 class="h2">Get your quote<span class="dot">.</span></h2>
+            <ul class="pc-list">
+              <li><Icon name="check" size={18} />No hidden fees</li>
+              <li><Icon name="check" size={18} />English & Spanish</li>
+            </ul>
+            <div class="pc-cta">
+              <a href="#quote" class="btn btn-red" data-text="Get my quote" data-track="quote">
+                <span>Get my quote</span>
+              </a>
+              <a href={HOME_PHONE_TEL} class="line-link" data-track="phone">
+                Call {HOME_PHONE_DISPLAY}
+                <Icon name="arrow" size={18} class="ic ll-ic" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band band-dark process-c">
+        <div class="container">
+          <div class="sec-title">
+            <p class="eyebrow">04 / How it works</p>
+            <h2 class="h2">{howItWorks.heading}</h2>
+          </div>
+          <div class="steps">
+            {
+              howItWorks.steps.map((step, index) => (
+                <div class="step">
+                  <div class="step-top">
+                    <span class="step-num">0{index + 1}</span>
+                    <span class="step-ic">
+                      <Icon name={step.icon} size={26} />
+                    </span>
+                  </div>
+                  <h3>{step.name}</h3>
+                  <p>{step.text}</p>
+                </div>
+              ))
+            }
+          </div>
+          <div class="process-cta">
+            <p>
+              <Icon name="phone" size={20} /> Questions first? Talk to a real person.
+            </p>
+            <a href={HOME_PHONE_TEL} class="btn btn-white btn-sm" data-text={`Call ${HOME_PHONE_DISPLAY}`} data-track="phone">
+              <span>Call {HOME_PHONE_DISPLAY}</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="band reviews-c" id="reviews">
+        <div class="container">
+          <div class="sec-head">
+            <div class="sec-title">
+              <p class="eyebrow">05 / Reviews</p>
+              <h2 class="h2">{GOOGLE_RATING}.0 on Google. Read them all<span class="dot">.</span></h2>
+            </div>
+            <a href={GOOGLE_MAPS_REVIEWS_URL} class="line-link" target="_blank" rel="noopener noreferrer">
+              See Google reviews
+              <Icon name="arrow" size={18} class="ic ll-ic" />
+            </a>
+          </div>
+          <div class="rv-wrap">
+            <div class="rv-track">
+              <article class="review rv-info">
+                <p class="rv-big">{GOOGLE_RATING}.0</p>
+                <span class="stars" aria-hidden="true">
+                  {Array.from({ length: 5 }).map(() => <Icon name="star" size={22} />)}
+                </span>
+                <p class="rv-info-t">Google rating</p>
+                <a href={GOOGLE_MAPS_REVIEWS_URL} class="line-link" target="_blank" rel="noopener noreferrer">
+                  Read our reviews
+                  <Icon name="arrow" size={18} class="ic ll-ic" />
+                </a>
+              </article>
+              {
+                googleReviews.map((review) => (
+                  <article class="review">
+                    <div class="rv-top">
+                      <span class="stars" role="img" aria-label="5 stars">
+                        {Array.from({ length: 5 }).map(() => <Icon name="star" size={16} />)}
+                      </span>
+                      <span class="rv-src">
+                        <Icon name="google" size={20} class="g" />
+                      </span>
+                    </div>
+                    <p class="rv-text">
+                      {review.text}
+                      {review.context ? <span>{review.context}</span> : null}
+                    </p>
+                    <div class="rv-author">
+                      <span class="rv-av">{review.initial}</span>
+                      <div>
+                        <b>{review.name}</b>
+                        <small>Google review</small>
+                      </div>
+                    </div>
+                  </article>
+                ))
+              }
+            </div>
+            <div class="rv-nav">
+              <button type="button" aria-label="Previous"><Icon name="chevL" size={20} /></button>
+              <button type="button" aria-label="Next"><Icon name="chevR" size={20} /></button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="band areas-c" id="areas">
+        <div class="container areas-c-grid">
+          <div class="areas-c-side">
+            <div class="sec-title">
+              <p class="eyebrow">06 / Service areas</p>
+              <h2 class="h2">Central Florida, street by street<span class="dot">.</span></h2>
+            </div>
+            <div class="nw-c">
+              <Photo
+                src={photos.keys.src}
+                alt={photos.keys.alt}
+                sizes="(max-width: 1100px) 100vw, 42vw"
+                widths={[480, 800, 1100]}
+              />
+              <div class="nw-c-body">
+                <span class="nw-ic"><Icon name="globe" size={24} /></span>
+                <h3>Nationwide too<span class="dot">.</span></h3>
+                <p>Leaving Florida? One call, one quote, anywhere in the U.S.</p>
+                <a href="#quote" class="btn btn-white btn-sm" data-text="Get a nationwide quote" data-track="quote">
+                  <span>Get a nationwide quote</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="bc-list">
+            {
+              homeCities.map((city, index) => (
+                <a href={city.href} class="bc-row">
+                  <span class="bc-i">0{index + 1}</span>
+                  <span class="bc-name">{city.name}</span>
+                  <span class="bc-go">
+                    Get a quote <Icon name="arrow" size={20} />
+                  </span>
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+
+      <section class="band guides-c" id="guides">
+        <div class="container">
+          <div class="sec-head">
+            <div class="sec-title">
+              <p class="eyebrow">07 / Guides</p>
+              <h2 class="h2">Before you tape the first box<span class="dot">.</span></h2>
+            </div>
+            <a href="/blog" class="line-link">
+              All guides
+              <Icon name="arrow" size={18} class="ic ll-ic" />
+            </a>
+          </div>
+          {
+            guides.featured ? (
+              <div class="guides">
+                <a class="guide guide-feat" href={guides.featured.href}>
+                  <div class="g-img">
+                    <Photo
+                      src={(guideArt[guides.featured.slug] ?? photos.boxes).src}
+                      alt=""
+                      sizes="(max-width: 760px) 100vw, 55vw"
+                      widths={[480, 800, 1100]}
+                    />
+                  </div>
+                  <div class="g-body">
+                    <span class="g-tag">Featured guide</span>
+                    <h3>{guides.featured.title}</h3>
+                    <p>{guides.featured.teaser}</p>
+                    <div class="g-meta">
+                      <span>{guides.featured.dateLabel}</span>
+                      <span class="g-arr"><Icon name="arrow" size={22} /></span>
+                    </div>
+                  </div>
+                </a>
+                <div class="guides-sm">
+                  {
+                    guides.cards.map((card) => (
+                      <a class="guide guide-sm" href={card.href}>
+                        <div class="g-img">
+                          <Photo
+                            src={(guideArt[card.slug] ?? photos.taping).src}
+                            alt=""
+                            sizes="(max-width: 760px) 100vw, 220px"
+                            widths={[320, 480, 640]}
+                          />
+                        </div>
+                        <div class="g-body">
+                          <span class="g-tag">Guide</span>
+                          <h3>{card.title}</h3>
+                          <p>{card.teaser}</p>
+                          <div class="g-meta">
+                            <span>{card.dateLabel}</span>
+                            <span class="g-arr"><Icon name="arrow" size={22} /></span>
+                          </div>
+                        </div>
+                      </a>
+                    ))
+                  }
+                </div>
+              </div>
+            ) : null
+          }
+        </div>
+      </section>
+
+      <section class="band band-dark faq-c" id="faq">
+        <div class="container faq-layout">
+          <div class="faq-side">
+            <div class="sec-title">
+              <p class="eyebrow">08 / FAQ</p>
+              <h2 class="h2">Straight answers<span class="dot">.</span></h2>
+            </div>
+            <p class="faq-c-note">
+              Still unsure? Call <a href={HOME_PHONE_TEL} data-track="phone">{HOME_PHONE_DISPLAY}</a>. A real person picks up.
+            </p>
+          </div>
+          <div class="faq faq-dark">
+            {
+              homeFaqs.map((item, index) => (
+                <div class:list={["faq-item", { "is-open": index === 0 }]}>
+                  <button class="faq-q" type="button" aria-expanded={index === 0 ? "true" : "false"}>
+                    {item.q}
+                    <span class="faq-ic"><Icon name="plus" size={20} /></span>
+                  </button>
+                  <div class="faq-a">
+                    <div>
+                      <p>{item.a}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+    </main>
+    <SiteFooter />
+  </div>
+  <script type="application/ld+json" is:inline set:html={jsonLd}></script>
+  <script is:inline>
+    document.querySelectorAll(".faq-q").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var item = button.parentNode;
+        var open = item.classList.toggle("is-open");
+        button.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+    });
+    document.querySelectorAll(".rv-wrap").forEach(function (wrap) {
+      var track = wrap.querySelector(".rv-track");
+      var buttons = wrap.querySelectorAll(".rv-nav button");
+      buttons[0].addEventListener("click", function () {
+        track.scrollBy({ left: -track.clientWidth * 0.8, behavior: "smooth" });
+      });
+      buttons[1].addEventListener("click", function () {
+        track.scrollBy({ left: track.clientWidth * 0.8, behavior: "smooth" });
+      });
+    });
+    document.addEventListener("click", function (event) {
+      var link = event.target.closest("a");
+      if (!link) return;
+      var href = link.getAttribute("href") || "";
+      if (link.dataset.track === "phone" || href.indexOf("tel:+18885031756") === 0) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: "phone_click", phone: "888-503-1756" });
+        if (window.gtag) window.gtag("event", "phone_click", { phone: "888-503-1756" });
+        if (window.fbq) window.fbq("trackCustom", "phone_click", { phone: "888-503-1756" });
+      }
+      if (link.dataset.track === "quote") {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: "quote_cta_click", href: href });
+        if (window.gtag) window.gtag("event", "quote_cta_click", { href: href });
+        if (window.fbq) window.fbq("trackCustom", "quote_cta_click", { href: href });
+      }
+    });
+  </script>
+</Base>

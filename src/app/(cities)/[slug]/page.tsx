@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { StickyCta } from "@/components/StickyCta";
@@ -45,14 +44,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function CityMoversPage({
-  params,
+export default function CityMoversPage({
+  slug,
 }: {
-  params: Promise<{ slug: string }>;
+  slug: string;
 }) {
-  const { slug } = await params;
   const city = getCityPage(slug);
-  if (!city) notFound();
+  if (!city) return null;
 
   return (
     <>

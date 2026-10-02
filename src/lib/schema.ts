@@ -30,12 +30,23 @@ const organizationDescription =
 /** Homepage WebPage description — keep aligned with meta (SERP + AEO). */
 const homepageDescription = SITE_DESCRIPTION;
 
-/** Freshness for WebPage / GEO audits */
-const DATE_MODIFIED = new Date().toISOString().slice(0, 10);
+/**
+ * Freshness for WebPage / GEO audits.
+ * Pinned to the live production build day so the Astro preview's JSON-LD
+ * matches https://toromovers.com instead of drifting on each preview build.
+ */
+const DATE_MODIFIED = "2026-09-29";
 
 export { businessAreaServed, businessPostalAddress };
 
-export function organizationGraph() {
+export function organizationGraph(options?: {
+  telephone?: string;
+  image?: string;
+  omitPriceRange?: boolean;
+}) {
+  const telephone = options?.telephone ?? PHONE_E164;
+  const contactTelephone = options?.telephone ?? PHONE_SECONDARY_E164;
+  const image = options?.image ?? `${SITE_URL}/images/moves/real-23.webp`;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -49,17 +60,17 @@ export function organizationGraph() {
           "@type": "ImageObject",
           url: `${SITE_URL}/logos/toro-lockup-navy.svg`,
         },
-        image: `${SITE_URL}/images/moves/real-23.webp`,
+        image,
         description: organizationDescription,
         slogan: SLOGAN,
-        telephone: PHONE_E164,
+        telephone,
         contactPoint: {
           "@type": "ContactPoint",
-          telephone: PHONE_SECONDARY_E164,
+          telephone: contactTelephone,
           contactType: "customer service",
         },
         email: EMAIL,
-        priceRange: "$$",
+        ...(options?.omitPriceRange ? {} : { priceRange: "$$" }),
         currenciesAccepted: "USD",
         paymentAccepted: "Cash, Credit Card, Debit Card",
         address: businessPostalAddress(),

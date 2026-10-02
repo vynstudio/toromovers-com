@@ -1,0 +1,27 @@
+User-Agent: *
+Allow: /
+Disallow: /move-day-checklist
+Disallow: /thank-you
+Disallow: /lp/
+Disallow: /api/
+
+User-Agent: GPTBot
+Allow: /
+
+User-Agent: ChatGPT-User
+Allow: /
+
+User-Agent: Google-Extended
+Allow: /
+
+User-Agent: PerplexityBot
+Allow: /
+
+User-Agent: ClaudeBot
+Allow: /
+
+User-Agent: Applebot-Extended
+Allow: /
+
+Host: https://toromovers.com
+Sitemap: https://toromovers.com/sitemap.xml

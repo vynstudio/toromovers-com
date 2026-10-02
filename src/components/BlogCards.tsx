@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { blogPosts, blogHref, blogShowsOwnPhoto } from "@/lib/blog";
+import { postsForHomepage } from "@/lib/blog-listing";
 import { VECTORS_ONLY } from "@/lib/vectors-temp";
 import { VectorSlot } from "@/components/ServiceIllustrations";
 
@@ -16,7 +17,7 @@ export function BlogCards() {
     >
       <div className="site-container-wide svc-band-inner">
         <ul className="svc-cards" aria-label="Blog guides">
-          {blogPosts.map((post) => (
+          {postsForHomepage(blogPosts).map((post) => (
             <li key={post.slug} className="svc-cards-item">
               <a
                 href={blogHref(post.slug)}

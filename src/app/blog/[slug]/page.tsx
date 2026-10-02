@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { CompanyPhoneLinks } from "@/components/CompanyPhoneLinks";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
@@ -95,10 +94,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params;
+export default function BlogPostPage({ slug }: { slug: string }) {
   const post = getBlogPost(slug);
-  if (!post) notFound();
+  if (!post) return null;
 
   const jsonLd = {
     "@context": "https://schema.org",

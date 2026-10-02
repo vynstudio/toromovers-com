@@ -10,6 +10,9 @@ import { PHONE_LINES } from "@/lib/site";
 function ThanksBody() {
   const params = useSearchParams();
   const sessionId = params.get("session_id") || "";
+  // Next leaves this Suspense boundary empty in the server HTML. Match that
+  // so the first paint (and hydration) does not show the loading heading.
+  const [mounted, setMounted] = useState(false);
   const [status, setStatus] = useState<"loading" | "complete" | "open" | "error">(
     "loading",
   );
@@ -19,6 +22,11 @@ function ThanksBody() {
   const [quoteNumber, setQuoteNumber] = useState("");
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
     if (!sessionId) {
       setStatus("error");
       return;
@@ -39,13 +47,13 @@ function ThanksBody() {
         }
       })
       .catch(() => setStatus("error"));
-  }, [sessionId]);
+  }, [mounted, sessionId]);
 
   useEffect(() => {
     if (status === "open") window.location.replace("/pay");
   }, [status]);
 
-  if (status === "open") return null;
+  if (!mounted || status === "open") return null;
 
   const dollars =
     amount != null

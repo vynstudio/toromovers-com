@@ -1,0 +1,101 @@
+---
+import React from "react";
+import { renderToString } from "react-dom/server";
+import Base from "../../layouts/Base.astro";
+import "../../app/globals.css";
+import { pageLoaders, type PageModule } from "../../lib/page-modules";
+import { routeFor } from "../../lib/route-table";
+import { resolveHead, type MetaIn } from "../../lib/seo-head";
+import { metadata as thanksMetadata } from "../../app/pay/thanks/layout";
+
+import Hydrate from "./Hydrate.astro";
+import checklistCss from "../../app/move-day-checklist/checklist.css?url";
+import payCss from "../../app/pay/pay.css?url";
+
+interface Props {
+  path: string;
+  searchParams?: Record<string, string | string[] | undefined>;
+  publishableKey?: string;
+  checkoutReady?: boolean;
+  /** Homepage renders static HTML. Other routes still hydrate the page. */
+  hydrate?: boolean;
+}
+
+const { path, searchParams, publishableKey, checkoutReady, hydrate = true } =
+  Astro.props as Props;
+const spec = routeFor(path);
+
+if (!spec) {
+  Astro.response.status = 404;
+}
+
+const load = spec ? pageLoaders[spec.key] : undefined;
+const mod = load ? ((await load()) as PageModule) : undefined;
+const Component = mod?.default;
+
+let rawMeta: unknown = mod?.metadata;
+if (!rawMeta && mod?.generateMetadata && spec) {
+  const params: Record<string, string> = {};
+  if (typeof spec.props.slug === "string") params.slug = spec.props.slug;
+  rawMeta = await mod.generateMetadata({ params: Promise.resolve(params) });
+}
+if (spec?.path === "pay/thanks") rawMeta = thanksMetadata;
+
+const head = resolveHead((rawMeta || {}) as MetaIn);
+const pageProps: Record<string, unknown> = { ...spec?.props };
+if (spec?.path === "pay") {
+  pageProps.searchParams = searchParams || {};
+  pageProps.publishableKey = publishableKey || "";
+  pageProps.checkoutReady = Boolean(checkoutReady);
+}
+
+let inner = "";
+if (Component) {
+  inner = renderToString(React.createElement(Component as never, pageProps));
+}
+const HERO_SRCSET =
+  "/images/hero-video-poster-640.webp 640w, /images/hero-video-poster-960.webp 960w, /images/hero-video-poster.webp 1280w";
+
+function normalizePreload(tag: string) {
+  let out = tag.replace(/\bfetchPriority=/g, "fetchpriority=");
+  if (out.includes("/images/hero-video-poster.webp") && !out.includes("imagesrcset=")) {
+    out = out.replace(
+      /^<link\s+/i,
+      `<link imagesrcset="${HERO_SRCSET}" imagesizes="100vw" `,
+    );
+  }
+  if (out.includes("hero-video-poster") && !/fetchpriority=/i.test(out)) {
+    out = out.replace(/^<link\s+/i, '<link fetchpriority="high" ');
+  }
+  return out;
+}
+
+const seenPreload = new Set<string>();
+const preloads = [...inner.matchAll(/<link\b[^>]*rel="preload"[^>]*>/gi)]
+  .map((match) => normalizePreload(match[0]))
+  .filter((tag) => {
+    const href = (tag.match(/\bhref="([^"]+)"/i) || [])[1] || tag;
+    if (seenPreload.has(href)) return false;
+    seenPreload.add(href);
+    return true;
+  });
+inner = inner.replace(/<link\b[^>]*rel="preload"[^>]*>/gi, "").trim();
+const pageKey = spec?.key || "";
+---
+
+<Base
+  title={head.title}
+  tags={head.tags}
+  preloads={preloads}
+  deferTrackers={!hydrate}
+  extraCss={
+    spec?.path === "move-day-checklist"
+      ? [checklistCss]
+      : spec?.path === "pay" || spec?.path === "pay/thanks"
+        ? [payCss]
+        : []
+  }
+>
+  <div id="app" class="contents" set:html={inner} />
+  {hydrate && pageKey ? <Hydrate pageKey={pageKey} pageProps={pageProps} /> : null}
+</Base>

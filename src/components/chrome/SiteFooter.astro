@@ -1,0 +1,70 @@
+---
+import Icon from "../home/Icon.astro";
+import {
+  HOME_PHONE_DISPLAY,
+  HOME_PHONE_TEL,
+  NATIONWIDE_HREF,
+  SERVICE_LINKS,
+} from "../../lib/site-chrome.ts";
+
+const services = [
+  SERVICE_LINKS[0],
+  SERVICE_LINKS[1],
+  SERVICE_LINKS[3],
+  SERVICE_LINKS[5],
+];
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="ft-cta">
+      <p class="eyebrow">Let us carry it</p>
+      <h2 class="ft-big">
+        Ready to move?<br />
+        <a href={HOME_PHONE_TEL} data-track="phone">
+          Call {HOME_PHONE_DISPLAY}<span class="dot">.</span>
+        </a>
+      </h2>
+      <div class="ft-btns">
+        <a href="#quote" class="btn btn-red" data-text="Get a Quote" data-track="quote">
+          <span>Get a Quote</span>
+        </a>
+        <a href={HOME_PHONE_TEL} class="line-link ll-white" data-track="phone">
+          Call now<Icon name="arrow" size={18} class="ic ll-ic" />
+        </a>
+      </div>
+    </div>
+    <div class="ft-cols">
+      <div>
+        <a href="/" class="logo logo-ft logo-img" aria-label="Toro Movers home">
+          <img src="/logos/toro-lockup-white.svg" alt="Toro Movers" width="220" height="55" loading="lazy" />
+        </a>
+        <p class="ft-note">
+          Moving homes, apartments and offices across Orlando and Central Florida. English & Spanish.
+        </p>
+      </div>
+      <div>
+        <p class="ft-label">Services</p>
+        {services.map((item) => <a href={item.href}>{item.label}</a>)}
+      </div>
+      <div>
+        <p class="ft-label">Areas</p>
+        <a href="/orlando-movers">Orlando</a>
+        <a href="/winter-park-movers">Winter Park</a>
+        <a href="/kissimmee-movers">Kissimmee</a>
+        <a href={NATIONWIDE_HREF}>Nationwide</a>
+      </div>
+      <div>
+        <p class="ft-label">Talk to us</p>
+        <a href={HOME_PHONE_TEL} data-track="phone">{HOME_PHONE_DISPLAY}</a>
+        <a href="https://toromovers.com/">toromovers.com</a>
+        <a href="#quote" data-track="quote">Get a quote</a>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span>© 2026 Toro Movers</span>
+      <span>No hidden fees</span>
+    </div>
+  </div>
+  <div class="ft-giant" aria-hidden="true"></div>
+</footer>

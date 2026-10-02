@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import PayFlow from "@/components/pay/PayFlow";
 import { PayShell } from "@/components/pay/PayShell";
-import { runtimeEnv, stripePublishableKey } from "@/lib/env";
 import { firstQueryValue, parsePayLink } from "@/lib/payments";
 
 export const metadata: Metadata = {
@@ -12,14 +11,16 @@ export const metadata: Metadata = {
   alternates: { canonical: "/pay" },
 };
 
-export const dynamic = "force-dynamic";
-
-export default async function PayPage({
-  searchParams,
+export default function PayPage({
+  searchParams = {},
+  publishableKey = "",
+  checkoutReady = false,
 }: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
+  searchParams?: Record<string, string | string[] | undefined>;
+  publishableKey?: string;
+  checkoutReady?: boolean;
 }) {
-  const params = await searchParams;
+  const params = searchParams;
   const link = parsePayLink(params);
   const quoteToken = firstQueryValue(params.q);
   const quoteNumber =
@@ -36,7 +37,6 @@ export default async function PayPage({
       : link.kind === "balance"
         ? "Pay the remaining balance on your move. You can add an optional tip here. Card details stay on this page. Stripe processes the payment."
         : "Pay a deposit to hold your move date. We just need your name, phone, address, and email. Card details stay on this page. Stripe processes the payment.";
-  const checkoutReady = Boolean(runtimeEnv("STRIPE_SECRET_KEY") && stripePublishableKey());
   return (
     <PayShell>
       <section className="pay-main">
@@ -51,7 +51,7 @@ export default async function PayPage({
             initialMode={link.mode}
             amountCents={link.amountCents}
             amountLocked={link.amountLocked}
-            publishableKey={stripePublishableKey()}
+            publishableKey={publishableKey}
             quoteToken={quoteToken}
             quoteNumber={quoteNumber}
             checkoutReady={checkoutReady}

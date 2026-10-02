@@ -6,15 +6,18 @@
 
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = "dist"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# Astro + @astrojs/netlify. Do not install @netlify/plugin-nextjs: it would
+# serve the old Next runtime over this site.
 
 [build.environment]
   NODE_VERSION = "20"
-  NEXT_TELEMETRY_DISABLED = "1"
   NEXT_PUBLIC_SITE_URL = "https://toromovers.com"
+  # The site still has the Next.js runtime installed in the Netlify UI.
+  # This branch does not change that setting. The variable tells that
+  # plugin to skip so this Astro build can publish dist/.
+  NETLIFY_NEXT_PLUGIN_SKIP = "true"
 
 # toromovers.net aliases → apex in one hop.
 # http and https are separate rules (Netlify does not combine them).
@@ -506,3 +509,30 @@
   force = true
 
 # NOTE: deliberately NO /manifest.webmanifest proxy — public/manifest.webmanifest must win.
+
+# /tip and /tip/thanks are Astro endpoints (307), not edge redirects.
+# An edge rule would also swallow /tip/ and skip the 308 trailing-slash hop
+# that live Next.js returns. See src/pages/tip/.
+# Trailing-slash 308s live in netlify/edge-functions/searchable.ts.
+# A toml rule from "/*/" to "/:splat" is rejected as a redirect loop.
+
+# Live Next responses send this. Netlify adds HSTS on HTTPS itself.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

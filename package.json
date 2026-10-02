@@ -3,31 +3,35 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "astro build",
+    "start": "node scripts/preview-static.mjs",
+    "preview": "node scripts/preview-static.mjs",
     "lint": "eslint",
     "test:payments": "node --experimental-strip-types --test src/lib/payments.test.ts",
     "test:cities": "node --experimental-strip-types --test src/lib/city-pages.test.ts src/lib/local-seo.test.ts",
     "test:notify": "node --experimental-strip-types --test src/lib/notify.test.ts src/lib/funnel-offer.test.ts src/lib/lead-email.test.ts src/lib/funnel-service.test.ts src/lib/quote-page.test.ts src/lib/selected-place.test.ts src/lib/mapbox-suggest.test.ts src/lib/quote-address.test.ts src/lib/fl-zip-cities.test.ts src/lib/move-checklist/progress.test.ts"
   },
   "dependencies": {
+    "@astrojs/netlify": "^6.6.0",
+    "@astrojs/react": "^4.4.0",
+    "@fontsource-variable/inter": "^5.2.8",
+    "@fontsource/space-grotesk": "^5.2.10",
     "@netlify/blobs": "^10.7.13",
-    "@netlify/plugin-nextjs": "^5.15.12",
     "@stripe/react-stripe-js": "^6.9.0",
     "@stripe/stripe-js": "^9.15.0",
-    "next": "16.2.12",
+    "astro": "^5.14.4",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "stripe": "^22.6.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/vite": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

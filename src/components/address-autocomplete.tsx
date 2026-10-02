@@ -38,6 +38,8 @@ type Props = {
   required?: boolean;
   /** Kept for older call sites. Suggestions are always street addresses. */
   streetOnly?: boolean;
+  /** Fallback number when search is down. Defaults to the company lines. */
+  phoneLines?: string;
   /**
    * Flexible fields (quote forms) also suggest cities and ZIP codes, a bare
    * ZIP fills in its city on blur, and hints are informational only: a typed
@@ -58,6 +60,7 @@ export function AddressAutocomplete({
   id,
   className,
   required,
+  phoneLines = PHONE_LINES,
   flexible = false,
 }: Props) {
   const reactId = useId();
@@ -268,7 +271,7 @@ export function AddressAutocomplete({
         ? "No suggestions. A street, city, or ZIP is fine as typed."
         : ""
     : status === "down"
-      ? `Address search is unavailable. Call ${PHONE_LINES}.`
+      ? `Address search is unavailable. Call ${phoneLines}.`
       : status === "empty"
         ? typedArea
           ? "Start with the street number and name, like 1 E Pine St, then choose a suggestion."

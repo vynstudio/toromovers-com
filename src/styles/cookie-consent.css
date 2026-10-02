@@ -1,0 +1,233 @@
+.ck-card,
+.ck-modal {
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  color: #0b0b0b;
+}
+.ck-card {
+  position: fixed;
+  z-index: 80;
+  left: 16px;
+  bottom: 16px;
+  width: min(380px, calc(100vw - 32px));
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(11, 11, 11, 0.16);
+  padding: 16px;
+  animation: ck-in 0.4s ease both;
+}
+.ck-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.ck-well {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #8cc7c4;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.ck-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 0 0 4px;
+}
+.ck-body,
+.ck-modal-lead,
+.ck-toggles p + p {
+  font-size: 13px;
+  line-height: 1.45;
+  margin: 0;
+  color: #0b0b0b;
+}
+.ck-links {
+  display: flex;
+  gap: 14px;
+  margin: 10px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+.ck-links a {
+  color: #2c687b;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ck-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+.ck-accept,
+.ck-essential,
+.ck-custom,
+.ck-switch {
+  font: inherit;
+  cursor: pointer;
+}
+.ck-accept,
+.ck-essential {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.ck-accept {
+  background: #db1a1a;
+  color: #fff;
+  border: 0;
+}
+.ck-essential {
+  background: #fff;
+  color: #2c687b;
+  border: 1.5px solid #2c687b;
+}
+.ck-custom {
+  min-height: 44px;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  color: #2c687b;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ck-accept:focus-visible,
+.ck-essential:focus-visible,
+.ck-custom:focus-visible,
+.ck-switch:focus-visible,
+.ck-links a:focus-visible {
+  outline: 2px solid #2c687b;
+  outline-offset: 2px;
+}
+.ck-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(11, 11, 11, 0.48);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+.ck-modal-card {
+  width: min(420px, 100%);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(11, 11, 11, 0.18);
+  padding: 20px;
+}
+.ck-modal-card h2 {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+.ck-toggles {
+  list-style: none;
+  margin: 16px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ck-toggles li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.ck-toggles p {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+.ck-toggles p + p {
+  font-size: 13px;
+  font-weight: 400;
+  margin-top: 2px;
+}
+.ck-switch {
+  width: 44px;
+  height: 26px;
+  border-radius: 999px;
+  border: 0;
+  background: #d5d8da;
+  position: relative;
+  flex-shrink: 0;
+}
+.ck-switch::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+.ck-switch[aria-checked="true"] {
+  background: #2c687b;
+}
+.ck-switch[aria-checked="true"]::after {
+  transform: translateX(18px);
+}
+.ck-switch:disabled {
+  cursor: not-allowed;
+}
+.ck-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@keyframes ck-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 760px) {
+  .ck-card {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    border-radius: 16px 16px 0 0;
+    padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
+    box-shadow: 0 -8px 28px rgba(11, 11, 11, 0.12);
+  }
+  body:has(.sticky-cta-bar) .ck-card {
+    bottom: calc(5.25rem + env(safe-area-inset-bottom, 0px));
+    border-radius: 16px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ck-card {
+    animation: none;
+  }
+  .ck-switch::after {
+    transition: none;
+  }
+}
