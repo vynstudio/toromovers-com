@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { SOCIAL_FOOTER_LINKS, SOCIAL_LINKS, SOCIAL_PROFILES } from "./site.ts";
 
-test("social profiles omit an empty Yelp URL and the long Maps search link", () => {
-  assert.equal(SOCIAL_LINKS.yelp, "");
+test("social profiles are Instagram, Facebook, and the short Google Maps link", () => {
+  assert.equal("yelp" in SOCIAL_LINKS, false);
   assert.deepEqual(
     SOCIAL_FOOTER_LINKS.map((item) => item.id),
     ["instagram", "facebook", "google"],

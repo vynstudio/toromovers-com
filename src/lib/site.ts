@@ -78,37 +78,29 @@ export const SERVICE_BASE_COUNTRY = "US";
  * match the hidden-address listing.
  */
 
-/**
- * Public profiles. Leave yelp empty until the URL is known; empty entries
- * are omitted from the footer and from JSON-LD sameAs.
- */
+/** Public profiles for the footer icons and Organization sameAs. */
 export const SOCIAL_LINKS = {
   instagram: "https://www.instagram.com/toromovers/",
   facebook: "https://www.facebook.com/722514634274519",
   google: "https://maps.app.goo.gl/4VLksGpLoVTYXv3k7",
-  yelp: "",
 } as const;
 
 export const SOCIAL = {
   facebook: SOCIAL_LINKS.facebook,
 } as const;
 
-/** Footer order. Yelp is skipped while SOCIAL_LINKS.yelp is empty. */
+/** Footer order: Instagram, Facebook, Google. */
 export const SOCIAL_FOOTER_LINKS = (
   [
     ["instagram", "Toro Movers on Instagram"],
     ["facebook", "Toro Movers on Facebook"],
     ["google", "Toro Movers on Google"],
-    ["yelp", "Toro Movers on Yelp"],
   ] as const
-)
-  .map(([id, label]) => ({ id, label, href: SOCIAL_LINKS[id] }))
-  .filter((item) => item.href.length > 0);
+).map(([id, label]) => ({ id, label, href: SOCIAL_LINKS[id] }));
 
-/** Organization sameAs: Facebook, Instagram, the short Google Maps link, Yelp when set. */
+/** Organization sameAs: Facebook, Instagram, then the short Google Maps link. */
 export const SOCIAL_PROFILES = [
   SOCIAL_LINKS.facebook,
   SOCIAL_LINKS.instagram,
   SOCIAL_LINKS.google,
-  SOCIAL_LINKS.yelp,
-].filter((url) => url.length > 0);
+];
