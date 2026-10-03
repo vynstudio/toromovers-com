@@ -5,6 +5,7 @@
  */
 
 import { businessAreaServed } from "./business-profile.ts";
+import { QUOTE_RATE_ANSWER } from "./quote-faqs.ts";
 import { SITE_URL, PHONE_LINES} from "./site.ts";
 
 export type ServiceGuide = {
@@ -63,7 +64,7 @@ export const packingServicesPage: ServiceGuide = {
   metadata: {
     title: "Packing services in Orlando | Help by the hour",
     description:
-      "Packing services in Orlando for kitchens, closets, or a full household pack. Same up-front hourly rate as the move. Call " + PHONE_LINES + ".",
+      "Packing services in Orlando for kitchens, closets, or a full household pack. The hourly model matches the move. Call 321-234-0510.",
     ogTitle: "Packing services in Orlando",
     ogDescription:
       "Hire Toro to box named rooms or the whole home before the carry. Up-front hourly rates across Central Florida.",
@@ -90,6 +91,13 @@ export const packingServicesPage: ServiceGuide = {
   },
   sections: [
     {
+      h2: "Who packing services are for",
+      paragraphs: [
+        "Book packing when the carry is already the plan and some rooms are still open. A common Central Florida fit is a house where the bedrooms are boxed and the kitchen, closets, or garage are not. Another fit is a condo with a short elevator reservation: pack the fragile rooms before that slot, and keep the reservation for the carry. A third fit is a labor-only day. You already have the truck, and you want the same crew to close the cartons before they load it.",
+        "Skip a packing booking when every carton is already taped, labeled, and stacked. That day is a move. Use full-service moving if the crew should also bring the truck. Use labor-only moving if the truck is already yours. Skip packing when the only piece is a sofa, a mattress, or one planned furniture delivery. Those hours would sit on a clock you do not need. If you are unsure which rooms are still open, say so on the quote and send photos of those rooms.",
+      ],
+    },
+    {
       h2: "What packing services cover",
       paragraphs: [
         "Packing services in Orlando are the boxes the crew closes, not a separate product from the move. A partial pack is the slice you name: the kitchen, the closets, or fragile pieces, after the rest of the home is already in cartons. A full pack is the crew boxing household goods that are still loose, then moving them. Self-pack means your cartons are already closed, taped, and labeled when the truck arrives. Furniture pads and wrap are part of the move on all three. The difference is whose time closes the cartons.",
@@ -106,8 +114,8 @@ export const packingServicesPage: ServiceGuide = {
     {
       h2: "How packing changes the hourly clock",
       paragraphs: [
-        "Local jobs are quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Packing the crew does is hours on that same rate. A larger pack needs more hours, and sometimes more movers, so the boxes and the furniture both finish. More people can box and carry at the same time, which can shorten the clock. The rate is per mover per hour, so the quote balances people and time.",
-        "How packed you will be can change the day more than bedroom count alone. A packed two-bedroom with closed boxes can finish faster than a larger home where the kitchen and closets are still open. Share home size and how packed you will be. Stairs, elevator waits, and a long walk from parking add time. They are not a stair fee. A short fragile pack plus a short carry can land on the 2-hour minimum. A full pack of a house will run past it. We explain crew size and the hourly model before the day.",
+        "Packing the crew does is hours on the same clock as the carry. A larger pack needs more hours, and sometimes more movers, so the boxes and the furniture both finish. More people can box and carry at the same time, which can shorten the clock. The quote balances people and time.",
+        "How packed you will be can change the day more than bedroom count alone. A packed two-bedroom with closed boxes can finish faster than a larger home where the kitchen and closets are still open. Share home size and how packed you will be. Stairs, elevator waits, and a long walk from parking add time. A short fragile pack plus a short carry can land on the minimum. A full pack of a house will run past it. We explain crew size and the hourly model before the day.",
       ],
     },
     {
@@ -121,7 +129,14 @@ export const packingServicesPage: ServiceGuide = {
       h2: "Where we pack in Central Florida",
       paragraphs: [
         "Toro Movers is based in Orlando and packs on local jobs across Central Florida, including Lake Nona, Dr. Phillips, Winter Park, Kissimmee, Winter Garden, and Lake Mary. The hourly model is the same on a short metro hop. Drive time between those cities is on the clock and quoted honestly.",
-        "If the drop-off leaves Central Florida, that job is a trip quote rather than this local hourly pack. Say so when you call so we do not plan a same-metro crew for a longer route. For local work, hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+        "If the drop-off leaves Central Florida, that job is a trip quote rather than this local hourly pack. Say so when you call so we do not plan a same-metro crew for a longer route. For local work, hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
+      ],
+    },
+    {
+      h2: "How packing connects to the rest of the move",
+      paragraphs: [
+        "Once the rooms are named, the rest of the booking is which truck shows up. If Toro should bring it, the quote is a full-service move with packing hours on the front of the day. If you already reserved a U-Haul, POD, or rental truck, the quote is labor-only and the packing happens before that vehicle is loaded. When the constraint is a building window rather than the cartons, the apartment movers page is the one to read before you lock the reservation.",
+        "A lift that is only a few pieces already on a truck belongs on loading and unloading help, not on a packing clock. A single sofa or a planned furniture delivery belongs on small moves. The services page is the full list if none of those is quite the job. The blog guide compares self-pack, a named slice, and a full pack so you can choose before you hire. This page is the booking once you know which rooms the crew should close.",
       ],
     },
   ],
@@ -138,7 +153,7 @@ export const packingServicesPage: ServiceGuide = {
     },
     {
       q: "Is there a separate price for packing?",
-      a: "No. There is no carton rate and no packing price list. Time the crew spends boxing is on the same hourly clock as the carry at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A larger pack needs more hours, and sometimes more movers.",
+      a: QUOTE_RATE_ANSWER,
     },
     {
       q: "Can packing be added to labor-only or full-service?",
@@ -150,7 +165,11 @@ export const packingServicesPage: ServiceGuide = {
     },
     {
       q: "How do I book packing services in Orlando?",
-      a: "Call or text " + PHONE_LINES + ", or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text 321-234-0510, or request a quote online. Say self-pack, packing help with the rooms named, or full packing. Add both addresses, stairs or elevator hours, parking, and truck versus labor-only. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
+    },
+    {
+      q: "Do I need to buy boxes before the crew arrives?",
+      a: "Bring sturdy cartons you already have. Crushed store boxes slow the pack and fail on a stair carry. If you want the crew to supply cartons, paper, and tape, say that when you request the quote so the start of the day includes stocking the rooms you named. Wardrobe cartons and dish packs take time to stage, and that time is on the same hourly clock as the wrapping. Point out anything that should stay unpacked, including documents, medication, and a bag you will carry yourself.",
     },
   ],
   closing: {

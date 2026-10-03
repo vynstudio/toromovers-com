@@ -97,7 +97,8 @@ const isFullService = spec?.path === "full-service-moving";
 const isLaborOnly = spec?.path === "labor-only-moving";
 const isApartment = spec?.path === "apartment-movers-orlando-fl";
 const isLoading = spec?.path === "loading-unloading";
-if (isFullService || isLaborOnly || isApartment || isLoading) {
+const isPacking = spec?.path === "packing-services-orlando";
+if (isFullService || isLaborOnly || isApartment || isLoading || isPacking) {
   for (const href of [grotesk400, grotesk600]) {
     if (seenPreload.has(href)) continue;
     seenPreload.add(href);
@@ -113,7 +114,7 @@ const isLpLocal = spec?.path === "lp/local-movers";
 const isThankYou = spec?.path === "thank-you";
 const isServices = spec?.path === "services";
 const isRebrandChrome =
-  isQuotes || isContact || isServices || isFullService || isLaborOnly || isApartment || isLoading;
+  isQuotes || isContact || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking;
 const LOCAL_PHONE = "321-234-0510";
 ---
 
@@ -124,11 +125,13 @@ const LOCAL_PHONE = "321-234-0510";
   deferTrackers={!hydrate}
   businessTelephone={isRebrandChrome || isLpLocal || isThankYou ? PHONE_E164 : undefined}
   businessImage={
-    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading
+    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking
       ? `${SITE_URL}/images/pay-confirm-family.webp`
       : undefined
   }
-  omitPriceRange={isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading}
+  omitPriceRange={
+    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking
+  }
   extraCss={
     spec?.path === "move-day-checklist"
       ? [checklistCss]
@@ -144,7 +147,7 @@ const LOCAL_PHONE = "321-234-0510";
                 ? [thanksCss]
                 : isServices
                   ? [servicesCss]
-                  : isFullService || isLaborOnly || isApartment || isLoading
+                  : isFullService || isLaborOnly || isApartment || isLoading || isPacking
                     ? [fullServiceCss]
                     : []
   }
