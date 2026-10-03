@@ -69,7 +69,8 @@ test("new service pages stay in the word range and cross-link the guides", () =>
     const deep =
       path === "/packing-services-orlando" ||
       path === "/office-movers-orlando" ||
-      path === "/same-day-movers-orlando";
+      path === "/same-day-movers-orlando" ||
+      path === "/small-moves-orlando";
     const min = deep ? 1000 : 800;
     const max = deep ? 2200 : 1210;
     assert.ok(words >= min && words <= max, `${path} ${words}`);
