@@ -73,11 +73,13 @@ export function RebrandCityPage({ city }: { city: CityRebrandCopy }) {
           <p className="eyebrow">{city.eyebrow}</p>
           <h1 id={headingId}>{city.h1}</h1>
           <p className="aeo-answer">{city.lede}</p>
-          <ul className="fs-chips" aria-label={`${city.cityName} moving highlights`}>
-            {city.chips.map((chip) => (
-              <li key={chip}>{chip}</li>
-            ))}
-          </ul>
+          {city.chips.length > 0 ? (
+            <ul className="fs-chips" aria-label={`${city.cityName} moving highlights`}>
+              {city.chips.map((chip) => (
+                <li key={chip}>{chip}</li>
+              ))}
+            </ul>
+          ) : null}
           <a className="btn btn-red fs-call" href={PHONE_TEL} data-cta={`${city.slug}-call`}>
             <span>Call {PHONE}</span>
           </a>
@@ -111,18 +113,30 @@ export function RebrandCityPage({ city }: { city: CityRebrandCopy }) {
       </section>
 
       <div className="fs-body">
-        {city.sections.map((section) => (
-          <section key={section.h2}>
-            <h2>{section.h2}</h2>
-            {section.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-            ))}
+        {city.included ? (
+          <section aria-labelledby={`${city.slug}-included`}>
+            <h2 id={`${city.slug}-included`}>{city.included.heading}</h2>
+            <ul>
+              {city.included.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+            {city.localNote ? <p>{city.localNote}</p> : null}
           </section>
-        ))}
+        ) : (
+          city.sections.map((section) => (
+            <section key={section.h2}>
+              <h2>{section.h2}</h2>
+              {section.paragraphs.map((paragraph) => (
+                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+              ))}
+            </section>
+          ))
+        )}
 
         <section aria-labelledby={`${city.slug}-services`}>
           <h2 id={`${city.slug}-services`}>{city.servicesHeading}</h2>
-          <p>{city.servicesIntro}</p>
+          {city.servicesIntro ? <p>{city.servicesIntro}</p> : null}
           <ul className="fs-cities">
             {SERVICES.map((link) => (
               <li key={link.href}>

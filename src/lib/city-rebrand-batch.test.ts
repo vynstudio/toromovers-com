@@ -31,12 +31,14 @@ const SERVICES = [
 function bodyLines(copy: CityRebrandCopy): string[] {
   return [
     copy.lede,
+    ...(copy.included?.items ?? []),
+    ...(copy.localNote ? [copy.localNote] : []),
     ...copy.sections.flatMap((section) => section.paragraphs),
     ...copy.faqs.map((item) => item.a),
     copy.servicesIntro,
     copy.nearbyIntro,
     copy.closing.body,
-  ].filter((line) => line !== QUOTE_RATE_ANSWER);
+  ].filter((line) => line && line !== QUOTE_RATE_ANSWER);
 }
 
 function strings(value: unknown, out: string[] = []): string[] {
@@ -66,12 +68,19 @@ test("batch 1 city pages keep URL, source, H1 intent, and unique copy", () => {
     assert.equal(city.source, `city-${city.slug}`);
     assert.match(city.h1, new RegExp(city.cityName, "i"));
     assert.doesNotMatch(city.h1, /\u2014/);
-    assert.ok(city.faqs.length >= 6, city.slug);
     assert.equal(city.faqs[0].a, QUOTE_RATE_ANSWER);
     assert.equal(QUOTE_RATE_ANSWER, RATE);
     assert.ok(city.description.length >= 120 && city.description.length <= 160, `${city.slug} ${city.description.length}`);
     assert.match(city.description, /321-234-0510/);
-    assert.ok(cityRebrandWordCount(city) >= 1000, `${city.slug} ${cityRebrandWordCount(city)}`);
+    if (city.slug === "kissimmee-movers") {
+      assert.equal(city.h1, "Kissimmee movers for homes, apartments, and Osceola hops");
+      assert.ok(city.faqs.length >= 4 && city.faqs.length <= 5, String(city.faqs.length));
+      assert.equal(city.included?.items.length, 4);
+      assert.equal(city.sections.length, 0);
+    } else {
+      assert.ok(city.faqs.length >= 6, city.slug);
+      assert.ok(cityRebrandWordCount(city) >= 1000, `${city.slug} ${cityRebrandWordCount(city)}`);
+    }
     for (const line of strings(city)) {
       if (line === QUOTE_RATE_ANSWER) continue;
       assert.equal(line.includes("$"), false, line);
