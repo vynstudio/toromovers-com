@@ -113,6 +113,35 @@ export const apartmentMoversPage = {
       { label: "Central Florida", href: "/central-florida-movers" },
     ] as const,
   },
+  sections: [
+    {
+      h2: "How an Orlando apartment move runs",
+      paragraphs: [
+        "The property sets the window more often than the inventory does. A leasing office may allow a move only on certain weekdays, only outside quiet hours, or only with a reserved freight elevator and pads on the cab walls. Ask what they require and the deadline, then send that with the booking. If they want a form or a certificate, forward the request with the manager's name. We cannot open a window the office never reserved.",
+        "On the day, the crew arrives for that reservation. A passenger elevator that residents still use is a slower clock than a reserved freight car, because the crew yields the car between loads. A walk-up is a different plan: the floor count, whether the stair turns back on itself, and whether the only legal stop is street parking. Tell us those three things before the quote is treated as final.",
+      ],
+    },
+    {
+      h2: "What to stage inside the unit",
+      paragraphs: [
+        "A clear path from the door to the largest pieces matters more than a perfect label system. Take down what you do not want decided in the hallway: a television you will carry, art with glass, and anything the lease says stays with the unit. Empty a fridge you are moving. Cartons you packed should be closed and taped. An open kitchen or a closet that is still on hangers is packing work. A short reservation will not cover those rooms on its own.",
+        "If you are unsure a sofa will leave, measure one tight point: the stair width, the elevator door, or the turn into the bedroom. Photos of that turn, the loading area, and where a truck is allowed to stand are enough to size the crew. A reservation that assumes a packed unit will not stretch because the closets were still full.",
+      ],
+    },
+    {
+      h2: "Central Florida buildings we plan around",
+      paragraphs: [
+        "Downtown and Lake Eola towers, Baldwin Park and Thornton Park walk-ups, College Park houses cut into apartments, and newer Lake Nona or Horizon West buildings with a garage court do not share one access plan. Older Winter Park and College Park buildings often have no dock. The truck stops on the street, and the carry starts at the stair. Newer communities often use a call box and a loading zone on a timer. Kissimmee and Dr. Phillips condos may have a side entrance or a dock that is shared with deliveries.",
+        "You are not quoted a separate building rate. The difference is minutes: the walk from the legal stop to the door, the floor, and whether the elevator is actually reserved. If the new unit is in another Central Florida city, the drive between the two addresses is part of the job. If the second address is outside the metro, say so before we plan a local crew. That route is a trip quote.",
+      ],
+    },
+    {
+      h2: "Which booking matches the building",
+      paragraphs: [
+        "Full-service is the booking when you want the truck as well as the crew, door to door. Labor-only is the same stairs and elevator plan when a U-Haul, POD, or rental truck is already reserved. Packing services is the add-on when the kitchen or closets will still be open at the start of the reservation. Name those rooms so the quote includes them. A single furniture piece is a small move. Every option is on the services page.",
+      ],
+    },
+  ] as const,
   faqs: [
     {
       q: "Do you handle apartment moves in Orlando?",
