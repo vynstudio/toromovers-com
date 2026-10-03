@@ -41,6 +41,80 @@ export type BlogPost = {
 
 export const blogPosts: readonly BlogPost[] = [
   {
+    slug: "orlando-piano-heavy-item-movers",
+    illustration: "loading",
+    eyebrow: "Heavy items · Orlando",
+    title: "How to move pianos and other heavy items in Orlando",
+    teaser:
+      "Heavy and awkward pieces in Orlando, including pianos: stairs, turns, heat, elevator windows, and an hourly crew quote.",
+    description:
+      "How Orlando and Central Florida movers handle a piano and other heavy or awkward pieces: stairs, turns, elevator windows, and an hourly quote.",
+    date: "2026-10-03",
+    dateLabel: "Oct 3, 2026",
+    image: {
+      src: "/images/services/special-item-move.webp",
+      alt: "Illustration of two movers carrying a piano down the front steps on a Central Florida heavy-item move",
+      dedicated: true,
+    },
+    body: [
+      "Heavy and awkward pieces on an Orlando move are the items that set the crew: a piano, a safe, a large sectional, or a dresser that has to turn on a landing. Toro Movers is the practical Central Florida option for that carry, with pads and a crew sized to the piece, quoted by the hour before anyone rolls.",
+      "## Stairs, landings, and tight turns",
+      "The path decides the job more than the room the piece sits in. Count the flights at pickup and at drop-off. A straight run with a wide landing is a different carry than a switchback where the piece has to pivot. Exterior stairs on garden apartments are common from Kissimmee to Colonial Drive and through Winter Park townhomes. Share the flight count, and say whether the turn is indoors or on an open stair.",
+      "A piano, a safe, a sleeper sofa, or a long dresser does not fold the way a box does. If the landing is narrower than the piece is long, the crew needs a plan before move morning: a different door, legs off when the piece is built that way, or more people so the turn can be held. Measure the tightest door, the landing, and the stair width if you can. A photo of that turn sizes the crew better than a bedroom count. How pads and doorways protect a piece is in /blog/careful-furniture-handling-orlando-movers.",
+      "Parking is part of the same path. A legal spot at the door keeps a heavy carry short. A downtown Orlando curb, a narrow apartment drive, or a visitor space two buildings away turns one flight into a long walk with a piece that cannot be set down halfway. Say where a truck may sit, and for how long. Stairs and that walk add time on the hourly clock. They are not a separate charge.",
+      "## Pianos and other bulky pieces",
+      "A piano is one example of a heavy, awkward piece. Toro Movers moves pianos in Orlando and nearby Central Florida as part of the moving service: pads, a crew sized to the weight and the turns, and placement in the room you name. That is ordinary work on a local job. There is no separate piano credential behind it.",
+      "Name the type. An upright, a console, or a spinet is tall and moves as one piece. It needs clearance on the stair and a door that is tall enough once the piece is on a dolly. A baby grand or a grand is wider. The legs and the pedal assembly usually come off so the body can turn, and those parts go back on in the new room. Send a photo of the whole piano, the room it is in, and the door it has to leave through. If you know the brand or the size, add that. If you do not know the weight, do not guess a number.",
+      "Other bulky pieces use the same quote. A safe usually does not come apart, and the stairs decide whether more people are required. A large sectional, a sleeper sofa, or a table with a stone top is the same idea: name it, show the path, and say whether it rolls. Empty a safe and a refrigerator before the day if you can. Weight left inside the piece is weight on the stair. A piano bench and a lamp can ride with the piano. Say so, so they are not left in the old room.",
+      "The crew places the piano where you want it and puts removable parts back on. The crew does not tune it. A piano technician tunes it after it has sat in the new room. Book that separately. Pads protect the finish from scuffs and door frames. They do not rebuild the inside of the piano, and they do not change how it sounds.",
+      "## What comes apart before the carry",
+      "Disassembly is whatever the piece was built to allow. A grand piano's legs and pedal assembly are expected to come off for a tight door. An upright's legs do not. A sectional that separates needs the hardware in a labeled bag, not loose in a drawer. A bed is a headboard, a frame, and a mattress, and those are separate carries. Bolted dining-table legs can come off. A table leaf comes out. A glass or stone top that is glued, a safe, and the inside of a piano stay in one piece.",
+      "Do not take a piano apart the morning of the move to save time. A leg removed without the right order, or hardware in an unlabeled cup, becomes time on site while the crew sorts it. Clear the room instead. Take photos, lamps, and stacked books off the piano. If a piece must stay fully assembled, say that in the quote. An antique you do not want opened is a slower path, not a reason to force hardware.",
+      "The path is the other half of prep. Move cars, rugs that slide, and hallway furniture that blocks the turn. Cover a floor when the building requires it, or say the association supplies runners. That protection is time on the same clock. It is not a stair charge. If a door has to come off its hinges for a sofa or a safe, say which door. A door that is painted shut should be known before the day.",
+      "## Heat, humidity, and building windows",
+      "Florida heat and humidity sit on a midday carry. An open stair in Kissimmee, a west-facing walk in Orlando, a closed garage in Clermont or Sanford, and a truck that has been sitting in the sun are harder after lunch than at an early start. Heat does not add a fee. It adds minutes, and minutes are the hourly clock. When the building allows it, book the earlier window. A piano finish and other wood furniture are already living in Central Florida humidity. Keep the piece out of a long uncovered wait. Pads do not control the weather.",
+      "Rain is the other clock. An afternoon storm can make an exterior stair and a metal ramp slick. If the only path is outside, say so. An early window is the practical answer when the association allows that hour. Do not plan the heavy carry for a wet open stair.",
+      "Many Orlando apartments, condos, and HOA communities only open the elevator, the dock, or the loading zone for a reserved slot. A piano or a safe can use that whole slot. A reservation written for a few boxes is often too short, and a reservation that was never made does not appear because the piece is heavy. Tell the office what is moving, which floor, and that the piece may need the freight elevator if the passenger cab is small. Measure the cab door and the interior if you can. A grand on its side, or an upright on a dolly, has to fit that opening. If it does not, the path is the stairs or a different entrance. Put the written hours in the quote. High-rise elevator rules are in /blog/orlando-apartment-high-rise-movers. The service page is /apartment-movers-orlando-fl.",
+      "The tighter window wins. A pickup elevator that closes at noon and a drop-off that opens later that afternoon cannot share one date unless both offices have said the hours overlap. A short slot often needs more movers so the heavy piece is through before the cab goes back to residents. More people can shorten the clock. The job is still quoted by the hour. Crew hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. If the only open building window sits outside those hours, say so before the quote is treated as final.",
+      "## Furniture-only, a household, or labor-only",
+      "Match the booking to the list. Furniture-only is the right job when the piano, or the piano plus a few named pieces, is everything that is moving. The rest of the home is staying, already gone, or never lived at that address. A quote built for one piano will not cover a house that is still full. A quote built for a house will not shrink on move morning because only the piano was ready. How a short list differs from a household is in /blog/orlando-furniture-only-movers. Book that short list on /small-moves-orlando.",
+      "A household move is the right booking when the piano is one piece inside a home that is also leaving: beds, a kitchen, boxes, and the heavy piece. Full-service is that job when you want the crew and the truck, door to door, including the drive between two Central Florida stops. See /full-service-moving. You do not need a second booking for the piano. Name it on the household quote so the crew and the path are sized for it.",
+      "Labor-only is the booking when you already have a truck, a cargo van, or a container that can hold the piece, and you need people for the lift. You drive. Say the vehicle length and the time it will be on site. A sedan or a small SUV is not a plan for an upright, and a grand needs floor space a short cargo van may not have. If the vehicle cannot take the piece, book full-service instead of hoping it fits at the curb. The service page is /labor-only-moving. Read /blog/orlando-labor-only-movers-guide before you reserve a truck that may be too small.",
+      "One piece between two Central Florida addresses stays on the hourly model. If the drop-off leaves the area, say the cities in the first message so the quote matches the drive.",
+      "## What to send for the quote",
+      "Request the quote at /quotes. Lead with the piece: upright, console, baby grand, grand, safe, sectional, or each bulky item by name. Add pickup and drop-off addresses, the room and floor at each stop, the flight count, and a photo of the tightest turn. Add the elevator, dock, or loading-zone hours if a building controls them, and where the truck may park. Say whether you need the truck included or you already have a vehicle that can hold the piece. Photos of the piano or the other heavy item, from the front and from the side, help. Say what is staying behind.",
+      "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text " +
+        PHONE_LINES +
+        ". Toro Movers is a family-owned local crew serving Orlando, Winter Park, Kissimmee, Clermont, Sanford, and nearby Central Florida. English and Spanish on the phone and on the job.",
+    ],
+    faqs: [
+      {
+        q: "Can Toro move a piano in Orlando or Central Florida?",
+        a: "Yes. A piano is one heavy, awkward piece on a local move. Toro Movers handles it with pads and a crew sized for the stairs, the turns, and the weight. An upright stays in one piece. A grand usually has the legs and pedal assembly removed so it can turn, then put back in the new room. That is ordinary moving work. Send the type, the floor, and a photo with a quote request at /quotes.",
+      },
+      {
+        q: "Do stairs or a tight turn add a fee on a heavy-item move?",
+        a: "No. Stairs, a narrow landing, and a long walk from parking add time on the hourly clock. They are not a separate charge. A piano or a safe that cannot turn without more people needs a larger crew so the carry finishes inside the building window. Share the flight count and a photo of the tightest turn when you request the quote at /quotes.",
+      },
+      {
+        q: "Will movers take a piano or bulky furniture apart?",
+        a: "When the piece is built to come apart. A grand piano usually loses its legs and pedal assembly for the carry, and those parts go back on at the destination. An upright usually does not come apart. Sectionals, bed frames, and bolted table legs come apart when the hardware allows it. A safe and a glued stone top stay in one piece. The crew does not tune the piano. A technician does that after it is placed. Say what must stay assembled.",
+      },
+      {
+        q: "Should I book furniture-only, a household move, or labor-only?",
+        a: "Book furniture-only when the piano or a few heavy pieces are the whole list. See /blog/orlando-furniture-only-movers and /small-moves-orlando. Book a household move when the rest of the home is going too, with the truck included on /full-service-moving. Book labor-only when you already have a truck or van that can hold the piece. See /labor-only-moving. A car or a small SUV is not that vehicle.",
+      },
+      {
+        q: "How do I get a quote for a piano or other heavy item in Orlando?",
+        a:
+          "Request a quote at /quotes, or call or text " +
+          PHONE_LINES +
+          ". Name the piece, upright or grand, both addresses, floors, stairs or the elevator window, parking, and whether you need a truck or labor-only help. Photos of the piece and the tightest turn help size the crew. Local jobs are $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      },
+    ],
+  },
+
+  {
     slug: "orlando-storage-unit-movers",
     illustration: "loading",
     eyebrow: "Storage unit · Orlando",
