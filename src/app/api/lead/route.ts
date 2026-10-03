@@ -188,6 +188,7 @@ export async function POST(req: Request) {
     service_office: "service_office",
     service_same_day: "service_same_day",
     service_small_moves: "service_small_moves",
+    service_pod_loading: "service_pod_loading",
     ads_short_form: "ads_short_callback",
     local_movers_ads_landing: "local_movers_ads_landing",
     "contact-page": "contact-page",

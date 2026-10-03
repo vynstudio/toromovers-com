@@ -560,7 +560,7 @@ export const podLoadingPage: ServiceGuide = {
   metadata: {
     title: "POD loading help in Orlando | U-Haul & storage",
     description:
-      "POD loading help in Orlando for a container, U-Haul, or storage unit. You keep the truck. Up-front hourly rates. Call " + PHONE_LINES + ".",
+      "POD loading help in Orlando for a container, a U-Haul, or a storage unit you already have across Central Florida. Call 321-234-0510.",
     ogTitle: "POD loading help in Orlando",
     ogDescription:
       "Load or unload a POD, U-Haul, or storage unit in Orlando. Labor by the hour, with the vehicle staying yours.",
@@ -610,15 +610,15 @@ export const podLoadingPage: ServiceGuide = {
     {
       h2: "How the hourly clock works",
       paragraphs: [
-        "Local labor is quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a long carry, a late gate, and an elevator wait add time on the hourly clock. They are not a separate fee. Crew size, and whether you book one stop or two, still change the total. Many loads start with two movers. A tight stair or a heavier inventory may need more so the pack finishes inside the window you actually have. The rate is per mover per hour, so the quote balances people and time.",
-        "Have the truck, the container, or the storage access on site when the crew arrives: keys, gate code, and unit number. Clear a path from the rooms to the door. Closed boxes let the crew stay on furniture. Packing that is still undone adds time on the same clock. Photos of bulky pieces help size the crew. If the building asks for a certificate, send the manager’s contact and the deadline when you book.",
+        "Local labor is hourly. Stairs, a long carry, a late gate, and an elevator wait add time on that clock. Crew size, and whether you book one stop or two, still change the total. Many loads start with two movers. A tight stair or a heavier inventory may need more so the pack finishes inside the window you actually have. We explain the hourly model before the crew starts.",
+        "Have the truck, the container, or the storage access on site when the crew arrives: keys, gate code, and unit number. Clear a path from the rooms to the door. Closed boxes let the crew stay on furniture. Packing that is still undone adds time on the same clock. Photos of bulky pieces help size the crew. If the building asks for paperwork, send the manager's contact and the deadline when you book.",
       ],
     },
     {
       h2: "Where we load containers and rental trucks",
       paragraphs: [
         "Toro Movers is based in Orlando and does this work across Central Florida, including Winter Springs, Deltona, Horizon West, Lake Nona, Dr. Phillips, Winter Park, and Winter Garden. Drive time between two local stops is on the clock and quoted honestly. If the drop-off leaves Central Florida, that route is a trip quote rather than this local hourly load. You would still drive a rental. The quote follows the route.",
-        "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Call or text " + PHONE_LINES + ", or email hello@toromovers.com. Lead with the vehicle: POD, U-Haul or other rental, or storage unit. Add the size, one end or both, the addresses or the facility name, and stairs or an elevator.",
+        "Hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM. Call or text 321-234-0510. Lead with the vehicle: POD, U-Haul or other rental, or storage unit. Add the size, one end or both, the addresses or the facility name, and stairs or an elevator.",
       ],
     },
   ],
@@ -647,7 +647,11 @@ export const podLoadingPage: ServiceGuide = {
     },
     {
       q: "How much does POD or U-Haul loading cost?",
-      a: "Local labor is quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Stairs, a late gate, and a long carry add time. They are not a separate fee. Call or text " + PHONE_LINES + " or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: QUOTE_RATE_ANSWER,
+    },
+    {
+      q: "What has to be on site before the crew arrives?",
+      a: "The container, the rental truck, or the storage access. That means keys, the gate code, and the unit number when there is one. A clear path from the door to the ramp or the container doors lets the crew stay on the load. If the container company is still moving the POD, book the crew for the day it is actually in place.",
     },
   ],
   closing: {
