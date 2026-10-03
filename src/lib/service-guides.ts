@@ -443,7 +443,7 @@ export const smallMovesPage: ServiceGuide = {
   metadata: {
     title: "Small movers in Orlando | Single item & delivery",
     description:
-      "Small movers in Orlando for one piece, a few items, or furniture pickup and delivery. Up-front hourly rates. Call " + PHONE_LINES + ".",
+      "Small movers in Orlando for one piece, a short list, or furniture pickup and delivery in Central Florida. Call 321-234-0510.",
     ogTitle: "Small movers in Orlando",
     ogDescription:
       "Single-item movers and local furniture pickup in Orlando and Central Florida, with up-front hourly rates.",
@@ -493,8 +493,8 @@ export const smallMovesPage: ServiceGuide = {
     {
       h2: "How a short job is quoted",
       paragraphs: [
-        "Local small jobs are hourly. Toro quotes $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on that minimum. Stairs, an elevator wait, a long walk from parking, and a piece that has to come apart add time on the same clock. They are not a separate fee. Two movers fit many single pieces. A heavier piece may need more people. The rate is per mover per hour, so the quote balances people and time.",
-        "A clear path from the room to the door, and a place to park that is actually legal, keeps the minimum realistic. A building that makes the crew wait for an elevator spends that wait on the clock. Florida heat slows a midday carry. Heat does not add a fee. When the building allows it, an earlier start is the faster job. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+        "Local small jobs are hourly. A short carry can still use the minimum on that clock. Stairs, an elevator wait, a long walk from parking, and a piece that has to come apart add time. Two movers fit many single pieces. A heavier piece may need more people. The quote balances people and time, and we explain that before the day.",
+        "A clear path from the room to the door, and a place to park that is actually legal, keeps the job realistic. A building that makes the crew wait for an elevator spends that wait on the clock. Florida heat slows a midday carry. When the building allows it, an earlier start is the faster job. Hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
       ],
     },
     {
@@ -526,11 +526,15 @@ export const smallMovesPage: ServiceGuide = {
     },
     {
       q: "How much do small movers cost in Orlando?",
-      a: "Local jobs are quoted at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. A short carry can land on the minimum. Stairs, elevator waits, and a long walk from parking add time. They are not a separate fee.",
+      a: QUOTE_RATE_ANSWER,
+    },
+    {
+      q: "Does a sofa or a bed need to come apart?",
+      a: "Sometimes. A tight stair, a sleeper sofa, or a bed frame that will not turn may have to come apart to leave the room. Say so when you book, and leave the hardware with the piece. The crew can take apart a simple bed, table, or desk as part of the carry. They do not rebuild a sleeper mechanism or repair a broken frame.",
     },
     {
       q: "How is this different from POD loading or labor-only?",
-      a: "This page is one piece or a short furniture list, often with our truck. POD loading help is a container, a U-Haul, or a storage unit you already have. Labor-only is a household load on your truck. Loading and unloading is a short lift that is not a planned delivery. Call or text " + PHONE_LINES + " if you are unsure which fits.",
+      a: "This page is one piece or a short furniture list, often with our truck. POD loading help is a container, a U-Haul, or a storage unit you already have. Labor-only is a household load on your truck. Loading and unloading is a short lift that is not a planned delivery. Call or text 321-234-0510 if you are unsure which fits.",
     },
   ],
   closing: {

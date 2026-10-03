@@ -100,7 +100,8 @@ const isLoading = spec?.path === "loading-unloading";
 const isPacking = spec?.path === "packing-services-orlando";
 const isOffice = spec?.path === "office-movers-orlando";
 const isSameDay = spec?.path === "same-day-movers-orlando";
-if (isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay) {
+const isSmallMoves = spec?.path === "small-moves-orlando";
+if (isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves) {
   for (const href of [grotesk400, grotesk600]) {
     if (seenPreload.has(href)) continue;
     seenPreload.add(href);
@@ -116,7 +117,7 @@ const isLpLocal = spec?.path === "lp/local-movers";
 const isThankYou = spec?.path === "thank-you";
 const isServices = spec?.path === "services";
 const isRebrandChrome =
-  isQuotes || isContact || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay;
+  isQuotes || isContact || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves;
 const LOCAL_PHONE = "321-234-0510";
 ---
 
@@ -127,12 +128,12 @@ const LOCAL_PHONE = "321-234-0510";
   deferTrackers={!hydrate}
   businessTelephone={isRebrandChrome || isLpLocal || isThankYou ? PHONE_E164 : undefined}
   businessImage={
-    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay
+    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves
       ? `${SITE_URL}/images/pay-confirm-family.webp`
       : undefined
   }
   omitPriceRange={
-    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay
+    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves
   }
   extraCss={
     spec?.path === "move-day-checklist"
@@ -149,7 +150,7 @@ const LOCAL_PHONE = "321-234-0510";
                 ? [thanksCss]
                 : isServices
                   ? [servicesCss]
-                  : isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay
+                  : isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves
                     ? [fullServiceCss]
                     : []
   }
