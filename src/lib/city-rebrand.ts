@@ -28,7 +28,7 @@ export type CityRebrandCopy = {
   sections: { h2: string; paragraphs: string[] }[];
   /** Short sample layout. Long city pages leave this unset. */
   included?: { heading: string; items: string[] };
-  localNote?: string;
+  localNote?: string | string[];
   faqs: { q: string; a: string }[];
   servicesHeading: string;
   servicesIntro: string;
@@ -41,7 +41,7 @@ export function cityRebrandWordCount(copy: CityRebrandCopy): number {
   const parts = [
     copy.lede,
     ...(copy.included?.items ?? []),
-    ...(copy.localNote ? [copy.localNote] : []),
+    ...(Array.isArray(copy.localNote) ? copy.localNote : copy.localNote ? [copy.localNote] : []),
     ...copy.sections.flatMap((section) => section.paragraphs),
     ...copy.faqs.map((item) => item.a),
     copy.servicesIntro,

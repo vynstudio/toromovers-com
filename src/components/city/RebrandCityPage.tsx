@@ -121,7 +121,11 @@ export function RebrandCityPage({ city }: { city: CityRebrandCopy }) {
                 <li key={item}>{item}</li>
               ))}
             </ul>
-            {city.localNote ? <p>{city.localNote}</p> : null}
+            {(Array.isArray(city.localNote) ? city.localNote : city.localNote ? [city.localNote] : []).map(
+              (paragraph) => (
+                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+              ),
+            )}
           </section>
         ) : (
           city.sections.map((section) => (

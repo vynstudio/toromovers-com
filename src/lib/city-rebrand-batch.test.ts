@@ -32,7 +32,7 @@ function bodyLines(copy: CityRebrandCopy): string[] {
   return [
     copy.lede,
     ...(copy.included?.items ?? []),
-    ...(copy.localNote ? [copy.localNote] : []),
+    ...(Array.isArray(copy.localNote) ? copy.localNote : copy.localNote ? [copy.localNote] : []),
     ...copy.sections.flatMap((section) => section.paragraphs),
     ...copy.faqs.map((item) => item.a),
     copy.servicesIntro,
@@ -74,7 +74,7 @@ test("batch 1 city pages keep URL, source, H1 intent, and unique copy", () => {
     assert.match(city.description, /321-234-0510/);
     if (city.slug === "kissimmee-movers") {
       assert.equal(city.h1, "Kissimmee movers for homes, apartments, and Osceola hops");
-      assert.ok(city.faqs.length >= 4 && city.faqs.length <= 5, String(city.faqs.length));
+      assert.ok(city.faqs.length >= 5 && city.faqs.length <= 6, String(city.faqs.length));
       assert.equal(city.included?.items.length, 4);
       assert.equal(city.sections.length, 0);
     } else {
