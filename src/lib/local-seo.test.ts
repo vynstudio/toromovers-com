@@ -66,8 +66,10 @@ test("new service pages stay in the word range and cross-link the guides", () =>
     const page = serviceGuides.find((item) => item.path === path);
     assert.ok(page);
     const words = serviceGuideWordCount(page);
-    const min = path === "/packing-services-orlando" ? 1000 : 800;
-    const max = path === "/packing-services-orlando" ? 2200 : 1210;
+    const deep =
+      path === "/packing-services-orlando" || path === "/office-movers-orlando";
+    const min = deep ? 1000 : 800;
+    const max = deep ? 2200 : 1210;
     assert.ok(words >= min && words <= max, `${path} ${words}`);
     assert.equal(page.hero.blogHref, `/blog/${blogSlug}`);
     assert.ok(page.metadata.description.length >= 120 && page.metadata.description.length <= 160);

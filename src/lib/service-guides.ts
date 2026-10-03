@@ -188,7 +188,7 @@ export const officeMoversPage: ServiceGuide = {
   metadata: {
     title: "Office movers in Orlando | Small commercial moves",
     description:
-      "Office movers in Orlando for small offices and light commercial jobs. After-hours crews, desks, and hourly rates. Call " + PHONE_LINES + ".",
+      "Office movers in Orlando for small suites and light commercial jobs. Desks, files, and after-hours windows. Call 321-234-0510.",
     ogTitle: "Office movers in Orlando",
     ogDescription:
       "Small office and light commercial moves across Orlando and Central Florida, with up-front hourly rates and bilingual crews.",
@@ -224,9 +224,9 @@ export const officeMoversPage: ServiceGuide = {
     {
       h2: "After hours, Saturday, and a short window",
       paragraphs: [
-        "A small office loses the day if the crew works while people are still at their desks. Schedule the load after close, early in the morning, or on Saturday so the suite is empty and downtime stays short. Published hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. If the building only allows a window outside those hours, say so when you book and confirm the start before the quote is final.",
-        "A short evening or weekend slot often needs a larger crew so the job finishes before the office reopens. Reserve the freight elevator and the dock for that same window. Share a contact who can open the building if the crew arrives before staff. Photos of bulky pieces — large desks, copiers, conference tables — help size that crew.",
-        "After-hours does not add a named surcharge in the pitch. It adds time, and sometimes more movers, on the hourly clock. We explain that before the day so a tight window is not a surprise at the dock.",
+        "A small office loses the day if the crew works while people are still at their desks. Schedule the load after close, early in the morning, or on Saturday so the suite is empty and downtime stays short. Published hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM. If the building only allows a window outside those hours, say so when you book and confirm the start before the quote is final.",
+        "A short evening or weekend slot often needs a larger crew so the job finishes before the office reopens. Reserve the freight elevator and the dock for that same window. Share a contact who can open the building if the crew arrives before staff. Photos of bulky pieces, such as large desks, copiers, and conference tables, help size that crew.",
+        "An evening or Saturday start stays on the same hourly clock. It can take more people so the suite is usable before staff return. We explain that before the day so a tight window is not a surprise at the dock.",
       ],
     },
     {
@@ -240,7 +240,7 @@ export const officeMoversPage: ServiceGuide = {
     {
       h2: "Freight elevators, docks, and building paperwork",
       paragraphs: [
-        "Office parks and commercial buildings often require a freight elevator, a loading dock, a service entrance, and a certificate of insurance before the truck can enter. Ask the property manager what the building needs and the deadline. Many offices want that paperwork several business days ahead, not the morning of the move. Send Toro the manager’s name, email, any required wording, and the deadline with the booking so the paperwork the property asks for can go out in time.",
+        "Office parks and commercial buildings often require a freight elevator, a loading dock, a service entrance, and paperwork before the truck can enter. Ask the property manager what the building needs and the deadline. Many offices want that paperwork several business days ahead, not the morning of the move. Send Toro the manager's name, email, any required wording, and the deadline with the booking so the paperwork the property asks for can go out in time.",
         "A dock shared with deliveries, or a freight elevator on a short reservation, adds time. Share the floor, the carry from the dock to the suite, and any loading-zone limit. We cannot open a window the property never reserved. If the only open window is early, book the early start and leave a clear path from each office to the elevator or the door.",
         "Apartment docks are a different page. A small office still needs the same honesty about access: floor, walk, and who meets the truck. Put gate codes and the suite number in the quote, not after the crew is on the street.",
       ],
@@ -248,8 +248,28 @@ export const officeMoversPage: ServiceGuide = {
     {
       h2: "How an office move is quoted",
       paragraphs: [
-        "Local office and light commercial moves are hourly. Toro quotes local jobs at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Freight-elevator waits and a long carry from the dock add time on that clock. They are not a separate line. Crew size, how packed the suite is, and truck versus labor-only still change the total.",
-        "Share both addresses, floors, the date, and whether the suite will be empty. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. We serve Orlando and the other Central Florida cities linked below.",
+        "Local office and light commercial moves are hourly. Freight-elevator waits and a long carry from the dock add time on that clock. They are not a separate line. Crew size, how packed the suite is, and truck versus labor-only still change the total. We explain the hourly model before the day.",
+        "Share both addresses, floors, the date, and whether the suite will be empty. Hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM. We serve Orlando and the other Central Florida cities linked below.",
+      ],
+    },
+    {
+      h2: "How a small office day runs",
+      paragraphs: [
+        "The crew starts at the suite you booked, not in a lobby full of people still working. They walk the floor, pad desks and glass, and load so the new office can be placed by room. If you labeled desks and chairs by person, they set those pieces where the labels say. Drive time between two Central Florida addresses is part of the job. At the new suite someone who knows the floor plan should be there, or on the phone, when the truck opens.",
+        "Power down computers and monitors before the carry, and label cables if you want the equipment moved as furniture. The crew carries those pieces. They do not rack servers, test phones, migrate files, or plug a network back together. A copier, a conference table, and a run of filing cabinets need a clear path to the dock. Empty the heavy drawers first. What you leave in a drawer becomes weight on the stair or the freight car.",
+      ],
+    },
+    {
+      h2: "Office parks and storefronts in Central Florida",
+      paragraphs: [
+        "A Lake Mary or Maitland office park with a shared dock is a different clock from a Winter Park or Thornton Park storefront that loads from the street. Downtown Orlando towers usually want the freight elevator, a service corridor, and a reserved window. A clinic back room or a studio in a mixed building may share a passenger elevator with people who are not moving. Tell us which one you have, the floor, and where a truck is allowed to stand.",
+        "If the new suite is in another Central Florida city, the drive is part of the quote. If one address leaves the metro, say so. That route is a trip quote, not this local office clock. A storefront with metered street parking needs a legal place for the truck for the whole carry. An office park that only opens the dock after the last delivery of the day needs that time in the booking, not discovered when the crew is at the gate.",
+      ],
+    },
+    {
+      h2: "Related bookings",
+      paragraphs: [
+        "Full-service moving is the booking when the crew should bring the truck and place the suite at the new address. Labor-only moving is the booking when you already have a rental truck or container and the crew only loads or unloads what you staged. Packing services is the add-on when files and small office goods are still loose and you want the crew to close those cartons before the carry. Apartment movers is the page when the hard part is a residential elevator, not an office dock. Every local option is listed on the services page.",
       ],
     },
   ],
@@ -262,7 +282,7 @@ export const officeMoversPage: ServiceGuide = {
   faqs: [
     {
       q: "Do you offer office movers in Orlando?",
-      a: "Yes. Toro Movers handles small office and light commercial moves in Orlando and Central Florida: desks, files, and boxed equipment, with up-front hourly rates. We do not set up networks or migrate data. Call or text " + PHONE_LINES + " or request a quote online.",
+      a: "Yes. Toro Movers handles small office and light commercial moves in Orlando and Central Florida: desks, files, and boxed equipment, with the hourly model explained before the day. We do not set up networks or migrate data. Call or text 321-234-0510 or request a quote online.",
     },
     {
       q: "Are you commercial movers for a small suite?",
@@ -270,15 +290,23 @@ export const officeMoversPage: ServiceGuide = {
     },
     {
       q: "Can the crew move an office after hours or on Saturday?",
-      a: "Saturday hours are 9:00 AM – 5:00 PM. Sunday–Friday hours are 7:00 AM – 7:00 PM. If the building only allows a window outside those hours, say so when you book and confirm the start before the quote is final. A short slot often needs a larger crew. Reserve the freight elevator or dock for that same window.",
+      a: "Saturday hours are 9:00 AM to 5:00 PM. Sunday through Friday hours are 7:00 AM to 7:00 PM. If the building only allows a window outside those hours, say so when you book and confirm the start before the quote is final. A short slot often needs a larger crew. Reserve the freight elevator or dock for that same window.",
     },
     {
-      q: "What if the landlord wants a certificate of insurance?",
-      a: "Ask the landlord what the building needs and the deadline. Send Toro the manager’s name, email, any required wording, and the deadline when you book so the paperwork the property asks for can go out in time. Many buildings want that several business days ahead.",
+      q: "What if the building wants paperwork before the truck can enter?",
+      a: "Ask the property what the building needs and the deadline. Send Toro the manager's name, email, any required wording, and the deadline when you book so that paperwork can go out in time. Many buildings want it several business days ahead, not the morning of the move.",
+    },
+    {
+      q: "How much do office movers cost in Orlando?",
+      a: QUOTE_RATE_ANSWER,
+    },
+    {
+      q: "Do you reconnect computers after an office move?",
+      a: "No. The crew moves desks, monitors, and boxed equipment. They do not rack servers, test phones, migrate files, or assign desks unless you labeled them. Power machines down and label cables before the carry if you want that equipment treated as furniture.",
     },
     {
       q: "How do I get an office moving quote?",
-      a: "Request a quote at the quote page, or call or text " + PHONE_LINES + ". Share both addresses, floors, dock or freight-elevator rules, after-hours limits, and truck versus labor-only. Local jobs are hourly at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Call or text 321-234-0510, or request a quote online. Share both addresses, floors, dock or freight-elevator rules, after-hours limits, and truck versus labor-only. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
     },
   ],
   closing: {
