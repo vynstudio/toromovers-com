@@ -325,7 +325,7 @@ export const sameDayMoversPage: ServiceGuide = {
   metadata: {
     title: "Same-day movers in Orlando | When a crew is open",
     description:
-      "Same-day movers in Orlando when a local crew is open. Not a guarantee. Up-front hourly rates for Central Florida hops. Call " + PHONE_LINES + ".",
+      "Same-day movers in Orlando when a local crew is still open. Not a guarantee. Central Florida hops only. Call 321-234-0510.",
     ogTitle: "Same-day movers in Orlando",
     ogDescription:
       "Local same-day moving in Orlando when a crew is still open. Hourly rates, clear limits, bilingual crew.",
@@ -354,8 +354,8 @@ export const sameDayMoversPage: ServiceGuide = {
     {
       h2: "What same-day means here",
       paragraphs: [
-        "Same-day movers in Orlando, for Toro, means a local job we can still put on today’s board. Both addresses stay inside Central Florida. A crew is open. Access does not depend on a reservation you never made. Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Calling at noon does not create a crew that is already on another job.",
-        "A packed studio or one-bedroom with clear parking can often start the same day. A labor-only load into a U-Haul or POD that is already at the curb can too, if the path is clear. A full-service hop — crew and truck — can also fit when the route is short and the home is ready. The truck choice does not make same-day automatic. The open slot does.",
+        "Same-day movers in Orlando, for Toro, means a local job we can still put on today's board. Both addresses stay inside Central Florida. A crew is open. Access does not depend on a reservation you never made. Hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM. Calling at noon does not create a crew that is already on another job.",
+        "A packed studio or one-bedroom with clear parking can often start the same day. A labor-only load into a U-Haul or POD that is already at the curb can too, if the path is clear. A full-service hop, crew and truck, can also fit when the route is short and the home is ready. The truck choice does not make same-day automatic. The open slot does.",
         "We will say no when the day is full or the building cannot take a truck today. A quote explains the rate and the start window. It is not a promise that every date and every property will fit.",
       ],
     },
@@ -363,7 +363,7 @@ export const sameDayMoversPage: ServiceGuide = {
       h2: "Jobs that often fit the same day",
       paragraphs: [
         "Short local hops are the usual fit: Orlando to Winter Park, Dr. Phillips to Windermere, Lake Nona to another southeast address, Kissimmee to a nearby Osceola stop. The list is not a boundary. It is the kind of distance a crew can still finish inside the hours that are left. Share the real addresses. We will tell you if the drive still fits today.",
-        "Labor-only is often the faster yes, because you already have the vehicle. Full-service needs a truck that is free as well as a crew. A few bulky pieces or a loading job that is already boxed is easier to place than a house that is still in drawers. If you want packing and a same-day carry, say so. A large pack may not finish today. Stairs, elevator waits, and a walk from parking add time. They are not a separate fee.",
+        "Labor-only is often the faster yes, because you already have the vehicle. Full-service needs a truck that is free as well as a crew. A few bulky pieces or a loading job that is already boxed is easier to place than a house that is still in drawers. If you want packing and a same-day carry, say so. A large pack may not finish today. Stairs, elevator waits, and a walk from parking add time on the same clock.",
       ],
     },
     {
@@ -377,7 +377,7 @@ export const sameDayMoversPage: ServiceGuide = {
     {
       h2: "How a same-day job is quoted",
       paragraphs: [
-        "Local same-day jobs are hourly. Toro quotes $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Crew size, how packed you are, and truck versus labor-only still change the total. There is no same-day surcharge in the pitch. The limit is whether a crew is open, not a different price list.",
+        "Local same-day jobs use the same hourly model as any other local booking. Crew size, how packed you are, and truck versus labor-only still change the total. The limit is whether a crew is open. A full board is a no for today, not a different kind of job.",
         "That hourly model is for local Central Florida work. A drop-off outside the region is a trip quote. We explain the rate and the start window before the crew rolls. If the only open time is shorter than the job, we will say that.",
       ],
     },
@@ -385,7 +385,13 @@ export const sameDayMoversPage: ServiceGuide = {
       h2: "What to send in the first message",
       paragraphs: [
         "Lead with the facts a dispatcher needs to say yes or no. Pickup and drop-off addresses. Stairs or a reserved elevator at either stop. How packed you will be when the crew arrives. Whether you need the truck or only labor on a rental or container you already have. Photos of bulky pieces help size the crew. Gate codes, HOA rules, and any loading-zone limit should be in that first message.",
-        "Hours are Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM. Email hello@toromovers.com, or call or text " + PHONE_LINES + ". If you are still deciding whether today is realistic, read the same-day guide first, then request the quote with the addresses in hand.",
+        "Hours are Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM. Call or text 321-234-0510. If you are still deciding whether today is realistic, read the same-day guide first, then request the quote with the addresses in hand.",
+      ],
+    },
+    {
+      h2: "Which booking to ask for today",
+      paragraphs: [
+        "Full-service moving is the ask when you need the truck and a crew is still open. Labor-only moving is the ask when the U-Haul, POD, or rental truck is already at the curb. Packing services is the add-on when rooms are still open and you want them boxed before the carry, which can push the job off today. Apartment movers is the page when a reserved elevator or a loading zone, not the crew, is what decides whether today works. The services page lists every local option if the job is not a same-day hop at all.",
       ],
     },
   ],
@@ -398,7 +404,7 @@ export const sameDayMoversPage: ServiceGuide = {
   faqs: [
     {
       q: "Can I book same-day movers in Orlando?",
-      a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Local jobs are quoted by the hour at $95 per mover per hour, with a 2-hour minimum, no fuel surcharge, and no stair fees. Call or text " + PHONE_LINES + " or request a quote online. Hours: Sun–Fri, 7:00 AM – 7:00 PM; Sat, 9:00 AM – 5:00 PM.",
+      a: "Often, when both stops stay inside Central Florida and a crew is open that day. Same-day is not a guarantee. Call or text 321-234-0510 or request a quote online. Hours: Sun-Fri, 7:00 AM to 7:00 PM; Sat, 9:00 AM to 5:00 PM.",
     },
     {
       q: "What should I send for a same-day quote?",
@@ -410,7 +416,11 @@ export const sameDayMoversPage: ServiceGuide = {
     },
     {
       q: "Is same-day priced differently from a booked local move?",
-      a: "No. Same-day local jobs inside Central Florida use the same hourly model: $95 per mover per hour, a 2-hour minimum, no fuel surcharge, and no stair fees. Availability depends on an open crew.",
+      a: QUOTE_RATE_ANSWER,
+    },
+    {
+      q: "What if every crew is already out?",
+      a: "Then today is a no. A crew that is already on a job cannot be split to start yours. Ask for the next open window instead of waiting on a callback that invents people. Availability depends on an open crew, and we will say so when the board is full.",
     },
     {
       q: "Do you run same-day long-distance moves?",
