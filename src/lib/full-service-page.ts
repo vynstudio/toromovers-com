@@ -119,6 +119,35 @@ export const fullServicePage = {
       { label: "Central Florida", href: "/central-florida-movers" },
     ] as const,
   },
+  sections: [
+    {
+      h2: "How a full-service day runs",
+      paragraphs: [
+        "The crew and the truck start at the first address you booked. They walk the rooms, pad the furniture that needs it, and load so the pieces can come off at the new place by room. Drive time between the two Central Florida addresses is part of the job. At the second address the crew unloads and sets the larger pieces where you point, then the cartons that belong in those rooms.",
+        "You do not drive the truck. Someone who can decide where a bed or a sofa goes should be at the drop-off, in person or on the phone with the crew. If a piece will not fit the stair, the doorway, or the elevator, the crew stops and asks before it is forced. Taking apart a bed, a table, or a simple desk is part of the carry when you named it on the quote. Reconnecting a washer, mounting a television, and installing fixtures are not.",
+      ],
+    },
+    {
+      h2: "Where the truck can actually stop",
+      paragraphs: [
+        "A driveway that fits the truck is the simple case. A downtown Orlando curb, a Winter Park street under low oaks, a locked-gate community, or a new court in Lake Nona, Horizon West, or Winter Garden often is not. Tell us about low branches, a steep drive, a side entrance the association requires, or guest parking that is the only legal stop. If the truck has to sit down the block, that walk is time on the clock. We would rather know the walk before the day than find it with a loaded truck.",
+        "Clear a path from the rooms to the door the night before, especially when the garage is part of what is moving and the driveway is the only place the truck can stand. If this job starts or ends in a building with an elevator window, a dock, or a loading zone, send the property's rules with the quote so the truck arrives inside the slot they actually gave you.",
+      ],
+    },
+    {
+      h2: "What changes the hours on a local move",
+      paragraphs: [
+        "Crew size and time follow the volume, the access, and how ready the home is. Closed, labeled cartons and an open path shorten the day. A kitchen still in the cabinets, a garage that still has to be sorted, or a second stop at a storage unit lengthens it. Fuel and stairs are not separate lines. They show up as minutes on the same clock. If one address leaves Central Florida, say so when you call. That route is a trip quote, not this local hourly move.",
+        "Photos of the bulky pieces, the stairs, and the parking spot are enough to size the crew. A quote built for a packed house will not cover a home that is still in drawers. If you want those rooms boxed by the same crew, name them when you book. If you already have a rental truck, this page is the wrong fit and labor-only is the one to use.",
+      ],
+    },
+    {
+      h2: "Related services",
+      paragraphs: [
+        "Labor-only is the booking when the U-Haul, POD, or rental truck is already yours and you only need the crew. Apartment movers is the page when stairs, a reserved elevator, or a loading zone is the hard part. Packing services is the add-on when named rooms are still open and you want the crew to close them before the carry. A short lift that is not a household, a single furniture piece, and a container pack each have their own page. The services page lists all of them.",
+      ],
+    },
+  ] as const,
   faqs: [
     {
       q: "What is full-service moving?",

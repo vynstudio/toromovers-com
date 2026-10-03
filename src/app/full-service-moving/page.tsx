@@ -188,6 +188,27 @@ export default function FullServiceMovingPage() {
           </ul>
         </section>
 
+        {page.sections.map((section) => (
+          <section key={section.h2}>
+            <h2>{section.h2}</h2>
+            {section.paragraphs.map((paragraph) => (
+              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+            ))}
+          </section>
+        ))}
+
+        <p>
+          Related: <a href="/labor-only-moving">labor-only movers</a>
+          {" · "}
+          <a href="/apartment-movers-orlando-fl">apartment movers</a>
+          {" · "}
+          <a href="/packing-services-orlando">packing services</a>
+          {" · "}
+          <a href="/loading-unloading">loading and unloading</a>
+          {" · "}
+          <a href="/services">all services</a>.
+        </p>
+
         <section id="faq" aria-labelledby="full-service-faq">
           <h2 id="full-service-faq">Common questions</h2>
           <dl>
