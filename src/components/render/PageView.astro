@@ -104,7 +104,11 @@ const isSmallMoves = spec?.path === "small-moves-orlando";
 const isPodLoading = spec?.path === "pod-loading-orlando";
 const isOrlandoHub = spec?.path === "orlando-movers";
 const isCentralFlorida = spec?.path === "central-florida-movers";
-if (isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida) {
+const isCityRebrand =
+  spec?.path === "kissimmee-movers" ||
+  spec?.path === "winter-park-movers" ||
+  spec?.path === "sanford-movers";
+if (isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida || isCityRebrand) {
   for (const href of [grotesk400, grotesk600]) {
     if (seenPreload.has(href)) continue;
     seenPreload.add(href);
@@ -120,7 +124,7 @@ const isLpLocal = spec?.path === "lp/local-movers";
 const isThankYou = spec?.path === "thank-you";
 const isServices = spec?.path === "services";
 const isRebrandChrome =
-  isQuotes || isContact || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida;
+  isQuotes || isContact || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida || isCityRebrand;
 const LOCAL_PHONE = "321-234-0510";
 ---
 
@@ -131,12 +135,12 @@ const LOCAL_PHONE = "321-234-0510";
   deferTrackers={!hydrate}
   businessTelephone={isRebrandChrome || isLpLocal || isThankYou ? PHONE_E164 : undefined}
   businessImage={
-    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida
+    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida || isCityRebrand
       ? `${SITE_URL}/images/pay-confirm-family.webp`
       : undefined
   }
   omitPriceRange={
-    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida
+    isThankYou || isServices || isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida || isCityRebrand
   }
   extraCss={
     spec?.path === "move-day-checklist"
@@ -153,7 +157,7 @@ const LOCAL_PHONE = "321-234-0510";
                 ? [thanksCss]
                 : isServices
                   ? [servicesCss]
-                  : isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida
+                  : isFullService || isLaborOnly || isApartment || isLoading || isPacking || isOffice || isSameDay || isSmallMoves || isPodLoading || isOrlandoHub || isCentralFlorida || isCityRebrand
                     ? [fullServiceCss]
                     : []
   }
