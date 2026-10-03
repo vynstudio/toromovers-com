@@ -25,6 +25,7 @@ const STATIC: Array<[string, string]> = [
   ["lp/local-movers", "../app/lp/local-movers/page.tsx"],
   ["move-day-checklist", "../app/move-day-checklist/page.tsx"],
   ["office-movers-orlando", "../app/office-movers-orlando/page.tsx"],
+  ["kissimmee-movers", "../app/kissimmee-movers/page.tsx"],
   ["orlando-movers", "../app/orlando-movers/page.tsx"],
   ["orlando-movers-gallery", "../app/orlando-movers-gallery/page.tsx"],
   ["packing-services-orlando", "../app/packing-services-orlando/page.tsx"],
@@ -32,10 +33,12 @@ const STATIC: Array<[string, string]> = [
   ["privacy", "../app/privacy/page.tsx"],
   ["quotes", "../app/quotes/page.tsx"],
   ["same-day-movers-orlando", "../app/same-day-movers-orlando/page.tsx"],
+  ["sanford-movers", "../app/sanford-movers/page.tsx"],
   ["services", "../app/services/page.tsx"],
   ["small-moves-orlando", "../app/small-moves-orlando/page.tsx"],
   ["terms", "../app/terms/page.tsx"],
   ["thank-you", "../app/thank-you/page.tsx"],
+  ["winter-park-movers", "../app/winter-park-movers/page.tsx"],
   ["pay", "../app/pay/page.tsx"],
   ["pay/thanks", "../app/pay/thanks/page.tsx"],
 ];
@@ -56,7 +59,15 @@ export function contentRoutes(): RouteSpec[] {
   }
 
   for (const slug of allCitySlugs()) {
-    if (slug === "orlando-movers" || slug === "central-florida-movers") continue;
+    if (
+      slug === "orlando-movers" ||
+      slug === "central-florida-movers" ||
+      slug === "kissimmee-movers" ||
+      slug === "winter-park-movers" ||
+      slug === "sanford-movers"
+    ) {
+      continue;
+    }
     routes.push({
       path: slug,
       key: "../app/(cities)/[slug]/page.tsx",
