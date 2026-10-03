@@ -16,6 +16,7 @@ const STATIC: Array<[string, string]> = [
   ["apartment-movers-orlando-fl", "../app/apartment-movers-orlando-fl/page.tsx"],
   ["blog", "../app/blog/page.tsx"],
   ["careers/ops-coordinator", "../app/careers/ops-coordinator/page.tsx"],
+  ["central-florida-movers", "../app/central-florida-movers/page.tsx"],
   ["contact", "../app/contact/page.tsx"],
   ["cookies", "../app/cookies/page.tsx"],
   ["full-service-moving", "../app/full-service-moving/page.tsx"],
@@ -55,7 +56,7 @@ export function contentRoutes(): RouteSpec[] {
   }
 
   for (const slug of allCitySlugs()) {
-    if (slug === "orlando-movers") continue;
+    if (slug === "orlando-movers" || slug === "central-florida-movers") continue;
     routes.push({
       path: slug,
       key: "../app/(cities)/[slug]/page.tsx",
