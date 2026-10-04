@@ -28,10 +28,11 @@ test("back goes to the previous step and only step 1 returns to the intro", () =
 test("section states distinguish done, active, and upcoming", () => {
   assert.equal(sectionState([1], 1), "on");
   assert.equal(sectionState([1], 2), "done");
-  assert.equal(sectionState([2, 3], 1), "upcoming");
-  assert.equal(sectionState([2, 3], 2), "on");
-  assert.equal(sectionState([2, 3], 3), "on");
-  assert.equal(sectionState([2, 3], 4), "done");
+  assert.equal(sectionState([2], 1), "upcoming");
+  assert.equal(sectionState([2], 2), "on");
+  assert.equal(sectionState([2], 3), "done");
+  assert.equal(sectionState([3], 2), "upcoming");
+  assert.equal(sectionState([3], 3), "on");
   assert.equal(sectionState([4], 3), "upcoming");
   assert.equal(sectionState([4], 4), "on");
 });

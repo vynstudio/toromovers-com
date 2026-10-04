@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ChecklistClient } from "@/components/move-checklist/checklist-client";
+import { MoveChecklistWizard } from "@/components/move-checklist/wizard";
 import { BUSINESS_NAME, PHONE_DISPLAY, PHONE_TEL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -28,7 +28,7 @@ export default function MoveDayChecklistPage() {
           confirmation after we review it.
         </p>
       </header>
-      <ChecklistClient />
+      <MoveChecklistWizard />
     </main>
   );
 }

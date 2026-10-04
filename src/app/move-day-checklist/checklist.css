@@ -93,25 +93,13 @@
 }
 .mdc-benefits {
   margin: 0 0 24px;
-  padding: 0;
-  list-style: none;
+  padding: 0 0 0 1.2rem;
   color: #000;
   font-size: 1rem;
   line-height: 1.45;
 }
 .mdc-benefits li {
-  display: grid;
-  grid-template-columns: 36px minmax(0, 1fr);
-  gap: 10px;
-  align-items: center;
-  margin-bottom: 8px;
-  padding: 10px 12px;
-  border: 1px solid #000;
-}
-.mdc-benefits li span:first-child {
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  margin-bottom: 6px;
 }
 .mdc-pipeline {
   display: flex;
@@ -177,8 +165,8 @@
 
 .mdc-steps {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
   margin: 0 0 12px;
   padding: 0;
   list-style: none;
@@ -189,11 +177,12 @@
 .mdc-steps button,
 .mdc-steps li > span {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
+  gap: 6px;
   width: 100%;
-  min-height: 64px;
-  padding: 8px;
+  min-height: 72px;
+  padding: 8px 6px;
   border: 1px solid rgba(0, 0, 0, 0.28);
   background: #fff;
   color: rgba(0, 0, 0, 0.4);
@@ -219,7 +208,11 @@
   flex-direction: column;
   gap: 2px;
   min-width: 0;
-  font-size: 0.84rem;
+  font-size: 0.72rem;
+  line-height: 1.15;
+}
+.mdc-steps .mdc-step-copy small {
+  display: none;
 }
 .mdc-step-copy small {
   font-size: 0.72rem;
